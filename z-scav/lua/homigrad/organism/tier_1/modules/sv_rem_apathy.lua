@@ -1,7 +1,8 @@
 --[[
     Z-SCAV: апатия.
 
-    При плохом настроении и депрессии персонаж иногда "не хочет" что-то делать:
+    При плохом настроении (любом ниже 0, по таблице Casualties: Unknown) и депрессии
+    персонаж иногда "не хочет" что-то делать:
       * поднять предмет / оружие с земли
       * взять предмет в руки (физический подбор на E)
       * нажать/открыть (двери, кнопки, ящики - E)
@@ -41,12 +42,30 @@ local function ApathyLevel(org)
 end
 hg.organism.ApathyLevel = ApathyLevel
 
+-- Casualties: Unknown: шанс отказа от действия по настроению
+--   -100: 90%   -50: 36.43%   -30: 15%   -10: 5%   0 и выше: 0%
+local REFUSE = {{-100, 0.90}, {-50, 0.3643}, {-30, 0.15}, {-10, 0.05}, {0, 0}}
+function hg.organism.RefuseChance(org)
+    if not org or not org.alive then return 0 end
+    local m = math.Clamp((org.mood or 0) * 100, -100, 100)
+    local c = 0
+    if m < 0 then
+        for i = 1, #REFUSE - 1 do
+            local a, b = REFUSE[i], REFUSE[i + 1]
+            if m >= a[1] and m <= b[1] then c = math.Remap(m, a[1], b[1], a[2], b[2]) break end
+        end
+    end
+    -- депрессия добавляет апатии сверху (Z-SCAV)
+    local dep = org.depression or 0
+    if dep > 0.2 then c = math.max(c, 0.15 + 0.45 * math.Clamp((dep - 0.2) / 0.8, 0, 1)) end
+    return c
+end
+
 -- true = персонаж отказывается. key - что именно пытаемся сделать (сущность/предмет)
 function hg.ZSCAVApathyRefuse(ply, key)
     if not cv:GetBool() or not IsValid(ply) or not ply:IsPlayer() or not ply:Alive() then return false end
     local org = ply.organism
-    local a = ApathyLevel(org)
-    if a < CFG.FROM then return false end
+    if hg.organism.RefuseChance(org) <= 0 then return false end
 
     -- одно решение на попытку
     ply.zscavApathy = ply.zscavApathy or {}
@@ -54,7 +73,7 @@ function hg.ZSCAVApathyRefuse(ply, key)
     local d = ply.zscavApathy[key]
     if d and now - d.t < CFG.DECISION_T then return d.refuse end
 
-    local chance = CFG.CHANCE_MIN + (CFG.CHANCE_MAX - CFG.CHANCE_MIN) * math.Clamp((a - CFG.FROM) / (1 - CFG.FROM), 0, 1)
+    local chance = hg.organism.RefuseChance(org)
     local refuse = math.Rand(0, 1) < chance
     ply.zscavApathy[key] = {t = now, refuse = refuse}
 

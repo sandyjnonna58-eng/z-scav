@@ -1026,8 +1026,10 @@ function PANEL:DrawMonitor(org, x, y, w)
     Txt(("ШОК   %d"):format(shock), "RemHP_Med", px, cy, shock > 40 and C_RED or (shock > 10 and C_YELLOW or C_GREEN))
     local mood = N(org.mood)
     local moodCol = mood > 0.3 and C_GREEN or (mood > -0.2 and C_DIM or (mood > -0.6 and C_ORANGE or C_RED))
-    local face = mood > 0.3 and ":)" or (mood > -0.2 and ":|" or ":(")
-    Txt(("НАСТРОЕНИЕ %+d %s"):format(mood * 100, face), "RemHP_Med", right, cy, moodCol, TEXT_ALIGN_RIGHT)
+    -- стадии как в Casualties: Unknown
+    local face = mood > 0.8 and "ЭЙФОРИЯ" or mood > 0.5 and "СЧАСТЛИВ" or mood > 0.3 and "ВООДУШЕВЛЁН" or mood > 0.1 and "ДОВОЛЕН"
+        or mood < -0.75 and "ОТЧАЯНИЕ" or mood < -0.5 and "ДЕПРЕССИЯ" or mood < -0.3 and "УНЫНИЕ" or mood < -0.1 and "ПОДАВЛЕН" or "НОРМА"
+    Txt(("НАСТР. %+d %s"):format(mood * 100, face), "RemHP_Med", right, cy, moodCol, TEXT_ALIGN_RIGHT)
     cy = cy + S(28)
     Dashed(px, cy, right) cy = cy + S(10)
 

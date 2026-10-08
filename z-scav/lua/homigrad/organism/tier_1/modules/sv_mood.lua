@@ -1,15 +1,26 @@
 --[[
-    REM: настроение.
+    Z-SCAV: настроение по механике Mood из Casualties: Unknown.
 
-    org.happiness 0..1 - внутреннее "счастье", медленно тянется к цели,
-                         которая зависит от состояния тела.
-    org.mood     -1..1 - то же самое для остальных систем (отправляется клиенту).
+    Настроение -100..100 = ПОСТОЯННОЕ + ВРЕМЕННОЕ.
+      Постоянное (org.happiness 0..1 = -100..100) копится от событий и состояний и само
+        медленно возвращается к 0: из плюса 0.45/мин, из минуса 0.6/мин.
+        Плюс: вкусная еда и питьё, сытость, сон, вправленный вывих (+3), удачные процедуры.
+        Минус: боль, голод, жажда, кровотечение, холод/жар, болезнь, убийство человека,
+               ранения, грязь, рвота.
+        Хорошее настроение смягчает минусы (буфер).
+      Временное считается заново каждый тик и пропадает вместе с причиной:
+        плюс: опиаты и другие препараты;  минус: ломка, боль, голод/жажда ниже 40,
+        страх/паника, болезнь, глухота, низкий объём крови, кровотечение (только ниже -50).
+    Старт жизни: случайно от -10 до 10.
 
-    Хорошее настроение (mood > HAPPY_FROM):
-      * быстрее бег (до +SPEED_BONUS, см. movement/sh_inertia.lua)
-      * персонаж иногда говорит что-нибудь хорошее
-    Плохое настроение растёт из боли, голода, холода, кровопотери и страха.
-    Долго плохое настроение превращается в депрессию (sv_depression.lua).
+    Стадии (значки):  >10 Satisfied, >30 Excited, >50 Happy, >80 Gleeful
+                      <-10 Feeling down, <-30 Gloomy, <-50 Depressed, <-75 Miserable
+      ниже 0   - растущий шанс отказаться от действия (sv_rem_apathy.lua, таблица из вики)
+      ниже -20 - разгон медленнее (movement/sh_inertia.lua)
+      ниже -30 - последний бой не сработает (sv_rem_laststand.lua)
+      ниже -75 - в меню здоровья можно использовать только опиаты (sv_rem_meduse.lua)
+      энергия тратится до x2 быстрее при -100 (sv_rem_energy.lua)
+    Сверху Z-SCAV: в хорошем настроении бег чуть быстрее и персонаж говорит хорошие фразы.
 ]]
 
 local Clamp, max, min, Approach = math.Clamp, math.max, math.min, math.Approach
@@ -41,6 +52,12 @@ CFG.PAIN_MAX_DROP   = 0.8   -- насколько сильно боль може
 CFG.PAIN_FULL       = 80    -- при такой боли цель опускается на максимум (было 120)
 CFG.PAIN_FALL_MUL   = 3     -- во сколько раз быстрее падает настроение при боли = PAIN_FULL
 CFG.PAIN_DRAIN      = 0.0004 -- прямое снижение happiness в секунду за 1 единицу боли (сверх 10)
+-- Casualties: Unknown
+CFG.DECAY_POS       = 0.45 / 60 -- возврат постоянного настроения к 0 из плюса, в секунду
+CFG.DECAY_NEG       = 0.60 / 60 -- ... из минуса
+CFG.JOY_TO_MOOD     = 25    -- AddJoy(1) = +25 постоянного настроения
+CFG.KILL_MOOD       = -8    -- убил человека
+CFG.HURT_MAX        = 10    -- максимум минуса за один удар
 CFG.PHRASE_MIN      = 70    -- пауза между хорошими фразами, сек
 CFG.PHRASE_MAX      = 160
 
@@ -50,68 +67,73 @@ CFG.phrases = {
     {"Everything's gonna be alright.", "Life's not that bad, you know?", "I'm proud of myself."},
 }
 
--- чего персонаж "хочет" сейчас: 0 - совсем плохо, 1 - отлично
-local function TargetHappiness(org)
-    -- нейтральное состояние ~ настроение 0. Еда, лекарства и приятные дела поднимают выше.
-    local t = 0.5
+local function N(v, d) return isnumber(v) and v or (d or 0) end
+local function RawPain(org) return max(N(org.pain), N(org.avgpain) * 0.85) end
+local function Hydration(org) return 100 - N(org.thirst) end
+local function Sick(org) return Clamp(N(org.remSepsis), 0, 1) end
 
-    -- депрессия немного "держит" настроение внизу, но не загоняет его в ноль сама
-    local dep = org.depression or 0
-    t = t - dep * 0.3
-
-    -- "сырая" боль: адреналин после падения/удара её глушит в org.pain, но настроение всё равно портится
-    local pain = max(org.pain or 0, (org.avgpain or 0) * 0.85)
-    t = t - min(pain / CFG.PAIN_FULL, 1) * CFG.PAIN_MAX_DROP
-
-    local hungry = org.hungry or 0
-    t = t - (hungry / 100) * 0.4
-    local thirst = org.thirst or 0
-    if thirst > 30 then t = t - (thirst - 30) / 70 * 0.4 end
-    if (org.satiety or 0) > 60 then t = t + 0.06 end -- сытый
-
-    local blood = org.blood or 5000
-    if blood < 4500 then t = t - (4500 - blood) / 2000 * 0.4 end
-
-    local temp = org.temperature or 36.7
-    if temp < 35.5 then t = t - 0.2 elseif temp > 38.5 then t = t - 0.15 end
-
-    t = t - Clamp(org.fear or 0, 0, 2) * 0.15
-    if org.panicattack and org.panicattack > 0 then t = t - 0.3 end
-
-    -- целый и здоровый - уже повод радоваться
-    local hurt = (org.lleg or 0) + (org.rleg or 0) + (org.larm or 0) + (org.rarm or 0) + (org.chest or 0) + (org.skull or 0)
-    if hurt <= 0 and pain < 5 and (org.bleed or 0) <= 0 then t = t + 0.1 end
-    -- адреналин настроение НЕ поднимает (иначе падение/удар "радовали" бы)
-
-    -- "плохой день": депрессивный эпизод без причины (sv_depression.lua)
-    if (org.remBadDayUntil or 0) > CurTime() then t = t - (org.remBadDayPower or 0.55) end
-
-    -- приятные дела
-    t = t + (org.remJoy or 0) * CFG.JOY_WEIGHT
-
-    -- опиоиды: эйфория (слабее с привыканием) и отходняк после
-    local an = Clamp(org.analgesia or 0, 0, 2)
-    t = t + an * CFG.OPIOID_EUPHORIA * (1 - (org.remOpioidTol or 0))
-    -- остальные препараты (бета-блокатор, тиамин...): "кайф" org.remHigh
-    t = t + (org.remHigh or 0) * CFG.HIGH_WEIGHT * (1 - (org.remOpioidTol or 0) * 0.5)
-    t = t - (org.remComedown or 0)
-
-    return Clamp(t, 0, 1)
+-- постоянные влияния: скорость изменения постоянного настроения, единиц в МИНУТУ
+local function PermanentRate(org)
+    local plus, minus = 0, 0
+    local pain = RawPain(org)
+    if pain > 10 then minus = minus + (min(pain, 100) - 10) / 90 * 8 end
+    local sat = N(org.satiety, 70)
+    if sat < 40 then minus = minus + (40 - sat) / 40 * 4 end
+    local hyd = Hydration(org)
+    if hyd < 40 then minus = minus + (40 - hyd) / 40 * 4 end
+    if N(org.bleed) > 0 then minus = minus + 2 end
+    local temp = N(org.temperature, 36.7)
+    if temp < 35.5 or temp > 38.5 then minus = minus + 3 end
+    if Sick(org) > 0.2 then minus = minus + 4 * Sick(org) end
+    if sat >= 100 then plus = plus + 1.5 elseif sat >= 70 then plus = plus + 0.8 end -- сыт / наелся
+    if org.remSleep then plus = plus + 2 end
+    return plus, minus
 end
+
+-- временные влияния: сколько добавить к настроению прямо сейчас (-100..100)
+local function Temporary(org, perm)
+    local t = 0
+    local pain = RawPain(org)
+    t = t - min(pain * 0.3, 30)
+    local sat = N(org.satiety, 70)
+    if sat < 40 then t = t - (40 - sat) / 40 * 15 end
+    local hyd = Hydration(org)
+    if hyd < 40 then t = t - (40 - hyd) / 40 * 15 end
+    t = t - Clamp(N(org.fear), 0, 2) * 8
+    if N(org.panicattack) > 0 then t = t - 15 end
+    t = t - Sick(org) * 30
+    t = t - Clamp(N(org.remDeaf), 0, 1) * 10
+    local blood = N(org.blood, 5000)
+    if blood < 4500 then t = t - min((4500 - blood) / 1500 * 20, 30) end
+    -- препараты
+    local tol = N(org.remOpioidTol)
+    t = t + Clamp(N(org.analgesia), 0, 2) * 20 * (1 - tol)
+    t = t + N(org.remHigh) * 30 * (1 - tol * 0.5)
+    t = t - N(org.remComedown) * 60
+    -- депрессия и "плохой день" (sv_depression.lua)
+    t = t - N(org.depression) * 20
+    if N(org.remBadDayUntil) > CurTime() then t = t - N(org.remBadDayPower, 0.55) * 60 end
+    -- кровотечение давит только когда уже совсем плохо
+    if N(org.bleed) > 0 and perm + t < -50 then t = t - 10 end
+    return t
+end
+
+local function AddPerm(org, amount)
+    org.happiness = Clamp(N(org.happiness, 0.5) + amount / 200, 0, 1)
+end
+hg.organism.AddMoodPermanent = function(org, amount) if org then AddPerm(org, amount) end end
 
 -- препарат, от которого "весело" (морфин, фентанил, обезболивающие, бета-блокатор, тиамин...)
 function hg.organism.AddDrugHigh(org, amount)
     if not org then return end
     org.remHigh = Clamp((org.remHigh or 0) + amount, 0, 1.5)
-    if org.happiness then org.happiness = min(1, org.happiness + amount * 0.25) end
 end
 
 -- любое приятное событие из других систем: hg.organism.AddJoy(org, 0.1)
 function hg.organism.AddJoy(org, amount)
     if not org then return end
-    org.remJoy = Clamp((org.remJoy or 0) + amount, 0, 1)
-    -- чуть-чуть сразу, чтобы было заметно
-    if org.happiness then org.happiness = min(1, org.happiness + amount * 0.5) end
+    -- Z-SCAV (CU): приятное событие = постоянная прибавка настроения
+    AddPerm(org, amount * CFG.JOY_TO_MOOD)
 end
 
 -- любой урон (падение, удар, ранение) - сразу удар по настроению
@@ -122,23 +144,30 @@ hook.Add("EntityTakeDamage", "REM_MoodHurt", function(ent, dmg)
     if not org or not org.alive or org.moodLockUntil then return end
     local d = dmg:GetDamage()
     if d < 2 then return end
-    org.happiness = math.max(0, (org.happiness or 0.6) - math.min(d * CFG.HURT_MOOD, 0.35))
-    org.remJoy = math.max(0, (org.remJoy or 0) - d * 0.01)
+    AddPerm(org, -math.min(d * 0.3, CFG.HURT_MAX))
+end)
+
+-- CU: убил человека - тяжело на душе (постоянно)
+hook.Add("PlayerDeath", "ZSCAV_MoodKill", function(victim, _, attacker)
+    if not IsValid(attacker) or not attacker:IsPlayer() or attacker == victim then return end
+    local org = attacker.organism
+    if org and org.alive then AddPerm(org, CFG.KILL_MOOD) end
 end)
 
 hook.Add("Org Clear", "REM_Mood", function(org)
     org.remJoy, org.remOpioidTol, org.remComedown, org.remLastAnalgesia = 0, 0, 0, 0
     org.remHigh = 0
     org.moodLockUntil, org.moodLockHappiness = nil, nil
-    org.happiness = 0.6
-    org.mood = 0.2
+    local start = math.Rand(-10, 10) -- CU: старт от -10 до 10
+    org.happiness = (start / 100 + 1) / 2
+    org.mood = math.Round(start / 100, 2)
     org.moodLastSatiety = org.satiety or 0
     org.moodNextPhrase = CurTime() + math.Rand(CFG.PHRASE_MIN, CFG.PHRASE_MAX)
 end)
 
 hook.Add("Org Think", "REM_Mood", function(owner, org, timeValue)
-    if not org.alive or org.otrub then return end
-    if org.happiness == nil then org.happiness = 0.6 end
+    if not org.alive or (org.otrub and not org.remSleep) then return end -- во сне настроение восстанавливается
+    if org.happiness == nil then org.happiness = 0.5 end
 
     -- поел - радость (сытость растёт по чуть-чуть за укус, поэтому считаем каждую прибавку)
     local sat = org.satiety or 0
@@ -147,7 +176,7 @@ hook.Add("Org Think", "REM_Mood", function(owner, org, timeValue)
         hg.organism.AddJoy(org, (sat - last) * CFG.JOY_PER_SATIETY)
     end
     org.moodLastSatiety = sat
-    org.remJoy = max(0, (org.remJoy or 0) - timeValue * CFG.JOY_DECAY)
+    org.remJoy = 0
 
     -- опиоиды: привыкание и отходняк
     local an = org.analgesia or 0
@@ -173,22 +202,25 @@ hook.Add("Org Think", "REM_Mood", function(owner, org, timeValue)
         org.remComedown = min(0.5, (org.remComedown or 0) + drop * CFG.COMEDOWN_MUL)
     end
 
-    local target = TargetHappiness(org)
+    -- постоянное настроение: возврат к 0 + постоянные влияния (хорошее настроение смягчает минусы)
+    local perm = N(org.happiness, 0.5) * 200 - 100
+    if perm > 0 then perm = max(0, perm - CFG.DECAY_POS * timeValue)
+    elseif perm < 0 then perm = min(0, perm + CFG.DECAY_NEG * timeValue) end
+    local plus, minus = PermanentRate(org)
+    local buffer = 1 - 0.5 * Clamp(perm, 0, 100) / 100
+    perm = Clamp(perm + (plus - minus * buffer) / 60 * timeValue, -100, 100)
+
+    local mood100
     if org.moodLockUntil and CurTime() < org.moodLockUntil then
-        target = org.moodLockHappiness or target -- выдано командой: держим
+        perm = N(org.moodLockHappiness, 0.5) * 200 - 100 -- выдано командой: держим
+        mood100 = perm
     else
         org.moodLockUntil, org.moodLockHappiness = nil, nil
+        mood100 = Clamp(perm + Temporary(org, perm), -100, 100)
     end
-    -- от боли настроение падает быстрее: ускоряем движение вниз + прямое "выжигание"
-    local pain = max(org.pain or 0, (org.avgpain or 0) * 0.85) -- "сырая" боль, как и в цели
-    local painF = Clamp(pain / CFG.PAIN_FULL, 0, 1)
-    local speed = CFG.FOLLOW_SPEED
-    if target < org.happiness then speed = speed * (1 + (CFG.PAIN_FALL_MUL - 1) * painF) end
-    org.happiness = Approach(org.happiness, target, timeValue * speed)
-    if pain > 10 and not org.moodLockUntil then
-        org.happiness = max(0, org.happiness - timeValue * CFG.PAIN_DRAIN * (pain - 10))
-    end
-    org.mood = math.Round(Clamp(org.happiness * 2 - 1, -1, 1), 2)
+    org.happiness = (perm + 100) / 200
+    org.remMoodTemp = mood100 - perm
+    org.mood = math.Round(mood100 / 100, 2)
 
     -- Z-SCAV: остановки сердца от настроения больше нет (даже при -100)
 

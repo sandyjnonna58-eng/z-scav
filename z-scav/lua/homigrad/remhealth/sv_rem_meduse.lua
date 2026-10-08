@@ -52,6 +52,8 @@ end
 
 local DISLOC_GROUP = {rleg = 1, lleg = 1, rarm = 2, larm = 2}
 
+local OPIATES = {weapon_morphine = true, weapon_fentanyl = true}
+
 net.Receive("rem_med_use", function(_, ply)
     local wep = net.ReadEntity()
     local partId = net.ReadString()
@@ -60,6 +62,16 @@ net.Receive("rem_med_use", function(_, ply)
     local part = hg.RemParts[partId]
     if not part then return end
     local org = ply.organism
+
+    -- Z-SCAV (CU): при плохом настроении действие в меню здоровья может "не получиться"
+    if action ~= 2 and hg.organism.RefuseChance and (ply.remMedNextUse or 0) <= CurTime() then
+        local c = hg.organism.RefuseChance(org)
+        if c > 0 and math.Rand(0, 1) < c then
+            ply.remMedNextUse = CurTime() + 0.5
+            ply:Notify(table.Random({"I can't bring myself to do it..", "What's the point..", "My hands won't listen."}), 3, "zscav_apathy", 0)
+            return
+        end
+    end
 
     if action == 1 then
         if (ply.remMedNextUse or 0) > CurTime() then return end
@@ -104,6 +116,12 @@ net.Receive("rem_med_use", function(_, ply)
     end
     if not IsValid(wep) or wep:GetOwner() ~= ply or not hg.RemIsMedicine(wep) then return end
     if (ply.remMedNextUse or 0) > CurTime() then return end
+    -- Z-SCAV (CU, Miserable): ниже -75 настроения из меню можно использовать только опиаты
+    if org and (org.mood or 0) < -0.75 and not OPIATES[wep:GetClass()] then
+        ply.remMedNextUse = CurTime() + 0.5
+        ply:Notify("Нет сил заниматься этим. Только опиаты...", 3, "zscav_miserable", 0)
+        return
+    end
     ply.remMedNextUse = CurTime() + 0.5
 
     ply.remMedPart = partId

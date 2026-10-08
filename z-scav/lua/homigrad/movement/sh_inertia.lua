@@ -788,6 +788,11 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			inertia_len = inertia_len * (1 + (moodCfg and moodCfg.SPEED_BONUS or 0.12) * f)
 		end
 
+		-- Z-SCAV (CU): настроение ниже -20 - разгон медленнее (до -15% при -100)
+		if org.mood and org.mood < -0.2 and inertia_len > 0 then
+			inertia_len = inertia_len * (1 - 0.15 * math_Clamp((-math_Round(org.mood, 2) - 0.2) / 0.8, 0, 1))
+		end
+
 		-- REM: депрессия - медленнее (organism/tier_1/modules/sv_depression.lua)
 		if org.depression and org.depression > 0.25 and inertia_len > 0 then
 			local depCfg = hg.organism and hg.organism.depressionCfg

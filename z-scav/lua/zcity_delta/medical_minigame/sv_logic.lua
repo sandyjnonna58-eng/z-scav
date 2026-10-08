@@ -659,6 +659,8 @@ net.Receive("hg_medical_minigame_finish", function(len, ply)
         end
 
         ApplyMedicalFinishEffects(ply, target, "dislocation")
+        -- Z-SCAV (CU): вправленный вывих +3 к настроению
+        if hg.organism and hg.organism.AddMoodPermanent then hg.organism.AddMoodPermanent(target.organism, 3) end
 
         return
     end

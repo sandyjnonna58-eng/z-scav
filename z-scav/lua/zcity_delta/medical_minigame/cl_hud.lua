@@ -3234,10 +3234,11 @@ local function SetMoodlesHtml(pnl, st)
         local lp = LocalPlayer()
         local morg = IsValid(lp) and lp.organism
         local m = (morg and tonumber(morg.mood)) or 0
-        if m >= 0.8 then moodStage = 7
-        elseif m >= 0.55 then moodStage = 6
-        elseif m >= 0.3 then moodStage = 5
-        elseif m > 0 then moodStage = 4 end
+        -- CU: >10 Satisfied, >30 Excited, >50 Happy, >80 Gleeful
+        if m > 0.8 then moodStage = 7
+        elseif m > 0.5 then moodStage = 6
+        elseif m > 0.3 then moodStage = 5
+        elseif m > 0.1 then moodStage = 4 end
     end
     local moodLabel = "Satisfied"
     local moodDesc = "Content with your current predicament."
@@ -3456,14 +3457,14 @@ local function SetMoodlesHtml(pnl, st)
             local mood = (org and tonumber(org.mood)) or 0
             local e = {key = "zscav_mood", fallback = fallbackBleed, active = false, src = "", title = ""}
             local label, desc, file, shake
-            if mood <= -0.75 then
-                label, desc, file, shake = "Miserable", "Everything feels hopeless. Depression is setting in.", "102px-Moodle_miserable_3_anim.png", 2
-            elseif mood <= -0.5 then
-                label, desc, file, shake = "Depressed", "A heavy, grey weight on everything.", "72px-Moodle_depression_2_anim.png", 1
-            elseif mood <= -0.3 then
-                label, desc, file = "Gloomy", "Feeling really down.", "72px-Moodle_gloomy_1.png"
-            elseif mood <= -0.1 then
-                label, desc, file = "Sad", "A little down.", "72px-Moodle_sad_0.png"
+            if mood < -0.75 then
+                label, desc, file, shake = "Miserable", "Everything feels hopeless. Only opiates can be used from the health panel.", "102px-Moodle_miserable_3_anim.png", 2
+            elseif mood < -0.5 then
+                label, desc, file, shake = "Depressed", "A heavy, grey weight on everything. You often can't bring yourself to act.", "72px-Moodle_depression_2_anim.png", 1
+            elseif mood < -0.3 then
+                label, desc, file = "Gloomy", "Feeling really down. You won't find the strength for a last stand.", "72px-Moodle_gloomy_1.png"
+            elseif mood < -0.1 then
+                label, desc, file = "Feeling down", "Starting to realize the gravity of your situation. Try to distract yourself.", "72px-Moodle_sad_0.png"
             end
             if label then
                 e.active = true

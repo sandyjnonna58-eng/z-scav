@@ -588,6 +588,8 @@ hook.Add("HomigradDamage", "PanicAttackDamage", function(ply, dmgInfo)
 	panic_witness_event(ply, attacker, math.Clamp(amount * 0.75, 0.04, 0.2), panicattack_witness_radius)
 end)
 
+hg.organism.DEATH_TIME = 60 -- Z-SCAV: сколько секунд длится умирание
+
 hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	if not IsValid(owner) then
 		hg.organism.list[owner] = nil
@@ -884,7 +886,7 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	end
 
 	if isPly and org.otrub and org.incapacitated then
-		org.deathStateEnd = org.deathStateEnd or curTime + 25
+		org.deathStateEnd = org.deathStateEnd or curTime + (hg.organism.DEATH_TIME or 60) -- Z-SCAV: 1 минута умирания (было 25 с)
 		if (org.defibDeathGrace or 0) > curTime then org.deathStateEnd = org.defibDeathGrace end
 
 		if curTime >= org.deathStateEnd and not org.deathStateKilled then

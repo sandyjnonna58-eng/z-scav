@@ -8,9 +8,9 @@
 
 local cv = CreateConVar("zscav_dying_brain", 1, FCVAR_ARCHIVE + FCVAR_NOTIFY, "Z-SCAV: мозг гибнет во время таймера умирания", 0, 1)
 
-local BRAIN_START = 0.10
+local BRAIN_START = 0.05
 local BRAIN_END   = 0.84  -- чуть ниже порога смерти мозга (85%), чтобы убивал именно таймер
-local CURVE       = 1.3   -- >1: сначала медленно, к концу быстрее
+local CURVE       = 1.6   -- >1: сначала медленно, к концу быстрее (умирание длится 1 минуту)
 
 hook.Add("Org Think", "ZSCAV_DyingBrain", function(owner, org, timeValue)
     if not cv:GetBool() or not org.alive or not IsValid(owner) or not owner:IsPlayer() then return end

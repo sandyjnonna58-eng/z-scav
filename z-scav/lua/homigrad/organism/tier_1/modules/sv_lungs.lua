@@ -429,6 +429,6 @@ module[2] = function(owner, org, timeValue)
 	org.mannitol = math.Approach(org.mannitol, 0, timeValue / 200)
 	
 	if k < 0.25 then
-		org.brain = min(org.brain + timeValue / (org.brain < 0.3 and 300 or 120) * math.min(((org.o2[1] < 0.25 and 1 or 0) + (org.brainHemorrhage or 0)), 1), 1)
+		org.brain = min(org.brain + timeValue / (org.brain < 0.3 and 600 or 240) * math.min(((org.o2[1] < 0.25 and 1 or 0) + (org.brainHemorrhage or 0)), 1), 1)
 	end --~120 seconds to fully die (0.3 of 300 and 0.4 of 60 seconds after)
 end

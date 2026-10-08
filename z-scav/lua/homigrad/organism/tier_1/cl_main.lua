@@ -523,7 +523,7 @@ hook.Add("Post Post Pre Post Processing", "organism-effects", function()
 
 	if lply:Alive() and (otrub or new_organism.otrub) and incapacitated and deathStateEnd then
 		local seconds = math.max(math.ceil(deathStateEnd - CurTime()), 0)
-		remDeathStateColor.a = math.Clamp((25 - (deathStateEnd - CurTime())) / 2, 0, 1) * 255
+		remDeathStateColor.a = math.Clamp((60 - (deathStateEnd - CurTime())) / 2, 0, 1) * 255
 		PlayRemDeathStateSound()
 		-- Z-SCAV: старая надпись таймера убрана - теперь таймер показывает кольцо (autorun/client/cl_unconscious_ring.lua)
 		-- draw.SimpleText("You are incapacitated, You will die in " .. seconds, "RemDeathStateFont", ScrW() / 2, ScrH() / 2, remDeathStateColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

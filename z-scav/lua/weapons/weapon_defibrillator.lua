@@ -366,7 +366,7 @@ local function ApplyAEDShock(org, accidental)
 	org.arrhythmia = 0
 	org.heartStrain = math.max((org.heartStrain or 0) - 0.2, 0)
 
-	if math.random(100) <= 22 then
+	if math.random(100) <= 20 then -- Z-SCAV (CU): удачный разряд заводит сердце с шансом 20%
 		org.heartstop = false
 		org.heartbeat = math.Clamp(org.heartbeat or 70, 55, 90)
 		org.pulse = math.max(org.pulse or 0, 45)

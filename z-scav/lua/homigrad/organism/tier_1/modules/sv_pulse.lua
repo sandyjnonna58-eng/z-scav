@@ -8,6 +8,18 @@ hg.organism.bloodHeart.ARRHYTHMIA      = 3500 -- ниже - аритмия
 hg.organism.bloodHeart.ARREST          = 2700 -- на этом уровне и ниже - остановка сердца
 hg.organism.bloodHeart.ARRHYTHMIA_MIN  = 0.35 -- сила аритмии сразу под порогом (1 - максимум у ARREST)
 hg.organism.bloodHeart.ARRHYTHMIA_RISE = 6    -- за сколько секунд аритмия набирает силу
+-- Z-SCAV: числа из вики Casualties: Unknown (Heart rate)
+hg.organism.heartCU = hg.organism.heartCU or {
+	BASE        = 70,
+	ADRENALINE  = 20,    -- уд/мин за единицу адреналина гейммода
+	BP_LOW      = 85,    -- ниже - сердце разгоняется, чтобы поднять давление (норма ~90 = 120/80)
+	BP_HIGH     = 100,   -- выше - замедляется
+	OPIATE      = 8,     -- уд/мин за единицу анальгезии
+	WITHDRAWAL  = 25,    -- уд/мин за единицу ломки (0..0.5)
+	FIB_BP      = 58,    -- ~88/58: ниже фибрилляция растёт
+	ARREST_HR   = 20,    -- ниже - остановка сердца
+	EPI_RESTART = 0.03,  -- шанс в секунду завести сердце адреналином (эпинефрином)
+}
 local module = hg.organism.module.pulse
 local Clamp, Approach, Remap = math.Clamp, math.Approach, math.Remap
 local CurTime = CurTime
@@ -131,51 +143,98 @@ module[2] = function(owner, org, timeValue)
 
 	org.fearadd = math.Clamp(org.fearadd, 0, 3)
 
-	local heartbeat = org.bloodPressure < 70 and 70 + (70 - org.bloodPressure) * 3 or 70
+	-- =====================================================================
+	-- Z-SCAV: частота сердца по механике Heart rate из Casualties: Unknown
+	--   база 70 уд/мин
+	--   + адреналин (0.55 за единицу CU ~ 20 за единицу гейммода)
+	--   + давление: тянет до +80 при низком и до -30 при высоком, у нормы эффект 0
+	--   + фибрилляция: +1 за каждый %, +4 выше 75%, +30 выше 95%
+	--   - опиаты (-0.2 за единицу), + ломка (+0.125 за единицу)
+	--   + выносливость: +0.6 за каждый пункт ниже 100 (до +60 при нуле)
+	--   +-0.5 за каждый градус выше/ниже 37
+	--   + боль: +1 за единицу
+	-- =====================================================================
+	local CU = hg.organism.heartCU
+	local st = org.stamina
+	local stF = (istable(st) and isnumber(st[1]) and isnumber(st.max) and st.max > 0) and Clamp(st[1] / st.max, 0, 1) or 1
+	local bp = org.bloodPressure or 90
+	local fibPct = Clamp(org.arrhythmia or 0, 0, 1) * 100
 
-	local runnin_or_exhausted = org.analgesia < 1 and (org.stamina.sub > 0 or org.stamina[1] < (org.stamina.max * 0.66))
-	org.heartbeat = math.Approach(org.heartbeat, math.max(heartbeat - 10, runnin_or_exhausted and ((1 - math.min(1, org.stamina[1] / (org.stamina.max * 1))) * 110 + 90) or 60), !runnin_or_exhausted and timeValue * 2 or timeValue * 15)
-	
-	heartbeat = heartbeat + (owner.suiciding and 50 or 0)
-	heartbeat = heartbeat + 40 * math.max(0, org.fear)
-	heartbeat = heartbeat + math.Clamp(org.shock, 0, 40)
-	heartbeat = heartbeat + math.Clamp(org.pain, 40, 80) - 40
-	heartbeat = heartbeat + 40 * math.min(org.adrenaline, 3)
-	heartbeat = heartbeat - 40 * math.min(org.analgesia / 2.5, 1)
-	heartbeat = heartbeat + 100 * math.Clamp(math.Remap(org.temperature, 40, 42, 0, 1), 0, 1)
-	heartbeat = heartbeat - 160 * (1 - math.Clamp(math.Remap(org.temperature, 28, 36.7, 0, 1), 0, 1))
-	heartbeat = heartbeat + (org.hypotension or 0) * 55
-	heartbeat = heartbeat - (org.myocardialOxygen and (1 - org.myocardialOxygen) or 0) * 35
-	if (org.arrhythmia or 0) > 0.05 and not org.fibrillation then heartbeat = heartbeat + math.Rand(-70, 90) * org.arrhythmia end
-	if org.fibrillation then heartbeat = math.Rand(180, 360) end
+	local heartbeat = CU.BASE
+	heartbeat = heartbeat + CU.ADRENALINE * math.min(org.adrenaline or 0, 5)
+	if bp < CU.BP_LOW then
+		heartbeat = heartbeat + 80 * Clamp((CU.BP_LOW - bp) / 45, 0, 1)
+	elseif bp > CU.BP_HIGH then
+		heartbeat = heartbeat - 30 * Clamp((bp - CU.BP_HIGH) / 40, 0, 1)
+	end
+	heartbeat = heartbeat + fibPct + (fibPct > 75 and 4 or 0) + (fibPct > 95 and 30 or 0)
+	heartbeat = heartbeat - CU.OPIATE * Clamp(org.analgesia or 0, 0, 3)
+	heartbeat = heartbeat + CU.WITHDRAWAL * (org.remComedown or 0)
+	heartbeat = heartbeat + 60 * (1 - stF)
+	heartbeat = heartbeat + 0.5 * ((org.temperature or 37) - 37)
+	heartbeat = heartbeat + math.max(org.pain or 0, 0)
+	-- немного от гейммода: страх и попытка самоубийства (старое)
+	heartbeat = heartbeat + 15 * Clamp(org.fear or 0, 0, 1)
+	-- нерегулярный ритм заметен на ЭКГ
+	if fibPct > 15 and not org.fibrillation then heartbeat = heartbeat + math.Rand(-25, 35) * fibPct / 100 end
+	if org.fibrillation then heartbeat = heartbeat + math.Rand(-40, 60) end
+	heartbeat = math.max(heartbeat, 0)
 
-	org.heartbeat = math.Approach(org.heartbeat, heartbeat, heartbeat > org.heartbeat and timeValue * 5 or timeValue * 3)
-	
+	org.heartbeat = math.Approach(org.heartbeat, heartbeat, heartbeat > org.heartbeat and timeValue * 8 or timeValue * 4)
+
 	local ischemia = Clamp(1 - (org.myocardialOxygen or 1), 0, 1)
-	local stress = Clamp((org.heart or 0) * 0.9 + ischemia * 0.8 + (org.hypertension or 0) * 0.35 + (org.hypotension or 0) * 0.3 + Clamp(org.shock, 0, 80) / 180 + max(org.pain - 60, 0) / 220 + max(org.heartbeat - 165, 0) / 190, 0, 2)
-	org.arrhythmia = Approach(org.arrhythmia or 0, Clamp(stress * 0.42, 0, 1), stress > (org.arrhythmia or 0) and timeValue / 25 or timeValue / 90)
+	local stress = Clamp((org.heart or 0) * 0.9 + ischemia * 0.8 + (org.hypertension or 0) * 0.35 + (org.hypotension or 0) * 0.3 + Clamp(org.shock, 0, 80) / 180 + max(org.pain - 60, 0) / 220, 0, 2)
 
-	-- REM: кровопотеря -> аритмия. Ниже ARRHYTHMIA сердце сбивается тем сильнее, чем меньше крови
+	-- ---------------------------------------------------------------------
+	-- фибрилляция (org.arrhythmia 0..1 = 0..100%), как в CU:
+	--   растёт 1%/с, пока есть причина (свыше 280 уд/мин - 4%/с), иначе падает 0.75%/с
+	--   >15% аритмия, >50% желудочковая тахикардия (сама прогрессирует),
+	--   >75% фибрилляция желудочков, 100% - сердце останавливается
+	-- ---------------------------------------------------------------------
+	local o2frac = (istable(org.o2) and org.o2.range and org.o2.range > 0) and Clamp(org.o2[1] / org.o2.range, 0, 1) or 1
 	local bloodCfg = hg.organism.bloodHeart
-	if not org.heartstop and org.blood < bloodCfg.ARRHYTHMIA then
-		local bloodArr = Clamp(Remap(org.blood, bloodCfg.ARRHYTHMIA, bloodCfg.ARREST, bloodCfg.ARRHYTHMIA_MIN, 1), bloodCfg.ARRHYTHMIA_MIN, 1)
-		if org.arrhythmia < bloodArr then
-			org.arrhythmia = Approach(org.arrhythmia, bloodArr, timeValue / bloodCfg.ARRHYTHMIA_RISE)
-		end
+	local floor = 0
+	if org.blood < bloodCfg.ARRHYTHMIA then
+		floor = Clamp(Remap(org.blood, bloodCfg.ARRHYTHMIA, bloodCfg.ARREST, bloodCfg.ARRHYTHMIA_MIN, 1), bloodCfg.ARRHYTHMIA_MIN, 1)
 	end
-	if stress > 0.65 and CurTime() >= (org.nextArrhythmiaRoll or 0) then
-		org.nextArrhythmiaRoll = CurTime() + Clamp(Remap(stress, 0.65, 1.6, 14, 3), 3, 14)
-		if math.Rand(0, 1) < Clamp((stress - 0.65) * 0.12, 0.01, 0.18) then hg.organism.StartFibrillation(org) end
-	end
+	floor = math.max(floor, Clamp(stress * 0.42, 0, 0.6)) -- повреждённое/перегруженное сердце
 
-	if org.heartbeat > 300 then
-		hg.organism.StartFibrillation(org)
+	local rising = (org.heartbeat > 200)
+		or bp < CU.FIB_BP
+		or (org.temperature or 37) < 28.5
+		or o2frac < 0.6
+		or (org.thirst or 0) >= 100 and math.Rand(0, 1) < 0.0166 * timeValue
+		or (org.arrhythmia or 0) > 0.5 -- желудочковая тахикардия прогрессирует сама
+	local arr = org.arrhythmia or 0
+	if not org.heartstop then
+		if rising then
+			local otherCause = org.heartbeat > 200 or bp < CU.FIB_BP or (org.temperature or 37) < 28.5 or o2frac < 0.6
+			local rate = 0.01                                          -- 1%/с
+			if org.heartbeat > 280 then rate = 0.04                    -- 4%/с
+			elseif arr > 0.5 and arr <= 0.75 and not otherCause then rate = 0.005 end -- тахикардия сама переходит в фибрилляцию медленнее
+			arr = arr + timeValue * rate
+		elseif arr > floor then
+			arr = math.max(floor, arr - timeValue * 0.0075)
+		end
+		if arr < floor then arr = Approach(arr, floor, timeValue / bloodCfg.ARRHYTHMIA_RISE) end
+		org.arrhythmia = Clamp(arr, 0, 1)
+
+		if org.arrhythmia > 0.75 and not org.fibrillation then
+			org.fibrillation = true
+			org.fibrillationStart = CurTime()
+		elseif org.arrhythmia <= 0.75 and org.fibrillation then
+			org.fibrillation = false
+		end
+		-- 100% или пульс ниже 20 - остановка сердца
+		if org.arrhythmia >= 0.999 or (org.alive and org.heartbeat < CU.ARREST_HR and heartbeat < CU.ARREST_HR) then
+			org.heartstop = true
+		end
 	end
 
 	if org.fibrillation then
 		org.consciousness = math.min(org.consciousness, Clamp(org.bloodPressure / 55, 0, 1))
 		org.o2[1] = max(org.o2[1] - timeValue * 1.8, 0)
-		if (org.fibrillationStart or CurTime()) + 24 < CurTime() or org.bloodPressure < 8 then org.heartstop = true end
+		if org.bloodPressure < 8 then org.heartstop = true end
 	end
 	if org.hypertension > 0.35 then org.heartStrain = Clamp((org.heartStrain or 0) + timeValue * org.hypertension / 360, 0, 1) end
 	if ischemia > 0.35 then org.heartStrain = Clamp((org.heartStrain or 0) + timeValue * ischemia / 260, 0, 1) end
@@ -185,6 +244,16 @@ module[2] = function(owner, org, timeValue)
 		org.shock = math.max(org.shock, 10 + ischemia * 22)
 	end
 	if org.hypotension > 0.2 then org.consciousness = math.min(org.consciousness, Clamp(Remap(org.bloodPressure, 20, 65, 0, 1), 0, 1)) end
+
+	-- CU: адреналин (эпинефрин) в крови может сам завести сердце, но с фибрилляцией 50%
+	if org.heartstop and org.alive and (org.adrenaline or 0) > 1 and (org.brain or 0) < 0.75 and (org.heart or 0) < 1
+		and org.blood > hg.organism.bloodHeart.ARREST and math.Rand(0, 1) < hg.organism.heartCU.EPI_RESTART * timeValue then
+		org.heartstop = false
+		org.arrhythmia = 0.5
+		org.heartbeat = 60
+		org.pulse = math.max(org.pulse or 0, 30)
+		org.bloodPressure = math.max(org.bloodPressure or 0, 40)
+	end
 
 	if org.heartstop then
 		org.heartbeat = 0

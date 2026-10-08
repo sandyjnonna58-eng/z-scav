@@ -3607,7 +3607,14 @@ local function SetMoodlesHtml(pnl, st)
             end
         end
         local defs = {
-            {"zscav_arrhythmia", N(org.arrhythmia) > 0.1 or org.fibrillation == true, "72px-Arrhythmia_1.png", "Arrhythmia", "Your heart is beating irregularly.", N(org.arrhythmia) > 0.5 and 1 or nil},
+            {"zscav_arrhythmia", N(org.arrhythmia) > 0.15 or org.fibrillation == true,
+                N(org.arrhythmia) > 0.75 and "48px-moodle_arrythmia_2_critical.png" or (N(org.arrhythmia) > 0.5 and "48px-arrhythmia_3.png" or "72px-Arrhythmia_1.png"),
+                N(org.arrhythmia) > 0.75 and "Ventricular fibrillation" or (N(org.arrhythmia) > 0.5 and "Ventricular tachycardia" or "Arrhythmia"),
+                N(org.arrhythmia) > 0.75 and "Your heart is quivering instead of pumping. Defibrillate now or it will stop."
+                    or (N(org.arrhythmia) > 0.5 and "Your heart is racing out of rhythm. Untreated, it will turn into fibrillation." or "Your heart is beating irregularly. Can be defibrillated."),
+                N(org.arrhythmia) > 0.75 and 2 or (N(org.arrhythmia) > 0.5 and 1 or nil)},
+            {"zscav_palpitations", (N(org.arrhythmia) > 0.5 or N(org.heartbeat) > 200) and not org.heartstop, "48px-palpitations.png", "Palpitations",
+                "You can feel your heart pounding in your chest.", 1},
             {"zscav_infection", maxInf > 0.5, "72px-Infection_3.png", "Infection", "A wound is infected. It hurts and burns.", nil},
             {"zscav_sepsis", N(org.remSepsis) > 0.01, "72px-Sepsis_2.png", "Sepsis", "The infection has spread into the blood. Fever, weakness.", N(org.remSepsis) > 0.5 and 2 or 1},
             {"zscav_hemothorax", N(org.pneumothorax) > 0, "72px-Moodle_hemothorax_1_anim.png", "Hemothorax", "Blood or air in the chest. Hard to breathe.", 1},

@@ -95,17 +95,23 @@ function hg.organism.HeartAttack(owner, org, msg)
 end
 
 -- учёт приёма и передозировка ("не больше N упаковок за раз"). true - передоз.
-function hg.organism.MedDose(owner, org, med)
+-- amount - доля приёма (таблетка = 0.2, т.е. 5 таблеток = 1 прежний пузырёк)
+function hg.organism.MedDose(owner, org, med, amount)
     local od = OVERDOSE[med]
     if not org or not od then return false end
+    amount = amount or 1
     local now = CurTime()
     org.remMedLog = org.remMedLog or {}
     local log = org.remMedLog[med] or {}
-    local fresh = {}
-    for _, t in ipairs(log) do if now - t < OD_WINDOW then fresh[#fresh + 1] = t end end
-    fresh[#fresh + 1] = now
+    local fresh, sum = {}, 0
+    for _, e in ipairs(log) do
+        if istable(e) and now - e[1] < OD_WINDOW then fresh[#fresh + 1] = e sum = sum + e[2] end
+    end
+    fresh[#fresh + 1] = {now, amount}
+    sum = sum + amount
     org.remMedLog[med] = fresh
-    if #fresh <= od.limit then return false end
+    if sum <= od.limit + 0.001 then return false end
+    org.remMedLog[med] = {} -- передоз уже случился, счёт заново
 
     if od.kind == "heart" then
         hg.organism.HeartAttack(owner, org, "Слишком много... сердце!")
@@ -129,9 +135,10 @@ function hg.organism.MedDose(owner, org, med)
 end
 
 -- приём лекарства. Возвращает true, если лекарство что-то лечило.
-function hg.organism.DiseaseMedicine(owner, org, med)
+function hg.organism.DiseaseMedicine(owner, org, med, amount)
     if not org then return false end
-    if hg.organism.MedDose(owner, org, med) then return true end
+    amount = amount or 1
+    if hg.organism.MedDose(owner, org, med, amount) then return true end
     if not org.remDis then return false end
     local now, any = CurTime(), false
     for _, id in ipairs(MED_TO[med] or {}) do
@@ -144,17 +151,20 @@ function hg.organism.DiseaseMedicine(owner, org, med)
                 else
                     Cured(owner, org, id)
                 end
-            elseif now - (st.lastDose or 0) < DOSE_GAP then
-                Say(owner, "Рано для следующего приёма.")
             else
+                -- 1 таблетка - небольшой эффект; 5 таблеток = 1 приём курса
                 st.lastDose = now
-                st.doses = st.doses + 1
                 st.treated = true
-                st.p = math.max(st.p - 0.3 * HealMul(org), 0)
-                if st.doses >= (D[id].doses or 1) then
-                    Cured(owner, org, id)
-                else
-                    Say(owner, ("Курс лечения: %d/%d"):format(st.doses, D[id].doses))
+                st.p = math.max(st.p - 0.3 * amount * HealMul(org), 0)
+                st.doseAcc = (st.doseAcc or 0) + amount
+                if st.doseAcc >= 0.999 then
+                    st.doseAcc = st.doseAcc - 1
+                    st.doses = st.doses + 1
+                    if st.doses >= (D[id].doses or 1) then
+                        Cured(owner, org, id)
+                    else
+                        Say(owner, ("Курс лечения: %d/%d"):format(st.doses, D[id].doses))
+                    end
                 end
             end
         end

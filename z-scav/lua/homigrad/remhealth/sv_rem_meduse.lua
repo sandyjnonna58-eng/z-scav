@@ -18,6 +18,7 @@ util.AddNetworkString("rem_med_use")
 function hg.RemMedGate(wep)
     if not cv:GetBool() then return false end
     if hg.RemIsMedicine and not hg.RemIsMedicine(wep) then return false end -- еда, напитки
+    if wep.ZSCAVPills then return false end -- банки с таблетками принимаются сразу, без меню
     local ply = wep:GetOwner()
     if not IsValid(ply) or not ply:IsPlayer() then return false end
     if (ply.remMedAllowUntil or 0) >= CurTime() and ply.remMedAllowWep == wep then return false end

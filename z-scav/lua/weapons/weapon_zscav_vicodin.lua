@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
 SWEP.PrintName = "Викодин"
-SWEP.Instructions = "Викодин - обезболивающее, которое вызывает привыкание. Хуже морфина, но им сложно передознуться. Если вы Доктор Хаус, то вам эти таблетки крайне не рекомендуются. ЛКМ - принять таблетку, ПКМ - дать другому."
+SWEP.Instructions = "Викодин - обезболивающее, которое вызывает привыкание. Хуже морфина, но им сложно передознуться. Если вы Доктор Хаус, то вам эти таблетки крайне не рекомендуются. ЛКМ - принять таблетку, ПКМ - дать другому. В банке 20 таблеток."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1
@@ -26,10 +26,12 @@ SWEP.offsetAng = Angle(-30, 20, 180)
 SWEP.modeNames = {
 	[1] = "таблетки"
 }
-SWEP.VicodinPills = 6
+SWEP.VicodinPills = 20
+SWEP.ZSCAVPills = true -- банка таблеток: ЛКМ - принять 1 таблетку без меню здоровья
 
 function SWEP:InitializeAdd()
 	self:SetHold(self.HoldType)
+	if SERVER then self:SetNWInt("zscav_pills", self.VicodinPills) end
 
 	self.modeValues = {
 		[1] = self.VicodinPills
@@ -37,7 +39,7 @@ function SWEP:InitializeAdd()
 end
 
 SWEP.modeValuesdef = {
-	[1] = 6,
+	[1] = 20,
 }
 
 SWEP.DeploySnd = "snd_jack_hmcd_pillsbounce.wav"
@@ -107,8 +109,9 @@ if SERVER then
 
 		-- одна таблетка за раз
 		if (self.zscavNextPill or 0) > CurTime() then return end
-		self.zscavNextPill = CurTime() + 2
+		self.zscavNextPill = CurTime() + 1
 
+		local target = org.owner
 		local entOwner = IsValid(owner.FakeRagdoll) and owner.FakeRagdoll or owner
 		entOwner:EmitSound("snd_jack_hmcd_pillsuse.wav", 60, math.random(95, 105))
 
@@ -121,6 +124,8 @@ if SERVER then
 		end
 
 		self.modeValues[1] = math.max((self.modeValues[1] or 1) - 1, 0)
+		self:SetNWInt("zscav_pills", self.modeValues[1])
+		if IsValid(target or owner) and (target or owner).Notify then (target or owner):Notify(("Таблеток осталось: %d"):format(self.modeValues[1]), 2, "zscav_pills", 0) end
 		if self.modeValues[1] <= 0 then
 			owner:SelectWeapon("weapon_hands_sh")
 			self:SpawnGarbage(nil, nil, "snd_jack_hmcd_foodbounce.wav")
@@ -128,5 +133,11 @@ if SERVER then
 		end
 
 		return true
+	end
+end
+if CLIENT then
+	function SWEP:DrawHUD()
+		local n = self:GetNWInt("zscav_pills", self.VicodinPills or 0)
+		draw.SimpleTextOutlined(("%s: таблеток %d   |   ЛКМ - принять 1, ПКМ - дать другому"):format(self.PrintName, n), "DermaDefaultBold", ScrW() * 0.5, ScrH() * 0.8, Color(225, 235, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black)
 	end
 end

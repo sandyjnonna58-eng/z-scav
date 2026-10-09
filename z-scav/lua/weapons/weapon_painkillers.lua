@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
 SWEP.PrintName = "Painkillers"
-SWEP.Instructions = "Помогает снять боль (спасибо, Капитан Очевидность). ПКМ - применить на другом."
+SWEP.Instructions = "Помогает снять боль (спасибо, Капитан Очевидность). 1 таблетка - небольшой эффект. В банке 20 таблеток. ЛКМ - принять 1, ПКМ - дать другому."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1
@@ -22,19 +22,22 @@ SWEP.WorkWithFake = true
 SWEP.offsetVec = Vector(2.5, -2.5, 0)
 SWEP.offsetAng = Angle(-30, 20, 180)
 SWEP.modeNames = {
-	[1] = "painkiller"
+	[1] = "таблетки"
 }
+SWEP.ZSCAVPills = true -- Z-SCAV: банка таблеток, принимается без меню здоровья
+SWEP.PillCount = 20
 
 function SWEP:InitializeAdd()
 	self:SetHold(self.HoldType)
 
 	self.modeValues = {
-		[1] = 1
+		[1] = self.PillCount
 	}
+	if SERVER then self:SetNWInt("zscav_pills", self.PillCount) end
 end
 
 SWEP.modeValuesdef = {
-	[1] = 1,
+	[1] = 20,
 }
 
 SWEP.DeploySnd = "snd_jack_hmcd_pillsbounce.wav"
@@ -93,7 +96,7 @@ if SERVER then
 		local org = ent.organism
 		if not org then return end
 		if ent ~= self:GetOwner() and !IsValid(org.owner.FakeRagdoll) then return end
-		if !org.analgesiaAdd or !self.modeValues or !self.modeValues[1] then return end
+		if !org.analgesiaAdd or !self.modeValues or (self.modeValues[1] or 0) <= 0 then return end
 
 		local owner = self:GetOwner()
 		if ent == hg.GetCurrentCharacter(owner) and hg_healanims:GetBool() then
@@ -102,19 +105,32 @@ if SERVER then
 			if self:GetHolding() < 100 then return end
 		end
 
+		-- Z-SCAV: одна таблетка за раз, небольшой эффект
+		if (self.zscavNextPill or 0) > CurTime() then return end
+		self.zscavNextPill = CurTime() + 1
+
 		local entOwner = IsValid(owner.FakeRagdoll) and owner.FakeRagdoll or owner
 		entOwner:EmitSound("snd_jack_hmcd_pillsuse.wav", 60, math.random(95, 105))
 
-		org.analgesiaAdd = math.min(org.analgesiaAdd + self.modeValues[1] * 0.4, 4)
-		if hg.organism.AddDrugHigh then hg.organism.AddDrugHigh(org, self.modeValues[1] * 0.25) end -- Z-SCAV: настроение
+		org.analgesiaAdd = math.min(org.analgesiaAdd + 0.08, 4)
+		if hg.organism.AddDrugHigh then hg.organism.AddDrugHigh(org, 0.03) end -- Z-SCAV: настроение
 
-		self.modeValues[1] = 0
-		if self.modeValues[1] == 0 then
+		self.modeValues[1] = math.max((self.modeValues[1] or 1) - 1, 0)
+		self:SetNWInt("zscav_pills", self.modeValues[1])
+		local target = org.owner
+		if IsValid(target) and target.Notify then target:Notify(("Таблеток осталось: %d"):format(self.modeValues[1]), 2, "zscav_pills", 0) end
+		if self.modeValues[1] <= 0 then
 			owner:SelectWeapon("weapon_hands_sh")
 			self:SpawnGarbage(nil, nil, "snd_jack_hmcd_foodbounce.wav")
 			self:Remove()
 		end
 		
 		return true
+	end
+end
+if CLIENT then
+	function SWEP:DrawHUD()
+		local n = self:GetNWInt("zscav_pills", self.PillCount or 0)
+		draw.SimpleTextOutlined(("%s: таблеток %d   |   ЛКМ - принять 1, ПКМ - дать другому"):format(self.PrintName, n), "DermaDefaultBold", ScrW() * 0.5, ScrH() * 0.8, Color(225, 235, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black)
 	end
 end

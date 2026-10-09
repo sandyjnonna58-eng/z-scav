@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
 SWEP.PrintName = "Рифампицин"
-SWEP.Instructions = "Антибиотик против проказы. Курс из 4 пузырьков (не чаще раза в минуту). Больше 2 пузырьков за раз - инфаркт. ЛКМ - выпить пузырёк, ПКМ - дать другому."
+SWEP.Instructions = "Антибиотик против проказы. 1 таблетка - слабый эффект. Курс - 20 таблеток. Больше 10 таблеток за 2 минуты - инфаркт. ЛКМ - принять 1 таблетку, ПКМ - дать другому. В банке 20 таблеток."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1
@@ -24,12 +24,14 @@ SWEP.WorkWithFake = true
 SWEP.offsetVec = Vector(2.5, -2.5, 0)
 SWEP.offsetAng = Angle(-30, 20, 180)
 SWEP.modeNames = {
-	[1] = "упаковка"
+	[1] = "таблетки"
 }
-SWEP.VicodinPills = 1
+SWEP.VicodinPills = 20
+SWEP.ZSCAVPills = true -- банка таблеток: ЛКМ - принять 1 таблетку без меню здоровья
 
 function SWEP:InitializeAdd()
 	self:SetHold(self.HoldType)
+	if SERVER then self:SetNWInt("zscav_pills", self.VicodinPills) end
 
 	self.modeValues = {
 		[1] = self.VicodinPills
@@ -37,7 +39,7 @@ function SWEP:InitializeAdd()
 end
 
 SWEP.modeValuesdef = {
-	[1] = 1,
+	[1] = 20,
 }
 
 SWEP.DeploySnd = "snd_jack_hmcd_pillsbounce.wav"
@@ -107,16 +109,16 @@ if SERVER then
 
 		-- одна таблетка за раз
 		if (self.zscavNextPill or 0) > CurTime() then return end
-		self.zscavNextPill = CurTime() + 2
+		self.zscavNextPill = CurTime() + 1
 
 		local entOwner = IsValid(owner.FakeRagdoll) and owner.FakeRagdoll or owner
 		entOwner:EmitSound(self.UseSound or "snd_jack_hmcd_pillsuse.wav", 60, math.random(95, 105))
 
 		local target = org.owner
-		if not (hg.organism.DiseaseMedicine and hg.organism.DiseaseMedicine(target, org, "rifampicin")) and IsValid(target) and target.Notify then
-			target:Notify("Ничего не изменилось.", 3, "zscav_med", 0)
-		end
+		if hg.organism.DiseaseMedicine then hg.organism.DiseaseMedicine(target, org, "rifampicin", 0.2) end
 		self.modeValues[1] = math.max((self.modeValues[1] or 1) - 1, 0)
+		self:SetNWInt("zscav_pills", self.modeValues[1])
+		if IsValid(target or owner) and (target or owner).Notify then (target or owner):Notify(("Таблеток осталось: %d"):format(self.modeValues[1]), 2, "zscav_pills", 0) end
 		if self.modeValues[1] <= 0 then
 			owner:SelectWeapon("weapon_hands_sh")
 			self:SpawnGarbage(nil, nil, "snd_jack_hmcd_foodbounce.wav")
@@ -124,5 +126,11 @@ if SERVER then
 		end
 
 		return true
+	end
+end
+if CLIENT then
+	function SWEP:DrawHUD()
+		local n = self:GetNWInt("zscav_pills", self.VicodinPills or 0)
+		draw.SimpleTextOutlined(("%s: таблеток %d   |   ЛКМ - принять 1, ПКМ - дать другому"):format(self.PrintName, n), "DermaDefaultBold", ScrW() * 0.5, ScrH() * 0.8, Color(225, 235, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black)
 	end
 end

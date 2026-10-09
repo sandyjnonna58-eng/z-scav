@@ -698,7 +698,7 @@ local function CinematicDeathBackground()
         local fadeOutProgress = math.Clamp((stageElapsed - fadeDuration) / fadeOutDuration, 0, 1)
 		local overlayAlpha = realish and math.floor((fadeOutProgress > 0 and 1 - fadeOutProgress or fadeProgress) * 255) or math.floor((1 - fadeOutProgress) * 255)
         local red = realish and 0 or math.floor((1 - fadeProgress) * 255)
-        surface.SetDrawColor(red, 0, 0, overlayAlpha)
+        surface.SetDrawColor(red, red, red, overlayAlpha) -- Z-SCAV: чёрно-белое (было красное): белый экран плавно уходит в чёрный
         surface.DrawRect(0, 0, sw, sh)
 
         if realish then return end

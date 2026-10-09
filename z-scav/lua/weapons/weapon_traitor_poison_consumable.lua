@@ -128,6 +128,7 @@ local poisonable_entities = {
 	["weapon_smallconsumable"] = true,
 	["weapon_bandage_sh"] = true,
 	["weapon_painkillers"] = true,
+	["weapon_zscav_vicodin"] = true,
 	["weapon_betablock"] = true,
 }
 

@@ -313,6 +313,8 @@ local function send_organism(org, ply)
 	sendtable.remSleep = org.remSleep and true or false
 	sendtable.remSleepQuality = org.remSleepQuality or 1
 	sendtable.remEnergized = org.remEnergized or 0
+	sendtable.remVicAddict = org.remVicAddict or 0
+	sendtable.remVicDetox = (org.remVicDetoxEnd or 0) > CurTime()
 	sendtable.vomitInThroat = org.vomitInThroat and true or false
 	-- Z-SCAV: отравление (яд, цианид, угарный газ) для мудла "Toxicosis"
 	local owner = org.owner
@@ -872,6 +874,8 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 		org.uncon_timer = 0
 	end
 
+	-- Z-SCAV: викодин - зависимость и ломка (modules/sv_rem_vicodin.lua)
+	if hg.organism.VicodinThink then hg.organism.VicodinThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: последний рубеж организма (modules/sv_rem_laststand.lua)
 	if hg.organism.LastStandThink then hg.organism.LastStandThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: энергия и сон (modules/sv_rem_energy.lua)

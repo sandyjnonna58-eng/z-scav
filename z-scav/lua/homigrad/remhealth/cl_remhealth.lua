@@ -1446,6 +1446,8 @@ function PANEL:DrawMonitor(org, x, y, w)
     elseif imm >= 150 then alerts[#alerts + 1] = ("ИММУНИТЕТ НА ПРЕДЕЛЕ %d%%"):format(imm) end
     if N(org.brain) >= 0.05 then alerts[#alerts + 1] = "СОТРЯСЕНИЕ" end
     if N(org.remLastStand) > CurTime() then alerts[#alerts + 1] = ("ПОСЛЕДНИЙ РУБЕЖ %dс"):format(N(org.remLastStand) - CurTime()) end
+    if org.remVicDetox then alerts[#alerts + 1] = "ЛОМКА (ВИКОДИН)"
+    elseif N(org.remVicAddict) >= 0.4 then alerts[#alerts + 1] = "ЗАВИСИМОСТЬ: ВИКОДИН" end
     if N(org.hungry) >= 65 then alerts[#alerts + 1] = "ИСТОЩЕНИЕ" end
     if N(org.analgesia) > 0.5 then alerts[#alerts + 1] = "ОПИОИДЫ" end
     if N(org.hungry) >= 85 then alerts[#alerts + 1] = "ИСТОЩЕНИЕ"

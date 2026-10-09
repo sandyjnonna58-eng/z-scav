@@ -756,6 +756,9 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 
 	local brainDelta = (org.brain or 0) - oldSeizureBrain
 	local lobeDelta = lobeDamage - oldSeizureLobeDamage
+	-- Z-SCAV: с аддоном NeuroTrauma судорогами от травмы мозга занимается он (zscav_neurotrauma_compat.lua)
+	local ntSeizures = ZSCAV_NeuroTraumaActive and ZSCAV_NeuroTraumaActive()
+	if ntSeizures then brainDelta, lobeDelta = 0, 0 end
 	if brainDelta > 0 then
 		hg.organism.AddSeizure(org, math.Clamp(brainDelta * seizure_brain_trauma_gain_mul, 0, 1))
 	elseif brainDelta < 0 and oldSeizureBrain > 0 then
@@ -775,7 +778,7 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	end
 
 	local seizureBrainDamage = math.max(org.brain or 0, lobeDamage)
-	if seizureBrainDamage > 0.05 then
+	if seizureBrainDamage > 0.05 and not ntSeizures then
 		org.nextSeizureRoll = org.nextSeizureRoll or (curTime + seizure_brain_roll_delay)
 		if curTime >= org.nextSeizureRoll then
 			org.nextSeizureRoll = curTime + seizure_brain_roll_delay

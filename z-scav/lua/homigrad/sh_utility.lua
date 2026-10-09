@@ -652,7 +652,9 @@ local IsValid = IsValid
 
 		if IsValid(self.OldRagdoll) then DrawAppearance(ent, self, true) end
 		if !hg.converging[self] then
-			ent:DrawModel()
+			-- Z-SCAV: раны Simple Wound (zscav_sw2_bridge.lua)
+			local swp = hg_ZSCAVWoundParams and hg_ZSCAVWoundParams(ent, self)
+			if swp then SimpleWound.DrawWithParams(ent, swp) else ent:DrawModel() end
 		else
 			DrawConversion(ent, self)
 		end

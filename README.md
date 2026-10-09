@@ -17,3 +17,10 @@
 - энергия и сон (кнопка «СОН» в меню здоровья)
 - мини-игры: бинт, шприц, СЛР, извлечение осколков
 - музыка состояний: Dying, Death, Despair, Drowning, Exhausted, Is this the end, PainDrone, Last stand, Fury-13
+
+## Раны L4D2 Wounds Shader (Simple Wound v2)
+В сборку встроен аддон L4D2 Wounds Shader: пулевые, резаные и рваные раны прямо на модели игрока,
+его рэгдолла и трупа (одежда и аксессуары Homigrad сохраняются).
+Чтобы раны были видны, каждому игроку нужен бинарный модуль Simple Wound
+(DLL в `garrysmod/lua/bin`): https://github.com/2016killer/gmod-simple-wound-v2/releases
+Без модуля игра работает как обычно. Выключить раны на игроках: `zscav_sw2 0`.

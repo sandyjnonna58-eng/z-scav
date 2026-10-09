@@ -66,7 +66,7 @@ end
 local function Target(org)
     local t = 100
     t = t + ((org.satiety or 70) - 70) * 0.75
-    t = t + ((100 - (org.thirst or 0)) - 60) * 0.3
+    t = t + (math.min(100 - (org.thirst or 0), 100) - 60) * 0.3
     t = t + ((org.remEnergy or 100) - 60) * 0.2 -- настоящая энергия (sv_rem_energy.lua)
     t = t + ((org.temperature or 37) - 37) * 8
     t = t + ((org.blood or 5000) - 5000) / 25 * 0.2

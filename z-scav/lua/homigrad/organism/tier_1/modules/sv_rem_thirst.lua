@@ -28,6 +28,8 @@ CFG.HURT_FROM   = 90
 CFG.HURT_HP     = 1
 CFG.HURT_TICK   = 5
 CFG.THOUGHT_CD  = 70
+CFG.OVERHYD_MIN = -75 -- вода до 175 (CU: Slaked >100, Overhydrated >125, Water-intoxicated >175)
+local function N0(v) return isnumber(v) and v or 0 end
 
 -- еда/питьё из любых предметов: food - сытость, water - сколько жажды снять
 function hg.organism.Consume(org, food, water, wep)
@@ -40,9 +42,14 @@ function hg.organism.Consume(org, food, water, wep)
     org.satiety = min((org.satiety or 0) + (food or 0) * CFG.FOOD_MUL, 150)
     org.hungry = max(0, 100 - org.satiety)
     local before = org.thirst or 0
-    org.thirst = max(0, before - (water or 0))
+    -- Z-SCAV (CU): можно перепить - вода выше 100 (жажда ниже 0), до 175
+    org.thirst = max(CFG.OVERHYD_MIN, before - (water or 0))
+    -- есть больно: вывих/перелом челюсти, сломанная шея
+    if (food or 0) > 0 and (org.jawdislocation or N0(org.jaw) >= 1 or N0(org.spine3) >= (hg.organism.fake_spine3 or 0.5)) then
+        org.painadd = (org.painadd or 0) + 4
+    end
     -- утолил жажду - приятно (сильнее, если очень хотелось пить)
-    local relief = before - org.thirst
+    local relief = max(0, before - max(org.thirst, 0))
     if relief > 0 and hg.organism.AddJoy then
         hg.organism.AddJoy(org, relief * 0.004 * (0.4 + before / 100))
     end
@@ -67,7 +74,11 @@ hook.Add("Org Think", "ZSCAV_Thirst", function(owner, org, timeValue)
 
     local mul = 1
     if IsValid(owner) and owner:IsPlayer() and owner:KeyDown(IN_SPEED) and owner:GetVelocity():Length2DSqr() > 150 * 150 then mul = mul * CFG.RUN_MUL end
-    if (org.temperature or 36.7) > 37.5 then mul = mul * CFG.HOT_MUL end
+    local temp = org.temperature or 36.7
+    if temp > 40.25 then mul = mul * CFG.HOT_MUL * 1.8      -- CU: Hyperthermia - жажда намного быстрее
+    elseif temp > 39 then mul = mul * CFG.HOT_MUL * 1.3     -- CU: Hot
+    elseif temp > 37.5 then mul = mul * CFG.HOT_MUL end
+    if org.thirst < 0 then mul = mul * 2 end               -- CU: перепил - вода уходит вдвое быстрее
     if (org.blood or 5000) < 4500 then mul = mul * CFG.BLEED_MUL end
     org.thirst = min(100, org.thirst + timeValue * CFG.GROW * mul)
 

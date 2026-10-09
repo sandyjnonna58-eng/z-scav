@@ -21,7 +21,7 @@ CFG.LOSE       = 45     -- сколько сытости уходит при р�
 CFG.THIRST     = 12
 CFG.COOLDOWN   = 8
 
-local function FoodVomit(owner, org)
+local function FoodVomit(owner, org, msg)
     org.satiety = math.max(0, (org.satiety or 0) - CFG.LOSE)
     org.hungry = math.max(0, 100 - org.satiety)
     if org.thirst then org.thirst = math.min(100, org.thirst + CFG.THIRST) end
@@ -36,7 +36,7 @@ local function FoodVomit(owner, org)
     if onSpine then org.vomitInThroat = true end -- лёжа на спине - в горло
     owner:SetNetVar("vomiting", CurTime() + 1.5)
     ent:EmitSound("vomit/vomit5.mp3", 70, math.random(95, 105))
-    owner:Notify("Ugh.. I ate way too much..", 4, "zscav_overeat_vomit", 0)
+    owner:Notify(msg or "Ugh.. I ate way too much..", 4, "zscav_overeat_vomit", 0)
 end
 hg.organism.FoodVomit = FoodVomit
 

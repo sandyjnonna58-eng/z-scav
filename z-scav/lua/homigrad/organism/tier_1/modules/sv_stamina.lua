@@ -91,7 +91,7 @@ module[2] = function(owner, org, timeValue)
 	//org.o2[1] = org.o2[1] - min(stamina.sub * timeValue, org.o2.regen * timeValue)
 	
 	//local old = stamina[1]
-	stamina[1] = min(stamina[1] + stamina.regen * timeValue * 9.15 * 1.5 * math.max(org.stamina[1] / org.stamina.max, 0.2) ^ 0.5 * (org.noradrenaline / 2 + 1) * (org.o2[1] / org.o2.range) * (org.adrenaline / 16 + 1) * (org.satiety/700 + 1) * ((owner:IsPlayer() and owner:Crouching() and velLen < 0.1) and 1.1 or 1) * (org.holdingbreath and 0 or 1) * (org.lungsfunction and 1 or 0) * (org.remEnergyRegen or 1), stamina.max)
+	stamina[1] = min(stamina[1] + stamina.regen * timeValue * 9.15 * 1.5 * math.max(org.stamina[1] / org.stamina.max, 0.2) ^ 0.5 * (org.noradrenaline / 2 + 1) * (org.o2[1] / org.o2.range) * (org.adrenaline / 16 + 1) * (org.satiety/700 + 1) * ((owner:IsPlayer() and owner:Crouching() and velLen < 0.1) and 1.1 or 1) * (org.holdingbreath and 0 or 1) * (org.lungsfunction and 1 or 0) * (org.remEnergyRegen or 1) * (org.remMoodleRegen or 1), stamina.max)
 
 	-- local painfrommoving = (stamina[1] < 150 and 1 or 0) * (stamina[1] - old) * (org.chest)
 	-- org.painadd = org.painadd + painfrommoving * timeValue * 5

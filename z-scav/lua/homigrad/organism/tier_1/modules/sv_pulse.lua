@@ -121,7 +121,8 @@ module[2] = function(owner, org, timeValue)
 	local bloodVolume = getBloodVolume(org)
 	local oxygenation = Clamp(o2, 0, 1)
 	local vascularTone = Clamp(1 + min(org.adrenaline, 3) * 0.12 + max(org.fear, 0) * 0.08 + Clamp(org.shock, 0, 45) / 360, 0.65, 1.55)
-	local pressureBase = 92 * bloodVolume * heart * vascularTone * Clamp(Remap(org.temperature, 28, 36.7, 0.55, 1), 0.45, 1.1)
+	local overhyd = Clamp(-(org.thirst or 0) / 75, 0, 1) -- Z-SCAV (CU): перепил поднимает давление
+	local pressureBase = 92 * (1 + overhyd * 0.12 + (overhyd >= 0.98 and 0.15 or 0)) * bloodVolume * heart * vascularTone * Clamp(Remap(org.temperature, 28, 36.7, 0.55, 1), 0.45, 1.1)
 	local rhythmMul = org.fibrillation and 0.18 or Clamp(1 - (org.arrhythmia or 0) * 0.22, 0.5, 1)
 	local defibGrace = (org.defibDeathGrace or 0) > CurTime()
 	local arrestPressure = defibGrace and 45 or 0
@@ -203,7 +204,8 @@ module[2] = function(owner, org, timeValue)
 		or bp < CU.FIB_BP
 		or (org.temperature or 37) < 28.5
 		or o2frac < 0.6
-		or (org.thirst or 0) >= 100 and math.Rand(0, 1) < 0.0166 * timeValue
+		or (org.thirst or 0) <= -74 and math.Rand(0, 1) < 0.0166 * timeValue -- водная интоксикация
+		or (org.remComedown or 0) * 200 > 34                                  -- CU: смертельная ломка
 		or (org.arrhythmia or 0) > 0.5 -- желудочковая тахикардия прогрессирует сама
 	local arr = org.arrhythmia or 0
 	if not org.heartstop then

@@ -3631,6 +3631,16 @@ local function SetMoodlesHtml(pnl, st)
             {"zscav_asleep", org.remSleep == true, N(org.remSleepQuality) <= 1 and "48px-badsleep_moodle.png" or "48px-asleep_moodle.png",
                 "Asleep", "You are sleeping and regaining energy.", nil},
             {"zscav_energized", not org.remSleep and N(org.remEnergized) > CurTime(), "48px-energized.png", "Energized", "You feel awake. Energy drains slower.", nil},
+            -- CU: перепил и переел
+            {"zscav_water", N(org.thirst) < 0,
+                N(org.thirst) <= -74 and "overhydrated.png" or (N(org.thirst) < -25 and "overhydrated.png" or "slaked.png"),
+                N(org.thirst) <= -74 and "Water-intoxicated" or (N(org.thirst) < -25 and "Overhydrated" or "Slaked"),
+                N(org.thirst) <= -74 and "Way too much water. Your blood pressure is dangerously high."
+                    or (N(org.thirst) < -25 and "Bloated with water. Moving is a bit harder." or "Fully hydrated. Thirst wears off faster for now."),
+                N(org.thirst) <= -74 and 2 or nil},
+            {"zscav_satiated", N(org.satiety) > 100, N(org.satiety) > 120 and "48px-moodle_hunger_5.png" or "48px-moodle_hunger_4.png",
+                N(org.satiety) > 120 and "Full" or "Satiated",
+                N(org.satiety) > 120 and "Stuffed. Moving around is harder, and you might throw up." or "Pleasantly full. A little slower.", nil},
             {"zscav_toxicosis", org.remToxic == true, "72px-Toxicosis_3.png", "Toxicosis", "Something poisonous is in your body.", 1},
         }
         for _, d in ipairs(defs) do

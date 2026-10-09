@@ -1005,7 +1005,7 @@ function PANEL:DrawMonitor(org, x, y, w)
     local over = satRaw > 100
     Txt(food and ("%.1f"):format(over and satRaw or food * 100) or "--", "RemHP_Big", right, cy, over and (satRaw > 120 and C_RED or C_YELLOW) or (food and HealthColor(food) or C_DIM), TEXT_ALIGN_RIGHT)
     cy = cy + S(28)
-    local water = org.thirst and (1 - N(org.thirst) / 100) or nil
+    local water = org.thirst and math.max(1 - N(org.thirst) / 100, 0) or nil
     Txt("ВОДА", "RemHP_Small", px, cy + S(3), C_DIM)
     Bar(px + S(86), cy, w - S(86) - S(76), S(20), water or 0, water and HealthColor(water) or C_DIM)
     Txt(water and ("%.1f"):format(water * 100) or "--", "RemHP_Big", right, cy, water and HealthColor(water) or C_DIM, TEXT_ALIGN_RIGHT)

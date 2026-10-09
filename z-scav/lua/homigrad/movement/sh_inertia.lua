@@ -809,6 +809,14 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			inertia_len = inertia_len * 1.1
 		end
 
+		-- Z-SCAV (CU мудлы): объелся, перепил, агония - двигаться тяжелее
+		if inertia_len > 0 then
+			local sat = org.satiety or 0
+			if sat > 120 then inertia_len = inertia_len * 0.92 elseif sat > 100 then inertia_len = inertia_len * 0.97 end
+			if (org.thirst or 0) < -25 then inertia_len = inertia_len * 0.95 end
+			if (org.pain or 0) > 80 then inertia_len = inertia_len * 0.75 end
+		end
+
 		-- Z-SCAV: обезвоживание - слабость (organism/tier_1/modules/sv_rem_thirst.lua)
 		if org.thirst and org.thirst >= 70 and inertia_len > 0 then
 			inertia_len = inertia_len * (1 - 0.2 * math_Clamp(math_Round((org.thirst - 70) / 30, 1), 0, 1))

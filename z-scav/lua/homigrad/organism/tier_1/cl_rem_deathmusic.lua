@@ -33,6 +33,11 @@ local function Play()
     end)
 end
 
+-- экран смерти пропущен - музыка быстро затихает
+hook.Add("ZSCAV_DeathScreenSkipped", "ZSCAV_DeathMusic", function()
+    if IsValid(station) then fading = true end
+end)
+
 hook.Add("Think", "ZSCAV_DeathMusic", function()
     local ply = LocalPlayer()
     if not IsValid(ply) then return end

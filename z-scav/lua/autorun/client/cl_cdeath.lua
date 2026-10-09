@@ -129,6 +129,7 @@ local transitionCallback  = nil
 local transitionFired     = false
 
 local prevReloadDown = false
+local prevSkipDown = true -- кнопка должна быть отпущена после смерти, чтобы пропуск не сработал случайно
 local prevJumpDown   = false
 
 local compatActive     = false
@@ -488,6 +489,25 @@ local function CinematicDeathTracker()
         end
     end
 
+    -- Z-SCAV: пропуск экрана смерти (ПРОБЕЛ / ЛКМ / ENTER) - сразу к наблюдению и возрождению
+    if isDead and not autoCompatTriggered and not inSpectator and not inTransition and (CurTime() - deathTime) > 0.6 then
+        local skipDown = SafeKeyDown(jumpKeyCode) or input.IsButtonDown(KEY_SPACE) or input.IsMouseDown(MOUSE_LEFT) or input.IsButtonDown(KEY_ENTER)
+        if skipDown and not prevSkipDown and not vgui.GetKeyboardFocus() and not gui.IsGameUIVisible() then
+            stage2Started = true
+            stage2Time = CurTime() - 1000
+            keepSoundAlive = false
+            for _, station in ipairs(deathSoundChannels) do
+                if IsValid(station) then station:Stop() end
+            end
+            deathSoundChannels = {}
+            ply:SetDSP(0)
+            ply:ConCommand("soundfade 0 1")
+            ZSCAV_DeathSkippedAt = RealTime()
+            hook.Run("ZSCAV_DeathScreenSkipped")
+        end
+        prevSkipDown = skipDown
+    end
+
     if isDead and stage2Started and not autoCompatTriggered then
         local fadeDuration = RealishDeathEffect() and REALISH_BLACK_FADE_DURATION or BLACK_FADE_DURATION
         local fadeOutDuration = RealishDeathEffect() and REALISH_BLACK_FADE_OUT_DURATION or BLACK_FADE_OUT_DURATION
@@ -682,6 +702,11 @@ local function CinematicDeathBackground()
         surface.DrawRect(0, 0, sw, sh)
 
         if realish then return end
+
+        -- подсказка: можно пропустить
+        if overlayAlpha > 10 then
+            draw.SimpleText("[ПРОБЕЛ / ЛКМ] - пропустить", "DeathEffect_Hint", sw - 30, sh - 30, Color(200, 200, 200, math.min(overlayAlpha, 180) * math.Clamp(stageElapsed - 0.6, 0, 1)), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
+        end
 
         if not DeathScreenEnabled() then
             local textFadeIn = math.Clamp(stageElapsed / DEATH_TEXT_FADE_IN, 0, 1)

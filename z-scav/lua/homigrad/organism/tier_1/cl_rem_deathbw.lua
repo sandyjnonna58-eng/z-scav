@@ -40,6 +40,8 @@ hook.Add("RenderScreenspaceEffects", "ZSCAV_DeathBW", function()
 
     local dead = not ply:Alive() and cv:GetBool()
     if dead then deadSince = deadSince or RealTime() else deadSince = nil end
+    -- экран смерти пропущен - чёрно-белый эффект тоже уходит
+    if dead and ZSCAV_DeathSkippedAt and deadSince and ZSCAV_DeathSkippedAt >= deadSince then dead = false end
     amount = math.Approach(amount, dead and 1 or 0, FrameTime() / (dead and CFG.fade_in or CFG.fade_out))
     if amount <= 0.001 then return end
 

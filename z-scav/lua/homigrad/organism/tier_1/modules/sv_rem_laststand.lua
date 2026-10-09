@@ -278,3 +278,63 @@ hook.Add("Org Clear", "ZSCAV_LastStand", function(org)
     org.remLastStandHeal = 0
     org.remMoodHist, org.remMoodHistNext = {}, 0
 end)
+
+-- ---------------------------------------------------------------------------
+-- Команды (только админ / консоль сервера):
+--   zscav_laststand_force [ник|*]  - сразу включить последний бой (без броска шанса,
+--                                     даже если уже был в этой жизни)
+--   zscav_laststand_reset [ник|*]  - снова разрешить рубеж в этой жизни
+--   zscav_laststand_chance [ник]   - показать шанс по настроению 9-10 мин назад
+-- Без ника - на себя.
+-- ---------------------------------------------------------------------------
+local function Targets(caller, arg)
+    if arg and arg ~= "" then
+        if arg == "*" then return player.GetAll() end
+        local out, low = {}, string.lower(arg)
+        for _, p in ipairs(player.GetAll()) do
+            if string.find(string.lower(p:Nick()), low, 1, true) then out[#out + 1] = p end
+        end
+        return out
+    end
+    return IsValid(caller) and {caller} or {}
+end
+
+local function Reply(caller, msg)
+    if IsValid(caller) then caller:ChatPrint(msg) else print(msg) end
+end
+
+concommand.Add("zscav_laststand_force", function(caller, _, args)
+    if IsValid(caller) and not caller:IsAdmin() then Reply(caller, "Только для админов.") return end
+    local list = Targets(caller, args[1])
+    if #list == 0 then Reply(caller, "Игрок не найден.") return end
+    for _, p in ipairs(list) do
+        local org = p.organism
+        if p:Alive() and org and org.alive ~= false then
+            Activate(p, org)
+            Reply(caller, "Последний бой: " .. p:Nick())
+        end
+    end
+end)
+
+concommand.Add("zscav_laststand_reset", function(caller, _, args)
+    if IsValid(caller) and not caller:IsAdmin() then Reply(caller, "Только для админов.") return end
+    for _, p in ipairs(Targets(caller, args[1])) do
+        local org = p.organism
+        if org then
+            org.remLastStandUsed = false
+            org.remLastStandRolled = false
+            Reply(caller, "Рубеж снова доступен: " .. p:Nick())
+        end
+    end
+end)
+
+concommand.Add("zscav_laststand_chance", function(caller, _, args)
+    for _, p in ipairs(Targets(caller, args[1])) do
+        local org = p.organism
+        if org then
+            local m = OldMood(org)
+            Reply(caller, ("%s: настроение 9-10 мин назад %+d -> шанс %.0f%%%s"):format(p:Nick(), math.Round(m),
+                hg.organism.LastStandChance(m) * 100, org.remLastStandUsed and " (уже использован)" or ""))
+        end
+    end
+end)

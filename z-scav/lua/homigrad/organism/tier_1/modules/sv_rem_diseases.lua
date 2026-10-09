@@ -4,8 +4,11 @@
     При появлении игрока каждая болезнь бросается отдельно со своим шансом
     (* zscav_disease_chance_mul). Выключить все: zscav_diseases 0, одну: zscav_disease_<id> 0.
 
-    Болезнь тихо развивается (прогресс 0..1), с 12% появляются симптомы и она видна
-    в меню здоровья. Смертельные на 100% переходят в терминальную стадию и убивают.
+    Первые 5 минут после заражения болезнь скрыта (бешенство - 10 минут), потом
+    появляются симптомы и она видна в меню здоровья (zscav_my_disease - узнать свою).
+    Иммунитет: ниже нормы - болезнь тяжелее и быстрее, выше - легче, а лечение быстрее.
+    Передозировка (больше N упаковок за 2 минуты): химия/альбендазол/рифампицин/ингибиторы >2 -
+    инфаркт, антибиотики >2 - интоксикация и 70% инфаркт, иммуноглобулин >10 - кровотечение и смерть. Смертельные на 100% переходят в терминальную стадию и убивают.
     Лечение - курс лекарства (несколько приёмов не чаще раза в 30 с): первый приём
     останавливает болезнь, каждый снимает часть симптомов, полный курс - излечение.
 
@@ -27,9 +30,26 @@
 local D = ZSCAV_DISEASES or {}
 local ORDER = ZSCAV_DISEASE_ORDER or {}
 local SYM_AT = ZSCAV_DISEASE_SYMPTOM_AT or 0.12
-local DOSE_GAP = 30
-local RABIES_INC = {600, 900}
+local DOSE_GAP = 60          -- сек между приёмами курса
+local SYM_DELAY = 300        -- симптомы через 5 минут после заражения
+local RABIES_DELAY = 600     -- бешенство - через 10 минут
 local RABIES_SYM_TIME = 240
+local OD_WINDOW = 120        -- "за раз": приёмы за последние 2 минуты
+-- передозировка: больше LIMIT упаковок за раз
+local OVERDOSE = {
+    chemo       = {limit = 2,  kind = "heart"},
+    albendazole = {limit = 2,  kind = "heart"},
+    rifampicin  = {limit = 2,  kind = "heart"},
+    inhibitors  = {limit = 2,  kind = "heart"},
+    antibiotics = {limit = 2,  kind = "detox"},
+    rabies_ig   = {limit = 10, kind = "bleed"},
+}
+
+-- иммунитет (40..200, норма 100): ниже - болезнь тяжелее и быстрее, выше - легче,
+-- и лечение/выздоровление идёт быстрее
+local function Imm(org) return math.Clamp(org.remImmunity or 100, 40, 200) end
+local function SevMul(org) return math.Clamp(100 / Imm(org), 0.6, 1.6) end
+local function HealMul(org) return math.Clamp(Imm(org) / 100, 0.5, 1.6) end
 
 local MED_TO = {} -- лекарство -> болезни
 for id, d in pairs(D) do if d.med then MED_TO[d.med] = MED_TO[d.med] or {} table.insert(MED_TO[d.med], id) end end
@@ -38,14 +58,16 @@ local function Say(owner, text, key)
     if IsValid(owner) and owner.Notify then owner:Notify(text, 5, key or "zscav_disease", 0, nil, Color(230, 210, 190)) end
 end
 
-local function Intensity(st) return math.Clamp((st.p - SYM_AT) / (1 - SYM_AT), 0, 1) end
+local function Intensity(st, org) return math.Clamp((st.p - SYM_AT) / (1 - SYM_AT) * (org and SevMul(org) or 1), 0, 1) end
 
 function hg.organism.GiveDisease(org, id)
     if not org or not D[id] then return end
     org.remDis = org.remDis or {}
     if org.remDis[id] then return end
-    local st = {p = 0, doses = 0, lastDose = 0, treated = false}
-    if id == "rabies" then st.incEnd = CurTime() + math.Rand(RABIES_INC[1], RABIES_INC[2]) end
+    local now = CurTime()
+    local st = {p = 0, doses = 0, lastDose = 0, treated = false, t0 = now}
+    st.symAt = now + (id == "rabies" and RABIES_DELAY or SYM_DELAY)
+    if id == "rabies" then st.incEnd = st.symAt end
     if id == "house" then st.p = 1 end
     org.remDis[id] = st
 end
@@ -63,9 +85,54 @@ local function Cured(owner, org, id)
     if hg.organism.AddMoodPermanent then hg.organism.AddMoodPermanent(org, 6) end
 end
 
+-- инфаркт
+function hg.organism.HeartAttack(owner, org, msg)
+    if not org then return end
+    org.heartstop = true
+    org.arrhythmia = 1
+    org.painadd = (org.painadd or 0) + 40
+    Say(owner, msg or "Сердце!.. Грудь разрывает!", "zscav_od")
+end
+
+-- учёт приёма и передозировка ("не больше N упаковок за раз"). true - передоз.
+function hg.organism.MedDose(owner, org, med)
+    local od = OVERDOSE[med]
+    if not org or not od then return false end
+    local now = CurTime()
+    org.remMedLog = org.remMedLog or {}
+    local log = org.remMedLog[med] or {}
+    local fresh = {}
+    for _, t in ipairs(log) do if now - t < OD_WINDOW then fresh[#fresh + 1] = t end end
+    fresh[#fresh + 1] = now
+    org.remMedLog[med] = fresh
+    if #fresh <= od.limit then return false end
+
+    if od.kind == "heart" then
+        hg.organism.HeartAttack(owner, org, "Слишком много... сердце!")
+    elseif od.kind == "detox" then
+        -- антибиотики: тяжёлая интоксикация и высокий шанс инфаркта
+        org.remAbxDetoxEnd = now + 120
+        org.remAbxNextVomit = now + math.Rand(3, 8)
+        Say(owner, "Меня всего выворачивает... перебрал с антибиотиками.", "zscav_od")
+        if math.Rand(0, 1) < 0.7 then
+            org.remAbxHeartAt = now + math.Rand(8, 25)
+        end
+    elseif od.kind == "bleed" then
+        -- иммуноглобулин: обширное внутреннее кровотечение и смерть
+        org.internalBleed = (org.internalBleed or 0) + 300
+        org.blood = math.max((org.blood or 5000) - 1500, 0)
+        org.painadd = (org.painadd or 0) + 30
+        org.remIgDoomAt = now + 40
+        Say(owner, "Внутри всё горит... кровь во рту...", "zscav_od")
+    end
+    return true
+end
+
 -- приём лекарства. Возвращает true, если лекарство что-то лечило.
 function hg.organism.DiseaseMedicine(owner, org, med)
-    if not org or not org.remDis then return false end
+    if not org then return false end
+    if hg.organism.MedDose(owner, org, med) then return true end
+    if not org.remDis then return false end
     local now, any = CurTime(), false
     for _, id in ipairs(MED_TO[med] or {}) do
         local st = org.remDis[id]
@@ -83,7 +150,7 @@ function hg.organism.DiseaseMedicine(owner, org, med)
                 st.lastDose = now
                 st.doses = st.doses + 1
                 st.treated = true
-                st.p = math.max(st.p - 0.3, 0)
+                st.p = math.max(st.p - 0.3 * HealMul(org), 0)
                 if st.doses >= (D[id].doses or 1) then
                     Cured(owner, org, id)
                 else
@@ -98,6 +165,7 @@ end
 -- химиолучевая терапия: 20% - организм не выдерживает
 function hg.organism.Chemotherapy(owner, org)
     if not org then return end
+    if hg.organism.MedDose(owner, org, "chemo") then return end
     if math.Rand(0, 1) < 0.2 then
         Say(owner, "Организм не выдержал химиотерапии...", "zscav_chemo")
         if IsValid(owner) and owner:Alive() then owner:Kill() end
@@ -249,20 +317,59 @@ function hg.organism.DiseaseThink(owner, org, timeValue, isPly)
         end
     end
 
+    -- передоз антибиотиков: интоксикация (рвота, боль), возможен инфаркт
+    if (org.remAbxDetoxEnd or 0) > now then
+        org.pain = math.max(org.pain or 0, 40)
+        org.remDiseaseRegen = math.min(org.remDiseaseRegen or 1, 0.5)
+        if (org.remAbxNextVomit or 0) < now then
+            org.remAbxNextVomit = now + math.Rand(18, 30)
+            Vomit(owner, org)
+        end
+    end
+    if org.remAbxHeartAt and now >= org.remAbxHeartAt then
+        org.remAbxHeartAt = nil
+        hg.organism.HeartAttack(owner, org)
+    end
+    -- передоз иммуноглобулина: смерть
+    if org.remIgDoomAt and now >= org.remIgDoomAt then
+        org.remIgDoomAt = nil
+        if IsValid(owner) and owner:Alive() then owner:Kill() end
+        return
+    end
+
+    -- докторская болезнь: очень редко - трость
+    if org.remDis and org.remDis.house and (org.remCaneNext or 0) < now then
+        org.remCaneNext = now + 60
+        if math.Rand(0, 1) < 0.004 and hg.organism.ShowCane then hg.organism.ShowCane(owner) end
+    end
+
     if not org.remDis then return end
     for id, st in pairs(org.remDis) do
         local d = D[id]
         local fn = SYM[id]
         if not d or not fn or not GetConVar("zscav_disease_" .. id):GetBool() then continue end
-        if not st.treated and (d.time or 0) > 0 and id ~= "rabies" then
-            st.p = math.min(st.p + dt / d.time, d.lethal and 1.2 or 1)
+        -- до симптомов (5 мин, бешенство 10 мин) болезнь скрыта
+        if id ~= "house" and now < (st.symAt or 0) then
+            -- лекарство до симптомов тоже работает (иммуноглобулин - только до них)
+            continue
+        end
+        if id ~= "house" and id ~= "rabies" and st.p < SYM_AT and not st.treated then st.p = SYM_AT end
+        if st.treated then
+            -- идёт лечение: выздоровление, быстрее при хорошем иммунитете
+            if id ~= "house" and id ~= "rabies" then
+                st.p = math.max(st.p - dt * 0.0006 * HealMul(org), 0)
+                if st.p <= 0 then Cured(owner, org, id) continue end
+            end
+        elseif (d.time or 0) > 0 and id ~= "rabies" then
+            -- болезнь развивается; при слабом иммунитете быстрее
+            st.p = math.min(st.p + dt / d.time * SevMul(org), d.lethal and 1.2 or 1)
         end
         if id == "rabies" or st.p >= SYM_AT then
             if not st.announced and id ~= "rabies" and id ~= "house" then
                 st.announced = true
                 Say(owner, "Мне нехорошо... (" .. d.name .. ")")
             end
-            fn(owner, org, st, Intensity(st), dt, now)
+            fn(owner, org, st, Intensity(st, org), dt, now)
         end
     end
 end
@@ -278,6 +385,12 @@ hook.Add("PlayerSpawn", "ZSCAV_Diseases", function(ply)
         for _, id in ipairs(ORDER) do
             if GetConVar("zscav_disease_" .. id):GetBool() and math.Rand(0, 1) < D[id].chance * mul then
                 hg.organism.GiveDisease(org, id)
+                -- докторская болезнь: очень редко - трость сразу при заболевании
+                if id == "house" and math.Rand(0, 1) < 0.05 then
+                    timer.Simple(math.Rand(10, 40), function()
+                        if IsValid(ply) and ply:Alive() and hg.organism.ShowCane then hg.organism.ShowCane(ply) end
+                    end)
+                end
             end
         end
     end)
@@ -311,7 +424,11 @@ concommand.Add("zscav_disease_give", function(c, _, args)
     hg.organism.GiveDisease(p.organism, id)
     -- для проверки - сразу с симптомами
     local st = p.organism.remDis[id]
-    if id == "rabies" then st.incEnd = CurTime() + 5 elseif id ~= "house" then st.p = math.max(st.p, SYM_AT + 0.05) end
+    local quiet = args[3] == "0" -- zscav_disease_give <id> <ник> 0 - без ускорения, по-настоящему
+    if not quiet then
+        st.symAt = CurTime() + 3
+        if id == "rabies" then st.incEnd = st.symAt end
+    end
     Reply(c, D[id].name .. " -> " .. p:Nick())
 end)
 
@@ -333,3 +450,40 @@ concommand.Add("zscav_disease_list", function(c, _, args)
     end
     Reply(c, p:Nick() .. ": " .. (#out > 0 and table.concat(out, "; ") or "здоров"))
 end)
+
+-- любой игрок: какая у меня болезнь (в консоль и в чат)
+local function FmtTime(sec) sec = math.max(0, math.floor(sec)) return ("%d:%02d"):format(sec / 60, sec % 60) end
+concommand.Add("zscav_my_disease", function(ply)
+    if not IsValid(ply) or not ply.organism then return end
+    local org, now = ply.organism, CurTime()
+    local lines = {}
+    for _, id in ipairs(ORDER) do
+        local st = org.remDis and org.remDis[id]
+        if st then
+            local d = D[id]
+            local state
+            if id ~= "house" and now < (st.symAt or 0) then
+                state = "без симптомов, проявится через " .. FmtTime(st.symAt - now)
+            elseif id == "rabies" and st.symStart then
+                state = "симптомы! осталось ~" .. FmtTime(st.symStart + RABIES_SYM_TIME - now)
+            else
+                state = ("развитие %d%%"):format(math.min(st.p, 1) * 100)
+            end
+            if st.treated and d.doses > 0 then state = state .. (" | курс %d/%d"):format(st.doses, d.doses) end
+            lines[#lines + 1] = ("%s (%s) - %s. Лекарство: %s. %s."):format(d.name, d.kind, state, d.cure, d.lethal and "СМЕРТЕЛЬНО" or "не смертельно")
+        end
+    end
+    lines[#lines + 1] = ("Иммунитет: %d%%"):format(Imm(org))
+    if #lines == 1 then table.insert(lines, 1, "Болезней нет.") end
+    for _, l in ipairs(lines) do
+        ply:PrintMessage(HUD_PRINTCONSOLE, l)
+        ply:ChatPrint(l)
+    end
+end)
+
+-- трость (эффект докторской болезни)
+util.AddNetworkString("zscav_cane")
+function hg.organism.ShowCane(ply)
+    if not IsValid(ply) then return end
+    net.Start("zscav_cane") net.Send(ply)
+end

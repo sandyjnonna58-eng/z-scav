@@ -8,7 +8,9 @@ SWEP.Primary.Wait = 1
 SWEP.Primary.Next = 0
 SWEP.HoldType = "slam"
 SWEP.ViewModel = ""
-SWEP.WorldModel = "models/bloocobalt/l4d/items/w_eq_pills.mdl"
+SWEP.WorldModel = "models/props_lab/jar01b.mdl"
+SWEP.Color = Color(240, 150, 50)
+SWEP.ModelScale = 0.5
 if CLIENT then
 	SWEP.WepSelectIcon = Material("vgui/wep_jack_hmcd_painpills")
 	SWEP.IconOverride = "vgui/wep_jack_hmcd_painpills.png"

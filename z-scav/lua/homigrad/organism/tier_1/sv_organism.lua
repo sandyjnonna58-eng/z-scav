@@ -770,6 +770,16 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	org.lastSeizureLobeDamage = lobeDamage
 	org.lastSeizureTemperature = temperature
 
+	-- Z-SCAV: пока действует последний бой - никакой эпилепсии (и мозг, "заживая", её не вызывает)
+	if (org.remLastStandUntil or 0) > curTime then
+		org.seizure = 0
+		org.nextSeizureRoll = curTime + seizure_brain_roll_delay
+		if org.seizureActive then
+			stop_seizure(owner, org)
+			if IsValid(owner) then owner.fakecd = 0 end
+		end
+	end
+
 	if org.seizure >= 1 and !org.seizureActive and isPly and owner:Alive() then
 		start_seizure(owner, org)
 	elseif org.seizureActive and org.seizure <= 0 then
@@ -903,7 +913,7 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 		org.owner.fullsend = true
 	end
 
-	if org.brain > 0.05 then
+	if org.brain > 0.05 and (org.remLastStandUntil or 0) < curTime then -- Z-SCAV: в последнем бою не падает
 		if math.random(600) < org.brain * 20 then
 			org.needfake = true
 		end

@@ -135,6 +135,19 @@ local function Activate(owner, org)
     if hg.organism.StopSeizure then hg.organism.StopSeizure(owner, org) else
         org.seizure, org.seizureActive, org.seizureStart, org.seizureEnd, org.nextSeizureSpasm = 0, false, 0, 0, 0
     end
+    org.stun = 0
+    -- Z-SCAV: сам встаёт с земли
+    if IsValid(owner) then
+        owner.fakecd = 0
+        org.needfake = false
+        timer.Simple(0.4, function()
+            if not IsValid(owner) or not owner:Alive() or not IsValid(owner.FakeRagdoll) then return end
+            local o = owner.organism
+            if o and (o.spine2 or 0) >= (hg.organism.fake_spine2 or 1) then return end -- сломан позвоночник - не встать
+            owner.fakecd = 0
+            if hg.FakeUp then hg.FakeUp(owner, true) end
+        end)
+    end
     -- силы
     if istable(org.stamina) then org.stamina[1] = org.stamina.max or org.stamina.range or org.stamina[1] end
     org.adrenalineAdd = math.max(org.adrenalineAdd or 0, 2)
@@ -161,7 +174,9 @@ function hg.organism.LastStandThink(owner, org, timeValue, isPly)
         org.adrenaline = math.max(org.adrenaline or 0, CFG.ADRENALINE_MIN)
         -- пока действует рубеж (5 мин) - новых судорог нет, психика не проваливается
         if org.seizureActive or (org.seizure or 0) > 0 then
-            org.seizure, org.seizureActive, org.seizureStart, org.seizureEnd = 0, false, 0, 0
+            if hg.organism.StopSeizure then hg.organism.StopSeizure(owner, org)
+            else org.seizure, org.seizureActive, org.seizureStart, org.seizureEnd = 0, false, 0, 0 end
+            if IsValid(owner) then owner.fakecd = 0 end
         end
         org.depression = math.min(org.depression or 0, 0.1)
         org.panicattack, org.panicattackadd = 0, 0

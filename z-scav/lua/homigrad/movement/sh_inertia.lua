@@ -819,6 +819,11 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			inertia_len = inertia_len * (1 - 0.2 * math_Clamp((math_Round(org.hungry) - 65) / 35, 0, 1))
 		end
 
+		-- Z-SCAV: Чумной доктор - быстрый бег (lua/autorun/server/zscav_plaguedoctor.lua)
+		if inertia_len > 0 and ply:GetNWBool("zscav_plague") then
+			inertia_len = inertia_len * ply:GetNWFloat("zscav_plague_speed", 1.45)
+		end
+
 		-- Z-SCAV: последний рубеж - рывок
 		if org.remLastStand and org.remLastStand > CurTime() and inertia_len > 0 then
 			inertia_len = inertia_len * 1.1

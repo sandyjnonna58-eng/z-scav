@@ -436,8 +436,17 @@ end
 -- ---------------------------------------------------------------------------
 local AV_CVAR = CreateClientConVar("zscav_health_avatar", "1", true, false, "Z-SCAV: в меню здоровья показывать свою модель (чёрный силуэт) вместо куклы")
 
-local matAvFlat = CreateMaterial("zscav_avatar_flat2", "UnlitGeneric", {
+-- два отдельных плоских материала: модуляция цвета на моделях работает не везде,
+-- поэтому чёрный задаём прямо в материале
+local matAvWhite = CreateMaterial("zscav_avatar_white3", "UnlitGeneric", {
     ["$basetexture"] = "color/white",
+    ["$model"] = "1",
+    ["$nocull"] = "1",
+})
+local matAvBlack = CreateMaterial("zscav_avatar_black3", "UnlitGeneric", {
+    ["$basetexture"] = "color/white",
+    ["$color"] = "[0 0 0]",
+    ["$color2"] = "[0 0 0]",
     ["$model"] = "1",
     ["$nocull"] = "1",
 })
@@ -683,7 +692,7 @@ local function AvatarDraw(pnl, ply, x, y, w, h, states, shakeFn)
         })
             cam.IgnoreZ(true)
             render.SuppressEngineLighting(true)
-            render.MaterialOverride(matAvFlat)
+            render.MaterialOverride((r + g + b) > 0 and matAvWhite or matAvBlack)
             render.SetColorModulation(r, g, b)
             render.SetBlend(1)
             ent:DrawModel()

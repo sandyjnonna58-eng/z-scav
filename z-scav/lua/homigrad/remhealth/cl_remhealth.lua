@@ -428,6 +428,357 @@ local function PartAt(px, py) -- координаты в пикселях исх
 end
 
 -- ---------------------------------------------------------------------------
+-- АВАТАР вместо мальчика: модель твоего персонажа (модель, скин, бодигруппы,
+-- аксессуары), залитая чёрным с белым контуром - как кукла. Руки разведены вниз,
+-- как у мальчика. Части тела считаются по костям модели, поэтому подсветка,
+-- капли крови, осколки, наведение и клик работают как раньше.
+-- zscav_health_avatar 0 - вернуть старую куклу.
+-- ---------------------------------------------------------------------------
+local AV_CVAR = CreateClientConVar("zscav_health_avatar", "1", true, false, "Z-SCAV: в меню здоровья показывать свою модель (чёрный силуэт) вместо куклы")
+
+local matAvFlat = CreateMaterial("zscav_avatar_flat2", "UnlitGeneric", {
+    ["$basetexture"] = "color/white",
+    ["$model"] = "1",
+    ["$nocull"] = "1",
+})
+
+-- части: кость A -> кость B (или вынос от A), радиус в юнитах модели
+local AV_SEG = {
+    head       = {a = "ValveBiped.Bip01_Head1", up = 7.5, r = 5.4, startUp = 0.5},
+    neck       = {a = "ValveBiped.Bip01_Neck1", b = "ValveBiped.Bip01_Head1", r = 3.0},
+    chest      = {a = "ValveBiped.Bip01_Spine2", b = "ValveBiped.Bip01_Spine4", r = 7.6},
+    abdomen    = {a = "ValveBiped.Bip01_Pelvis", b = "ValveBiped.Bip01_Spine1", r = 7.4},
+    r_upperarm = {a = "ValveBiped.Bip01_R_UpperArm", b = "ValveBiped.Bip01_R_Forearm", r = 3.3},
+    r_forearm  = {a = "ValveBiped.Bip01_R_Forearm", b = "ValveBiped.Bip01_R_Hand", r = 2.9},
+    r_hand     = {a = "ValveBiped.Bip01_R_Hand", b = "ValveBiped.Bip01_R_Finger2", ext = 4, r = 2.7},
+    l_upperarm = {a = "ValveBiped.Bip01_L_UpperArm", b = "ValveBiped.Bip01_L_Forearm", r = 3.3},
+    l_forearm  = {a = "ValveBiped.Bip01_L_Forearm", b = "ValveBiped.Bip01_L_Hand", r = 2.9},
+    l_hand     = {a = "ValveBiped.Bip01_L_Hand", b = "ValveBiped.Bip01_L_Finger2", ext = 4, r = 2.7},
+    r_thigh    = {a = "ValveBiped.Bip01_R_Thigh", b = "ValveBiped.Bip01_R_Calf", r = 4.4},
+    r_shin     = {a = "ValveBiped.Bip01_R_Calf", b = "ValveBiped.Bip01_R_Foot", r = 3.5},
+    r_foot     = {a = "ValveBiped.Bip01_R_Foot", b = "ValveBiped.Bip01_R_Toe0", r = 3.0, down = 2.5},
+    l_thigh    = {a = "ValveBiped.Bip01_L_Thigh", b = "ValveBiped.Bip01_L_Calf", r = 4.4},
+    l_shin     = {a = "ValveBiped.Bip01_L_Calf", b = "ValveBiped.Bip01_L_Foot", r = 3.5},
+    l_foot     = {a = "ValveBiped.Bip01_L_Foot", b = "ValveBiped.Bip01_L_Toe0", r = 3.0, down = 2.5},
+}
+-- кто забирает пиксели первым при перекрытии (и кто первым ловит курсор)
+local AV_ORDER = {"r_hand", "l_hand", "r_forearm", "l_forearm", "r_foot", "l_foot", "r_shin", "l_shin",
+    "r_upperarm", "l_upperarm", "r_thigh", "l_thigh", "head", "neck", "abdomen", "chest"}
+local PART_INDEX = {}
+for i, p in ipairs(PARTS) do PART_INDEX[p.id] = i end
+-- конечность, которая пропадает целиком при ампутации
+local AV_AMPUTATE = {
+    r_upperarm = "ValveBiped.Bip01_R_UpperArm", l_upperarm = "ValveBiped.Bip01_L_UpperArm",
+    r_forearm = "ValveBiped.Bip01_R_Forearm", l_forearm = "ValveBiped.Bip01_L_Forearm",
+    r_hand = "ValveBiped.Bip01_R_Hand", l_hand = "ValveBiped.Bip01_L_Hand",
+    r_thigh = "ValveBiped.Bip01_R_Thigh", l_thigh = "ValveBiped.Bip01_L_Thigh",
+    r_shin = "ValveBiped.Bip01_R_Calf", l_shin = "ValveBiped.Bip01_L_Calf",
+    r_foot = "ValveBiped.Bip01_R_Foot", l_foot = "ValveBiped.Bip01_L_Foot",
+}
+
+local AV = {segs = {}, centers = {}, shake = {}, hidden = {}}
+local ARM_DROP = math.rad(38) -- насколько опущены руки от горизонтали (как у мальчика)
+
+local function AvBone(ent, name)
+    AV.bonecache = AV.bonecache or {}
+    local b = AV.bonecache[name]
+    if b == nil then
+        b = ent:LookupBone(name) or false
+        AV.bonecache[name] = b
+    end
+    return b or nil
+end
+
+local function AvDescendants(ent, bone, out)
+    out = out or {}
+    out[#out + 1] = bone
+    for _, c in ipairs(ent:GetChildBones(bone) or {}) do AvDescendants(ent, c, out) end
+    return out
+end
+
+-- поворот матрицы кости вокруг точки piv на угол roll (ось X модели - на камеру)
+local function RotAround(m, piv, roll)
+    local T = Matrix()
+    T:SetTranslation(piv)
+    T:Rotate(Angle(0, 0, roll))
+    T:Translate(-piv)
+    return T * m
+end
+
+-- вызывается движком после расчёта костей: разводим руки и трясём больные части
+local function AvatarBuildBones(ent, num)
+    if ent ~= AV.ent then return end
+    -- руки: из любой позы (T-поза, стойка) ставим как у куклы
+    for side, names in pairs({[1] = {"ValveBiped.Bip01_L_UpperArm", "ValveBiped.Bip01_L_Hand"}, [-1] = {"ValveBiped.Bip01_R_UpperArm", "ValveBiped.Bip01_R_Hand"}}) do
+        local ua, hd = AvBone(ent, names[1]), AvBone(ent, names[2])
+        local mua, mhd = ua and ent:GetBoneMatrix(ua), hd and ent:GetBoneMatrix(hd)
+        if mua and mhd then
+            local S0 = mua:GetTranslation()
+            local d = mhd:GetTranslation() - S0
+            local cur = math.atan2(d.z, d.y * side)          -- угол руки в плоскости экрана
+            local want = -ARM_DROP
+            local delta = math.deg(want - cur)
+            -- знак roll зависит от стороны: проверяем, куда реально уходит вектор
+            local test = Vector(0, d.y, d.z) test:Rotate(Angle(0, 0, delta))
+            local roll = delta
+            if math.abs(math.atan2(test.z, test.y * side) - want) > 0.05 then roll = -delta end
+            AV.armList = AV.armList or {}
+            AV.armList[side] = AV.armList[side] or AvDescendants(ent, ua)
+            for _, b in ipairs(AV.armList[side]) do
+                local m = ent:GetBoneMatrix(b)
+                if m then ent:SetBoneMatrix(b, RotAround(m, S0, roll)) end
+            end
+        end
+    end
+    -- дрожь от боли: смещение по экрану (Y - вправо, Z - вверх)
+    for b, off in pairs(AV.shake) do
+        local m = ent:GetBoneMatrix(b)
+        if m then
+            m:SetTranslation(m:GetTranslation() + off)
+            ent:SetBoneMatrix(b, m)
+        end
+    end
+end
+
+local function AvatarEnsure(ply)
+    local mdl = ply:GetModel()
+    if not mdl or mdl == "" then return end
+    local ent = AV.ent
+    if not IsValid(ent) or AV.mdl ~= mdl then
+        if IsValid(ent) then ent:Remove() end
+        ent = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+        if not IsValid(ent) then return end
+        ent:SetNoDraw(true)
+        ent:SetIK(false)
+        ent:SetPos(vector_origin)
+        ent:SetAngles(angle_zero)
+        local seq = -1
+        for _, n in ipairs({"reference", "ragdoll", "idle_all_01", "idle_subtle"}) do
+            local s = ent:LookupSequence(n)
+            if s and s >= 0 then seq = s break end
+        end
+        ent:ResetSequence(math.max(seq, 0))
+        ent:SetCycle(0)
+        ent:SetPlaybackRate(0)
+        ent:AddCallback("BuildBonePositions", AvatarBuildBones)
+        AV.ent, AV.mdl = ent, mdl
+        AV.bonecache, AV.armList, AV.bounds = {}, nil, nil
+        table.Empty(AV.hidden)
+    end
+    -- внешний вид как у тебя сейчас
+    ent:SetSkin(ply:GetSkin())
+    for i = 0, (ply:GetNumBodyGroups() or 1) - 1 do
+        local v = ply:GetBodygroup(i)
+        if ent:GetBodygroup(i) ~= v then ent:SetBodygroup(i, v) end
+    end
+    return ent
+end
+
+-- рисует силуэт в прямоугольник (x, y, w, h); states - состояния частей, pxShake(i) -> ox, oy
+local function AvatarDraw(pnl, ply, x, y, w, h, states, shakeFn)
+    local ent = AvatarEnsure(ply)
+    if not IsValid(ent) then return false end
+
+    -- ампутации: прячем конечность (дети прячутся вместе с ней)
+    for id, bname in pairs(AV_AMPUTATE) do
+        local st = states[PART_INDEX[id]]
+        local miss = st and st.missing or false
+        if AV.hidden[id] ~= miss then
+            AV.hidden[id] = miss
+            local b = AvBone(ent, bname)
+            if b then ent:ManipulateBoneScale(b, miss and Vector(0, 0, 0) or Vector(1, 1, 1)) end
+        end
+    end
+
+    -- дрожь: пиксели -> юниты (масштаб из прошлого кадра)
+    table.Empty(AV.shake)
+    local ppu = AV.ppu or 1
+    for i, p in ipairs(PARTS) do
+        local ox, oy = shakeFn(i)
+        if ox ~= 0 or oy ~= 0 then
+            for _, bn in ipairs(p.bones) do
+                local b = AvBone(ent, bn)
+                if b then AV.shake[b] = Vector(0, ox / ppu, -oy / ppu) end
+            end
+        end
+    end
+
+    ent:InvalidateBoneCache()
+    ent:SetupBones()
+
+    -- точки частей в мире
+    local function BP(name)
+        local b = AvBone(ent, name)
+        if not b then return end
+        local m = ent:GetBoneMatrix(b)
+        return m and m:GetTranslation()
+    end
+    local wsegs = {}
+    local minY, maxY, minZ, maxZ = math.huge, -math.huge, math.huge, -math.huge
+    for id, sg in pairs(AV_SEG) do
+        local a = BP(sg.a)
+        if a then
+            local b
+            if sg.up then
+                a = a + Vector(0, 0, sg.startUp or 0)
+                b = a + Vector(0, 0, sg.up)
+            else
+                b = sg.b and BP(sg.b)
+                if not b and sg.ext then
+                    local par = ent:GetBoneParent(AvBone(ent, sg.a) or -1)
+                    local pm = par and par >= 0 and ent:GetBoneMatrix(par)
+                    local dir = pm and (a - pm:GetTranslation()):GetNormalized() or Vector(0, 0, -1)
+                    b = a + dir * sg.ext
+                end
+                b = b or a
+                if sg.down then b = Vector(b.x, b.y, b.z - sg.down) end
+            end
+            wsegs[id] = {a, b, sg.r}
+            local st = states[PART_INDEX[id]]
+            if not (st and st.missing) then
+                for _, v in ipairs({a, b}) do
+                    minY, maxY = math.min(minY, v.y - sg.r), math.max(maxY, v.y + sg.r)
+                    minZ, maxZ = math.min(minZ, v.z - sg.r), math.max(maxZ, v.z + sg.r)
+                end
+            end
+        end
+    end
+    if minY == math.huge then return false end
+    minZ = math.min(minZ, 0) -- подошвы
+
+    -- рамка сглаживается, чтобы дрожь не дёргала весь силуэт
+    local tb = {minY, maxY, minZ, maxZ}
+    if not AV.bounds then AV.bounds = tb
+    else for k = 1, 4 do AV.bounds[k] = Lerp(0.15, AV.bounds[k], tb[k]) end end
+    local B = AV.bounds
+    local cy, cz = (B[1] + B[2]) * 0.5, (B[3] + B[4]) * 0.5
+    local aspect = w / h
+    local hh = math.max((B[4] - B[3]) * 0.5, (B[2] - B[1]) * 0.5 / aspect) * 1.03
+    local hw = hh * aspect
+    AV.ppu = (w * 0.5) / hw
+
+    local function Proj(v)
+        return x + w * 0.5 + (v.y - cy) / hw * w * 0.5, y + h * 0.5 - (v.z - cz) / hh * h * 0.5
+    end
+
+    -- экранные отрезки частей + центры (в пикселях куклы - для капель/осколков)
+    table.Empty(AV.segs)
+    for id, s in pairs(wsegs) do
+        local ax, ay = Proj(s[1])
+        local bx, by = Proj(s[2])
+        AV.segs[id] = {ax, ay, bx, by, s[3] * AV.ppu}
+        AV.centers[id] = {((ax + bx) * 0.5 - x) / w * DOLL_W, ((ay + by) * 0.5 - y) / h * DOLL_H}
+    end
+    AV.rect = {x, y, w, h}
+
+    local sx, sy = pnl:LocalToScreen(x, y)
+    local function DrawModelAt(dx, dy, r, g, b)
+        cam.Start({
+            type = "3D",
+            origin = Vector(300, cy - dx / AV.ppu, cz + dy / AV.ppu),
+            angles = Angle(0, 180, 0),
+            x = sx, y = sy, w = w, h = h,
+            znear = 1, zfar = 1000,
+            ortho = {left = -hw, right = hw, top = -hh, bottom = hh},
+        })
+            cam.IgnoreZ(true)
+            render.SuppressEngineLighting(true)
+            render.MaterialOverride(matAvFlat)
+            render.SetColorModulation(r, g, b)
+            render.SetBlend(1)
+            ent:DrawModel()
+            -- аксессуары (шапки, сумки) тоже входят в силуэт
+            local acc = ply.GetNetVar and ply:GetNetVar("Accessories")
+            if acc and hg and hg.Accessories and DrawAccesories then
+                if not istable(acc) then acc = {acc} end
+                for _, a in ipairs(acc) do
+                    local d = hg.Accessories[a]
+                    if d and not d.needcoolRender then pcall(DrawAccesories, ent, ent, a, d, false, true) end
+                end
+            end
+            render.SetColorModulation(1, 1, 1)
+            render.MaterialOverride()
+            render.SuppressEngineLighting(false)
+            cam.IgnoreZ(false)
+        cam.End3D()
+    end
+
+    -- белый контур: силуэт, сдвинутый в 8 сторон
+    local o = math.max(2, math.floor(h / 300))
+    for _, d in ipairs({{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-0.7, -0.7}, {0.7, -0.7}, {-0.7, 0.7}, {0.7, 0.7}}) do
+        DrawModelAt(d[1] * o, d[2] * o, 1, 1, 1)
+    end
+
+    -- чёрная заливка + трафарет (по нему красим части)
+    render.ClearStencil()
+    render.SetStencilEnable(true)
+    render.SetStencilWriteMask(255)
+    render.SetStencilTestMask(255)
+    render.SetStencilReferenceValue(1)
+    render.SetStencilCompareFunction(STENCIL_ALWAYS)
+    render.SetStencilPassOperation(STENCIL_REPLACE)
+    render.SetStencilFailOperation(STENCIL_KEEP)
+    render.SetStencilZFailOperation(STENCIL_REPLACE)
+    DrawModelAt(0, 0, 0, 0, 0)
+    render.SetStencilZFailOperation(STENCIL_KEEP)
+    return true
+end
+
+-- капсула (отрезок с радиусом) как выпуклый многоугольник
+local function AvCapsulePoly(ax, ay, bx, by, r)
+    local ang = math.atan2(by - ay, bx - ax)
+    local poly = {}
+    local N = 10
+    for k = 0, N do
+        local t = ang + math.pi * 0.5 + math.pi * k / N
+        poly[#poly + 1] = {x = ax + math.cos(t) * r, y = ay + math.sin(t) * r}
+    end
+    for k = 0, N do
+        local t = ang - math.pi * 0.5 + math.pi * k / N
+        poly[#poly + 1] = {x = bx + math.cos(t) * r, y = by + math.sin(t) * r}
+    end
+    return poly
+end
+
+-- красим части поверх чёрного силуэта: colorFn(i) -> col, alpha
+local function AvatarPaintParts(colorFn)
+    draw.NoTexture()
+    -- каждая точка силуэта достаётся одной части: первая по AV_ORDER забирает (1 -> 2)
+    render.SetStencilCompareFunction(STENCIL_EQUAL)
+    render.SetStencilReferenceValue(1)
+    render.SetStencilPassOperation(STENCIL_INCR)
+    for _, id in ipairs(AV_ORDER) do
+        local s = AV.segs[id]
+        local i = PART_INDEX[id]
+        if s and i then
+            local col, a = colorFn(i)
+            surface.SetDrawColor(col.r, col.g, col.b, a or 0)
+            surface.DrawPoly(AvCapsulePoly(s[1], s[2], s[3], s[4], s[5]))
+        end
+    end
+    render.SetStencilEnable(false)
+end
+
+local function AvatarPartAt(mx, my, states)
+    for _, id in ipairs(AV_ORDER) do
+        local s = AV.segs[id]
+        local i = PART_INDEX[id]
+        if s and i and not (states[i] and states[i].missing) then
+            local ax, ay, bx, by, r = s[1], s[2], s[3], s[4], s[5]
+            local dx, dy = bx - ax, by - ay
+            local l2 = dx * dx + dy * dy
+            local t = l2 > 0 and math.Clamp(((mx - ax) * dx + (my - ay) * dy) / l2, 0, 1) or 0
+            local px, py = ax + dx * t - mx, ay + dy * t - my
+            if px * px + py * py <= r * r then return i end
+        end
+    end
+end
+
+local function AvatarOn()
+    return AV_CVAR:GetBool()
+end
+
+-- ---------------------------------------------------------------------------
 -- стиль
 -- ---------------------------------------------------------------------------
 local C_BG      = Color(20, 36, 28, 240)
@@ -786,7 +1137,9 @@ function PANEL:Think()
     local x, y, w, h = self:DollRect()
     local mx, my = self:CursorPos()
     local hov
-    if mx >= x and mx <= x + w and my >= y and my <= y + h then
+    if self.AvatarDrawn then
+        hov = AvatarPartAt(mx, my, self.States)
+    elseif mx >= x and mx <= x + w and my >= y and my <= y + h then
         hov = PartAt((mx - x) / w * DOLL_W, (my - y) / h * DOLL_H)
     end
     if hov ~= self.Hover and hov then surface.PlaySound("ui/rem_hover.wav") end
@@ -1155,24 +1508,8 @@ function PANEL:DrawDoll()
         offs[i] = {ox, oy}
     end
 
-    -- части: заливка + контур
-    surface.SetDrawColor(255, 255, 255, 255)
-    local split = PARTS[1].full and not PARTS[1].full:IsError()
-    if split then
-        for i, p in ipairs(PARTS) do
-            local st = self.States[i]
-            if not (st and st.missing) then
-                surface.SetMaterial(p.full)
-                surface.DrawTexturedRect(x + offs[i][1], y + offs[i][2], w, h)
-            end
-        end
-    else
-        -- запасной вариант: цельная кукла (если файлов частей нет)
-        surface.SetMaterial(matOutline) surface.DrawTexturedRect(x, y, w, h)
-        surface.SetMaterial(matDoll)    surface.DrawTexturedRect(x, y, w, h)
-    end
-
-    for i, p in ipairs(PARTS) do
+    -- цвет подсветки части: состояние, кровотечение, выбор, наведение
+    local function PartColor(i)
         local st = self.States[i]
         local a, col = 0, C_GREEN
         if st then
@@ -1197,6 +1534,40 @@ function PANEL:DrawDoll()
             a = math.min(255, a + 60)
             if not st or st.health >= 0.999 then col = C_GREEN end
         end
+        return col, a
+    end
+
+    -- аватар: твоя модель чёрным силуэтом (дрожь делают сами кости)
+    local CENTERS = PART_CENTER
+    self.AvatarDrawn = AvatarOn() and AvatarDraw(self, LocalPlayer(), x, y, w, h, self.States, function(i) return offs[i][1], offs[i][2] end) or false
+    if self.AvatarDrawn then
+        AvatarPaintParts(PartColor)
+        CENTERS = AV.centers
+        for i = 1, #PARTS do offs[i] = {0, 0} end
+    end
+
+    -- части: заливка + контур
+    surface.SetDrawColor(255, 255, 255, 255)
+    local split = PARTS[1].full and not PARTS[1].full:IsError()
+    if self.AvatarDrawn then
+        -- уже нарисовано
+    elseif split then
+        for i, p in ipairs(PARTS) do
+            local st = self.States[i]
+            if not (st and st.missing) then
+                surface.SetMaterial(p.full)
+                surface.DrawTexturedRect(x + offs[i][1], y + offs[i][2], w, h)
+            end
+        end
+    else
+        -- запасной вариант: цельная кукла (если файлов частей нет)
+        surface.SetMaterial(matOutline) surface.DrawTexturedRect(x, y, w, h)
+        surface.SetMaterial(matDoll)    surface.DrawTexturedRect(x, y, w, h)
+    end
+
+    for i, p in ipairs(PARTS) do
+        if self.AvatarDrawn then break end
+        local col, a = PartColor(i)
         if a > 0 then
             surface.SetDrawColor(col.r, col.g, col.b, a)
             surface.SetMaterial(p.mat)
@@ -1206,7 +1577,9 @@ function PANEL:DrawDoll()
 
     -- белые линии поверх (дрожат вместе с частью)
     surface.SetDrawColor(255, 255, 255, 255)
-    if split and PARTS[1].plines and not PARTS[1].plines:IsError() then
+    if self.AvatarDrawn then
+        -- у силуэта линий нет: контур уже белый
+    elseif split and PARTS[1].plines and not PARTS[1].plines:IsError() then
         for i, p in ipairs(PARTS) do
             local st = self.States[i]
             if not (st and st.missing) then
@@ -1222,7 +1595,7 @@ function PANEL:DrawDoll()
     -- кровотечение: капля на каждой кровоточащей части (чем сильнее, тем больше и краснее)
     for i, p in ipairs(PARTS) do
         local lvl = DropLevel(self.Wounds and self.Wounds[i])
-        local c = PART_CENTER[p.id]
+        local c = CENTERS[p.id]
         if lvl > 0 and c and matDrops[lvl] and not matDrops[lvl]:IsError() then
             local size = S(16 + lvl * 5)
             -- капля "стекает": медленно сползает вниз и снова появляется
@@ -1241,7 +1614,7 @@ function PANEL:DrawDoll()
     if org then
         local per = {}
         for _, sh in ipairs(RemShardList()) do
-            local c = PART_CENTER[sh.part]
+            local c = CENTERS[sh.part]
             if c then
                 per[sh.part] = (per[sh.part] or 0) + 1
                 local n = per[sh.part]

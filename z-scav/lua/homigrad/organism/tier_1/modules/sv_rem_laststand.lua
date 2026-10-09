@@ -1,16 +1,13 @@
 --[[
     Z-SCAV: последний рубеж (по правилам Casualties: Unknown, Last stand).
 
-    Срабатывает ТОЛЬКО во время процесса умирания (таймер "You will die in..."):
-    в начале умирания один раз бросается шанс, зависящий от настроения (счастья):
+    Срабатывает, когда начинается умирание (таймер "You will die in...") или мозг
+    подходит к смерти (повреждение >= 78%, у нас 85% - смерть). Бросок один на эпизод, сам рубеж - один раз за жизнь.
+    Шанс берётся по настроению 9-10 минут назад (каждую минуту настроение пишется
+    в историю из 10 ячеек, как в CU). Точки кривой из вики, между ними - линейно:
 
-        настроение | шанс
-        -100..-30  |   0%
-        -30..-10.02|  0 -> 10%
-        -10..0     |  20%
-          0..10    |  20 -> 50%
-         10..70    |  50 -> 100%
-         70..100   | 100%
+        настроение | -30  -20  -10   0    10   20     40   60     70
+        шанс       |  0%   5%  20%  20%  50%  58.3%  75%  91.7%  100%
 
     Сработал - персонаж приходит в себя, таймер умирания снимается, и сразу:
       мозг 75-90% здоровья, сытость и вода на полпути к полным, кровь не меньше 3.75 л,
@@ -34,16 +31,34 @@ CFG.ADRENALINE_TIME = 300
 CFG.ADRENALINE_MIN = 1.5    -- уровень адреналина гейммода, ниже которого не опускается 5 минут
 CFG.ONCE_PER_LIFE  = true
 
--- таблица шанса из вики (настроение -100..100 -> 0..1)
+CFG.HEAL_TIME      = 300    -- сек: сколько тело активно заживает после рубежа
+CFG.ORGAN_HEAL     = 0.6    -- сразу: повреждение органов -60%
+CFG.ORGAN_REGEN    = 1 / 120 -- потом: органы заживают на 1/120 в секунду
+CFG.BLOOD_REGEN    = 6      -- мл/с, кровь восстанавливается до BLOOD_TARGET
+CFG.BLOOD_TARGET   = 4500
+CFG.BRAIN_CAP      = 0.3    -- пока действует рубеж, мозг сам не отмирает (только от новых ран)
+CFG.IMMUNITY_TIME  = 240    -- как антибиотики
+
+-- кривая шанса из вики (настроение -100..100 -> 0..1)
+local CURVE = {{-30, 0}, {-20, 0.05}, {-10, 0.20}, {0, 0.20}, {10, 0.50}, {20, 0.5833}, {40, 0.75}, {60, 0.9167}, {70, 1}}
 function hg.organism.LastStandChance(mood100)
     local m = mood100
-    if m <= -30 then return 0 end
-    if m < -10.01 then return math.Remap(m, -30, -10.02, 0, 0.10) end
-    if m < 0 then return 0.20 end
-    if m < 10 then return math.Remap(m, 0, 10, 0.20, 0.50) end
-    if m < 70 then return math.Remap(m, 10, 70, 0.50, 1.00) end
+    if m <= CURVE[1][1] then return 0 end
+    for i = 2, #CURVE do
+        local a, b = CURVE[i - 1], CURVE[i]
+        if m <= b[1] then return Lerp((m - a[1]) / (b[1] - a[1]), a[2], b[2]) end
+    end
     return 1
 end
+
+-- настроение 9-10 минут назад (если игрок жив меньше - самое старое, что есть)
+local function OldMood(org)
+    local h = org.remMoodHist
+    if istable(h) and #h > 0 then return h[#h] end
+    return (org.mood or 0) * 100
+end
+
+local function Heal(v, k) return isnumber(v) and math.max(v * (1 - k), 0) or v end
 
 local PHRASES = {"Только не так.. ТОЛЬКО НЕ ТАК!", "Вставай. ВСТАВАЙ!", "Я здесь не умру!", "Ещё нет.. ещё нет!"}
 
@@ -67,6 +82,23 @@ local function Activate(owner, org)
 
     -- мозг 75-90%
     org.brain = math.min(org.brain or 0, 1 - math.Rand(0.75, 0.90))
+    -- органы: повреждения -60% сразу, дальше заживают (см. LastStandThink)
+    for _, k in ipairs({"heart", "liver", "stomach", "intestines", "trachea", "eyeL", "eyeR", "heartStrain"}) do
+        org[k] = Heal(org[k], CFG.ORGAN_HEAL)
+    end
+    for _, k in ipairs({"lungsL", "lungsR"}) do
+        if istable(org[k]) then org[k][1] = Heal(org[k][1], CFG.ORGAN_HEAL) org[k][2] = Heal(org[k][2], CFG.ORGAN_HEAL) end
+    end
+    org.critical = false
+    -- мышцы +30% к здоровью (полные переломы - значение 1 - остаются)
+    for _, k in ipairs({"lleg", "rleg", "larm", "rarm", "chest", "pelvis", "skull", "jaw"}) do
+        if isnumber(org[k]) and org[k] < 1 then org[k] = org[k] * 0.7 end
+    end
+    -- иммунитет как от антибиотиков на 4 минуты, энергия полная, бодрость 200 с
+    org.remAntibioticsUntil = math.max(org.remAntibioticsUntil or 0, now + CFG.IMMUNITY_TIME)
+    org.remEnergy = 100
+    org.remEnergized = now + CFG.ENERGY_TIME
+    org.remLastStandHeal = now + CFG.HEAL_TIME
     org.brainHemorrhage = 0                         -- инсульт
     -- еда / вода на полпути к полным
     org.satiety = (org.satiety or 0) + (100 - (org.satiety or 0)) * 0.5
@@ -182,17 +214,57 @@ function hg.organism.LastStandThink(owner, org, timeValue, isPly)
         org.panicattack, org.panicattackadd = 0, 0
         org.remSepsis = 0
     end
+    -- история настроения: раз в минуту, 10 ячеек (последняя = 9-10 минут назад)
+    if (org.remMoodHistNext or 0) <= now then
+        org.remMoodHistNext = now + 60
+        org.remMoodHist = org.remMoodHist or {}
+        table.insert(org.remMoodHist, 1, (org.mood or 0) * 100)
+        if #org.remMoodHist > 10 then org.remMoodHist[11] = nil end
+    end
+
+    -- Z-SCAV: 5 минут тело реально заживает, а не просто "просыпается"
+    if (org.remLastStandHeal or 0) > now then
+        local dt = timeValue or 0
+        local r = CFG.ORGAN_REGEN * dt
+        for _, k in ipairs({"heart", "liver", "stomach", "intestines", "trachea", "eyeL", "eyeR"}) do
+            if isnumber(org[k]) and org[k] < 1 then org[k] = math.max(org[k] - r, 0) end
+        end
+        for _, k in ipairs({"lungsL", "lungsR"}) do
+            if istable(org[k]) then
+                if isnumber(org[k][1]) and org[k][1] < 1 then org[k][1] = math.max(org[k][1] - r, 0) end
+                if isnumber(org[k][2]) then org[k][2] = math.max(org[k][2] - r, 0) end
+            end
+        end
+        org.heartStrain = math.max((org.heartStrain or 0) - r, 0)
+        -- мозг сам не отмирает и понемногу заживает
+        org.brain = math.max(math.min(org.brain or 0, CFG.BRAIN_CAP) - r * 0.5, 0)
+        org.lastSeizureBrain = org.brain
+        -- кровь восстанавливается, раны подсыхают
+        if (org.blood or 0) < CFG.BLOOD_TARGET then org.blood = math.min((org.blood or 0) + CFG.BLOOD_REGEN * dt, CFG.BLOOD_TARGET) end
+        for _, w in ipairs(org.wounds or {}) do if isnumber(w[1]) then w[1] = math.max(w[1] - dt * 0.05, 0) end end
+        for _, w in ipairs(org.arterialwounds or {}) do if isnumber(w[1]) then w[1] = math.max(w[1] - dt * 0.05, 0) end end
+        if org.internalBleed then org.internalBleed = math.max(org.internalBleed - dt * 0.2, 0) end
+        -- кислород не проваливается, сердце не встаёт (если оно не разрушено)
+        if istable(org.o2) then org.o2[1] = math.max(org.o2[1] or 0, (org.o2.range or 30) * 0.5) end
+        if org.heartstop and (org.heart or 0) < 1 then org.heartstop = false end
+        org.arrhythmia = math.min(org.arrhythmia or 0, 0.4)
+        -- боль глушится адреналином
+        org.pain = math.min(org.pain or 0, 30)
+        org.shock = math.min(org.shock or 0, 10)
+        org.consciousness = math.max(org.consciousness or 1, 0.75)
+    end
+
     if (org.remLastStand or 0) > now then
         org.needotrub = false   -- первые секунды держим в сознании
         return
     end
 
-    -- процесс умирания идёт: один бросок на эпизод
-    if org.deathStateEnd and org.deathStateEnd > 0 then
+    -- процесс умирания идёт или мозг ниже 15%: один бросок на эпизод
+    if (org.deathStateEnd and org.deathStateEnd > 0) or (org.brain or 0) >= 0.78 then -- 0.85 у нас уже смерть мозга, ловим чуть раньше
         if org.remLastStandRolled then return end
         org.remLastStandRolled = true
         if CFG.ONCE_PER_LIFE and org.remLastStandUsed then return end
-        local chance = hg.organism.LastStandChance((org.mood or 0) * 100)
+        local chance = hg.organism.LastStandChance(OldMood(org))
         if math.Rand(0, 1) < chance then Activate(owner, org) end
     else
         org.remLastStandRolled = false
@@ -203,4 +275,6 @@ hook.Add("Org Clear", "ZSCAV_LastStand", function(org)
     org.remLastStand, org.remLastStandSpO2, org.remLastStandEnergy, org.remLastStandAdren = 0, 0, 0, 0
     org.remLastStandUsed = false
     org.remLastStandRolled = false
+    org.remLastStandHeal = 0
+    org.remMoodHist, org.remMoodHistNext = {}, 0
 end)

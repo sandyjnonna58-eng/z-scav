@@ -1601,22 +1601,8 @@ function PANEL:DrawDoll()
         surface.DrawTexturedRect(x, y, w, h)
     end
 
-    -- кровотечение: капля на каждой кровоточащей части (чем сильнее, тем больше и краснее)
-    for i, p in ipairs(PARTS) do
-        local lvl = DropLevel(self.Wounds and self.Wounds[i])
-        local c = CENTERS[p.id]
-        if lvl > 0 and c and matDrops[lvl] and not matDrops[lvl]:IsError() then
-            local size = S(16 + lvl * 5)
-            -- капля "стекает": медленно сползает вниз и снова появляется
-            local ph = (RealTime() * (0.4 + lvl * 0.08) + i * 0.37) % 1
-            local sx = x + (c[1] / DOLL_W) * w + offs[i][1] + S(10)
-            local sy = y + (c[2] / DOLL_H) * h + offs[i][2] - S(6) + ph * S(10)
-            local a = 255 * math.min(1, (1 - ph) * 3)
-            surface.SetDrawColor(255, 255, 255, a)
-            surface.SetMaterial(matDrops[lvl])
-            surface.DrawTexturedRect(sx - size * 0.5, sy - size * 0.5, size, size)
-        end
-    end
+    -- капли крови рисуются в самом конце Paint, поверх всего (PANEL:DrawDrops)
+    self.DropCtx = {x = x, y = y, w = w, h = h, offs = offs, centers = CENTERS}
 
     -- осколки в теле
     local org = self:GetOrg()
@@ -1652,6 +1638,32 @@ function PANEL:DrawDoll()
     end
 end
 
+-- кровотечение: капля на каждой кровоточащей части (чем сильнее, тем больше и краснее).
+-- Рисуется последней - поверх куклы/аватара, предметов, кнопок и подписей.
+function PANEL:DrawDrops()
+    local ctx = self.DropCtx
+    if not ctx then return end
+    local x, y, w, h, offs, CENTERS = ctx.x, ctx.y, ctx.w, ctx.h, ctx.offs, ctx.centers
+    render.SetStencilEnable(false)
+    DisableClipping(true)
+    for i, p in ipairs(PARTS) do
+        local lvl = DropLevel(self.Wounds and self.Wounds[i])
+        local c = CENTERS[p.id]
+        if lvl > 0 and c and matDrops[lvl] and not matDrops[lvl]:IsError() then
+            local size = S(16 + lvl * 5)
+            -- капля "стекает": медленно сползает вниз и снова появляется
+            local ph = (RealTime() * (0.4 + lvl * 0.08) + i * 0.37) % 1
+            local sx = x + (c[1] / DOLL_W) * w + offs[i][1] + S(10)
+            local sy = y + (c[2] / DOLL_H) * h + offs[i][2] - S(6) + ph * S(10)
+            local a = 255 * math.min(1, (1 - ph) * 3)
+            surface.SetDrawColor(255, 255, 255, a)
+            surface.SetMaterial(matDrops[lvl])
+            surface.DrawTexturedRect(sx - size * 0.5, sy - size * 0.5, size, size)
+        end
+    end
+    DisableClipping(false)
+end
+
 function PANEL:Paint(w, h)
     -- затемнение мира
     surface.SetDrawColor(0, 0, 0, 170)
@@ -1671,6 +1683,11 @@ function PANEL:Paint(w, h)
 
     Txt("ЛКМ - выбрать часть / предмет -> часть   ПКМ / " .. string.upper(input.GetKeyName(KEY_CVAR:GetInt()) or "?") .. " / ESC - закрыть",
         "RemHP_Small", w - S(20), h - S(16), C_DIM, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
+end
+
+-- PaintOver идёт после дочерних панелей - капли крови точно поверх всего
+function PANEL:PaintOver(w, h)
+    self:DrawDrops()
 end
 
 vgui.Register("RemHealthMenu", PANEL, "EditablePanel")

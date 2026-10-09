@@ -36,6 +36,8 @@ function SWEP:PrimaryAttack()
     org.remAntibioticsUntil = math.min(math.max(org.remAntibioticsUntil or 0, now) + DOSE_TIME, now + MAX_TIME)
     ply:EmitSound("snd_jack_hmcd_pillsuse.wav", 60, math.random(95, 105))
     ply:Notify("Антибиотики.. организм сопротивляется.", 4, "zscav_antibiotics", 0)
+    -- Z-SCAV: курс лечения нейросифилиса (sv_rem_diseases.lua)
+    if hg.organism.DiseaseMedicine then hg.organism.DiseaseMedicine(ply, org, "antibiotics") end
     self.Pills = (self.Pills or PILLS) - 1
     if self.Pills <= 0 then
         ply:SelectWeapon("weapon_hands_sh")

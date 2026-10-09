@@ -314,6 +314,15 @@ local function send_organism(org, ply)
 	sendtable.remSleepQuality = org.remSleepQuality or 1
 	sendtable.remEnergized = org.remEnergized or 0
 	sendtable.remVicAddict = org.remVicAddict or 0
+	-- Z-SCAV: болезни - клиенту только проявившиеся (id -> прогресс)
+	local dis
+	for id, st in pairs(org.remDis or {}) do
+		if (id == "rabies" and st.symStart) or (id ~= "rabies" and (st.p or 0) >= (ZSCAV_DISEASE_SYMPTOM_AT or 0.12)) then
+			dis = dis or {}
+			dis[id] = math.Round(math.min(st.p or 0, 1), 2)
+		end
+	end
+	sendtable.remDis = dis or false
 	sendtable.remVicDetox = (org.remVicDetoxEnd or 0) > CurTime()
 	sendtable.vomitInThroat = org.vomitInThroat and true or false
 	-- Z-SCAV: отравление (яд, цианид, угарный газ) для мудла "Toxicosis"
@@ -874,6 +883,8 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 		org.uncon_timer = 0
 	end
 
+	-- Z-SCAV: болезни (modules/sv_rem_diseases.lua)
+	if hg.organism.DiseaseThink then hg.organism.DiseaseThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: викодин - зависимость и ломка (modules/sv_rem_vicodin.lua)
 	if hg.organism.VicodinThink then hg.organism.VicodinThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: последний рубеж организма (modules/sv_rem_laststand.lua)

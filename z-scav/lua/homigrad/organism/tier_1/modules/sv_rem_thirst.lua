@@ -34,6 +34,13 @@ local function N0(v) return isnumber(v) and v or 0 end
 -- еда/питьё из любых предметов: food - сытость, water - сколько жажды снять
 function hg.organism.Consume(org, food, water, wep)
     if not org then return end
+    -- Z-SCAV: бешенство - гидрофобия, пить невозможно (sv_rem_diseases.lua)
+    if org.remRabiesSym and (water or 0) > (food or 0) then
+        org.fear = math.min((org.fear or 0) + 0.5, 1)
+        org.painadd = (org.painadd or 0) + 8
+        if IsValid(org.owner) and org.owner.Notify then org.owner:Notify("Не могу! Горло сводит от одного вида воды!", 4, "zscav_hydrophobia", 0) end
+        return
+    end
     -- Z-SCAV: кофе, газировка и энергетики бодрят (sv_rem_energy.lua)
     if hg.organism.IsEnergyDrink and hg.organism.AddEnergy and hg.organism.IsEnergyDrink(wep) then
         hg.organism.AddEnergy(org, (water or 0) * hg.organism.EnergyCFG.DRINK_ENERGY, true)

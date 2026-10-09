@@ -1448,6 +1448,16 @@ function PANEL:DrawMonitor(org, x, y, w)
     if N(org.remLastStand) > CurTime() then alerts[#alerts + 1] = ("ПОСЛЕДНИЙ РУБЕЖ %dс"):format(N(org.remLastStand) - CurTime()) end
     if org.remVicDetox then alerts[#alerts + 1] = "ЛОМКА (ВИКОДИН)"
     elseif N(org.remVicAddict) >= 0.4 then alerts[#alerts + 1] = "ЗАВИСИМОСТЬ: ВИКОДИН" end
+    -- Z-SCAV: проявившиеся болезни
+    if istable(org.remDis) and ZSCAV_DISEASES then
+        for _, id in ipairs(ZSCAV_DISEASE_ORDER or {}) do
+            local p = tonumber(org.remDis[id])
+            local d = ZSCAV_DISEASES[id]
+            if p and d then
+                alerts[#alerts + 1] = string.upper(d.name) .. (d.lethal and (" %d%%"):format(math.min(p, 1) * 100) or "")
+            end
+        end
+    end
     if N(org.hungry) >= 65 then alerts[#alerts + 1] = "ИСТОЩЕНИЕ" end
     if N(org.analgesia) > 0.5 then alerts[#alerts + 1] = "ОПИОИДЫ" end
     if N(org.hungry) >= 85 then alerts[#alerts + 1] = "ИСТОЩЕНИЕ"

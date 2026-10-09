@@ -62,9 +62,9 @@ CFG.PHRASE_MIN      = 70    -- пауза между хорошими фраза
 CFG.PHRASE_MAX      = 160
 
 CFG.phrases = {
-    {"Today is actually a pretty good day.", "I feel great right now!", "Things are going my way."},
-    {"I could run all day!", "Man, I love being alive.", "Nothing can stop me today!"},
-    {"Everything's gonna be alright.", "Life's not that bad, you know?", "I'm proud of myself."},
+    {"А сегодня, вообще-то, неплохой день.", "Мне сейчас отлично!", "Всё идёт как надо."},
+    {"Я бы мог бегать весь день!", "Как же здорово быть живым.", "Сегодня меня ничто не остановит!"},
+    {"Всё будет хорошо.", "Жизнь не так уж плоха, знаешь?", "Я горжусь собой."},
 }
 
 local function N(v, d) return isnumber(v) and v or (d or 0) end

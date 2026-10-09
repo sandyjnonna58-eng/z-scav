@@ -16,7 +16,7 @@ function PANEL:Init()
 	self.dialogue:SetText("Meow meow meow meow meow, meow meow meow, meow meow meow meow meow meow, meow meow meow meow. OwO. Meow meow meow meow. Meow meow, meow meow meow.", 2)
 	timer.Simple(15, function()
 		if !IsValid(self) then return end
-		self.dialogue:SetText("Meow. :3")
+		self.dialogue:SetText("Мяу. :3")
 
 		self:SetKeyboardInputEnabled(false)
 

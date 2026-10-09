@@ -24,7 +24,7 @@ function PLUGIN.Broadcast.Do(ply)
 	
 	if(ply.Abnormalties_Invisible)then
 		PLUGIN.Invisibility.SetInvisible(ply, false)
-		PLUGIN.ShowMessage(ply, "Your invisibility fades")
+		PLUGIN.ShowMessage(ply, "Ваша невидимость исчезает")
 	end
 	
 	ply.Abnormalties_BroadcastNextFadeTime = CurTime() + 10
@@ -45,10 +45,10 @@ local function TryBroadcast(zone, ply)
 			PLUGIN.AddConsequencesToZoneChanters(zone, 1)
 			PLUGIN.AddConsequences(ply, 10)
 		else
-			PLUGIN.ShowMessage(ply, "There are no players within the zone")
+			PLUGIN.ShowMessage(ply, "В зоне нет игроков")
 		end
 	else
-		PLUGIN.ShowMessage(ply, "There is not enough equalizers in order to cogito broadcast")
+		PLUGIN.ShowMessage(ply, "Недостаточно эквалайзеров для Cogito Broadcast")
 	end
 end
 --//

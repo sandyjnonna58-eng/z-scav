@@ -169,7 +169,7 @@ local CAMP = {
         },
         {
             id = "player", action = "achievements", actionRMB = "credits",
-            label = "ACHIEVEMENTS", hint = "RMB - CREDITS",
+            label = "ACHIEVEMENTS", hint = "ПКМ - ТИТРЫ",
             rect = {x = 165, y = 500, w = 315, h = 140},
             glow = Color(150, 220, 255), labelSide = "top",
         },
@@ -207,7 +207,7 @@ local CAMP = {
         lines = {
             {"Z-SCAV", "big"},
             {""}, {""},
-            {"BASED ON", "head"},
+            {"ОСНОВАНО НА", "head"},
             {"Z-City - uzelezz123"},
             {"github.com/uzelezz123/Z-City"},
             {""},
@@ -220,12 +220,12 @@ local CAMP = {
             {"ART", "head"},
             {"впишите автора фона"},
             {""},
-            {"USED ADDONS", "head"},
+            {"ИСПОЛЬЗОВАННЫЕ АДДОНЫ", "head"},
             {"Glide - StyledStrike"},
             {"vFire"},
             {"wOS DynaBase"},
             {""}, {""}, {""},
-            {"THANK YOU FOR PLAYING", "head"},
+            {"СПАСИБО ЗА ИГРУ", "head"},
         },
     },
 }

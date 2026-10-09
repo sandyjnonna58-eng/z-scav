@@ -50,6 +50,6 @@ end
 --//
 
 PLUGIN.Name = "RolePlus"
-PLUGIN.Description = "Adds subroles"
+PLUGIN.Description = "Добавляет подроли"
 PLUGIN.Version = 1
 

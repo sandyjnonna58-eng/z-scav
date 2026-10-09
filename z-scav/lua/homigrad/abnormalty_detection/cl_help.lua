@@ -32,7 +32,7 @@ Thaumaturgical phrases consists of some symbols and thaumaturgical letters.
 They will change after map cleanup. This can be delayed by 10 minutes every time by spelling a proper thaumaturgical phrase with these letters.
 
 4. Chanting your first phrase
-Try to chant something like "resources of the body" 10 times.
+Try to chant something like "ресурсы тела" 10 times.
 After you chanted it 10 times, some thoughts will appear in your head and point you in the direction you're going.
 
 Example:
@@ -77,7 +77,7 @@ Continue on the NEXT page.
 ]]
 	},
 	[2] = {
-		Name = "Rituals 1",
+		Name = "Ритуалы 1",
 		Desc = [[Life force]]
 	},
 	[3] = {
@@ -110,11 +110,11 @@ What it does?:
 	Besides these consequences, ressurected human can have their heart stopped randomly at first.]]
 	},
 	[5] = {
-		Name = "Rituals 2",
+		Name = "Ритуалы 2",
 		Desc = [[Invisibility, interaction and etc.]]
 	},
 	[6] = {
-		Name = "Cogito Evasion (Invisibility)",
+		Name = "Cogito Evasion (невидимость)",
 		Desc = [[
 Even if they can see me, they can't aknowledge me.
 You will need:
@@ -169,11 +169,11 @@ What it does?:
 ]]
 	},
 	[11] = {
-		Name = "Rituals 3",
+		Name = "Ритуалы 3",
 		Desc = [[Composite rituals and hard rituals]]
 	},
 	[12] = {
-		Name = "Thaumaturgical Arm Conjurement",
+		Name = "Тауматургическое призвание руки",
 		Desc = [[
 It seems that purity of the blood matters the most in rituals and not the amount.
 By utilizing Magic-infused weaponry I will be able to extract the purest blood.

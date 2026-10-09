@@ -111,7 +111,7 @@ function MODE:FigureOutConsequences()
 end
 
 function MODE:EndRound()
-	PrintMessage(HUD_PRINTTALK, "Round ended.")
+	PrintMessage(HUD_PRINTTALK, "Раунд окончен.")
 
 	for k, _ in pairs(self.saved.Timers or {}) do
 		timer.Remove(k)
@@ -499,7 +499,7 @@ function MODE:SpawnDeltaSquad(count)
 
 		ply:SetNetVar("CurPluv", "pluvberet")
 
-		zb.GiveRole(ply, "Delta Squad", Color(79, 10, 10))
+		zb.GiveRole(ply, "Отряд «Дельта»", Color(79, 10, 10))
 
 		spawned = spawned + 1
 		table.insert(SpawnedPlayers, ply)
@@ -526,7 +526,7 @@ function MODE:SpawnSquadHelicopter()
 			if #squad == 0 then
 				self:BroadcastCommander("Sorry, the extraction isn't coming. You're doomed. Better kill yourself.")
 			else
-				self:BroadcastCommander("The extraction helicopter is now in your area. Find it and try to signal to it somehow.")
+				self:BroadcastCommander("Вертолёт эвакуации уже в вашем районе. Найдите его и попробуйте подать сигнал.")
 
 				local heli = self:SpawnGlideHelicopter()
 				self.saved.UWUCopter = heli
@@ -556,7 +556,7 @@ function MODE:InitiateCQExtraction()
 			if #squad == 0 then
 				self:BroadcastCommander("Sorry, the extraction isn't coming. You're doomed. Better kill yourself.")
 			else
-				self:BroadcastCommander("The Delta Squad is here. Find them, and then follow them for your extraction.")
+				self:BroadcastCommander("Отряд «Дельта» здесь. Найдите их и следуйте за ними к эвакуации.")
 
 				self.saved.ExtractPoint = spawnPoint.pos
 
@@ -787,7 +787,7 @@ MODE.LootTable = {
 function MODE:CanPlayerEnterVehicle(ply, ent) -- damdn i forgot about the broken mode hooks lmao
 	if ply.PlayerClassName == "furry" then
 		if (ply.cantdrivecd or 0) < CurTime() then
-			ply:Notify("Uhh, idk how to drive.", 0, "idkdrive", 0)
+			ply:Notify("Эээ, я не умею водить.", 0, "idkdrive", 0)
 			ply.cantdrivecd = CurTime() + 10
 		end
 
@@ -796,17 +796,17 @@ function MODE:CanPlayerEnterVehicle(ply, ent) -- damdn i forgot about the broken
 end
 
 local killfurries = {
-	"One freak less.",
+	"Одним уродом меньше.",
 	"Cleansed.",
-	"Die, scum!",
-	"Not even human!",
-	"A raving beast, silenced.",
-	"Unholy creature.",
-	"Die! Die! Die!",
-	"Fucking hate those things.",
-	"I'll see you in hell.",
-	"I bring god's justice.",
-	"One abomination, now dead."
+	"Сдохни, мразь!",
+	"Даже не человек!",
+	"Бешеный зверь умолк.",
+	"Нечестивая тварь.",
+	"Сдохни! Сдохни! Сдохни!",
+	"Ненавижу этих тварей.",
+	"Увидимся в аду.",
+	"Я несу божье правосудие.",
+	"Одной мерзостью меньше."
 }
 
 function MODE:PlayerDeath(ply, inflictor, att)
@@ -921,7 +921,7 @@ function MODE:SpawnGlideHelicopter()
 					v.override = false
 					v.FakeRagdoll:Remove()
 				end
-				//v:ChatPrint("You are a stupid furry UwU")
+				//v:ChatPrint("Ты глупый фурри UwU")
 				v:KillSilent()
 				timer.Simple(0.1, function()
 					v:KillSilent() // awesomesauce
@@ -931,7 +931,7 @@ function MODE:SpawnGlideHelicopter()
 
 				if !self.saved.ContractorEscapee then
 					self.saved.ContractorEscapee = true
-					self:BroadcastContractor("Someone just escaped! The mission is a failure! Your contract is terminated.")
+					self:BroadcastContractor("Кто-то сбежал! Задание провалено! Ваш контракт расторгнут.")
 				end
 			end
 
@@ -940,7 +940,7 @@ function MODE:SpawnGlideHelicopter()
 			end)
 
 			timer.Simple(5, function()
-				self:BroadcastCommander("The extraction helicopter just left the area. Sorry pal, i guess you've got left behind.")
+				self:BroadcastCommander("Вертолёт эвакуации только что улетел. Извини, приятель, похоже, тебя бросили.")
 			end)
 		end
 	end
@@ -949,7 +949,7 @@ function MODE:SpawnGlideHelicopter()
 		if !self.HasExploded then return end
 
 		timer.Simple(5, function()
-			self:BroadcastCommander("I have lost contact with the helicopter... Fuck...")
+			self:BroadcastCommander("Я потерял связь с вертолётом... Чёрт...")
 		end)
 	end)
 
@@ -1020,7 +1020,7 @@ function MODE:Think()
 									ply.override = false
 									ply.FakeRagdoll:Remove()
 								end
-								//v:ChatPrint("You are a stupid furry UwU")
+								//v:ChatPrint("Ты глупый фурри UwU")
 								ply:KillSilent()
 								self.saved.Escaped[ply] = true
 							end
@@ -1043,13 +1043,13 @@ function MODE:Think()
 									ply.override = false
 									ply.FakeRagdoll:Remove()
 								end
-								//v:ChatPrint("You are a stupid furry UwU")
+								//v:ChatPrint("Ты глупый фурри UwU")
 								ply:KillSilent()
 								self.saved.Escaped[ply] = true
 
 								if !self.saved.ContractorEscapee then
 									self.saved.ContractorEscapee = true
-									self:BroadcastContractor("Someone just escaped! The mission is a failure! Your contract is terminated.")
+									self:BroadcastContractor("Кто-то сбежал! Задание провалено! Ваш контракт расторгнут.")
 								end
 							end
 						end)

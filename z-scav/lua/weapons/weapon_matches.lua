@@ -3,7 +3,7 @@ if SERVER then
 end
 
 if CLIENT then
-    SWEP.PrintName = "Match Box"
+    SWEP.PrintName = "Коробок спичек"
     SWEP.Slot = 3
     SWEP.SlotPos = 5
     SWEP.DrawAmmo = false
@@ -178,8 +178,8 @@ if CLIENT then
 		surface.DrawRect(x - 2.5, y - 25 * lerpthing * 0.1, 5, 50 * lerpthing * 0.1)
 
 		if IsValid(tr.Entity) and (tr.Entity.OnMatches or tr.Entity.shouldburn) then
-			draw.SimpleText( "Ignite object", "HomigradFont", toScreen.x + 3, toScreen.y + 27, color_black, TEXT_ALIGN_CENTER )
-			draw.SimpleText( "Ignite object", "HomigradFont", toScreen.x, toScreen.y + 25, colred, TEXT_ALIGN_CENTER )
+			draw.SimpleText( "Поджечь предмет", "HomigradFont", toScreen.x + 3, toScreen.y + 27, color_black, TEXT_ALIGN_CENTER )
+			draw.SimpleText( "Поджечь предмет", "HomigradFont", toScreen.x, toScreen.y + 25, colred, TEXT_ALIGN_CENTER )
 		end
 	end
 end

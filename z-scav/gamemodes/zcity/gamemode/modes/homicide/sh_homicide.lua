@@ -247,7 +247,7 @@ MODE.SubRoles = {
 		Name = "Traitor",
 		Description = [[You are the custom traitor.
 Your abilities and loadout are based on your selected preset or loadout.]],
-		Objective = "Use your loadout to murder everyone here.",
+		Objective = "Используйте снаряжение, чтобы убить всех здесь.",
 		SpawnFunction = function(ply)
 			ApplyTraitorLoadout(ply)
 		end,
@@ -260,7 +260,7 @@ If all players are cured zombie will lose.
 Instead of dying will be randomly transported to another infected player's body.
 Has no weapons or any tools.
 Despite being zombie, still bears appearance of a normal human.]],
-		Objective = "You're the zombie. Infect everyone to win. Avoid doctor.",
+		Objective = "Вы зомби. Заразите всех, чтобы победить. Избегайте врача.",
 		SpawnFunction = function(ply)
 		end,
 	},
@@ -343,13 +343,13 @@ MODE.RoleChooseRoundTypes = {
 MODE.Roles = {}
 MODE.Roles.standard = {
 	traitor = {
-		objective = "You've been preparing for this for a long time. Kill everyone.",
+		objective = "Вы долго к этому готовились. Убейте всех.",
 		name = "Murderer",
 		color = Color(190,0,0)
 	},
 
 	gunner = {
-		objective = "You're the hero. Use your loadout to stop the murderer.",
+		objective = "Вы герой. Используйте снаряжение, чтобы остановить убийцу.",
 		name = "Hero",
 		color = Color(158,0,190)
 	},
@@ -362,20 +362,20 @@ MODE.Roles.standard = {
 
 MODE.Roles.supermario = {
 	traitor = {
-		objective = "You're the evil Mario! Jump around and take down everyone.",
-		name = "Traitor Mario",
+		objective = "Вы злой Марио! Прыгайте и уничтожьте всех.",
+		name = "Марио-предатель",
 		color = Color(190,0,0)
 	},
 
 	gunner = {
-		objective = "You're the hero Mario! Use your jumping ability to stop the traitor.",
-		name = "Hero Mario",
+		objective = "Вы Марио-герой! Используйте прыжки, чтобы остановить предателя.",
+		name = "Марио-герой",
 		color = Color(158,0,190)
 	},
 
 	innocent = {
-		objective = "You're a bystander Mario, survive and avoid the traitor's traps!",
-		name = "Innocent Mario",
+		objective = "Вы Марио-прохожий: выживите и избегайте ловушек предателя!",
+		name = "Невиновный Марио",
 		color = Color(0,120,190)
 	},
 }

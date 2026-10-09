@@ -122,7 +122,7 @@ local function AchievementGetSortedEntries()
             progress = normalized,
             percent = percent,
             completed = completed,
-            status = completed and "Completed" or (percent > 0 and "In Progress" or "Locked")
+            status = completed and "Completed" or (percent > 0 and "В процессе" or "Locked")
         }
     end
 
@@ -509,14 +509,14 @@ function hg.DrawAchievmentsMenu(ParentPanel)
     listTitle:SetPos(MenuUnit(14), MenuUnit(10))
     listTitle:SetFont("ZCity_Ach_Small")
     listTitle:SetTextColor(achievement_color_white)
-    listTitle:SetText("ALL ACHIEVEMENTS")
+    listTitle:SetText("ВСЕ ДОСТИЖЕНИЯ")
     listTitle:SizeToContents()
 
     local listHint = vgui.Create("DLabel", listHeader)
     listHint:SetPos(MenuUnit(14), MenuUnit(30))
     listHint:SetFont("ZCity_Ach_Tiny")
     listHint:SetTextColor(achievement_color_text_dim)
-    listHint:SetText("Completed entries rise to the top")
+    listHint:SetText("Выполненные поднимаются наверх")
     listHint:SizeToContents()
 
     local listScroll = vgui.Create("DScrollPanel", listCard)
@@ -583,7 +583,7 @@ function hg.DrawAchievmentsMenu(ParentPanel)
     detailHeaderHint:SetPos(MenuUnit(14), MenuUnit(30))
     detailHeaderHint:SetFont("ZCity_Ach_Tiny")
     detailHeaderHint:SetTextColor(achievement_color_text_dim)
-    detailHeaderHint:SetText("Selected achievement overview")
+    detailHeaderHint:SetText("Обзор выбранного достижения")
     detailHeaderHint:SizeToContents()
 
     local detailContent = vgui.Create("DPanel", detailCard)
@@ -605,7 +605,7 @@ function hg.DrawAchievmentsMenu(ParentPanel)
     end
 
     local detailName = vgui.Create("DPanel", detailContent)
-    detailName.DisplayText = "No achievements loaded"
+    detailName.DisplayText = "Достижения не загружены"
     detailName.Paint = function(self, w, h)
         local text = self.DisplayText or ""
         local textOffset = AchievementGetMarqueeOffset(text, "ZCity_Ach_Title", w, w)
@@ -619,7 +619,7 @@ function hg.DrawAchievmentsMenu(ParentPanel)
     local detailStatus = vgui.Create("DLabel", detailContent)
     detailStatus:SetFont("ZCity_Ach_Small")
     detailStatus:SetTextColor(achievement_color_text)
-    detailStatus:SetText("Waiting for achievement data")
+    detailStatus:SetText("Ожидание данных достижений")
     detailStatus:SizeToContents()
 
     local detailDesc = vgui.Create("DLabel", detailContent)
@@ -627,7 +627,7 @@ function hg.DrawAchievmentsMenu(ParentPanel)
     detailDesc:SetTextColor(achievement_color_text_dim)
     detailDesc:SetWrap(true)
     detailDesc:SetAutoStretchVertical(true)
-    detailDesc:SetText("Open the menu again if achievements do not appear immediately.")
+    detailDesc:SetText("Откройте меню снова, если достижения не появились сразу.")
 
     local detailProgress = vgui.Create("DLabel", detailContent)
     detailProgress:SetFont("ZCity_Ach_Tiny")
@@ -719,7 +719,7 @@ function hg.DrawAchievmentsMenu(ParentPanel)
             empty:SetFont("ZCity_Ach_Tiny")
             empty:SetTextColor(achievement_color_text_dim)
             empty:SetContentAlignment(5)
-            empty:SetText("NO ACHIEVEMENTS AVAILABLE")
+            empty:SetText("ДОСТИЖЕНИЙ НЕТ")
             return
         end
 
@@ -784,9 +784,9 @@ function hg.DrawAchievmentsMenu(ParentPanel)
         local entry = self:GetActiveEntry()
         if not entry then
             detailIcon.IconMat = achievement_placeholder
-            detailName.DisplayText = "No achievements loaded"
-            detailStatus:SetText("Waiting for achievement data")
-            detailDesc:SetText("Open the menu again if achievements do not appear immediately.")
+            detailName.DisplayText = "Достижения не загружены"
+            detailStatus:SetText("Ожидание данных достижений")
+            detailDesc:SetText("Откройте меню снова, если достижения не появились сразу.")
             detailProgress:SetText("")
             detailBar.Progress = 0
             detailContent:InvalidateLayout(true)
@@ -796,7 +796,7 @@ function hg.DrawAchievmentsMenu(ParentPanel)
         detailIcon.IconMat = entry.image or achievement_placeholder
         detailName.DisplayText = string.upper(entry.name)
         detailStatus:SetText(entry.status)
-        detailDesc:SetText(entry.description ~= "" and entry.description or "No description provided.")
+        detailDesc:SetText(entry.description ~= "" and entry.description or "Описания нет.")
         detailProgress:SetText(entry.current .. " / " .. entry.needed .. " progress")
         detailBar.Progress = entry.progress
         detailContent:InvalidateLayout(true)

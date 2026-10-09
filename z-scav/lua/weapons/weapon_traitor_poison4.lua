@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_base"
-SWEP.PrintName = "Curare vial"
-SWEP.Instructions = "Curare only becomes active when it contaminates a wound or is introduced directly to the bloodstream; it is not active when ingested orally. This poison causes weakness of the skeletal muscles and, when administered in a sufficient dose, eventual death by asphyxiation due to paralysis of the diaphragm."
+SWEP.PrintName = "Флакон кураре"
+SWEP.Instructions = "Кураре действует, только попав в рану или прямо в кровь; при приёме внутрь не действует. Яд вызывает слабость скелетных мышц, а в достаточной дозе — смерть от удушья из-за паралича диафрагмы."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -178,7 +178,7 @@ if CLIENT then
 			if not whitelist[wep:GetClass()] then continue end
 			
 			local but = vgui.Create("DButton", dscroll)
-			but:SetText("Poison " .. wep.PrintName)
+			but:SetText("Яд " .. wep.PrintName)
 			but:SetFont("HomigradFontSmall")
 			but:SetPos(50, 150)
 			but:SetSize(300, 50)
@@ -197,7 +197,7 @@ if CLIENT then
 				net.SendToServer()
 
 				frame:Close()
-				lply:ChatPrint((wep.PrintName or "Weapon").." was poisoned!")
+				lply:ChatPrint((wep.PrintName or "Weapon").." отравлен!")
 			end
 		end
 	end
@@ -235,7 +235,7 @@ if SERVER then
 		else -- prank
 			if (not org.poison4notificate) and ((org.poison4 + 20) < CurTime()) then
 				org.poison4notificate = true
-				org.owner:Notify("I'm doing.. Something.. Wrong...", true, "poison4", 3)
+				org.owner:Notify("Я делаю.. что-то.. не так...", true, "poison4", 3)
 				org.owner:EmitSound( ( ThatPlyIsFemale(org.owner) and "vo/npc/female01/moan0"..math.random(5)..".wav" ) or "vo/npc/male01/moan0"..math.random(5)..".wav")
 				org.o2.regen = 0
 				--hg.organism.AmputateLimb(org, "larm") -- жестокие видеоигры
@@ -268,7 +268,7 @@ if SERVER then
 		
 		if (not org.poison4notificate) and ((org.poison4 + 20) < CurTime()) then
 			org.poison4notificate = true
-			org.owner:Notify("Breathing is... oddly harder...", true, "poison4", 3)
+			org.owner:Notify("Дышать... почему-то тяжелее...", true, "poison4", 3)
 			org.owner:EmitSound( ( ThatPlyIsFemale(org.owner) and "vo/npc/female01/moan0"..math.random(5)..".wav" ) or "vo/npc/male01/moan0"..math.random(5)..".wav")
 		end
 

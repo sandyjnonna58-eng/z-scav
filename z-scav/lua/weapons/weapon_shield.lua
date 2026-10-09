@@ -1,7 +1,7 @@
 if true then return end
 if SERVER then AddCSLuaFile() end
-SWEP.PrintName = "Ballistic shield"
-SWEP.Instructions = "A ballistic shield"
+SWEP.PrintName = "Баллистический щит"
+SWEP.Instructions = "Баллистический щит"
 SWEP.Category = "ZCity Other"
 SWEP.Instructions = ""
 SWEP.Spawnable = false

@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bigconsumable"
 SWEP.PrintName = "Pluviska"
-SWEP.Instructions = "PluvTown's Finest. A true delicacy."
+SWEP.Instructions = "Лучшее из ПлювТауна. Настоящий деликатес."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1

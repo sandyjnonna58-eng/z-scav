@@ -290,7 +290,7 @@ local function TryBuyArmor(ply)
 
 	local coins = ply:GetNWInt("Realish_Coins", 0)
 	if coins < cost then
-		ply:ChatPrint("Not enough coins for armor.")
+		ply:ChatPrint("Недостаточно монет на броню.")
 		return false
 	end
 

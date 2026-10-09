@@ -36,7 +36,7 @@ local function FindBody(zone)
 end
 
 local function Ressurect(owner, body, time)
-	PLUGIN.ShowMessageToAll("Something happens now")
+	PLUGIN.ShowMessageToAll("Сейчас что-то произойдёт")
 	util.ScreenShake(body:GetPos(), 5, 5, time, 300)
 
 	PLUGIN.Ressurection.ToRessurect[owner] = {
@@ -62,14 +62,14 @@ local function TryRessurect(zone, ply)
 				PLUGIN.AddConsequencesToZoneChanters(zone, -2)
 				PLUGIN.AddConsequences(ply, -50)
 			else
-				PLUGIN.ShowMessage(ply, "There are no dead bodies within the zone")
+				PLUGIN.ShowMessage(ply, "В зоне нет мёртвых тел")
 			end
 			-- PLUGIN.AddConsequences(ply, 200)
 		else
-			PLUGIN.ShowMessage(ply, "There are no dead bodies within the zone")
+			PLUGIN.ShowMessage(ply, "В зоне нет мёртвых тел")
 		end
 	else
-		PLUGIN.ShowMessage(ply, "There is not enough blood in order to reanimate body")
+		PLUGIN.ShowMessage(ply, "Недостаточно крови, чтобы оживить тело")
 	end
 end
 --//
@@ -133,7 +133,7 @@ hook.Add("Think", "Abnormalties_Ressurection", function()
 				-- body:Remove()
 				
 				--owner:Give("weapon_hands_sh")
-				PLUGIN.ShowMessageToAll("Something wicked happened")
+				PLUGIN.ShowMessageToAll("Случилось что-то зловещее")
 			end
 			
 			PLUGIN.Ressurection.ToRessurect[ply] = nil

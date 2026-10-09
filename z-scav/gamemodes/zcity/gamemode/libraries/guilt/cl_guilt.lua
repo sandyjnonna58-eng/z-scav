@@ -28,7 +28,7 @@ net.Receive("get_karma",function(len)
     local printTbl = "\nPlayers karma: \n"
 
     for id,karma in pairs(tbl) do
-        printTbl = printTbl.."\t"..(Player(id):Name().."'s karma is "..math.Round(karma,2)).."\n"
+        printTbl = printTbl.."\t"..(Player(id):Name()..": карма "..math.Round(karma,2)).."\n"
     end
 
     LocalPlayer():PrintMessage(HUD_PRINTCONSOLE,printTbl)
@@ -112,15 +112,15 @@ end
 
 local function harmdone(harm)
     if harm >= 9 then
-        return "killed you."
+        return "убил вас."
     elseif harm >= 5 then
-        return "basically killed you."
+        return "фактически убил вас."
     elseif harm >= 2 then
-        return "seriously injured you."
+        return "серьёзно ранил вас."
     elseif harm >= 1 then
-        return "mildly injured you."
+        return "слегка ранил вас."
     else
-        return "damaged you a bit."
+        return "немного задел вас."
     end
 end
 
@@ -138,7 +138,7 @@ hook.Add("HUDPaint","shownotification",function()
     if showstuff > CurTime() then
         local w, h = ScrW(), ScrH()
         local x, y = w / 2, h / 25 * 24
-        local txt = "Press F to open forgiveness menu."
+        local txt = "Нажмите F, чтобы открыть меню прощения."
         surface.SetFont( "HomigradFontBig" )
         surface.SetTextColor(255,255,255,255)
         local w, h = surface.GetTextSize(txt)
@@ -227,7 +227,7 @@ OpenMenu = function(tbl)
     if playerCount == 0 then
         local empty = vgui.Create("DLabel", scroll)
         empty:Dock(FILL)
-        empty:SetText("no punishments given")
+        empty:SetText("наказаний нет")
         empty:SetFont("ZCity_Menu_Settings_Tiny")
         empty:SetTextColor(color_white)
         empty:SetContentAlignment(5)
@@ -246,7 +246,7 @@ OpenMenu = function(tbl)
 		but:DockMargin(mg, first and mg or 0, mg, ScaleMenu(4))
         first = false
 		but:SetText("")
-		but.guiltText = "Forgive "..ply:Name().."? You will restore "..math.Round(harm,1).." karma and get "..math.Round(harm).." XP."
+		but.guiltText = "Forgive "..ply:Name().."? Вы восстановите "..math.Round(harm,1).." кармы и получите "..math.Round(harm).." XP."
 		but:SetTextColor(color_white)
         but.ply = ply
         but.name = ply:Name()

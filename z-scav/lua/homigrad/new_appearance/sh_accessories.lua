@@ -52,7 +52,7 @@ hg.Accessories = {
         placement = "face",
         bPointShop = true,
         price = 1000,
-        name = "Nerd Glasses"
+        name = "Очки ботаника"
     },
 
     ["headphones"] = {
@@ -76,7 +76,7 @@ hg.Accessories = {
         skin = 0,
         norender = true,
         placement = "head",
-        name = "Baseball Cap"
+        name = "Бейсболка"
     },
 
     ["fedora"] = {
@@ -111,7 +111,7 @@ hg.Accessories = {
         skin = 0,
         norender = true,
         placement = "head",
-        name = "Straw Hat"
+        name = "Соломенная шляпа"
     },
 
     ["sun hat"] = {
@@ -124,7 +124,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Sun Hat"
+        name = "Панама"
     },
 
     ["bling cap"] = {
@@ -145,7 +145,7 @@ hg.Accessories = {
         skin = 0,
         norender = true,
         placement = "head",
-        name = "Top Hat (waffle)"
+        name = "Цилиндр (вафельный)"
     },
 
     ["backpack"] = {
@@ -170,7 +170,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 4000,
         vpos = Vector(0,0,0),
-        name = "HelloKitty Backpack"
+        name = "Рюкзак HelloKitty"
     },
 
     ["kickme sticker"] = {
@@ -184,7 +184,7 @@ hg.Accessories = {
         bonemerge = true,
         bPointShop = true,
         price = 2500,
-        name = "KickMe Sticker"
+        name = "Наклейка «Пни меня»"
     },
 
     ["nerd tooths"] = {
@@ -198,7 +198,7 @@ hg.Accessories = {
         bonemerge = true,
         bPointShop = true,
         price = 2500,
-        name = "Nerd Teeth"
+        name = "Зубы ботаника"
     },
 
     ["purse"] = {
@@ -222,7 +222,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1500,
-        name = "ZCITY Baseball Cap"
+        name = "Бейсболка ZCITY"
     },
 
     ["gray cap"] = {
@@ -233,7 +233,7 @@ hg.Accessories = {
         skin = 0,
         norender = true,
         placement = "head",
-        name = "Grey Baseball Cap"
+        name = "Серая бейсболка"
     },
 
     ["light gray cap"] = {
@@ -244,7 +244,7 @@ hg.Accessories = {
         skin = 2,
         norender = true,
         placement = "head",
-        name = "Light Gray Baseball Cap"
+        name = "Светло-серая бейсболка"
     },
 
     ["white cap"] = {
@@ -257,7 +257,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "White Baseball Cap"
+        name = "Белая бейсболка"
     },
 
     ["green cap"] = {
@@ -270,7 +270,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Green Baseball Cap"
+        name = "Зелёная бейсболка"
     },
 
     ["dark green cap"] = {
@@ -281,7 +281,7 @@ hg.Accessories = {
         skin = 5,
         norender = true,
         placement = "head",
-        name = "Dark Green Baseball Cap"
+        name = "Тёмно-зелёная бейсболка"
     },
 
     ["brown cap"] = {
@@ -294,7 +294,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Brown Baseball Cap"
+        name = "Коричневая бейсболка"
     },
 
     ["blue cap"] = {
@@ -305,7 +305,7 @@ hg.Accessories = {
         skin = 7,
         norender = true,
         placement = "head",
-        name = "Blue Baseball Cap"
+        name = "Синяя бейсболка"
     },
     -- FaceMasks
     ["bandana"] = {
@@ -348,7 +348,7 @@ hg.Accessories = {
         bPointShop = true,
         vpos = Vector(0,0,63),
         price = 4500,
-        name = "Bandana colorable"
+        name = "Бандана (цветная)"
     },
 
 	-- cs stuff
@@ -362,7 +362,7 @@ hg.Accessories = {
         norender = true,
         disallowinappearance = true,
         bonemerge = true,
-        name = "Arctic Balaclava"
+        name = "Арктическая балаклава"
     },
 
     ["phoenix_balaclava"] = {
@@ -375,7 +375,7 @@ hg.Accessories = {
         norender = true,
         disallowinappearance = true,
         bonemerge = true,
-        name = "Phoenix Balaclava"
+        name = "Балаклава «Феникс»"
     },
    	--[[
 	["hood_balaclava"] = {
@@ -402,7 +402,7 @@ hg.Accessories = {
         bonemerge = true,
         needcoolRender = true,
         flex = true,
-        name = "Terrorist Armband"
+        name = "Повязка террориста"
     },
 
     -- scarfs
@@ -415,7 +415,7 @@ hg.Accessories = {
         norender = false,
         vpos = Vector(0,0,20),
         placement = "torso",
-        name = "White Scarf"
+        name = "Белый шарф"
     },
 
     ["gray scarf"] = {
@@ -427,7 +427,7 @@ hg.Accessories = {
         norender = false,
         vpos = Vector(0,0,20),
         placement = "torso",
-        name = "Gray Scarf"
+        name = "Серый шарф"
     },
 
     ["black scarf"] = {
@@ -441,7 +441,7 @@ hg.Accessories = {
         bPointShop = true,
         vpos = Vector(0,0,20),
         price = 1000,
-        name = "Black Scarf"
+        name = "Чёрный шарф"
     },
 
     ["blue scarf"] = {
@@ -455,7 +455,7 @@ hg.Accessories = {
         bPointShop = true,
         vpos = Vector(0,0,20),
         price = 1000,
-        name = "Blue Scarf"
+        name = "Синий шарф"
     },
 
     ["red scarf"] = {
@@ -469,7 +469,7 @@ hg.Accessories = {
         bPointShop = true,
         vpos = Vector(0,0,20),
         price = 1000,
-        name = "Red Scarf"
+        name = "Красный шарф"
     },
 
     ["green scarf"] = {
@@ -483,7 +483,7 @@ hg.Accessories = {
         bPointShop = true,
         vpos = Vector(0,0,20),
         price = 1000,
-        name = "Green Scarf"
+        name = "Зелёный шарф"
     },
 
     ["pink scarf"] = {
@@ -497,7 +497,7 @@ hg.Accessories = {
         bPointShop = true,
         vpos = Vector(0,0,20),
         price = 1000,
-        name = "Pink Scarf"
+        name = "Розовый шарф"
     },
     -- earmuffs
     ["red earmuffs"] = {
@@ -510,7 +510,7 @@ hg.Accessories = {
         placement = "ears",
         bPointShop = true,
         price = 1000,
-        name = "Red Earmuffs"
+        name = "Красные наушники-грелки"
     },
 
     ["pink earmuffs"] = {
@@ -522,7 +522,7 @@ hg.Accessories = {
         norender = true,
         bPointShop = true,
         price = 1000,
-        name = "Pink Earmuffs"
+        name = "Розовые наушники-грелки"
     },
 
     ["green earmuffs"] = {
@@ -535,7 +535,7 @@ hg.Accessories = {
         placement = "ears",
         bPointShop = true,
         price = 1000,
-        name = "Green Earmuffs"
+        name = "Зелёные наушники-грелки"
     },
 
     ["yellow earmuffs"] = {
@@ -548,7 +548,7 @@ hg.Accessories = {
         placement = "ears",
         bPointShop = true,
         price = 1000,
-        name = "Yellow Earmuffs"
+        name = "Жёлтые наушники-грелки"
     },
     -- fedoras
 
@@ -562,7 +562,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Gray Fedora"
+        name = "Серая федора"
     },
 
     ["black fedora"] = {
@@ -575,7 +575,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Black Fedora"
+        name = "Чёрная федора"
     },
 
     ["white fedora"] = {
@@ -588,7 +588,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "White Fedora"
+        name = "Белая федора"
     },
 
     ["beige fedora"] = {
@@ -601,7 +601,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Beige Fedora"
+        name = "Бежевая федора"
     },
 
     ["black/red fedora"] = {
@@ -614,7 +614,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Black-n-Red Fedora"
+        name = "Чёрно-красная федора"
     },
 
     ["blue fedora"] = {
@@ -627,7 +627,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Blue Fedora"
+        name = "Синяя федора"
     },
     -- beanies
     ["striped beanie"] = {
@@ -640,7 +640,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Striped Beanie"
+        name = "Полосатая шапка"
     },
     ["periwinkle beanie"] = {
         model = "models/modified/hat03.mdl",
@@ -652,7 +652,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Periwinkle Beanie"
+        name = "Барвинковая шапка"
     },
 
     ["fuschia beanie"] = {
@@ -665,7 +665,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Fuschia Beanie"
+        name = "Фуксиевая шапка"
     },
 
     ["white beanie"] = {
@@ -678,7 +678,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "White Beanie"
+        name = "Белая шапка"
     },
 
     ["gray beanie"] = {
@@ -691,7 +691,7 @@ hg.Accessories = {
         placement = "head",
         bPointShop = true,
         price = 1000,
-        name = "Gray Beanie"
+        name = "Серая шапка"
     },
     -- backpacks
     ["large red backpack"] = {
@@ -704,7 +704,7 @@ hg.Accessories = {
         placement = "spine",
         bPointShop = true,
         price = 1000,
-        name = "Large Red Backpack"
+        name = "Большой красный рюкзак"
     },
 
     ["large gray backpack"] = {
@@ -717,7 +717,7 @@ hg.Accessories = {
         placement = "spine",
         bPointShop = true,
         price = 1000,
-        name = "Large Gray Backpack"
+        name = "Большой серый рюкзак"
     },
 
     ["medium backpack"] = {
@@ -730,7 +730,7 @@ hg.Accessories = {
         placement = "spine",
         bPointShop = true,
         price = 1000,
-        name = "Medium Backpack"
+        name = "Средний рюкзак"
     },
 
     ["medium gray backpack"] = {
@@ -743,7 +743,7 @@ hg.Accessories = {
         placement = "spine",
         bPointShop = true,
         price = 1000,
-        name = "Medium Gray Backpack"
+        name = "Средний серый рюкзак"
     },
 
     ["monokl"] = {
@@ -774,7 +774,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 2500,
         vpos = Vector(0,0,0),
-        name = "China Hat"
+        name = "Китайская шляпа"
     },
 
     ["helicopter cap"] = {
@@ -790,7 +790,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 2500,
         vpos = Vector(0,0,69),
-        name = "Helicopter Baseball Cap"
+        name = "Бейсболка с пропеллером"
     },
 
     ["welding glasses"] = {
@@ -806,7 +806,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 2500,
         vpos = Vector(0,0,69),
-        name = "Welding Glasses"
+        name = "Сварочные очки"
     },
 
     ["big glasses"] = {
@@ -823,7 +823,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 2000,
         vpos = Vector(0,0,69),
-        name = "Big Glasses"
+        name = "Большие очки"
     },
 
     ["glasses with nose"] = {
@@ -855,7 +855,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3000,
         vpos = Vector(0,0,69),
-        name = "FMF Glasses"
+        name = "Очки FMF"
     },
 
     ["warmcap"] = {
@@ -886,7 +886,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat Survivor"
+        name = "Слизнекот Выживший"
     },
     ["slugcat monk"] = {
         model = "models/salat_port/slugcat_figure.mdl",
@@ -900,7 +900,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat Monk"
+        name = "Слизнекот Монах"
     },
     ["slugcat gourmand"] = {
         model = "models/salat_port/slugcat_figure.mdl",
@@ -914,7 +914,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat Gourmand"
+        name = "Слизнекот Гурман"
     },
     ["slugcat arti"] = {
         model = "models/salat_port/slugcat_figure.mdl",
@@ -928,7 +928,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat Artificer"
+        name = "Слизнекот Ремесленник"
     },
     ["slugcat rivulet"] = {
         model = "models/salat_port/slugcat_figure.mdl",
@@ -942,7 +942,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat WetMouse"
+        name = "Слизнекот МокраяМышь"
     },
     ["slugcat speermaster"] = {
         model = "models/salat_port/slugcat_figure.mdl",
@@ -956,7 +956,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat Spearmaster"
+        name = "Слизнекот Копейщик"
     },
     ["slugcat saint"] = {
         model = "models/salat_port/slugcat_figure.mdl",
@@ -970,7 +970,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 3500,
         vpos = Vector(0,0,0),
-        name = "Slugcat Saint"
+        name = "Слизнекот Святой"
     },
     ["pinklizard"] = {
         model = "models/zcity/lizard.mdl",
@@ -982,7 +982,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 1, -- for those who notices :3
         vpos = Vector(0,0,0),
-        name = "Pink Lizard"
+        name = "Розовая ящерица"
     },
     ["headband"] = {
         model = "models/distac/headband.mdl",
@@ -1040,7 +1040,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2300,
         vpos = Vector(0,0,69),
-        name = "Cap God"
+        name = "Кепка «Бог»"
     },
     ["glasses viktor"] = {
         model = "models/distac/viktor.mdl",
@@ -1055,7 +1055,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 1350,
         vpos = Vector(0,0,69),
-        name = "Viktor Glasses"
+        name = "Очки Виктора"
     },
     ["glasses folding"] = {
         model = "models/distac/folding.mdl",
@@ -1069,7 +1069,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 1350,
         vpos = Vector(0,0,69),
-        name = "Folding Glasses"
+        name = "Складные очки"
     },
     ["headband kamikadze"] = {
         model = "models/distac/headband.mdl",
@@ -1085,7 +1085,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 750,
         vpos = Vector(0,0,69),
-        name = "Kamikaze Headband"
+        name = "Повязка камикадзе"
     },
     ["mfdoom mask"] = {
         model = "models/distac/mfdoom.mdl",
@@ -1100,7 +1100,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2500,
         vpos = Vector(0,0,69),
-        name = "MF Doom Mask"
+        name = "Маска MF Doom"
     },
     -- ["anon mask"] = {
     --     model = "models/rawjesus/wear/anon.mdl",
@@ -1164,7 +1164,7 @@ hg.Accessories = {
         norender = true,
         bonemerge = true,
         bSetColor = true,
-        name = "Christmas Hat"
+        name = "Новогодняя шапка"
     },
     ["cap deeper"] = {
         model = "models/grinchfox/head_wear/caphat.mdl",
@@ -1179,7 +1179,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 850,
         vpos = Vector(0,0,5),
-        name = "Deeper Cap"
+        name = "Кепка Deeper"
     },
 
     ["cap nurse"] = {
@@ -1195,7 +1195,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 750,
         vpos = Vector(0,0,5),
-        name = "Nurse Cap"
+        name = "Шапочка медсестры"
     },
 
 	["cap payot"] = {
@@ -1211,7 +1211,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 4000,
         vpos = Vector(0,0,5),
-        name = "Payot Cap"
+        name = "Кепка с пейсами"
     },
 
 	["burger king crown"] = {
@@ -1227,7 +1227,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 99999999, -- не должно быть видно в поинтшопе типо нельзя купить (пасхалка)
         vpos = Vector(0,0,5),
-        name = "Burger King Crown"
+        name = "Корона Burger King"
     },
 
     ["deal glasses"] = {
@@ -1259,7 +1259,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 4000,
         vpos = Vector(0,0,5),
-        name = "Fancy Glasses"
+        name = "Модные очки"
     },
 
     ["retro glasses"] = {
@@ -1275,7 +1275,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2500,
         vpos = Vector(0,0,5),
-        name = "Retro Glasses"
+        name = "Ретро-очки"
     },
 
     ["tophat white"] = {
@@ -1291,7 +1291,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 1700,
         vpos = Vector(0,0,5),
-        name = "White Tophat"
+        name = "Белый цилиндр"
     },
 
     ["bandana groove"] = {
@@ -1308,7 +1308,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 1400,
         vpos = Vector(0,0,63),
-        name = "Groove Bandana"
+        name = "Бандана Groove"
     },
 
     ["bandana crips"] = {
@@ -1325,7 +1325,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 1400,
         vpos = Vector(0,0,63),
-        name = "Crips Bandana"
+        name = "Бандана Crips"
     },
 
     ["bandana white"] = {
@@ -1342,7 +1342,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 1100,
         vpos = Vector(0,0,63),
-        name = "White Bandana"
+        name = "Белая бандана"
     },
 
     ["bandana ghost"] = {
@@ -1358,7 +1358,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2500,
         vpos = Vector(0,0,63),
-        name = "Ghost Bandana"
+        name = "Бандана «Призрак»"
     },
 
     ["bandana hm"] = {
@@ -1374,7 +1374,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 1100,
         vpos = Vector(0,0,63),
-        name = "HM Bandana"
+        name = "Бандана HM"
     },
 
     ["bandana evil"] = {
@@ -1390,7 +1390,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 1500,
         vpos = Vector(0,0,63),
-        name = "Evil (evil) Bandana"
+        name = "Злая (злая) бандана"
     },
 
     ["baseball hub"] = {
@@ -1406,7 +1406,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 1750,
         vpos = Vector(0,0,5),
-        name = "Baseball Hat"
+        name = "Бейсбольная шапка"
     },
 
     ["leather bag"] = {
@@ -1423,7 +1423,7 @@ hg.Accessories = {
         isdpoint = false,
         price = 1550,
         vpos = Vector(0,0,42),
-        name = "Leather Bag"
+        name = "Кожаная сумка"
     },
 
     ["starglassis"] = {
@@ -1438,7 +1438,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2000,
         vpos = Vector(0,0,69),
-        name = "Star Glassis"
+        name = "Очки-звёзды"
     },
 
     ["cap brain"] = {
@@ -1453,7 +1453,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2000,
         vpos = Vector(0,0,0),
-        name = "Brain Cap"
+        name = "Кепка-мозг"
     },
 
     ["coolPro headphone"] = {
@@ -1468,7 +1468,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 2500,
         vpos = Vector(0,0,69),
-        name = "Headphones coolPro"
+        name = "Наушники coolPro"
     },
 
     ["medieval hood"] = {
@@ -1485,7 +1485,7 @@ hg.Accessories = {
         bPointShop = true,
         price = 950,
         vpos = Vector(0,0,69),
-        name = "Medieval hood"
+        name = "Средневековый капюшон"
     },
 
     ["cap cool"] = {
@@ -1501,7 +1501,7 @@ hg.Accessories = {
         price = 2000,
         vpos = Vector(0,0,0),
         SubMat = "distac/41/cap_fire",
-        name = "Cool Cap"
+        name = "Крутая кепка"
     },
 }
 

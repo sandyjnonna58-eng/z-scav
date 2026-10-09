@@ -275,7 +275,7 @@ hook.Add("EntityTakeDamage", "HL2Shit", function(target, dmginfo)
 
 		target.AccumulatedDamage = target.AccumulatedDamage + damage
 		if target.AccumulatedDamage >= target.DamageThreshold then
-			DestroyVehicle("accumulated damage: " .. math.Round(target.AccumulatedDamage))
+			DestroyVehicle("накопленный урон: " .. math.Round(target.AccumulatedDamage))
 		end
 
 		return false
@@ -1324,9 +1324,9 @@ end )
 --\\ Kick on death
 	local reasons = {
 		"Goodbye.",
-		"Better luck next time.",
+		"Повезёт в следующий раз.",
 		"Error",
-		"Something wrong"
+		"Что-то не так"
 	}
 
 	local plymeta = FindMetaTable("Player")

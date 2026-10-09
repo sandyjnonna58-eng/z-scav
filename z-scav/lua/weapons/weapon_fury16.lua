@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
-SWEP.PrintName = "'Uber' Norepinephrine"
+SWEP.PrintName = "«Убер» норадреналин"
 SWEP.Instructions = "An experimental combat stimulant refined from early Fury-13 samples with uncertain origin, nicknamed as 'Fury-16'.\n\nInstead of modifying your body, it forces it to burn through every resource for a massive speed boost. Functions by flooding the system with synthetic noradrenaline, inducing extreme vasoconstriction and cardiac output."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true

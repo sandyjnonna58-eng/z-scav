@@ -59,12 +59,12 @@ CFG.BADDAY_POWER   = {0.4, 0.75}    -- насколько роняет наст�
 CFG.BADDAY_DEP     = 0.0015         -- депрессия растёт в секунду во время эпизода
 CFG.BADDAY_CD      = 10 * 60        -- минимум между эпизодами
 CFG.BADDAY_LINES = {
-    "I don't know why.. but everything feels heavy today.",
-    "Nothing happened. I just feel empty.",
-    "Today is one of those days..",
-    "It's like a grey cloud came out of nowhere.",
+    "Не знаю почему.. но сегодня всё такое тяжёлое.",
+    "Ничего не случилось. Просто пусто внутри.",
+    "Сегодня один из тех дней..",
+    "Будто серая туча появилась из ниоткуда.",
 }
-CFG.BADDAY_END = {"It's getting a little lighter..", "The heaviness is fading a bit."}
+CFG.BADDAY_END = {"Становится немного легче..", "Тяжесть понемногу уходит."}
 
 -- приступ навязчивых мыслей (мини-игра, cl_rem_thoughts.lua)
 CFG.EPISODE_FROM   = 0.45   -- с какой депрессии бывают приступы
@@ -79,22 +79,22 @@ CFG.LOSE_STUN      = 3      -- сек: персонажа "накрывает" (
 -- стадии как в оригинальном Remorse (0.25 / 0.35 / 0.5), мысли без подталкивания к вреду себе
 CFG.stages = {
     {from = 0.25, lines = {
-        "You are feeling down.",
-        "A heavy weight settles on your chest.",
-        "Everything looks duller than it should.",
-        "You feel tired for no reason.",
+        "Вам грустно.",
+        "На грудь давит тяжесть.",
+        "Всё кажется тусклее, чем должно.",
+        "Вы устали без причины.",
     }},
     {from = 0.35, lines = {
-        "You are feeling upset.",
-        "A quiet sadness creeps over you.",
-        "Nothing feels worth the effort.",
-        "You can feel yourself slipping.",
+        "Вам тоскливо.",
+        "Подкрадывается тихая грусть.",
+        "Ничто не стоит усилий.",
+        "Вы чувствуете, что сползаете вниз.",
     }},
     {from = 0.5, lines = {
-        "You are feeling depressed.",
-        "A grey fog settles over everything.",
-        "You feel hollow, like something is missing.",
-        "Nothing seems to matter anymore.",
+        "У вас депрессия.",
+        "Всё затянуто серым туманом.",
+        "Внутри пусто, будто чего-то не хватает.",
+        "Кажется, ничто больше не важно.",
     }},
 }
 
@@ -265,13 +265,13 @@ net.Receive("rem_thoughts_mg_done", function(_, ply)
     if win then
         org.depression = math.max(0, (org.depression or 0) - CFG.WIN_DEPRESSION)
         if hg.organism.AddJoy then hg.organism.AddJoy(org, CFG.WIN_MOOD) end
-        ply:Notify("It's okay. I'm still here. It will pass.", 6, "rem_thoughts_win", 0)
+        ply:Notify("Всё в порядке. Я ещё здесь. Это пройдёт.", 6, "rem_thoughts_win", 0)
     else
         org.depression = math.min(1, (org.depression or 0) + CFG.LOSE_DEPRESSION)
         if org.happiness then org.happiness = math.max(0, org.happiness - 0.15) end
         org.fear = math.min(2, (org.fear or 0) + 0.5)
         if hg.LightStunPlayer then hg.LightStunPlayer(ply, CFG.LOSE_STUN) end
-        ply:Notify("Everything is too much right now.. I need to talk to someone.", 7, "rem_thoughts_lose", 0)
+        ply:Notify("Сейчас всего слишком много.. Мне нужно с кем-то поговорить.", 7, "rem_thoughts_lose", 0)
     end
 end)
 

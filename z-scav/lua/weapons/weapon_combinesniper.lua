@@ -1,9 +1,9 @@
 SWEP.Base = "homigrad_base"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Combine Sniper Rifle"
+SWEP.PrintName = "Снайперская винтовка Альянса"
 SWEP.Author = "Universal Union"
-SWEP.Instructions = "A powerful combine semi-automatic sniper rifle. Fires the same pulse ammo, but the force of the bullet is much greater."
+SWEP.Instructions = "Мощная полуавтоматическая снайперская винтовка Альянса. Стреляет теми же импульсными зарядами, но с гораздо большей силой."
 SWEP.Category = "Weapons - Sniper Rifles"
 SWEP.Slot = 2
 SWEP.SlotPos = 10

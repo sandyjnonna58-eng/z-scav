@@ -1,5 +1,5 @@
 MODE.name = "criresp"
-MODE.PrintName = "Crisis Response"
+MODE.PrintName = "Реагирование на кризис"
 
 MODE.ForBigMaps = false
 MODE.ROUND_TIME = 480

@@ -6,30 +6,30 @@ util.AddNetworkString("HGThought")
 local hev_color = Color(255,125,0)
 local CreateThought
 local thoughtMessages = {
-    panicattack_start = "You are experiencing a panic attack.",
-    panicattack_heartstop = "Your heart stopped.",
-    wake = "You regained consciousness.",
-    dislocations_unlucky = "The joint is back in place.",
-    painfromjawspeak = "Your jaw hurts when you speak.",
-    arteria = "Your carotid artery is gushing out blood.",
-    take_gasmask = "The gas mask is suffocating you.",
-    take_gasmask2 = "The gas mask is suffocating you.",
-    oxygen_lowintake = "You are not getting enough air.",
-    lowoxy = "You are low on oxygen.",
-    lowoxy2 = "You are low on oxygen.",
-    drugged = "You are drugged.", 
-    pneumothorax1 = "Something is filling your lungs.",
-    pneumothorax2 = "It is getting harder to breathe.",
-    pneumothorax3 = "You are struggling to breathe.",
-    brain = "Your brain is damaged.",
-    blood2 = "You are close to fainting.",
-    internalbleed = "You are bleeding internally.",
-    hungry = "You are hungry.",
-    heart = "You feel a sharp pain from your chest.",
-    heartstop = "Your heart stopped.",
-    painfrommoving = "Your leg hurts when you move.",
-    painfromjaw = "Your jaw hurts.",
-    painfromribs = "Your broken ribs make it painful to breathe.",
+    panicattack_start = "У вас паническая атака.",
+    panicattack_heartstop = "Ваше сердце остановилось.",
+    wake = "Вы пришли в сознание.",
+    dislocations_unlucky = "Сустав встал на место.",
+    painfromjawspeak = "Челюсть болит, когда вы говорите.",
+    arteria = "Из сонной артерии хлещет кровь.",
+    take_gasmask = "Противогаз вас душит.",
+    take_gasmask2 = "Противогаз вас душит.",
+    oxygen_lowintake = "Вам не хватает воздуха.",
+    lowoxy = "У вас мало кислорода.",
+    lowoxy2 = "У вас мало кислорода.",
+    drugged = "Вы под препаратами.", 
+    pneumothorax1 = "Что-то заполняет ваши лёгкие.",
+    pneumothorax2 = "Дышать становится тяжелее.",
+    pneumothorax3 = "Вы задыхаетесь.",
+    brain = "Ваш мозг повреждён.",
+    blood2 = "Вы на грани обморока.",
+    internalbleed = "У вас внутреннее кровотечение.",
+    hungry = "Вы голодны.",
+    heart = "Резкая боль в груди.",
+    heartstop = "Ваше сердце остановилось.",
+    painfrommoving = "Нога болит при движении.",
+    painfromjaw = "Челюсть болит.",
+    painfromribs = "Из-за сломанных рёбер больно дышать.",
 }
 
 local scpcbHitgroupToCat = {
@@ -46,154 +46,154 @@ local scpcbHitgroupToCat = {
 
 local scpcbThoughts = {
     head = {
-        "A {weapon} struck your head, killing you instantly.",
-        "A {weapon} hit your head, killing you instantly.",
-        "A {weapon} pierced your skull, ending your life instantly.",
-        "A {weapon} struck your temple, killing you instantly.",
-        "A {weapon} shattered your cranium, killing you instantly.",
-        "A {weapon} tore through your brain, killing you instantly.",
-        "A {weapon} hit your forehead, ending your life instantly.",
-        "A {weapon} struck your head, causing immediate brain death.",
-        "A {weapon} shattered your head, ending it all instantly."
+        "{weapon} — удар в голову. Мгновенная смерть.",
+        "{weapon} — попадание в голову. Мгновенная смерть.",
+        "{weapon} пробивает череп. Мгновенная смерть.",
+        "{weapon} — попадание в висок. Мгновенная смерть.",
+        "{weapon} раскалывает череп. Мгновенная смерть.",
+        "{weapon} разрывает мозг. Мгновенная смерть.",
+        "{weapon} — попадание в лоб. Мгновенная смерть.",
+        "{weapon} — удар в голову. Смерть мозга.",
+        "{weapon} разбивает голову. Всё кончено."
     },
     pelvis = {
-        "The {weapon} pierces your pelvis, narrowly missing your nads.",
-        "A {weapon} strikes your waist, causing severe pain.",
-        "A {weapon} hits your pelvis, making you cringe.",
-        "A {weapon} grazes your groin, narrowly missing your nads.",
-        "A {weapon} shatters your hip, making you stumble."
+        "{weapon} пробивает таз, едва не задев самое ценное.",
+        "{weapon} — попадание в поясницу. Сильная боль.",
+        "{weapon} — попадание в таз. Вас передёргивает.",
+        "{weapon} задевает пах, едва не задев самое ценное.",
+        "{weapon} раздробляет бедро. Вы спотыкаетесь."
     },
     pelvis_lethal = {
-        "A {weapon} destroyed your pelvis, causing fatal blood loss.",
-        "A {weapon} tore through your waist, severing an artery.",
-        "A {weapon} shattered your pelvis, killing you from shock."
+        "{weapon} разрушает таз. Смертельная кровопотеря.",
+        "{weapon} разрывает поясницу, перебив артерию.",
+        "{weapon} раздробляет таз. Смерть от шока."
     },
     head_nonlethal = {
-        "A {weapon} hit your head, causing severe pain.",
-        "A {weapon} struck your head.",
-        "A {weapon} hit your skull, making you dizzy.",
-        "A {weapon} grazed your head, leaving a laceration.",
-        "A {weapon} struck your skull, leaving you dazed.",
-        "A {weapon} hit your head, making you gasp."
+        "{weapon} — попадание в голову. Сильная боль.",
+        "{weapon} — удар в голову.",
+        "{weapon} — попадание в череп. Кружится голова.",
+        "{weapon} задевает голову, оставив рваную рану.",
+        "{weapon} — удар в череп. Вы оглушены.",
+        "{weapon} — попадание в голову. У вас перехватывает дыхание."
     },
     chest = {
-        "A {weapon} hit your chest, making you gasp.",
-        "A {weapon} struck your chest, making you gasp.",
-        "A {weapon} hit your ribs, causing severe pain.",
-        "A {weapon} struck your chest. Breathing becomes difficult.",
-        "A {weapon} penetrated your chest.",
-        "A {weapon} hit your chest, causing pain."
+        "{weapon} — попадание в грудь. У вас перехватывает дыхание.",
+        "{weapon} — удар в грудь. У вас перехватывает дыхание.",
+        "{weapon} — попадание в рёбра. Сильная боль.",
+        "{weapon} — удар в грудь. Дышать становится трудно.",
+        "{weapon} пробивает грудь.",
+        "{weapon} — попадание в грудь. Больно."
     },
     chest_lethal = {
-        "A {weapon} struck your chest, causing fatal internal injuries.",
-        "A {weapon} hit your chest, destroying your heart.",
-        "A {weapon} tore through your lung, drowning you in blood.",
-        "A {weapon} struck your chest, killing you instantly.",
-        "A {weapon} shattered your ribcage, puncturing your heart."
+        "{weapon} — удар в грудь. Смертельные внутренние травмы.",
+        "{weapon} — попадание в грудь. Сердце разорвано.",
+        "{weapon} пробивает лёгкое. Вы захлёбываетесь кровью.",
+        "{weapon} — удар в грудь. Мгновенная смерть.",
+        "{weapon} раздробляет грудную клетку и пробивает сердце."
     },
     stomach = {
-        "A {weapon} hit your stomach, making you gasp.",
-        "A {weapon} struck your gut, causing severe pain.",
-        "A {weapon} hit your abdomen.",
-        "A {weapon} struck your stomach, causing pain.",
-        "A {weapon} penetrated your stomach."
+        "{weapon} — попадание в живот. У вас перехватывает дыхание.",
+        "{weapon} — удар в живот. Сильная боль.",
+        "{weapon} — попадание в живот.",
+        "{weapon} — удар в живот. Больно.",
+        "{weapon} пробивает живот."
     },
     stomach_lethal = {
-        "A {weapon} struck your stomach, causing fatal internal bleeding.",
-        "A {weapon} tore through your gut, killing you.",
-        "A {weapon} hit your liver, causing massive bleeding.",
-        "A {weapon} destroyed your stomach, ending your life."
+        "{weapon} — удар в живот. Смертельное внутреннее кровотечение.",
+        "{weapon} разрывает живот. Смерть.",
+        "{weapon} — попадание в печень. Сильное кровотечение.",
+        "{weapon} разрушает желудок. Смерть."
     },
     leftarm = {
-        "A {weapon} hit your left arm.",
-        "A {weapon} struck your left arm.",
-        "A {weapon} hit your left shoulder.",
-        "A {weapon} struck your left forearm.",
-        "A {weapon} pierced your left arm."
+        "{weapon} — попадание в левую руку.",
+        "{weapon} — удар в левую руку.",
+        "{weapon} — попадание в левое плечо.",
+        "{weapon} — удар в левое предплечье.",
+        "{weapon} пробивает левую руку."
     },
     leftarm_lethal = {
-        "A {weapon} severed your left arm, causing fatal blood loss.",
-        "A {weapon} tore through your left arm, hitting an artery.",
-        "A {weapon} shattered your left shoulder, killing you from shock.",
-        "A {weapon} destroyed your left arm, causing you to bleed out."
+        "{weapon} отсекает левую руку. Смертельная кровопотеря.",
+        "{weapon} разрывает левую руку, задев артерию.",
+        "{weapon} раздробляет левое плечо. Смерть от шока.",
+        "{weapon} разрушает левую руку. Вы истекаете кровью."
     },
     rightarm = {
-        "A {weapon} hit your right arm.",
-        "A {weapon} struck your right arm.",
-        "A {weapon} hit your right shoulder.",
-        "A {weapon} struck your right forearm.",
-        "A {weapon} pierced your right arm."
+        "{weapon} — попадание в правую руку.",
+        "{weapon} — удар в правую руку.",
+        "{weapon} — попадание в правое плечо.",
+        "{weapon} — удар в правое предплечье.",
+        "{weapon} пробивает правую руку."
     },
     rightarm_lethal = {
-        "A {weapon} severed your right arm, causing fatal blood loss.",
-        "A {weapon} tore through your right arm, hitting an artery.",
-        "A {weapon} shattered your right shoulder, killing you from shock.",
-        "A {weapon} destroyed your right arm, causing you to bleed out."
+        "{weapon} отсекает правую руку. Смертельная кровопотеря.",
+        "{weapon} разрывает правую руку, задев артерию.",
+        "{weapon} раздробляет правое плечо. Смерть от шока.",
+        "{weapon} разрушает правую руку. Вы истекаете кровью."
     },
     leftleg = {
-        "A {weapon} hit your left leg.",
-        "A {weapon} struck your left leg.",
-        "A {weapon} hit your left thigh.",
-        "A {weapon} struck your left calf.",
-        "A {weapon} hit your left knee.",
-        "A {weapon} pierced your left leg."
+        "{weapon} — попадание в левую ногу.",
+        "{weapon} — удар в левую ногу.",
+        "{weapon} — попадание в левое бедро.",
+        "{weapon} — удар в левую голень.",
+        "{weapon} — попадание в левое колено.",
+        "{weapon} пробивает левую ногу."
     },
     leftleg_lethal = {
-        "A {weapon} severed your left leg, causing fatal blood loss.",
-        "A {weapon} tore through your left thigh, severing the femoral artery.",
-        "A {weapon} shattered your left leg, killing you from shock.",
-        "A {weapon} destroyed your left leg, causing you to bleed out."
+        "{weapon} отсекает левую ногу. Смертельная кровопотеря.",
+        "{weapon} разрывает левое бедро, перебив бедренную артерию.",
+        "{weapon} раздробляет левую ногу. Смерть от шока.",
+        "{weapon} разрушает левую ногу. Вы истекаете кровью."
     },
     rightleg = {
-        "A {weapon} hit your right leg.",
-        "A {weapon} struck your right leg.",
-        "A {weapon} hit your right thigh.",
-        "A {weapon} struck your right calf.",
-        "A {weapon} hit your right knee.",
-        "A {weapon} pierced your right leg."
+        "{weapon} — попадание в правую ногу.",
+        "{weapon} — удар в правую ногу.",
+        "{weapon} — попадание в правое бедро.",
+        "{weapon} — удар в правую голень.",
+        "{weapon} — попадание в правое колено.",
+        "{weapon} пробивает правую ногу."
     },
     rightleg_lethal = {
-        "A {weapon} severed your right leg, causing fatal blood loss.",
-        "A {weapon} tore through your right thigh, severing the femoral artery.",
-        "A {weapon} shattered your right leg, killing you from shock.",
-        "A {weapon} destroyed your right leg, causing you to bleed out."
+        "{weapon} отсекает правую ногу. Смертельная кровопотеря.",
+        "{weapon} разрывает правое бедро, перебив бедренную артерию.",
+        "{weapon} раздробляет правую ногу. Смерть от шока.",
+        "{weapon} разрушает правую ногу. Вы истекаете кровью."
     },
     generic = {
-        "A {weapon} hit you.",
-        "A {weapon} struck you.",
-        "A {weapon} hit your body.",
-        "A {weapon} struck your torso.",
-        "A {weapon} hit you, causing pain."
+        "{weapon} — попадание.",
+        "{weapon} — удар.",
+        "{weapon} — попадание в тело.",
+        "{weapon} — удар в торс.",
+        "{weapon} — попадание. Больно."
     },
     generic_lethal = {
-        "A {weapon} hit you, killing you instantly.",
-        "A {weapon} struck you, causing fatal trauma.",
-        "A {weapon} hit your body, ending your life.",
-        "A {weapon} tore through you, causing fatal damage."
+        "{weapon} — попадание. Мгновенная смерть.",
+        "{weapon} — удар. Смертельная травма.",
+        "{weapon} — попадание в тело. Смерть.",
+        "{weapon} пробивает насквозь. Смертельное ранение."
     },
     near_miss = {
-        "A {weapon} barely missed you.",
-        "A {weapon} whizzed past your head.",
-        "A {weapon} flew by your ear.",
-        "A {weapon} narrowly missed you.",
-        "A {weapon} grazed past you.",
-        "A {weapon} passed within inches of your head.",
-        "A {weapon} went past you.",
-        "A {weapon} missed you, but barely."
+        "{weapon} пролетает совсем рядом.",
+        "{weapon} свистит у самой головы.",
+        "{weapon} пролетает у уха.",
+        "{weapon} едва не попадает в вас.",
+        "{weapon} проносится вплотную.",
+        "{weapon} проходит в сантиметрах от головы.",
+        "{weapon} пролетает мимо.",
+        "{weapon} промахивается, но едва-едва."
     },
     armor_full = {
-        "A {weapon} hit your chest. The vest absorbed most of the damage.",
-        "A {weapon} hit your chest. The vest absorbed some of the damage.",
-        "A {weapon} struck your vest. Armor absorbed the impact.",
-        "A {weapon} hit your vest.",
-        "A {weapon} struck your vest."
+        "{weapon} — попадание в грудь. Жилет принял почти весь удар.",
+        "{weapon} — попадание в грудь. Жилет принял часть удара.",
+        "{weapon} — удар в жилет. Броня погасила удар.",
+        "{weapon} — попадание в жилет.",
+        "{weapon} — удар в жилет."
     },
     armor_partial = {
-        "A {weapon} hit your chest. The vest absorbed some of the damage.",
-        "A {weapon} struck your chest. Vest compromised.",
-        "A {weapon} hit your chest. Plating cracked but stopped the impact.",
-        "A {weapon} struck your vest, partially penetrating.",
-        "A {weapon} hit your chest. Armor slowed the strike, but it still hit you."
+        "{weapon} — попадание в грудь. Жилет принял часть удара.",
+        "{weapon} — удар в грудь. Жилет пробит.",
+        "{weapon} — попадание в грудь. Пластина треснула, но удержала.",
+        "{weapon} — удар в жилет, частичное пробитие.",
+        "{weapon} — попадание в грудь. Броня ослабила удар, но он прошёл."
     }
 }
 
@@ -308,8 +308,8 @@ SCPCBCreateThought = function(ply, category, dmgType, isLethal)
     if not options then return end
 
     local weaponStr = "bullet"
-    if dmgType == "blunt" then weaponStr = "blunt object" end
-    if dmgType == "slash" then weaponStr = "sharp object" end
+    if dmgType == "blunt" then weaponStr = "тупой предмет" end
+    if dmgType == "slash" then weaponStr = "острый предмет" end
     if dmgType == "generic" then weaponStr = "impact" end
 
     local msg = string.gsub(options[math.random(1, #options)], "{weapon}", weaponStr)

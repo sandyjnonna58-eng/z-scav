@@ -3053,7 +3053,7 @@ if CLIENT then
 		local countLabel = vgui.Create( "DLabel", Frame )
 		countLabel:SetPos( 25, 293 )
 		countLabel:SetTextColor(color_white)
-		countLabel:SetText( "Count:" )
+		countLabel:SetText( "Количество:" )
 		countLabel:SetFont("HomigradFontSmall")
 		countLabel:SizeToContents()
 
@@ -3159,7 +3159,7 @@ if CLIENT then
 
 					return 0
 				end,
-				"Drop Ammo"
+				"Выбросить патроны"
 			}
 		end
 	end)
@@ -3173,8 +3173,8 @@ if SERVER then
         local ammotype = net.ReadFloat()
         local count = net.ReadFloat()
         local pos = ply:EyePos()+ply:EyeAngles():Forward()*15
-        if ply:GetAmmoCount(ammotype)-count < 0 then ply:ChatPrint(((math.random(1,100) == 100 or 1) and "I need mor booolets!!!" ) or "You don't have enogh ammo") return end
-        if count < 1 then ply:ChatPrint("You can't drop zero ammo") return end
+        if ply:GetAmmoCount(ammotype)-count < 0 then ply:ChatPrint(((math.random(1,100) == 100 or 1) and "Мне нужно больше патронов!!!" ) or "Недостаточно патронов") return end
+        if count < 1 then ply:ChatPrint("Нельзя выбросить ноль патронов") return end
 			--if not ammolistent[ammotype] then ply:ChatPrint("Invalid entitytype...") return end
 			--print(game.GetAmmoName(ammotype))
 		

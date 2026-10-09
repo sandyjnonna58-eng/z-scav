@@ -2,8 +2,8 @@ SWEP.Base = "homigrad_base"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 SWEP.PrintName = "MP-80-13T"
-SWEP.Author = "Izhevsk Mechanical Plant"
-SWEP.Instructions = "Non-lethal gas pistol chambered in .45 Rubber"
+SWEP.Author = "Ижевский механический завод"
+SWEP.Instructions = "Нелетальный газовый пистолет под .45 Rubber"
 SWEP.Category = "Weapons - Pistols"
 SWEP.ViewModel = ""
 

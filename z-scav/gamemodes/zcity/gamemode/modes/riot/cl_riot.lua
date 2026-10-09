@@ -55,14 +55,14 @@ end)
 
 local teams = {
 	[0] = {
-                objective = "Overrun the police and survive the clash.",
+                objective = "Прорвитесь через полицию и выживите в столкновении.",
 		name = "a Rioter",
 		color1 = Color(190,0,0),
 		color2 = Color(190,0,0)
         },
         [1] = {
-                objective = "Contain the riot and neutralize the threat.",
-                name = "a Law Enforcement",
+                objective = "Подавите бунт и устраните угрозу.",
+                name = "силовик",
                 color1 = Color(0,120,190),
                 color2 = Color(0,120,190)
 	},
@@ -121,9 +121,9 @@ local function OpenVoteMenu()
         surface.SetDrawColor(100, 100, 100, 35)
         surface.SetMaterial(tex_gradient_d)
         surface.DrawTexturedRect(0, 0, w, h)
-        draw.SimpleText("RIOT INTENSITY", "ZCity_Menu_Small", w * 0.5, titleY, Color(225, 225, 225, 255 * titleFrac), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Vote before the round starts", "ZCity_Menu_Settings_Small", w * 0.5, h * 0.16 - (1 - titleFrac) * 18, Color(200, 200, 200, 255 * titleFrac), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText("TIME LEFT: " .. timerLeft, "ZCity_Menu_Small", w * 0.5, h * 0.86, timerColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("ИНТЕНСИВНОСТЬ БУНТА", "ZCity_Menu_Small", w * 0.5, titleY, Color(225, 225, 225, 255 * titleFrac), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Проголосуйте до начала раунда", "ZCity_Menu_Settings_Small", w * 0.5, h * 0.16 - (1 - titleFrac) * 18, Color(200, 200, 200, 255 * titleFrac), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("ОСТАЛОСЬ ВРЕМЕНИ: " .. timerLeft, "ZCity_Menu_Small", w * 0.5, h * 0.86, timerColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     RiotVoteMenu.Think = function()
         if CurTime() >= voteEndTime and IsValid(RiotVoteMenu) then
@@ -244,7 +244,7 @@ function MODE:HUDPaint()
     add("Riot", "ZB_HomicideHeader", Color(255, 255, 255), sw * 0.5, sh * 0.1, "left", 0, 0.9)
     add(intensityData.name, "ZB_HomicideMediumLarge", Color(255, 255, 255), sw * 0.5, sh * 0.2, "left", 0.25, 0.95)
     add(intensityData.description, "ZCity_Menu_Settings_Small", Color(225, 225, 225), sw * 0.5, sh * 0.26, "left", 0.45, 1, true)
-    add("You are " .. (riotIntroRoleName or teamData.name), "ZB_HomicideMediumLarge", ColorRole, sw * 0.5, sh * 0.5, "right", 0.7, 1.1)
+    add("Вы — " .. (riotIntroRoleName or teamData.name), "ZB_HomicideMediumLarge", ColorRole, sw * 0.5, sh * 0.5, "right", 0.7, 1.1)
     add(teamData.objective, "ZB_HomicideMedium", Color(255, 255, 255), sw * 0.5, sh * 0.9, "bottom", 1.4, 1.3, true)
 
     local tilts = MODE.RoundTextTilts or {}
@@ -282,7 +282,7 @@ function MODE:HUDPaint()
         surface.SetDrawColor(255, 255, 255, math.random(175, 255) * pluv_a / 2)
         surface.DrawTexturedRect(sw * 0.25 + cox, sh * 0.44 - ScreenScale(15) + coy, sw / 2, ScreenScale(30))
 
-        draw.SimpleText("SOMEWHERE IN PLUVTOWN", "ZB_ScrappersLarge", sw / 2 + cox, sh * 0.44 - ScreenScale(2) + coy, Color(0, 0, 0, 255 * pluv_a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("ГДЕ-ТО В ПЛЮВТАУНЕ", "ZB_ScrappersLarge", sw / 2 + cox, sh * 0.44 - ScreenScale(2) + coy, Color(0, 0, 0, 255 * pluv_a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end
 
@@ -426,9 +426,9 @@ CreateEndMenu = function()
 
 		surface.SetFont( "ZB_InterfaceMediumLarge" )
 		surface.SetTextColor(col.r,col.g,col.b,col.a)
-		local lengthX, lengthY = surface.GetTextSize("Players:")
+		local lengthX, lengthY = surface.GetTextSize("Игроки:")
 		surface.SetTextPos(w / 2 - lengthX/2,20)
-		surface.DrawText("Players:")
+		surface.DrawText("Игроки:")
 
 		surface.SetDrawColor( 255, 0, 0, 128)
         surface.DrawOutlinedRect( 0, 0, w, h, 2.5 )
@@ -461,33 +461,33 @@ CreateEndMenu = function()
 
             local col = ply:GetPlayerColor():ToColor()
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			
 			surface.SetTextColor(0,0,0,255)
 			surface.SetTextPos(w / 2 + 1,h/2 - lengthY/2 + 1)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
 			surface.SetTextPos(w / 2,h/2 - lengthY/2)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
             
 			local col = colSpect2
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			surface.SetTextPos(15,h/2 - lengthY/2)
-			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "He quited...")
+			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "Он вышел...")
 
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "Он вышел..." )
 			surface.SetTextPos(w - lengthX -15,h/2 - lengthY/2)
-			surface.DrawText(ply:Frags() or "He quited...")
+			surface.DrawText(ply:Frags() or "Он вышел...")
 		end
 
 		function but:DoClick()
-			if ply:IsBot() then chat.AddText(Color(255,0,0), "no, you can't") return end
+			if ply:IsBot() then chat.AddText(Color(255,0,0), "нет, нельзя") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/"..ply:SteamID64())
 		end
 

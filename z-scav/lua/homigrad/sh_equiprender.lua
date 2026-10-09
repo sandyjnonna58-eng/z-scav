@@ -467,7 +467,7 @@ if CLIENT then
 	
 		if not organism.otrub and table.Count(tbl) > 0 then
 			hg.radialOptions = hg.radialOptions or {}
-			local newEntry = {equipmentMenu, "Drop Equipment"}
+			local newEntry = {equipmentMenu, "Снять снаряжение"}
 			hg.radialOptions[#hg.radialOptions + 1] = newEntry
 		end
 	end)
@@ -656,7 +656,7 @@ if CLIENT then
 		lbl:DockMargin(10,0,10,10)
 
 		lbl.Paint = function(self, w, h)
-			draw.SimpleText("LMB - Drop equipment", "ZCity_Tiny", w * 0.5, h * 0.5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("ЛКМ - Снять снаряжение", "ZCity_Tiny", w * 0.5, h * 0.5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		local scroll = vgui.Create("DScrollPanel",frame)

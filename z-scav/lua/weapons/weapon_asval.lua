@@ -1,8 +1,8 @@
 SWEP.Base = "homigrad_base"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "AS «Val»"
-SWEP.Author = "TsNIITochmash Tula arms plant"
+SWEP.PrintName = "АС «Вал»"
+SWEP.Author = "ЦНИИТочмаш, Тульский оружейный завод"
 SWEP.Instructions = "An incredibly potent armament, this steel/polymer 9x39mm gas-operated, selective-fire, integrally suppressed rifle, the ASVAL, is the epitome of Soviet special operations units in the mid-1980s. With a 20-round-capacity magazine, a folding stock, and a pistol grip, it's designed for precision and stealth. Its unique design allows it to fire subsonic ammunition, reducing muzzle flash and report to a mere whisper. This makes the ASVAL a formidable weapon in the right hands, symbolizing the silent but deadly efficiency of specialized warfare. \n\nRate of fire 900 rounds per minute"
 SWEP.Category = "Weapons - Assault Rifles"
 SWEP.Slot = 2

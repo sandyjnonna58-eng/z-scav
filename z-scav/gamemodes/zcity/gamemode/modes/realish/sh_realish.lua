@@ -84,8 +84,8 @@ RealishKillstreakOrder = {"Supply", "Radar", "Airstrike", "PhantomRush"}
 
 RealishKillstreaks = {
 	Supply = {
-		name = "Ammo Crate",
-		desc = "A one time use ammo crate that will give you 2 magazines worth of ammo on all of your weapons.",
+		name = "Ящик с патронами",
+		desc = "Одноразовый ящик с патронами: по 2 магазина на всё ваше оружие.",
 		kills = 2,
 		icon = "spawnicons/models/props_junk/wood_crate001a.png",
 		weapon = "weapon_ammocrate",
@@ -95,7 +95,7 @@ RealishKillstreaks = {
 	},
 	Radar = {
 		name = "UAV",
-		desc = "Marks enemies on that area for a brief period of time.",
+		desc = "На короткое время отмечает врагов в области.",
 		kills = 3,
 		icon = "vgui/uav.png",
 		weapon = "weapon_uav",
@@ -105,7 +105,7 @@ RealishKillstreaks = {
 	},
 	Airstrike = {
 		name = "Airstrike",
-		desc = "Call in an airstrike that will drop a set of bombs on the target area.",
+		desc = "Вызвать авиаудар: серия бомб по цели.",
 		kills = 5,
 		icon = "vgui/airstrike.png",
 		weapon = "weapon_airstrike",
@@ -115,7 +115,7 @@ RealishKillstreaks = {
 	},
 	PhantomRush = {
 		name = "Phantom Rush",
-		desc = "Carpet bomb the designated area with B2 Stealth Bombers.",
+		desc = "Ковровая бомбардировка области бомбардировщиками B2.",
 		kills = 8,
 		icon = "vgui/b2bomber.png",
 		weapon = "weapon_carpetbomber",
@@ -129,7 +129,7 @@ RealishLoadoutSlots = RealishLoadoutSlots or {
 	{id = "primary", name = "Primary"},
 	{id = "secondary", name = "Secondary"},
 	{id = "gadget", name = "Gadget"},
-	{id = "gadget2", name = "Gadget 2"},
+	{id = "gadget2", name = "Гаджет 2"},
 	{id = "grenade", name = "Grenade"}
 }
 
@@ -156,7 +156,7 @@ RealishClasses = RealishClasses or {
 			{name = "Type 56-1", class = "weapon_type56", clips = 3, attachments = {"supressor1", "supressor6"}},
 			{name = "VPO-136", class = "weapon_vpo136", clips = 3, attachments = {"supressor1", "supressor6", "holo5fur", "holo6fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo6", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic4", "optic5", "optic6", "optic7", "optic8", "optic9", "optic11", "grip_akm0", "laser4"}},
 			{name = "VPO-209", class = "weapon_vpo209", clips = 3, attachments = {"supressor1", "supressor6", "holo5fur", "holo6fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo6", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic4", "optic5", "optic6", "optic7", "optic8", "optic9", "optic11", "grip_akm0", "laser4"}},
-			{name = "Underground AKM", class = "weapon_akmwreked", clips = 3, attachments = {"supressor1", "supressor6"}},
+			{name = "Подпольный АКМ", class = "weapon_akmwreked", clips = 3, attachments = {"supressor1", "supressor6"}},
 		},
 		secondary = {
 			{name = "Colt M45A1", class = "weapon_m45", clips = 2, attachments = {"supressor4"}},
@@ -171,9 +171,9 @@ RealishClasses = RealishClasses or {
 			{name = "TEC-9", class = "weapon_tec9", clips = 2},
 		},
 		gadget = {
-			{name = "Ballistic Shield", class = "weapon_ballistic_shield", clips = 0},
-			{name = "Taser X26", class = "weapon_taser", clips = 2},
-			{name = "Battering Ram", class = "weapon_ram", clips = 0},
+			{name = "Баллистический щит", class = "weapon_ballistic_shield", clips = 0},
+			{name = "Тазер X26", class = "weapon_taser", clips = 2},
+			{name = "Таран", class = "weapon_ram", clips = 0},
 			{name = "M7 Bayonet", class = "weapon_combatknife", clips = 0},
 		},
 		grenade = {
@@ -218,7 +218,7 @@ RealishClasses = RealishClasses or {
 			{name = "Medkit", class = "weapon_medkit_sh", clips = 0},
 			{name = "Painkillers", class = "weapon_painkillers", clips = 0},
 			{name = "Defibrillator", class = "weapon_defibrillator", clips = 0},
-			{name = "Big Bandage", class = "weapon_bigbandage_sh", clips = 0},
+			{name = "Большой бинт", class = "weapon_bigbandage_sh", clips = 0},
 			{name = "Morphine", class = "weapon_morphine", clips = 0},
 			{name = "Epinephrine", class = "weapon_adrenaline", clips = 0},
 			{name = "Mannitol", class = "weapon_mannitol", clips = 0},
@@ -258,10 +258,10 @@ RealishClasses = RealishClasses or {
 			{name = "Glock 17 LB", class = "weapon_glock17lb", clips = 2, attachments = {"supressor4", "supressor6", "holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo16", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9", "grip1", "grip2", "grip3", "laser1", "laser2", "laser3", "laser5", "mag1"}},
 			{name = "CZ 75", class = "weapon_cz75", clips = 2, attachments = {"supressor3", "supressor4", "supressor6"}},
 			{name = "CZ 75-A", class = "weapon_cz75a", clips = 2, attachments = {"supressor3", "supressor4", "supressor6"}},
-			{name = "PB-4 Osa", class = "weapon_osapb", clips = 2},
+			{name = "ПБ-4 «Оса»", class = "weapon_osapb", clips = 2},
 		},
 		gadget = {
-			{name = "Taser X26", class = "weapon_taser", clips = 2},
+			{name = "Тазер X26", class = "weapon_taser", clips = 2},
 			{name = "SOG SEAL 2000", class = "weapon_sogknife", clips = 0},
 		},
 		grenade = {
@@ -290,7 +290,7 @@ RealishClasses = RealishClasses or {
 			{name = "Remington 870 Sawed", class = "weapon_remington870_sawed_off", clips = 3, attachments = {"holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9"}},
 			{name = "M870 MCS", class = "weapon_m870mcs", clips = 3, attachments = {"supressor5", "holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9"}},
 			{name = "IZh-43", class = "weapon_doublebarrel", clips = 3},
-			{name = "Sawed-off IZh-43", class = "weapon_doublebarrel_short", clips = 3},
+			{name = "Обрез ИЖ-43", class = "weapon_doublebarrel_short", clips = 3},
 			{name = "KS-23", class = "weapon_ks23", clips = 3},
 			{name = "TOZ-106", class = "weapon_toz106", clips = 3, attachments = {"supressor1", "supressor6", "holo5fur", "holo6fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo6", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic4", "optic5", "optic6", "optic7", "optic8", "optic9", "optic11"}},
 		},
@@ -299,7 +299,7 @@ RealishClasses = RealishClasses or {
 			{name = "Glock 17", class = "weapon_glock17", clips = 2, attachments = {"supressor4", "supressor6", "holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo16", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9", "grip1", "grip2", "grip3", "laser1", "laser2", "laser3", "laser5", "mag1"}},
 			{name = "MR-96", class = "weapon_revolver2", clips = 2, attachments = {"supressor4", "supressor6"}},
 			{name = "Desert Eagle", class = "weapon_deagle", clips = 2, attachments = {"holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9"}},
-			{name = "AR Pistol", class = "weapon_ar_pistol", clips = 2, attachments = {"supressor2", "supressor6", "holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9"}},
+			{name = "AR-пистолет", class = "weapon_ar_pistol", clips = 2, attachments = {"supressor2", "supressor6", "holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9"}},
 			{name = "Micro Draco", class = "weapon_draco", clips = 2, attachments = {"supressor1", "supressor8", "holo5fur", "holo6fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo6", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic4", "optic5", "optic6", "optic7", "optic8", "optic9", "optic11"}},
 			{name = "VSKA Draco", class = "weapon_dracovska", clips = 2, attachments = {"supressor1", "supressor6", "holo5fur", "holo6fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo6", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo17", "optic2", "optic3", "optic4", "optic5", "optic6", "optic7", "optic8", "optic9", "optic11"}},
 			{name = "PM-9", class = "weapon_pm9", clips = 2, attachments = {"supressor4", "supressor6", "holo5fur", "holo1", "holo2", "holo3", "holo4", "holo5", "holo7", "holo8", "holo9", "holo11", "holo12", "holo13", "holo14", "holo15", "holo16", "holo17", "optic2", "optic3", "optic5", "optic6", "optic7", "optic8", "optic9", "grip1", "grip2", "grip3", "laser1", "laser2", "laser3", "laser5", "mag1"}},
@@ -307,14 +307,14 @@ RealishClasses = RealishClasses or {
 		},
 		gadget = {
 			{name = "SLAM", class = "weapon_hg_slam", clips = 0},
-			{name = "Pipe Bomb", class = "weapon_hg_pipebomb_tpik", clips = 0},
-			{name = "Battering Ram", class = "weapon_ram", clips = 0},
+			{name = "Самодельная бомба", class = "weapon_hg_pipebomb_tpik", clips = 0},
+			{name = "Таран", class = "weapon_ram", clips = 0},
 		},
 		grenade = 		{
 			{name = "RGD-5", class = "weapon_hg_rgd_tpik", clips = 0},
 			{name = "Incendiary", class = "weapon_hg_grenade_incendiary_tpik", clips = 0},
 			{name = "Molotov", class = "weapon_hg_molotov_tpik", clips = 0},
-			{name = "Pipe Bomb", class = "weapon_hg_pipebomb_tpik", clips = 0},
+			{name = "Самодельная бомба", class = "weapon_hg_pipebomb_tpik", clips = 0},
 			{name = "IED", class = "weapon_traitor_ied", clips = 0},
 			{name = "Type-59", class = "weapon_hg_type59_tpik", clips = 0},
 		},

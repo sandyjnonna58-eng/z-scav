@@ -193,7 +193,7 @@ function SWEP:Reload()
     end
 
     self:SetNetVar("mode", mode)
-    owner:ChatPrint("Changed mode to " .. (mode and "slash." or "stab."))
+    owner:ChatPrint("Режим изменён на " .. (mode and "slash." or "stab."))
     self:StartModeSwitch(mode)
 end
 

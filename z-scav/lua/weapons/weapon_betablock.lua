@@ -1,8 +1,8 @@
 if SERVER then AddCSLuaFile() end
 
 SWEP.Base = "weapon_bandage_sh"
-SWEP.PrintName = "Beta-Blocker"
-SWEP.Instructions = "Beta blockers can help in stressful situations, will reduce your panic and adrenaline. Very useful in combat at certain doses. RMB to inject into someone else."
+SWEP.PrintName = "Бета-блокатор"
+SWEP.Instructions = "Бета-блокаторы помогают в стрессе: снижают панику и адреналин. Очень полезны в бою в нужных дозах. ПКМ - ввести другому."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1
@@ -25,7 +25,7 @@ SWEP.WorkWithFake = true
 SWEP.offsetVec = Vector(2.5, -2.5, 0)
 SWEP.offsetAng = Angle(-30, 20, 180)
 SWEP.modeNames = {
-    [1] = "beta-blocker"
+    [1] = "бета-блокатор"
 }
 
 function SWEP:InitializeAdd()

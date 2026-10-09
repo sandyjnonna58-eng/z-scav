@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_hg_grenade_tpik"
-SWEP.PrintName = "Pipe-Bomb"
+SWEP.PrintName = "Самодельная бомба"
 SWEP.Instructions = 
 [[This improvised explosive device is a heavy-gauge steel pipe filled with black powder and surrounded by nails. It has a simple short pyrotechnic fuze. This device achieves high detonation speed and shrapnel projection through tight containment of the black powder (a low explosive). It's still not as deadly or reliable as a proper grenade, though.
 

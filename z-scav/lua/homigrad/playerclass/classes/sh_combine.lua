@@ -617,7 +617,7 @@ if CLIENT then
             local col_bg = bg_color
             col_bg.a = 225*silentlerp
             silentclr.a = 225*silentlerp
-            local txt = "SNEAK MODE"
+            local txt = "РЕЖИМ СКРЫТНОСТИ"
             draw.DrawText(txt,"CMBFontSmall",
                 pos[1],
                 pos[2]+(size[2]/2),

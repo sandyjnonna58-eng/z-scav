@@ -1,9 +1,9 @@
 SWEP.Base = "homigrad_base"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Heavy Dragoon Pistol"
+SWEP.PrintName = "Тяжёлый драгунский пистолет"
 SWEP.Author = "N/A"
-SWEP.Instructions = "This is a muzzle-loaded flintlock pistol that appeared as self-defense weapon and as a military arm in the early 16th century, using black powder and 20mm caliber."
+SWEP.Instructions = "Дульнозарядный кремнёвый пистолет, появившийся в начале XVI века как оружие самообороны и армии. Чёрный порох, калибр 20 мм."
 SWEP.Category = "Weapons - Pistols"
 SWEP.Slot = 1
 SWEP.SlotPos = 10

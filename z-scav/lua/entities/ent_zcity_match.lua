@@ -4,7 +4,7 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Fire Match"
+ENT.PrintName = "Спичка"
 ENT.Category = "ZCity Other"
 ENT.Spawnable = true
 ENT.Model = "models/weapons/gleb/matchhead.mdl"

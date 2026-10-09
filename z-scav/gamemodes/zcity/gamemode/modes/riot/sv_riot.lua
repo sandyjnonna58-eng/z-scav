@@ -144,7 +144,7 @@ local function GetIntensityData(index)
     return intensities[index] or intensities[2] or {
         id = "ESCALATED",
         name = "Escalated",
-        description = "Some people are armed, the fire is rising."
+        description = "Некоторые вооружены, огонь разгорается."
     }
 end
 
@@ -166,7 +166,7 @@ local function GetIntroRoleName(ply, intensityId)
         return "SWAT"
     end
 
-    return "Law Enforcement"
+    return "Силовики"
 end
 
 function MODE:Intermission()
@@ -360,7 +360,7 @@ local function GiveAnarchyRioter(ply)
 end
 
 local function GiveContainedLaw(ply, lawIndex)
-    zb.GiveRole(ply, "Law Enforcement", Color(0, 0, 190))
+    zb.GiveRole(ply, "Силовики", Color(0, 0, 190))
     ply:SetPlayerClass("police")
     GiveSling(ply)
     ply:Give("weapon_hands_sh")
@@ -382,7 +382,7 @@ local function GiveContainedLaw(ply, lawIndex)
 end
 
 local function GiveEscalatedLaw(ply, lawIndex, glockIndex)
-    zb.GiveRole(ply, "Law Enforcement", Color(0, 0, 190))
+    zb.GiveRole(ply, "Силовики", Color(0, 0, 190))
     ply:SetPlayerClass("police")
     GiveSling(ply)
     ply:Give("weapon_hands_sh")

@@ -793,7 +793,7 @@ hook.Add("HUDPaint","homigrad-wound-debug",function()
 				
 			cam.End3D()
 			
-			draw.SimpleText("R to skip.", "HomigradFontBig", ScrW() / 3 * 2, ScrH() / 7, color_white)
+			draw.SimpleText("R - пропустить.", "HomigradFontBig", ScrW() / 3 * 2, ScrH() / 7, color_white)
 			draw.SimpleText("Hit "..tostring(iter).." of "..tostring(#hg.hits).." by "..inf.." from "..attacker, "HomigradFontBig", ScrW() / 3 * 2, ScrH() / 10, color_white)
 			
 			local countedorgans = {}

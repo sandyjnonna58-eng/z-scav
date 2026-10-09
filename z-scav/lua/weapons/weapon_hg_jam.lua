@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 
-SWEP.PrintName = "Door Wedge"
+SWEP.PrintName = "Дверной клин"
 SWEP.Category = "ZCity Other"
 SWEP.Instructions = "This is a heavy-duty commercial door wedge. It can be kicked into place to stop a door from moving.\n\nLeft click to jam a door.\nPress E to pick up wedge again."
 SWEP.Spawnable = true

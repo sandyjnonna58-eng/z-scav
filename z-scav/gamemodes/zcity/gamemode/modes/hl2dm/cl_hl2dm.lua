@@ -10,9 +10,9 @@ end)
 
 local teams = {
 	[0] = {
-		objective = "Kill all combines and survive.",
+		objective = "Убейте всех солдат Альянса и выживите.",
 		name = "a Rebel",
-		name_refugee = "the Refugee",
+		name_refugee = "беженец",
 		color1 = Color(230,100,5),
 		color2 = Color(210,80,0),
 		color3 = Color(25, 110, 25),
@@ -20,10 +20,10 @@ local teams = {
 		color_subrole = Color(180, 15, 15),
 	},
 	[1] = {
-        objective = "Destroy all rebel forces.",
-        name = "a Combine Soldier",
-        name_elite = "the Elite Combine Soldier",
-        name_shotgunner = "the Combine Shotgunner",
+        objective = "Уничтожьте все силы повстанцев.",
+        name = "солдат Альянса",
+        name_elite = "элитный солдат Альянса",
+        name_shotgunner = "дробовикщик Альянса",
         color1 = Color(0, 200, 220), -- самый
         color2 = Color(0, 180, 200),
         color3 = Color(180, 15, 15),
@@ -64,7 +64,7 @@ function MODE:HUDPaint()
     
     role_data.color.a = 255 * fade
 
-    draw.SimpleText("You are " .. role_data.name, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, role_data.color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Вы — " .. role_data.name, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, role_data.color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     local objective_color = team_data.color2
 
@@ -77,7 +77,7 @@ function MODE:HUDPaint()
 		surface.SetDrawColor(255, 255, 255, math.random(175, 255) * fade / 2)
 		surface.DrawTexturedRect(sw * 0.25, sh * 0.44 - ScreenScale(15), sw / 2, ScreenScale(30))
 
-		draw.SimpleText("SOMEWHERE IN PLUVTOWN", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("ГДЕ-ТО В ПЛЮВТАУНЕ", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -91,7 +91,7 @@ hook.Add("radialOptions", "CMB_Airstrike", function()
 				net.Start("ZB_RequestAirStrike") 
 				net.SendToServer()
 			end,
-			"Request Airstrike"
+			"Запросить авиаудар"
 		}
 		hg.radialOptions[#hg.radialOptions + 1] = tbl
     end
@@ -192,9 +192,9 @@ CreateEndMenu = function()
 
 		surface.SetFont( "ZB_InterfaceMediumLarge" )
 		surface.SetTextColor(col.r,col.g,col.b,col.a)
-		local lengthX, lengthY = surface.GetTextSize("Players:")
+		local lengthX, lengthY = surface.GetTextSize("Игроки:")
 		surface.SetTextPos(w / 2 - lengthX/2,20)
-		surface.DrawText("Players:")
+		surface.DrawText("Игроки:")
 
 		surface.SetDrawColor( 255, 0, 0, 128)
         surface.DrawOutlinedRect( 0, 0, w, h, 2.5 )
@@ -227,33 +227,33 @@ CreateEndMenu = function()
 
             local col = ply:GetPlayerColor():ToColor()
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			
 			surface.SetTextColor(0,0,0,255)
 			surface.SetTextPos(w / 2 + 1,h/2 - lengthY/2 + 1)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
 			surface.SetTextPos(w / 2,h/2 - lengthY/2)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
             
 			local col = colSpect2
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			surface.SetTextPos(15,h/2 - lengthY/2)
-			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "He quited...")
+			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "Он вышел...")
 
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "Он вышел..." )
 			surface.SetTextPos(w - lengthX -15,h/2 - lengthY/2)
-			surface.DrawText(ply:Frags() or "He quited...")
+			surface.DrawText(ply:Frags() or "Он вышел...")
 		end
 
 		function but:DoClick()
-			if ply:IsBot() then chat.AddText(Color(255,0,0), "no, you can't") return end
+			if ply:IsBot() then chat.AddText(Color(255,0,0), "нет, нельзя") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/"..ply:SteamID64())
 		end
 

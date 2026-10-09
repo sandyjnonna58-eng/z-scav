@@ -871,9 +871,9 @@ local IsValid = IsValid
 			if ply.remUrgeEnd then return end
 			if not ply.suiciding and ply.organism and (ply.organism.depression or 0) < 0.5 then
 				if ply:GetInfoNum("hg_newthoughts", 0) > 0 then
-					ply:Thought("You shouldnt do this.", 6, "depression_block_suicide", 0)
+					ply:Thought("Тебе не стоит этого делать.", 6, "depression_block_suicide", 0)
 				else
-					ply:Notify("I shouldnt do this", 6, "depression_block_suicide", 0)
+					ply:Notify("Мне не стоит этого делать", 6, "depression_block_suicide", 0)
 				end
 				return
 			end

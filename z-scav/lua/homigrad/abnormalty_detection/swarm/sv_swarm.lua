@@ -13,7 +13,7 @@ util.AddNetworkString("SWARM(Knockout)")
 util.AddNetworkString("SWARM(Bleed)")
 
 SWARM={}
-SWARM.Msg='You die as Swarm bursts from you'
+SWARM.Msg='Вы умираете, когда из вас вырывается Рой'
 
 SWARM_CV_InfectionsDefault = CreateConVar("swarm_horrormode", 4, bit.bor(FCVAR_ARCHIVE), "Allow horror by default? (Will simulate C and I genes in all entities. Swarm can infect by default)\nSet to more than 1 to experience hardmode" )
 SWARM_CV_MutationMul = CreateConVar("swarm_mutationmul", 1, bit.bor(FCVAR_ARCHIVE), "Mutation multiplier(Yes, these things evolve)" )
@@ -224,7 +224,7 @@ end)
 
 hook.Add('CanPlayerSuicide','Swarm',function(p) 
 	if(p.SwarmPerc>10 and p.Swm)then
-		p:ChatPrint("You can't.")
+		p:ChatPrint("Вы не можете.")
 		return false
 	end
 end)

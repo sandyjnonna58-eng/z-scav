@@ -334,7 +334,7 @@ function PANEL:Paint(w, h)
 	-- ?????????
 	local labelText = "TIMER"
 	if self.paused then labelText = "PAUSED" end
-	if self.finished then labelText = "TIME'S UP" end
+	if self.finished then labelText = "ВРЕМЯ ВЫШЛО" end
 	draw.SimpleText(labelText, "RemTimer_Label", 18, 14, COL_MUTED, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
 	if self.cancelled then

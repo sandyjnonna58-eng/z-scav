@@ -25,12 +25,12 @@ CFG.DECISION_T  = 2.5   -- сколько секунд держится реше
 CFG.THOUGHT_CD  = 6     -- не спамить мыслями
 
 local THOUGHTS = {
-    "I don't feel like it..",
-    "What's the point..",
-    "Not now.. I just can't.",
-    "Why bother..",
-    "I can't bring myself to do it.",
-    "Maybe later..",
+    "Не хочется..",
+    "Какой смысл..",
+    "Не сейчас.. Я просто не могу.",
+    "Зачем стараться..",
+    "Не могу себя заставить.",
+    "Может, потом..",
 }
 
 local function ApathyLevel(org)

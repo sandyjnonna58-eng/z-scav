@@ -10,7 +10,7 @@
 --//
 
 PLUGIN.Name = "Synthesizer"
-PLUGIN.Description = "Adds math and voicebank (not yet) based vocal synthesizer"
+PLUGIN.Description = "Добавляет синтезатор голоса на основе математики (и голосовых банков - пока нет)"
 PLUGIN.Version = 1
 
 --\\

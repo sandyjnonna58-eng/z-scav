@@ -585,10 +585,10 @@ elseif SERVER then
     }
 
     local phrases = {
-        "Gordon Freeman has died. Now what?",
-        "He's dead. Who will lead the way now?",
-        "Gordon Freeman has failed his mission.",
-        "What an unfortunate end to such a good employee.",
+        "Гордон Фримен погиб. Что теперь?",
+        "Он мёртв. Кто теперь поведёт нас?",
+        "Гордон Фримен провалил задание.",
+        "Какой печальный конец для такого хорошего сотрудника.",
     }
 
     local hev_color = Color(255,125,0)
@@ -616,7 +616,7 @@ elseif SERVER then
             if org.brain > 0.1 then
                 org.mannitol = org.brain * 2
                 --ply, msg, delay, msgKey, showTime, func, clr)
-                ply:Notify("HEV suit has detected a traumatic brain injury. Injecting mannitol.",true,"mannitol_hev",0.5,function(ply)
+                ply:Notify("Костюм HEV обнаружил черепно-мозговую травму. Ввод маннитола.",true,"mannitol_hev",0.5,function(ply)
                     net.Start("HEV_DAMAGE")
                         net.WriteString("hl1/fvox/automedic_on.wav")
                     net.Send(ply)
@@ -631,7 +631,7 @@ elseif SERVER then
                 org.pneumothorax = 0
                 org.needle = 0
 
-                ply:Notify("HEV suit has detected pneumothorax. Repairing.", true, "needle_hev", 0.5, function(ply)
+                ply:Notify("Костюм HEV обнаружил пневмоторакс. Устранение.", true, "needle_hev", 0.5, function(ply)
                     net.Start("HEV_DAMAGE")
                         net.WriteString("hl1/fvox/automedic_on.wav")
                     net.Send(ply)
@@ -650,7 +650,7 @@ elseif SERVER then
                     ply.HEV.Morphine = ply.HEV.Morphine - administer
                     
                     if administer > 0.1 then
-                        ply:Notify("HEV suit has detected pain receptors almost reaching the threshold. Injecting morphine.", 10, "morphine_hev", 0.5,
+                        ply:Notify("Костюм HEV обнаружил, что боль почти достигла порога. Ввод морфина.", 10, "morphine_hev", 0.5,
                         function(ply)
                             net.Start("HEV_DAMAGE")
                                 net.WriteString("hl1/fvox/morphine_shot.wav")
@@ -661,7 +661,7 @@ elseif SERVER then
             end
 
             if (org.CO > 10) or (org.COregen > 10) then
-                ply:Notify("HEV suit has detected a carbon monoxide presence in the organism. Neutralising.",60,"co_hev",0.5,function(ply)
+                ply:Notify("Костюм HEV обнаружил угарный газ в организме. Нейтрализация.",60,"co_hev",0.5,function(ply)
                     net.Start("HEV_DAMAGE")
                         net.WriteString("hl1/fvox/automedic_on.wav")
                     net.Send(ply)
@@ -693,7 +693,7 @@ elseif SERVER then
                 end
 
                 if bonesfixed then
-                    ply:Notify("HEV suit has detected fractures. Repairing.",60,"bones_hev",0.5,function(ply)
+                    ply:Notify("Костюм HEV обнаружил переломы. Восстановление.",60,"bones_hev",0.5,function(ply)
                         net.Start("HEV_DAMAGE")
                             net.WriteString("hl1/fvox/automedic_on.wav")
                         net.Send(ply)
@@ -739,7 +739,7 @@ elseif SERVER then
             end
 
             if (org.pulse < 40) or (org.blood < 3000) or (org.o2[1] < 10) then
-                ply:Notify("HEV suit has detected a critically low pulse. Epinephrine injected. Auto-pulse enabled. Plasma injected.", 60, "pulse_hev", 0.5, function(ply)
+                ply:Notify("Костюм HEV обнаружил критически низкий пульс. Введён адреналин. Включён автопульс. Введена плазма.", 60, "pulse_hev", 0.5, function(ply)
                     net.Start("HEV_DAMAGE")
                         net.WriteString("hl1/fvox/health_critical.wav")
                     net.Send(ply)

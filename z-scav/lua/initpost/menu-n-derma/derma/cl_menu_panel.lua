@@ -187,7 +187,7 @@ CreateMainMenuFonts()
 
 local Selects = {
     {Title = "Disconnect", BypassTransition = true, Func = function(luaMenu) luaMenu:PlayDisconnectCutscene() end},
-    {Title = "Main Menu", Func = function(luaMenu) gui.ActivateGameUI() luaMenu:Close() end},
+    {Title = "Главное меню", Func = function(luaMenu) gui.ActivateGameUI() luaMenu:Close() end},
     {Title = "Loadout",
     GamemodeOnly = true,
     Func = function(luaMenu,pp) 
@@ -215,7 +215,7 @@ local splasheh = {
     'LIKE HOMICIDED',
     'PLUV PLUV PLUVISKI',
     'LULU IS NOT DEAD | !PLUV',
-    'THE TRAITOR WAS KILLED',
+    'ПРЕДАТЕЛЬ УБИТ',
     'NAB HOMICIDE SERVER',
     'ALSO TRY MODDED HOMICIDE 2',
     'HOP ON Z-CITY',
@@ -226,7 +226,7 @@ local splasheh = {
     'MORE CLUE2022',
     'BACKROOMS == CLUE',
     'HELL IS NEAR',
-    'I WISH YOU GOOD HEALTH, JASON STATHAM'
+    'ЖЕЛАЮ ВАМ ЗДОРОВЬЯ, ДЖЕЙСОН СТЭТХЭМ'
 }
 
 --print(string.upper('I wish you good health, Jason Statham'))
@@ -624,14 +624,14 @@ function PANEL:CreateTopPlayersTicker()
     ticker:SetPos(0, MenuUnit(menu_news.top))
     ticker:SetMouseInputEnabled(false)
     ticker:SetAlpha(0)
-    ticker.Text = "TOP 3 PLAYERS: LOADING"
+    ticker.Text = "ТОП-3 ИГРОКОВ: ЗАГРУЗКА"
     ticker.Leaders = {}
     ticker.NextRefresh = 0
     ticker.Paint = function(this, w, h)
         if (this.NextRefresh or 0) <= CurTime() then
             local leaders = hg.Leaderboard.Get(3)
             this.Leaders = leaders
-            this.Text = #leaders > 0 and "TOP 3 PLAYERS:" or "TOP 3 PLAYERS: NO SQL LEADERBOARD DATA"
+            this.Text = #leaders > 0 and "ТОП-3 ИГРОКОВ:" or "ТОП-3 ИГРОКОВ: НЕТ ДАННЫХ ТАБЛИЦЫ ЛИДЕРОВ"
             this.NextRefresh = CurTime() + menu_news.refresh
         end
 
@@ -1016,7 +1016,7 @@ function PANEL:Init()
     zteam:DockMargin(ScreenScale(10), 0, 0, 0)
     zteam:SetFont("ZCity_Menu_Tiny")
     zteam:SetTextColor(clr_gray)
-    zteam:SetText("EARLY-ACCESS")
+    zteam:SetText("РАННИЙ ДОСТУП")
     zteam:SetContentAlignment(4)
     zteam:SizeToContents()
 end
@@ -1114,7 +1114,7 @@ function PANEL:AddSelect( pParent, strTitle, tbl )
     local id = #self.Buttons + 1
     self.Buttons[id] = vgui.Create( "DLabel", pParent )
     local btn = self.Buttons[id]
-    btn:SetText( string.rep("#", #(curent_panel == string.lower(strTitle) and strTitle ~= 'Traitor Role' and '[ '..strTitle..' ]' or strTitle)) )
+    btn:SetText( string.rep("#", #(curent_panel == string.lower(strTitle) and strTitle ~= 'Роль предателя' and '[ '..strTitle..' ]' or strTitle)) )
     btn:SetMouseInputEnabled( true )
     btn:SizeToContents()
     btn:SetFont( "ZCity_Menu_Small" )
@@ -1192,7 +1192,7 @@ function PANEL:AddSelect( pParent, strTitle, tbl )
 
         local elapsed = CurTime() - self.OpenTime
         local charsToShow = math.floor(elapsed * 15)
-        local targetText = (curent_panel == string.lower(strTitle) and strTitle ~= 'Traitor Role') and '[ '..strTitle..' ]' or strTitle
+        local targetText = (curent_panel == string.lower(strTitle) and strTitle ~= 'Роль предателя') and '[ '..strTitle..' ]' or strTitle
         local len = #targetText
 
         if charsToShow > len then charsToShow = len end

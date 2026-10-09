@@ -5,7 +5,7 @@ ZC_CLOTHES_SLOT_BACKPACK = 3
 -- if you really want this NOW https://steamcommunity.com/sharedfiles/filedetails/?id=3670069780
 local clothes = {
     wintercoat1 = {
-        PrintName = "Winter Coat 1",
+        PrintName = "Зимнее пальто 1",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -25,7 +25,7 @@ local clothes = {
         WarmSave = 0.15
     },
     suit_coat1 = {
-        PrintName = "Black Warm Suit Coat",
+        PrintName = "Чёрное тёплое пальто",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -44,7 +44,7 @@ local clothes = {
         }
     },
     suit_pants1 = {
-        PrintName = "Black Warm Suit Coat Pants",
+        PrintName = "Чёрные тёплые брюки",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_PANTS] = true
@@ -64,7 +64,7 @@ local clothes = {
     },
 
     suit_coat2 = {
-        PrintName = "White Suit Coat",
+        PrintName = "Белое пальто",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -83,7 +83,7 @@ local clothes = {
         }
     },
     suit_pants2 = {
-        PrintName = "White Suit Coat Pants",
+        PrintName = "Белые брюки",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_PANTS] = true
@@ -103,7 +103,7 @@ local clothes = {
     },
 
     suit_coat3 = {
-        PrintName = "Black Suit Coat",
+        PrintName = "Чёрное пальто",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -122,7 +122,7 @@ local clothes = {
         }
     },
     suit_pants3 = {
-        PrintName = "Black Suit Coat Pants",
+        PrintName = "Чёрные брюки",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_PANTS] = true
@@ -141,7 +141,7 @@ local clothes = {
         }
     },
     mountaineering_jacket1 = {
-        PrintName = "White Mountaineering jacket",
+        PrintName = "Белая альпинистская куртка",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -164,7 +164,7 @@ local clothes = {
     },
 
     mountaineering_jacket2 = {
-        PrintName = "Black Mountaineering jacket",
+        PrintName = "Чёрная альпинистская куртка",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -188,7 +188,7 @@ local clothes = {
 
 
     backpack1 = {
-        PrintName = "Backpack 1",
+        PrintName = "Рюкзак 1",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_BACKPACK] = true
@@ -208,7 +208,7 @@ local clothes = {
     },
 
     winter_pants1 = {
-        PrintName = "Winter Pants",
+        PrintName = "Зимние штаны",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_PANTS] = true
@@ -236,7 +236,7 @@ local clothes = {
     },
 
     jacket1 = {
-        PrintName = "Gray Winter jacket",
+        PrintName = "Серая зимняя куртка",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -257,7 +257,7 @@ local clothes = {
     },
 
     jacket2 = {
-        PrintName = "Gray Wind jacket",
+        PrintName = "Серая ветровка",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -278,7 +278,7 @@ local clothes = {
     },
 
     jacket3 = {
-        PrintName = "Dark-gray jacket",
+        PrintName = "Тёмно-серая куртка",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_TORSO] = true
@@ -320,7 +320,7 @@ local clothes = {
     -- },
 
     cargo_pants1 = {
-        PrintName = "Cargo Pants",
+        PrintName = "Карго-штаны",
         Model = "models/props_junk/cardboard_box003a.mdl",
         SlotOccupation = {
             [ZC_CLOTHES_SLOT_PANTS] = true
@@ -349,7 +349,7 @@ local function register()
         local ENT = {}
         ENT.Base = "ent_zcity_clothes_base"
         ENT.PrintName = v.PrintName
-        ENT.Category = "ZCity Clothes"
+        ENT.Category = "ZCity Одежда"
         ENT.Spawnable = true
         ENT.Model = v.Model
 

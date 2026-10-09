@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_melee"
-SWEP.PrintName = "Ballistic Shield"
-SWEP.Instructions = "Anti-ballistic shield for police entry teams. Passively stops pistol-caliber rounds, shrapnel and melee hits while held. Covers your back when holstered."
+SWEP.PrintName = "Баллистический щит"
+SWEP.Instructions = "Противопульный щит для полицейских штурмовых групп. Пока в руках, сам останавливает пистолетные пули, осколки и удары. В кобуре прикрывает спину."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false

@@ -111,11 +111,11 @@ hook.Add("HUDPaint","FUCKINGSAMENAMEUSEDINHOOKFUCKME",function()
 	
 	surface.SetFont("HomigradFont")
 	surface.SetTextColor(255, 255, 255, 255)
-	local txt = "Spectating player: "..spect:Name()
+	local txt = "Наблюдение за игроком: "..spect:Name()
 	local w, h = surface.GetTextSize(txt)
 	surface.SetTextPos(ScrW() / 2 - w / 2, ScrH() / 8 * 7)
 	surface.DrawText(txt)
-	local txt = "In-game name: "..spect:GetPlayerName()
+	local txt = "Ник в игре: "..spect:GetPlayerName()
 	local w, h = surface.GetTextSize(txt)
 	surface.SetTextPos(ScrW() / 2 - w / 2, ScrH() / 8 * 7 + h)
 	surface.DrawText(txt)
@@ -671,14 +671,14 @@ function GM:ScoreboardShow()
 
 	local teamBtn
 	if lp:Team() ~= TEAM_SPECTATOR then
-		teamBtn = SB_MakeButton(footer, "JOIN SPECTATORS", nil, function()
+		teamBtn = SB_MakeButton(footer, "В НАБЛЮДАТЕЛИ", nil, function()
 			net.Start("ZB_SpecMode")
 				net.WriteBool(true)
 			net.SendToServer()
 			if IsValid(scoreBoardMenu) then scoreBoardMenu:Remove() scoreBoardMenu = nil end
 		end)
 	else
-		teamBtn = SB_MakeButton(footer, "JOIN PLAYERS", nil, function()
+		teamBtn = SB_MakeButton(footer, "В ИГРОКИ", nil, function()
 			net.Start("ZB_SpecMode")
 				net.WriteBool(false)
 			net.SendToServer()
@@ -693,12 +693,12 @@ function GM:ScoreboardShow()
 		switchingPage = true
 	end)
 
-	local muteSpectBtn = SB_MakeButton(footer, "MUTE SPECTATORS", function() return hg.mutespect end, function()
+	local muteSpectBtn = SB_MakeButton(footer, "ЗАГЛУШИТЬ НАБЛЮДАТЕЛЕЙ", function() return hg.mutespect end, function()
 		hg.mutespect = !hg.mutespect
 		ApplyScoreboardVoiceMutes()
 	end)
 
-	local muteAllBtn = SB_MakeButton(footer, "MUTE ALL", function() return hg.muteall end, function()
+	local muteAllBtn = SB_MakeButton(footer, "ЗАГЛУШИТЬ ВСЕХ", function() return hg.muteall end, function()
 		hg.muteall = !hg.muteall
 		ApplyScoreboardVoiceMutes()
 	end)
@@ -840,7 +840,7 @@ function GM:ScoreboardShow()
 		ply.soundButton = snd
 
 		function row:DoClick()
-			if ply:IsBot() then chat.AddText(Color(255, 0, 0), "no, you can't") return end
+			if ply:IsBot() then chat.AddText(Color(255, 0, 0), "нет, нельзя") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/" .. ply:SteamID64())
 		end
 
@@ -849,17 +849,17 @@ function GM:ScoreboardShow()
 			menu:AddOption("Account", function()
 				zb.Experience.AccountMenu(ply)
 			end)
-			menu:AddOption("Copy SteamID", function()
+			menu:AddOption("Копировать SteamID", function()
 				SetClipboardText(ply:SteamID())
 			end)
 			if lp:IsSuperAdmin() then
-				menu:AddOption("Set as assistant", function()
+				menu:AddOption("Сделать помощником", function()
 					net.Start("HMCD_SetNextTraitorRole")
 						net.WriteEntity(ply)
 						net.WriteString("assistant")
 					net.SendToServer()
 				end)
-				menu:AddOption("Set as traitor", function()
+				menu:AddOption("Сделать предателем", function()
 					net.Start("HMCD_SetNextTraitorRole")
 						net.WriteEntity(ply)
 						net.WriteString("traitor")
@@ -1033,7 +1033,7 @@ concommand.Add("zb_snake", function() -- вот как здесь!
     end
 
     local frame = vgui.Create("ZFrame")
-    frame:SetTitle("Snake Game")
+    frame:SetTitle("Змейка")
     frame:SetSize(400, 400)
     frame:Center()
     frame:MakePopup()
@@ -1160,10 +1160,10 @@ concommand.Add("zb_snake", function() -- вот как здесь!
             drawSnake()
             drawFood()
         else
-            draw.SimpleText("Game Over! Press R to restart", "DermaDefault", w / 2, h / 2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Игра окончена! R - заново", "DermaDefault", w / 2, h / 2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
 
-        draw.SimpleText("Score: " .. score, "DermaDefault", 10, 10, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+        draw.SimpleText("Счёт: " .. score, "DermaDefault", 10, 10, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
     end
 
 

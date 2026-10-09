@@ -4,13 +4,13 @@ if not SERVER then return end
 CreateConVar(
     "deatheffect_spectator", "1",
     bit.bor(FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE),
-    "allow players to enter spectator mode on the death screen",
+    "разрешить переходить в режим наблюдателя с экрана смерти",
     0, 1
 )
 CreateConVar(
     "deatheffect_compat", "0",
     bit.bor(FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE),
-    "remove all cinematic effects before the option screen appears, for better compatibility with other mods",
+    "убирать все кинематографичные эффекты перед экраном выбора, для совместимости с другими модами",
     0, 1
 )
 CreateConVar(

@@ -453,11 +453,11 @@ local weapons_Get = weapons.Get
 if SERVER then util.AddNetworkString("hgwep shoot") end
 
 local CantDoIt = {
-	"But... There's so much to live for!",
-	"I... I can't do it...",
-	"There must be another way. This is not it!",
-	"I... Cannot bring myself to do this.",
-	"What am i even doing? I can't do this."
+	"Но... мне есть ради чего жить!",
+	"Я... я не могу...",
+	"Должен быть другой выход. Не этот!",
+	"Я... не могу себя заставить.",
+	"Что я вообще делаю? Я не могу."
 }
 --qol lmao
 function SWEP:CanPrimaryAttack()
@@ -902,7 +902,7 @@ if CLIENT then
 					(clip > clipsize - (self.OpenBolt and 0 or 1) - 1) and "Full" or 
 					(clip <= clipsize and clip > clipsize/1.5 ) and "~ Full" or 
 					(clip <= clipsize/1.5 and clip > clipsize/3.5) and "~ Half" or 
-					(clip <= clipsize/3.5 and clip != 0 ) and "~ Almost Empty" or 
+					(clip <= clipsize/3.5 and clip != 0 ) and "~ Почти пуст" or 
 					(clip == 0 and "Empty")
 				)
 				coloruse.r = 0

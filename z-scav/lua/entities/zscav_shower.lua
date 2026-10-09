@@ -110,7 +110,7 @@ if SERVER then
                     end
                     if (ply.zscavShowerMsg or 0) < CurTime() then
                         ply.zscavShowerMsg = CurTime() + 60
-                        ply:Notify("Warm water.. that feels good.", 4, "zscav_shower", 0)
+                        ply:Notify("Тёплая вода.. как же хорошо.", 4, "zscav_shower", 0)
                     end
                 end
             end

@@ -218,7 +218,7 @@ end
 
 // Need to register the base stuff LMAO
 wOS.DynaBase:RegisterSource({
-	Name = "Base Animations",
+	Name = "Базовые анимации",
 	Type = WOS_DYNABASE.REANIMATION,
 	IconOverwrite = "wos/dynabase/gmod.png",
 	Core = true,
@@ -228,7 +228,7 @@ wOS.DynaBase:RegisterSource({
 })
 
 wOS.DynaBase:RegisterSource({
-	Name = "Local Player Animations",
+	Name = "Анимации локального игрока",
 	Type = WOS_DYNABASE.REANIMATION,
 	IconOverwrite = "wos/dynabase/local.png",
 	Core = true,

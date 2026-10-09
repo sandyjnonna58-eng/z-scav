@@ -48,12 +48,12 @@ function hg.AddAttachment(ply,wep,att)
 			if not att or not istable(att) or table.IsEmpty(att) or att[1] == "empty" then continue end
 			if restrictAtt then
 				if hg.attachments[i][att[1]][1] == restrictAtt then
-					ply:ChatPrint("There is no space for this attachment.")
+					ply:ChatPrint("Для этого обвеса нет места.")
 					return
 				end
 			else
 				if not wep.availableAttachments[i].noblock and hg.attachments[i][att[1]].restrictatt and hg.attachments[i][att[1]].restrictatt == placement then
-					ply:ChatPrint("There is no space for this attachment.")
+					ply:ChatPrint("Для этого обвеса нет места.")
 					return
 				end
 			end
@@ -62,7 +62,7 @@ function hg.AddAttachment(ply,wep,att)
 
 	if not placement then return end
 	if not (table.IsEmpty(wep.attachments[placement]) or wep.attachments[placement][1] == "empty") then
-		ply:ChatPrint("There is no space for this attachment.")
+		ply:ChatPrint("Для этого обвеса нет места.")
 		return
 	end
 	

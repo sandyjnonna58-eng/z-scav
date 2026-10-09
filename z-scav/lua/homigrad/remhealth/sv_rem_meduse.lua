@@ -68,7 +68,7 @@ net.Receive("rem_med_use", function(_, ply)
         local c = hg.organism.RefuseChance(org)
         if c > 0 and math.Rand(0, 1) < c then
             ply.remMedNextUse = CurTime() + 0.5
-            ply:Notify(table.Random({"I can't bring myself to do it..", "What's the point..", "My hands won't listen."}), 3, "zscav_apathy", 0)
+            ply:Notify(table.Random({"Не могу себя заставить..", "Какой смысл..", "Руки не слушаются."}), 3, "zscav_apathy", 0)
             return
         end
     end

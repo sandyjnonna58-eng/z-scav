@@ -13,8 +13,8 @@ properties.Add( "notify", {
 	Filter = check,
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
         Derma_StringRequest(
-            "Notify ".. ent:GetPlayerName(), 
-            "Write a message",
+            "Уведомить ".. ent:GetPlayerName(), 
+            "Напишите сообщение",
             "",
             function(text) 
                 self:MsgStart()
@@ -47,7 +47,7 @@ properties.Add( "givegun", {
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
         Derma_StringRequest(
             "Give ".. ent:GetPlayerName(), 
-            "Write a entity class name",
+            "Напишите класс сущности",
             "",
             function(text) 
                 self:MsgStart()
@@ -80,8 +80,8 @@ properties.Add( "strip", {
 	Filter = check,
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
         Derma_Query(
-            "The player will be stripped down to only their fists.",
-            "Are you sure?",
+            "У игрока останутся только кулаки.",
+            "Вы уверены?",
             "Yes",
             function()
                 self:MsgStart()
@@ -105,15 +105,15 @@ properties.Add( "strip", {
 } )
 
 properties.Add( "fullstrip", {
-	MenuLabel = "Full Strip", -- Name to display on the context menu
+	MenuLabel = "Полностью раздеть", -- Name to display on the context menu
 	Order = 4, -- The order to display this property relative to other properties
 	MenuIcon = "icon16/lorry_delete.png", -- The icon to display next to the property
 
 	Filter = check,
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
         Derma_Query(
-            "All weapons, including fists, will be stripped.",
-            "Are you sure?",
+            "Будет отобрано всё оружие, включая кулаки.",
+            "Вы уверены?",
             "Yes",
             function()
                 self:MsgStart()
@@ -137,15 +137,15 @@ properties.Add( "fullstrip", {
 } )
 
 properties.Add( "reset_org", {
-	MenuLabel = "Reset organism", -- Name to display on the context menu
+	MenuLabel = "Сбросить организм", -- Name to display on the context menu
 	Order = 5, -- The order to display this property relative to other properties
 	MenuIcon = "icon16/heart_add.png", -- The icon to display next to the property
 
 	Filter = check,
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
         Derma_Query(
-            "Organism will be new like a respawn",
-            "Are you sure?",
+            "Организм станет как новый, как при возрождении",
+            "Вы уверены?",
             "Yes",
             function()
                 self:MsgStart()
@@ -211,8 +211,8 @@ properties.Add( "snatch", {
     end,
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
         Derma_Query(
-            "If no players are around, he will simply disappear.",
-            "Are you sure?",
+            "Если рядом никого нет, он просто исчезнет.",
+            "Вы уверены?",
             "Yes",
             function()
                 self:MsgStart()
@@ -265,7 +265,7 @@ properties.Add( "ragdollize", {
 } )
 
 properties.Add( "vomit", {
-	MenuLabel = "Make vomit", -- Name to display on the context menu
+	MenuLabel = "Вызвать рвоту", -- Name to display on the context menu
 	Order = 9, -- The order to display this property relative to other properties
 	MenuIcon = "pluv/pluv51.png", -- The icon to display next to the property
 
@@ -304,17 +304,17 @@ properties.Add( "lobotomize", {
         ent = hg.RagdollOwner(ent) or ent
         
         ent.organism.brain = ent.organism.brain + 0.05
-        ply:ChatPrint("Lobotomized brain to "..math.Round(ent.organism.brain * 100).."%")
+        ply:ChatPrint("Лоботомия мозга до "..math.Round(ent.organism.brain * 100).."%")
         print(tostring(ply:Nick() or ply) .." has lobotomized ".. tostring(ent:Nick() or ent))
 
         if ent.organism.brain >= 0.25 and ent.organism.brain < 0.3 then
-            ply:ChatPrint("Consciousness loss on the next lobotomization!")
+            ply:ChatPrint("При следующей лоботомии - потеря сознания!")
         end
     end 
 } )
 
 properties.Add("killsilent", {
-	MenuLabel = "Kill (Silent)",
+	MenuLabel = "Убить (тихо)",
 	Order = 11,
 	MenuIcon = "icon16/cross.png",
 
@@ -357,7 +357,7 @@ properties.Add("removeply", {
 })
 
 properties.Add( "setplayerclass", {
-	MenuLabel = "Set player class", -- Name to display on the context menu
+	MenuLabel = "Задать класс игрока", -- Name to display on the context menu
 	Order = 15, -- The order to display this property relative to other properties
 	MenuIcon = "vgui/entities/npc_nukude_proto_h", -- The icon to display next to the property
 
@@ -399,7 +399,7 @@ properties.Add( "setplayerclass", {
 } )
 
 properties.Add( "break_limb", {
-	MenuLabel = "Break Limb",
+	MenuLabel = "Сломать конечность",
 	Order = 13,
 	MenuIcon = "pluv/pluv51.png",
 
@@ -415,43 +415,43 @@ properties.Add( "break_limb", {
 		neck:SetIsCheckable(true)
 		neck.OnChecked = function(s, checked) self:BreakLimb(ent, 0) end
 
-		local larm = submenu:AddOption("Left Arm")
+		local larm = submenu:AddOption("Левая рука")
 		larm:SetRadio(true)
 		larm:SetChecked(ent.organism.larm > 0)
 		larm:SetIsCheckable(true)
 		larm.OnChecked = function(s, checked) self:BreakLimb(ent, 1) end
 
-		local rarm = submenu:AddOption("Right Arm")
+		local rarm = submenu:AddOption("Правая рука")
 		rarm:SetRadio(true)
 		rarm:SetChecked(ent.organism.rarm > 0)
 		rarm:SetIsCheckable(true)
 		rarm.OnChecked = function(s, checked) self:BreakLimb(ent, 2) end
 
-		local lleg = submenu:AddOption("Left Leg")
+		local lleg = submenu:AddOption("Левая нога")
 		lleg:SetRadio(true)
 		lleg:SetChecked(ent.organism.lleg > 0)
 		lleg:SetIsCheckable(true)
 		lleg.OnChecked = function(s, checked) self:BreakLimb(ent, 3) end
 
-		local rleg = submenu:AddOption("Right Leg")
+		local rleg = submenu:AddOption("Правая нога")
 		rleg:SetRadio(true)
 		rleg:SetChecked(ent.organism.rleg > 0)
 		rleg:SetIsCheckable(true)
 		rleg.OnChecked = function(s, checked) self:BreakLimb(ent, 4) end
 
-		local spine1 = submenu:AddOption("Spine 1")
+		local spine1 = submenu:AddOption("Позвоночник 1")
 		spine1:SetRadio(true)
 		spine1:SetChecked(ent.organism.rleg > 0)
 		spine1:SetIsCheckable(true)
 		spine1.OnChecked = function(s, checked) self:BreakLimb(ent, 5) end
 
-		local spine2 = submenu:AddOption("Spine 2")
+		local spine2 = submenu:AddOption("Позвоночник 2")
 		spine2:SetRadio(true)
 		spine2:SetChecked(ent.organism.rleg > 0)
 		spine2:SetIsCheckable(true)
 		spine2.OnChecked = function(s, checked) self:BreakLimb(ent, 6) end
 
-		local spine3 = submenu:AddOption("Spine 3")
+		local spine3 = submenu:AddOption("Позвоночник 3")
 		spine3:SetRadio(true)
 		spine3:SetChecked(ent.organism.rleg > 0)
 		spine3:SetIsCheckable(true)
@@ -494,7 +494,7 @@ properties.Add( "break_limb", {
 } )
 
 properties.Add( "amputate_limb", {
-	MenuLabel = "Amputate Limb",
+	MenuLabel = "Ампутировать конечность",
 	Order = 14,
 	MenuIcon = "effects/arc9_eft/evil.png",
 
@@ -510,31 +510,31 @@ properties.Add( "amputate_limb", {
 		head:SetIsCheckable(true)
 		head.OnChecked = function(s, checked) self:AmputateLimb(ent, 0) end
 
-		local larm = submenu:AddOption("Left Arm")
+		local larm = submenu:AddOption("Левая рука")
 		larm:SetRadio(true)
 		larm:SetChecked(ent.organism.larm > 0)
 		larm:SetIsCheckable(true)
 		larm.OnChecked = function(s, checked) self:AmputateLimb(ent, 1) end
 
-		local rarm = submenu:AddOption("Right Arm")
+		local rarm = submenu:AddOption("Правая рука")
 		rarm:SetRadio(true)
 		rarm:SetChecked(ent.organism.rarm > 0)
 		rarm:SetIsCheckable(true)
 		rarm.OnChecked = function(s, checked) self:AmputateLimb(ent, 2) end
 
-		local lleg = submenu:AddOption("Left Leg")
+		local lleg = submenu:AddOption("Левая нога")
 		lleg:SetRadio(true)
 		lleg:SetChecked(ent.organism.lleg > 0)
 		lleg:SetIsCheckable(true)
 		lleg.OnChecked = function(s, checked) self:AmputateLimb(ent, 3) end
 
-		local rleg = submenu:AddOption("Right Leg")
+		local rleg = submenu:AddOption("Правая нога")
 		rleg:SetRadio(true)
 		rleg:SetChecked(ent.organism.rleg > 0)
 		rleg:SetIsCheckable(true)
 		rleg.OnChecked = function(s, checked) self:AmputateLimb(ent, 4) end
 
-		local torso = submenu:AddOption("Amputate Torso")
+		local torso = submenu:AddOption("Отсечь торс")
 		torso:SetRadio(true)
 		torso:SetIsCheckable(true)
 		torso.OnChecked = function(s, checked) self:AmputateLimb(ent, 5) end
@@ -581,7 +581,7 @@ local function doorCheck(self, ent, ply)
 end
 
 properties.Add( "door_toggle", {
-    MenuLabel = "Toggle Door",
+    MenuLabel = "Открыть/закрыть дверь",
     Order = 7,
     MenuIcon = "icon16/door.png",
     Filter = doorCheck,
@@ -598,7 +598,7 @@ properties.Add( "door_toggle", {
 })
 
 properties.Add( "door_lock", {
-    MenuLabel = "Lock Door",
+    MenuLabel = "Запереть дверь",
     Order = 8,
     MenuIcon = "icon16/lock.png",
     Filter = doorCheck,
@@ -615,7 +615,7 @@ properties.Add( "door_lock", {
 })
 
 properties.Add( "door_unlock", {
-    MenuLabel = "Unlock Door",
+    MenuLabel = "Отпереть дверь",
     Order = 9,
     MenuIcon = "icon16/lock_open.png",
     Filter = doorCheck,
@@ -696,7 +696,7 @@ end
 hg.RespawnIntoBody = Respawn
 
 properties.Add( "respawn_ply_in_rag", {
-	MenuLabel = "Respawn Player", -- Name to display on the context menu
+	MenuLabel = "Возродить игрока", -- Name to display on the context menu
 	Order = 1, -- The order to display this property relative to other properties
 	MenuIcon = "icon16/heart.png", -- The icon to display next to the property
 
@@ -729,7 +729,7 @@ properties.Add( "respawn_ply_in_rag", {
 } )
 
 properties.Add( "respawn_lply_in_rag", {
-	MenuLabel = "Spawn Self", -- Name to display on the context menu
+	MenuLabel = "Возродиться в теле", -- Name to display on the context menu
 	Order = 2, -- The order to display this property relative to other properties
 	MenuIcon = "icon16/heart.png", -- The icon to display next to the property
 
@@ -742,8 +742,8 @@ properties.Add( "respawn_lply_in_rag", {
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
 
         Derma_Query(
-            "You will take over this body, and respawn as this character.",
-            "Are you sure?",
+            "Вы займёте это тело и возродитесь этим персонажем.",
+            "Вы уверены?",
             "Yes",
             function()
                 self:MsgStart()
@@ -766,7 +766,7 @@ properties.Add( "respawn_lply_in_rag", {
 } )
 
 properties.Add( "respawn_ragply_in_rag", {
-	MenuLabel = "Spawn RagOwner", -- Name to display on the context menu
+	MenuLabel = "Возродить хозяина рэгдолла", -- Name to display on the context menu
 	Order = 3, -- The order to display this property relative to other properties
 	MenuIcon = "icon16/heart.png", -- The icon to display next to the property
 
@@ -779,8 +779,8 @@ properties.Add( "respawn_ragply_in_rag", {
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
 
         Derma_Query(
-            "The Player of this ragdoll will be respawned into his body",
-            "Are you sure?",
+            "Игрок этого рэгдолла возродится в своём теле",
+            "Вы уверены?",
             "Yes",
             function()
                 self:MsgStart()

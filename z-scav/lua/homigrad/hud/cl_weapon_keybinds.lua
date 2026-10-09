@@ -94,30 +94,30 @@ local specialActionByClass = {
 
 local derivedActionsByClass = {
 	["weapon_ducttape"] = {
-		{"LMB", "Tape objects"}
+		{"LMB", "Обмотать скотчем"}
 	},
 	["weapon_matches"] = {
-		{"LMB", "Ignite match"}
+		{"LMB", "Зажечь спичку"}
 	},
 	["weapon_walkie_talkie"] = {
-		{"LMB", "Radio menu"},
-		{"R", "Toggle radio"}
+		{"LMB", "Меню рации"},
+		{"R", "Вкл/выкл рацию"}
 	},
 	["weapon_bloodbag"] = {
-		{"LMB", "Use on self"},
-		{"RMB", "Use on target"},
-		{"R", "Change mode"}
+		{"LMB", "Применить на себя"},
+		{"RMB", "Применить на цель"},
+		{"R", "Сменить режим"}
 	}
 }
 
 local derivedActionsByBase = {
 	["weapon_bandage_sh"] = {
-		{"LMB", "Use on self"},
-		{"RMB", "Use on target"},
-		{"R", "Change mode"}
+		{"LMB", "Применить на себя"},
+		{"RMB", "Применить на цель"},
+		{"R", "Сменить режим"}
 	},
 	["weapon_hg_medicine_base"] = {
-		{"LMB", "Use on self"}
+		{"LMB", "Применить на себя"}
 	},
 	["weapon_bigconsumable"] = {
 		{"LMB", "Consume"}
@@ -163,19 +163,19 @@ local function normalizeAction(action)
 	action = string.gsub(action, "%.$", "")
 	if action == "" then return "" end
 	local lower = string.lower(action)
-	if lower == "apply on others" or lower == "use on someone else" then
-		action = "Use on target"
-	elseif lower == "change use mode" or lower == "change treatment mode" then
-		action = "Change mode"
-	elseif lower == "open radio menu" then
-		action = "Radio menu"
-	elseif lower == "toggle power" then
-		action = "Toggle radio"
-	elseif lower == "hold to tape objects" then
-		action = "Tape objects"
-	elseif lower == "hold to ignite a match" then
-		action = "Ignite match"
-	elseif lower == "hold to consume" then
+	if lower == "применить на других" or lower == "применить на другом" then
+		action = "Применить на цель"
+	elseif lower == "сменить режим применения" or lower == "сменить режим лечения" then
+		action = "Сменить режим"
+	elseif lower == "открыть меню рации" then
+		action = "Меню рации"
+	elseif lower == "вкл/выкл питание" then
+		action = "Вкл/выкл рацию"
+	elseif lower == "держать, чтобы обмотать скотчем" then
+		action = "Обмотать скотчем"
+	elseif lower == "держать, чтобы зажечь спичку" then
+		action = "Зажечь спичку"
+	elseif lower == "держать, чтобы употребить" then
 		action = "Consume"
 	end
 	local first = string.upper(string.sub(action, 1, 1))
@@ -232,7 +232,7 @@ local function splitInstructionChunk(chunk)
 	local lowerCombo = string.lower(combo)
 	if string.sub(lowerCombo, 1, 5) == "hold " then
 		combo = string.Trim(string.sub(combo, 6))
-		action = "Hold to " .. action
+		action = "Держать, чтобы " .. action
 	elseif string.sub(lowerCombo, 1, 6) == "press " then
 		combo = string.Trim(string.sub(combo, 7))
 	end
@@ -347,11 +347,11 @@ local function addDerivedMeleeBinds(wep, rows, seen)
 	end
 
 	if wep.canchargeattack then
-		upsertBind(rows, seen, "R + LMB", "Charge attack")
+		upsertBind(rows, seen, "R + LMB", "Заряженная атака")
 	end
 
 	if getMethodBool(wep, "CanSecondaryAttack", false) then
-		upsertBind(rows, seen, "RMB + LMB", "Secondary attack")
+		upsertBind(rows, seen, "RMB + LMB", "Вторичная атака")
 	end
 end
 
@@ -359,7 +359,7 @@ local function addDerivedGunBinds(wep, rows, seen)
 	upsertBind(rows, seen, "LMB", "Fire")
 	upsertBind(rows, seen, "RMB", "Aim")
 	upsertBind(rows, seen, "R", wep.CockSound and "Reload / pump" or "Reload")
-	upsertBind(rows, seen, "ALT + R", "Check ammo")
+	upsertBind(rows, seen, "ALT + R", "Проверить патроны")
 	upsertBind(rows, seen, "E + LMB", "Buttstroke")
 end
 
@@ -450,7 +450,7 @@ local function drawPanel(alpha)
 	local rows = WK.rows
 	if not rows or #rows < 1 then return end
 
-	local title = WK.title or "Weapon Keybinds"
+	local title = WK.title or "Клавиши оружия"
 	local titleW, titleH = measureText("HGWeaponKeybindsTitle", title)
 	local width = math.max(panelMinWidth, titleW + panelPadding * 2)
 	local rowHeight = 0

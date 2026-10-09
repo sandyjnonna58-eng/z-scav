@@ -184,12 +184,12 @@ RemoveOldBinds()
 
 hg.Binds:CreateBind("hg_kick", KEY_NONE, nil, true, "Kick", "hg_kick")
 hg.Binds:CreateBind("fake", KEY_NONE, nil, true, "Ragdoll/Get up", "fake")
-hg.Binds:CreateBind("hmcd_togglelaser", KEY_NONE, nil, true, "Toggle weapon laser", "hmcd_togglelaser")
-hg.Binds:CreateBind("+alt1", KEY_NONE, nil, true, "Lean left", "+alt1")
-hg.Binds:CreateBind("+alt2", KEY_NONE, nil, true, "Lean right", "+alt2")
-hg.Binds:CreateBind("+hmcd_holdbreath", KEY_NONE, nil, true, "Hold breath", "+hmcd_holdbreath")
-hg.Binds:CreateBind("+altlook", KEY_NONE, nil, true, "Look around", "+altlook")
-hg.Binds:CreateBind("+hg_zoom", KEY_NONE, nil, true, "Zoom camera", "+hg_zoom")
+hg.Binds:CreateBind("hmcd_togglelaser", KEY_NONE, nil, true, "Вкл/выкл лазер оружия", "hmcd_togglelaser")
+hg.Binds:CreateBind("+alt1", KEY_NONE, nil, true, "Наклон влево", "+alt1")
+hg.Binds:CreateBind("+alt2", KEY_NONE, nil, true, "Наклон вправо", "+alt2")
+hg.Binds:CreateBind("+hmcd_holdbreath", KEY_NONE, nil, true, "Задержать дыхание", "+hmcd_holdbreath")
+hg.Binds:CreateBind("+altlook", KEY_NONE, nil, true, "Осмотреться", "+altlook")
+hg.Binds:CreateBind("+hg_zoom", KEY_NONE, nil, true, "Приблизить камеру", "+hg_zoom")
 
 if CLIENT then
     hg.Binds.LoadBinds()
@@ -502,7 +502,7 @@ if CLIENT then
 			surface.SetTextPos(ScrW() / 4, ScrH() / 2)
 			surface.SetTextColor(255, 0, 0, 255)
 			surface.SetFont("DermaLarge")
-			surface.DrawText("Please set your DirectX to 9 or higher and restart your game to play, or leave this server.")
+			surface.DrawText("Установите DirectX 9 или выше и перезапустите игру, чтобы играть, или покиньте сервер.")
 		end
 		
 		hook.Add("HUDPaint", "noYouDon't", noYouDont)

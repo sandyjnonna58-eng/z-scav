@@ -18,7 +18,7 @@ CFG.TIME      = {4, 9}    -- сек
 
 util.AddNetworkString("zscav_wander")
 
-local PHRASES = {"Where am I even going..", "My legs just.. keep moving.", "I'm not here. I'm somewhere else.", "Just walk. Don't think."}
+local PHRASES = {"Куда я вообще иду..", "Ноги просто.. идут сами.", "Меня здесь нет. Я где-то далеко.", "Просто иди. Не думай."}
 
 function hg.organism.StartWander(ply, dur)
     if not IsValid(ply) or not ply:Alive() then return end

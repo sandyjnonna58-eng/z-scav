@@ -25,17 +25,17 @@ local function TryConjureTA(zone, ply)
 		end)
 		
 		if(ent)then
-			PLUGIN.ShowMessageInSphere("Conjuring Thaumaturgic Arm...", zone.Pos, zone.Radius)
+			PLUGIN.ShowMessageInSphere("Призыв Тауматургической руки...", zone.Pos, zone.Radius)
 			PLUGIN.ConjureTA.Do(ent, 5)
 			PLUGIN.RemoveZoneOrPlyEqualizers(zone, ply, equalizers_consumption)
 			PLUGIN.RemoveZoneOrPlyBlood(zone, ply, blood_consumption)
 			PLUGIN.AddConsequencesToZoneChanters(zone, -1)
 			PLUGIN.AddConsequences(ply, -10)
 		else
-			PLUGIN.ShowMessage(ply, "There are no melee weapon sacrifices within the zone")
+			PLUGIN.ShowMessage(ply, "В зоне нет жертвенного холодного оружия")
 		end
 	else
-		PLUGIN.ShowMessage(ply, "There is not enough equalizers or blood in order to conjure thaumaturgic arm")
+		PLUGIN.ShowMessage(ply, "Недостаточно эквалайзеров или крови, чтобы призвать тауматургическую руку")
 	end
 end
 --//

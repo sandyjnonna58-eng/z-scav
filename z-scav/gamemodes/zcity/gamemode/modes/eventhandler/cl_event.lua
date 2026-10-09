@@ -62,7 +62,7 @@ function MODE:HUDPaint()
     local Rolename = isEventer and "Eventer" or GetGlobalString("ZB_EventRole","Player")
     local ColorRole = isEventer and eventer.color1 or fighter.color1
     ColorRole.a = 255 * fade
-    draw.SimpleText("You are a "..Rolename , "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Вы — "..Rolename , "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     local Objective = GetGlobalString("ZB_EventObjective","")
     local ColorObj = isEventer and eventer.color1 or fighter.color1
@@ -184,33 +184,33 @@ CreateEndMenu = function()
 
             local col = ply:GetPlayerColor():ToColor()
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			
 			surface.SetTextColor(0,0,0,255)
 			surface.SetTextPos(w / 2 + 1,h/2 - lengthY/2 + 1)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
 			surface.SetTextPos(w / 2,h/2 - lengthY/2)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
             
 			local col = colSpect2
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			surface.SetTextPos(15,h/2 - lengthY/2)
-			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "He quited...")
+			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "Он вышел...")
 
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "Он вышел..." )
 			surface.SetTextPos(w - lengthX -15,h/2 - lengthY/2)
-			surface.DrawText(ply:Frags() or "He quited...")
+			surface.DrawText(ply:Frags() or "Он вышел...")
 		end
 
 		function but:DoClick()
-			if ply:IsBot() then chat.AddText(Color(255,0,0), "no, you can't") return end
+			if ply:IsBot() then chat.AddText(Color(255,0,0), "нет, нельзя") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/"..ply:SteamID64())
 		end
 
@@ -248,7 +248,7 @@ local function CreateLootPollingMenu()
     
     Dynamic = 0
     LootPollingMenu = vgui.Create("ZFrame")
-    LootPollingMenu:SetTitle("Event Loot Manager")
+    LootPollingMenu:SetTitle("Менеджер лута события")
     LootPollingMenu:SetSize(700, 550)
     LootPollingMenu:Center()
     LootPollingMenu:MakePopup()
@@ -265,7 +265,7 @@ local function CreateLootPollingMenu()
         
         surface.SetFont("ZB_InterfaceMedium")
         surface.SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
-        local text = "Event Loot Settings - " .. serverName
+        local text = "Настройки лута события - " .. serverName
         local textW, textH = surface.GetTextSize(text)
         surface.SetTextPos(w/2 - textW/2, 10)
         surface.DrawText(text)
@@ -276,7 +276,7 @@ local function CreateLootPollingMenu()
     itemList:SetSize(660, 300)
     itemList:SetMultiSelect(false)
     itemList:AddColumn("Weight").Width = 80
-    itemList:AddColumn("Item Class").Width = 580
+    itemList:AddColumn("Класс предмета").Width = 580
     
     itemList.Paint = function(self, w, h)
         surface.SetDrawColor(30, 30, 40, 200)
@@ -328,7 +328,7 @@ local function CreateLootPollingMenu()
     
     local weightLabel = vgui.Create("DLabel", controlPanel)
     weightLabel:SetPos(15, 10)
-    weightLabel:SetText("Weight (Chance):")
+    weightLabel:SetText("Вес (шанс):")
     weightLabel:SetTextColor(textColor)
     weightLabel:SizeToContents()
     
@@ -340,19 +340,19 @@ local function CreateLootPollingMenu()
     
     local classLabel = vgui.Create("DLabel", controlPanel)
     classLabel:SetPos(90, 10)
-    classLabel:SetText("Item Class:")
+    classLabel:SetText("Класс предмета:")
     classLabel:SetTextColor(textColor)
     classLabel:SizeToContents()
     
     local classEntry = vgui.Create("DTextEntry", controlPanel)
     classEntry:SetPos(90, 35)
     classEntry:SetSize(380, 25)
-    classEntry:SetPlaceholderText("weapon_name or prop_physics")
+    classEntry:SetPlaceholderText("weapon_name или prop_physics")
     
     local addButton = vgui.Create("DButton", controlPanel)
     addButton:SetPos(480, 35)
     addButton:SetSize(100, 25)
-    addButton:SetText("Add Item")
+    addButton:SetText("Добавить предмет")
     addButton:SetTextColor(textColor)
     addButton.Paint = function(self, w, h)
         if self:IsHovered() then
@@ -371,7 +371,7 @@ local function CreateLootPollingMenu()
         local class = classEntry:GetValue()
         
         if weight <= 0 or class == "" then
-            notification.AddLegacy("Please specify weight and item class", NOTIFY_ERROR, 3)
+            notification.AddLegacy("Укажите вес и класс предмета", NOTIFY_ERROR, 3)
             return
         end
         
@@ -420,7 +420,7 @@ local function CreateLootPollingMenu()
         return btn
     end
     
-    local removeButton = createButton(buttonPanel, 15, 20, 140, 30, "Remove Selected", 
+    local removeButton = createButton(buttonPanel, 15, 20, 140, 30, "Удалить выбранное", 
         Color(180, 10, 10), Color(220, 30, 30),
         function()
             local selected = itemList:GetSelectedLine()
@@ -435,13 +435,13 @@ local function CreateLootPollingMenu()
         end
     )
     
-    local resetButton = createButton(buttonPanel, 505, 20, 140, 30, "Reset All", 
+    local resetButton = createButton(buttonPanel, 505, 20, 140, 30, "Сбросить всё", 
         Color(180, 10, 10), Color(220, 30, 30),
         function()
             if not LocalPlayer():IsAdmin() and not EventersList[LocalPlayer():SteamID()] then return end
             
             Derma_Query(
-                "Are you sure you want to reset the entire loot table?",
+                "Точно сбросить всю таблицу лута?",
                 "Confirmation",
                 "Yes", function()
                     RunConsoleCommand("zb_event_loot_reset")
@@ -451,29 +451,29 @@ local function CreateLootPollingMenu()
         end
     )
     
-    local specialButton = createButton(buttonPanel, 165, 20, 160, 30, "Select from List", 
+    local specialButton = createButton(buttonPanel, 165, 20, 160, 30, "Выбрать из списка", 
         Color(80, 80, 160), Color(100, 100, 190),
         function()
             local menu = DermaMenu()
             menu:SetSkin("Default")
             
             local weaponSubMenu = menu:AddSubMenu("Weapons")
-            weaponSubMenu:AddOption("Pistol (USP)", function() classEntry:SetValue("weapon_hk_usp") end)
+            weaponSubMenu:AddOption("Пистолет (USP)", function() classEntry:SetValue("weapon_hk_usp") end)
             weaponSubMenu:AddOption("Revolver", function() classEntry:SetValue("weapon_revolver357") end)
             weaponSubMenu:AddOption("Desert Eagle", function() classEntry:SetValue("weapon_deagle") end)
             weaponSubMenu:AddOption("Shotgun", function() classEntry:SetValue("weapon_remington870") end)
             weaponSubMenu:AddOption("MP5", function() classEntry:SetValue("weapon_mp5") end)
             weaponSubMenu:AddOption("AKM", function() classEntry:SetValue("weapon_akm") end)
-            weaponSubMenu:AddOption("Sniper Rifle", function() classEntry:SetValue("weapon_m98b") end)
+            weaponSubMenu:AddOption("Снайперская винтовка", function() classEntry:SetValue("weapon_m98b") end)
             
             local meleeSubMenu = menu:AddSubMenu("Melee")
-            meleeSubMenu:AddOption("Lead Pipe", function() classEntry:SetValue("weapon_leadpipe") end)
+            meleeSubMenu:AddOption("Свинцовая труба", function() classEntry:SetValue("weapon_leadpipe") end)
             meleeSubMenu:AddOption("Crowbar", function() classEntry:SetValue("weapon_hg_crowbar") end)
             meleeSubMenu:AddOption("Axe", function() classEntry:SetValue("weapon_hg_axe") end)
             meleeSubMenu:AddOption("Machete", function() classEntry:SetValue("weapon_hatchet") end)
             
             local explosiveSubMenu = menu:AddSubMenu("Explosives")
-            explosiveSubMenu:AddOption("Molotov Cocktail", function() classEntry:SetValue("weapon_hg_molotov_tpik") end)
+            explosiveSubMenu:AddOption("Коктейль Молотова", function() classEntry:SetValue("weapon_hg_molotov_tpik") end)
             explosiveSubMenu:AddOption("Grenade", function() classEntry:SetValue("weapon_hg_f1_tpik") end)
             explosiveSubMenu:AddOption("RPG", function() classEntry:SetValue("weapon_hg_rpg") end)
             
@@ -481,8 +481,8 @@ local function CreateLootPollingMenu()
             armorSubMenu:AddOption("Vest", function() classEntry:SetValue("ent_armor_vest3") end)
             armorSubMenu:AddOption("Helmet", function() classEntry:SetValue("ent_armor_helmet1") end)
             
-            local specialSubMenu = menu:AddSubMenu("Special Items")
-            specialSubMenu:AddOption("Ammo (Random)", function() classEntry:SetValue("*ammo*") end)
+            local specialSubMenu = menu:AddSubMenu("Особые предметы")
+            specialSubMenu:AddOption("Патроны (случайные)", function() classEntry:SetValue("*ammo*") end)
             
             menu:Open()
         end
@@ -502,7 +502,7 @@ local function CreateLootPollingMenu()
     
     local infoLabel = vgui.Create("DLabel", LootPollingMenu)
     infoLabel:SetPos(350, 535)
-    infoLabel:SetText("Loot table is automatically saved")
+    infoLabel:SetText("Таблица лута сохраняется автоматически")
     infoLabel:SetTextColor(Color(180, 180, 180))
     infoLabel:SizeToContents()
     

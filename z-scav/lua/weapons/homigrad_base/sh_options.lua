@@ -14,7 +14,7 @@ if CLIENT then
 	    local wep = ply:GetActiveWeapon()
 	    local type_ = math.Round(args[1])
 	    if wep and ishgweapon(wep) and (wep:Clip1() == 0 or wep.AllwaysChangeAmmo) and wep:CanUse() and wep.AmmoTypes and wep.AmmoTypes[type_] then
-	        ply:ChatPrint("Changed ammotype to: " .. wep.AmmoTypes[type_][1])
+	        ply:ChatPrint("Тип патронов: " .. wep.AmmoTypes[type_][1])
 	        net.Start("changeAmmoType")
 	        net.WriteEntity(wep)
 	        net.WriteInt(type_, 4)
@@ -69,15 +69,15 @@ else
 end
 
 hg.postures = {
-    [0] = "Regular hold",
+    [0] = "Обычный хват",
     [1] = "Hipfire",
-    [2] = "Left shoulder",
-    [3] = "High ready",
-    [4] = "Low ready",
-    [5] = "Point shooting",
-    [6] = "Shooting from cover",
+    [2] = "Левое плечо",
+    [3] = "Высокая готовность",
+    [4] = "Низкая готовность",
+    [5] = "Стрельба навскидку",
+    [6] = "Стрельба из-за укрытия",
     [7] = {"Gangsta",isPistolOnly = true},
-    [8] = {"One-handed",isPistolOnly = true},
+    [8] = {"Одной рукой",isPistolOnly = true},
 	[9] = "Somalian",
 }
 
@@ -162,7 +162,7 @@ else
 end
 
 if CLIENT then
-	local weaponMenuAmmoSectionText = "Ammo Types"
+	local weaponMenuAmmoSectionText = "Типы патронов"
 	local weaponMenuCylinderSectionText = "Cylinder"
 	local weaponMenuSlotText = "Slot %d"
 	local weaponMenuAmmoIconCache = {}
@@ -266,7 +266,7 @@ if CLIENT then
 
 				return 0
 			end,
-			[2] = "Attachments Menu"
+			[2] = "Меню обвесов"
 		}
 
         if !IsValid(wep) or !ishgweapon(wep) then
@@ -309,7 +309,7 @@ if CLIENT then
                 [1] = function()
                     RunConsoleCommand("hg_change_posture", 0)
                 end,
-                [2] = "Reset Posture"
+                [2] = "Сбросить стойку"
             },
 			[3] = attmenu,
         }
@@ -320,7 +320,7 @@ if CLIENT then
 				RunConsoleCommand("hg_rolldrum")
 
 				return -1
-			end, "Roll Drum"}
+			end, "Прокрутить барабан"}
             tbl[#tbl + 1] = tbl3
 
 			local drumMenu = BuildWeaponDrumMenu(wep)
@@ -374,7 +374,7 @@ if CLIENT then
                 [1] = function()
                     RunConsoleCommand("hmcd_togglelaser")
                 end,
-                [2] = "Toggle Laser" 
+                [2] = "Вкл/выкл лазер" 
             }
 		end
 
@@ -384,7 +384,7 @@ if CLIENT then
 
                 return -1
             end,
-            [2] = "Weapon Menu"
+            [2] = "Меню оружия"
         }
     end)
 end

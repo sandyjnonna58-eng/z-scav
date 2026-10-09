@@ -156,13 +156,13 @@ function SWEP:DrawHUD()
 
 		surface.SetFont("HomigradFontLarge")
 		surface.SetTextColor(255, 255, 255, lerpalpha)
-		local txt = "Afflictions shown for "..ent:GetPlayerName()..":"
+		local txt = "Травмы показаны на "..ent:GetPlayerName()..":"
 		local w1, h1 = surface.GetTextSize(txt)
 		surface.SetTextPos(scrw * 0.05, scrh * 0.95 - h - h1)
 		surface.DrawText(txt)
 
 		if org.blood and org.blood < 4000 then
-			hg.DrawAffliction(posx + add_x, posy - h, w, h, (4000 - org.blood) / 4000, hg.afflictions.pale, lerpalpha, "Pale skin")
+			hg.DrawAffliction(posx + add_x, posy - h, w, h, (4000 - org.blood) / 4000, hg.afflictions.pale, lerpalpha, "Бледная кожа")
 
 			add_x = add_x + w + add
 		end
@@ -180,25 +180,25 @@ function SWEP:DrawHUD()
 		end
 
 		if org.rleg and org.rleg > 0 then
-			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rleg, org.rleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.rleg > 0.999 and "Right leg fracture" or "Right leg blunt trauma")
+			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rleg, org.rleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.rleg > 0.999 and "Перелом правой ноги" or "Ушиб правой ноги")
 
 			add_x = add_x + w + add
 		end
 
 		if org.lleg and org.lleg > 0 then
-			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.lleg, org.lleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.lleg > 0.999 and "Left leg fracture" or "Left leg blunt trauma")
+			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.lleg, org.lleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.lleg > 0.999 and "Перелом левой ноги" or "Ушиб левой ноги")
 
 			add_x = add_x + w + add
 		end
 
 		if org.rarm and org.rarm > 0 then
-			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rarm, org.rarm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.rarm > 0.999 and "Right arm fracture" or "Right arm blunt trauma")
+			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rarm, org.rarm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.rarm > 0.999 and "Перелом правой руки" or "Ушиб правой руки")
 
 			add_x = add_x + w + add
 		end
 
 		if org.larm and org.larm > 0 then
-			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.larm, org.larm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.larm > 0.999 and "Left arm fracture" or "Left arm blunt trauma")
+			hg.DrawAffliction(posx + add_x, posy - h, w, h, org.larm, org.larm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.larm > 0.999 and "Перелом левой руки" or "Ушиб левой руки")
 
 			add_x = add_x + w + add
 		end
@@ -210,7 +210,7 @@ function SWEP:DrawHUD()
 		end
 
 		if org.o2 and org.o2[1] < 5 then
-			hg.DrawAffliction(posx + add_x, posy - h, w, h, (5 - org.o2[1]) / 5, hg.afflictions.lung_failure, lerpalpha, "Lung failure")
+			hg.DrawAffliction(posx + add_x, posy - h, w, h, (5 - org.o2[1]) / 5, hg.afflictions.lung_failure, lerpalpha, "Отказ лёгких")
 
 			add_x = add_x + w + add
 		end
@@ -221,7 +221,7 @@ function SWEP:DrawHUD()
 			surface.SetFont("HomigradFontLarge")
 			surface.SetTextColor(255, 255, 255, lerpalpha)
 			surface.SetTextPos(scrw * 0.05, scrh * 0.95 - h)
-			surface.DrawText("No afflictions.")
+			surface.DrawText("Травм нет.")
 		end
 	end
 end

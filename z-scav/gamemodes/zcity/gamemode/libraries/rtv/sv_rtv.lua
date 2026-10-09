@@ -461,7 +461,7 @@ end
 
 
 COMMANDS.forcertv = {function(ply, args)
-	if not ply:IsAdmin() then ply:ChatPrint("You don't have access") return end
+	if not ply:IsAdmin() then ply:ChatPrint("У вас нет доступа") return end
 		zb.StartRTV(20)
 	end,
 	0
@@ -488,7 +488,7 @@ function zb.CheckRTVVotes(needPrint)
     if votes >= votesNeeded then
         if needPrint then
             for _, v in player.Iterator() do
-                v:ChatPrint("Enough votes to change the map. RTV will be on next round.")
+                v:ChatPrint("Голосов достаточно для смены карты. RTV будет в следующем раунде.")
             end
         end
         
@@ -508,7 +508,7 @@ local function rtv(ply, args)
     
     if rtvVotes[steamID] then
         rtvVotes[steamID] = nil
-        ply:ChatPrint("You canceled your vote for map change.")
+        ply:ChatPrint("Вы отменили голос за смену карты.")
         
         local votesNeeded = math.ceil(#player.GetAll() / 2)
         local votes = table.Count(rtvVotes)
@@ -544,8 +544,8 @@ local function rtv(ply, args)
     for _, v in player.Iterator() do
         if remaining != 0 then
             v:ChatPrint(
-                ply:Nick() .. " voted for map change. " .. 
-                remaining .. " more votes needed. Type !rtv again to cancel your vote."
+                ply:Nick() .. " проголосовал за смену карты. " .. 
+                remaining .. " голосов ещё нужно. Введите !rtv снова, чтобы отменить голос."
             )
         end
     end

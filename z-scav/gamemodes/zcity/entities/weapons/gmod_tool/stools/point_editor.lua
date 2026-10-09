@@ -1,12 +1,12 @@
 TOOL.Category = "ZBattle"
-TOOL.Name = "Point Editor"
+TOOL.Name = "Редактор точек"
 
 TOOL.ClientConVar["point"] = ""
 
 function TOOL:LeftClick(trace, attach)
 	local ply = self:GetOwner()
 	if not ply:IsAdmin() then
-		ply:ChatPrint("You are a furry")
+		ply:ChatPrint("Ты фурри")
 		return false
 	end
 
@@ -38,7 +38,7 @@ end
 function TOOL:RightClick(trace)
 	local ply = self:GetOwner()
 	if not ply:IsAdmin() then
-		ply:ChatPrint("You are a furry")
+		ply:ChatPrint("Ты фурри")
 		return false
 	end
 
@@ -123,7 +123,7 @@ function TOOL.BuildCPanel(CPanel)
 	local dlist = vgui.Create("DListView")
 	dlist:Dock(TOP)
 	dlist:SetTall(ScreenScale(100))
-	dlist:AddColumn("Point Name")
+	dlist:AddColumn("Название точки")
 
 	for k, _ in SortedPairs(zb.Points) do
 		dlist:AddLine(k)

@@ -774,7 +774,7 @@ surface.CreateFont("HGWoundHoldPrompt", {
 })
 
 local woundHoldPromptFade = 0
-local woundHoldPromptText = "[E + SPACE] to hold your wound"
+local woundHoldPromptText = "[E + ПРОБЕЛ] зажать рану"
 local woundHoldPromptActive = false
 
 hook.Add("HUDPaint", "HG_WoundHoldPrompt", function()
@@ -797,7 +797,7 @@ hook.Add("HUDPaint", "HG_WoundHoldPrompt", function()
 	local active = ply:GetNWBool("hg_hold_wound_manual", false)
 	if shouldShow then
 		woundHoldPromptActive = active
-		woundHoldPromptText = active and "Holding wound" or "[E + SPACE] to hold your wound"
+		woundHoldPromptText = active and "Зажимаю рану" or "[E + ПРОБЕЛ] зажать рану"
 	end
 
 	local flash = woundHoldPromptActive and (0.5 + 0.5 * math.sin(CurTime() * 10)) or 0

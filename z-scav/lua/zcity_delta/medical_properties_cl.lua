@@ -40,19 +40,19 @@ properties.Add("zcity_delta_medical", {
     MenuOpen = function(self, option, ent)
         local submenu = option:AddSubMenu()
 
-        submenu:AddOption("Amputate Left Arm", function()
+        submenu:AddOption("Ампутировать левую руку", function()
             SendRequest(ent, "larm")
         end)
 
-        submenu:AddOption("Amputate Right Arm", function()
+        submenu:AddOption("Ампутировать правую руку", function()
             SendRequest(ent, "rarm")
         end)
 
-        submenu:AddOption("Amputate Left Leg", function()
+        submenu:AddOption("Ампутировать левую ногу", function()
             SendRequest(ent, "lleg")
         end)
 
-        submenu:AddOption("Amputate Right Leg", function()
+        submenu:AddOption("Ампутировать правую ногу", function()
             SendRequest(ent, "rleg")
         end)
     end

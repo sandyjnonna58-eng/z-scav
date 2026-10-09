@@ -305,7 +305,7 @@ local appearance_unsaved_box_width = 420
 local appearance_unsaved_box_height = 170
 local appearance_unsaved_button_width = 140
 local appearance_unsaved_button_height = 34
-local appearance_unsaved_message = "You havent saved your changes."
+local appearance_unsaved_message = "Вы не сохранили изменения."
 local appearance_unsaved_fade_in_time = 0.12
 local appearance_unsaved_fade_out_time = 0.1
 local appearance_unsaved_box_rise = 10
@@ -751,7 +751,7 @@ function PANEL:PostInit()
             surface.DrawOutlinedRect(MenuUnit(8), MenuUnit(8), MenuUnit(68), MenuUnit(78), 1)
             draw.SimpleText("X", "ZCity_Menu_Settings_Medium", MenuUnit(42), MenuUnit(47), appearance_color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             draw.SimpleText("None", "ZCity_Menu_Settings_Small", MenuUnit(86), MenuUnit(18), appearance_color_text, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-            draw.SimpleText(self.IsActive and "Clear slot" or "Clear slot", "ZCity_Menu_Settings_Tiny", MenuUnit(86), MenuUnit(46), appearance_color_text_dim, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            draw.SimpleText(self.IsActive and "Очистить слот" or "Очистить слот", "ZCity_Menu_Settings_Tiny", MenuUnit(86), MenuUnit(46), appearance_color_text_dim, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
         end
         return row
     end
@@ -912,7 +912,7 @@ function PANEL:PostInit()
             surface.DrawRect(0, 0, w, h)
             surface.SetDrawColor(255, 255, 255, 255)
             surface.DrawOutlinedRect(0, 0, w, h, 1)
-            draw.SimpleText("Dont Save", "ZCity_Menu_Settings_Small", w * 0.5, h * 0.5, appearance_color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Не сохранять", "ZCity_Menu_Settings_Small", w * 0.5, h * 0.5, appearance_color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
         dontSaveBtn.DoClick = function()
             CloseUnsavedPrompt(function()
@@ -931,18 +931,18 @@ function PANEL:PostInit()
     end
 
     local function SaveCurrentPreset()
-        Derma_StringRequest("Save Preset", "Preset name", main.AppearanceTable.AName or "", function(presetName)
+        Derma_StringRequest("Сохранить набор", "Название набора", main.AppearanceTable.AName or "", function(presetName)
             if not isstring(presetName) then return end
             presetName = string.Trim(presetName)
             if presetName == "" or #presetName < 2 then
                 surface.PlaySound("buttons/button10.wav")
-                notification.AddLegacy("Enter a preset name (min 2 chars)", NOTIFY_ERROR, 3)
+                notification.AddLegacy("Введите название набора (мин. 2 символа)", NOTIFY_ERROR, 3)
                 return
             end
             presetName = string.gsub(presetName, "[^%w%s_-]", "")
             SavePreset(presetName, main.AppearanceTable)
             surface.PlaySound("buttons/button14.wav")
-            notification.AddLegacy("Preset '" .. presetName .. "' saved!", NOTIFY_GENERIC, 3)
+            notification.AddLegacy("Набор '" .. presetName .. "' saved!", NOTIFY_GENERIC, 3)
         end)
     end
 
@@ -950,11 +950,11 @@ function PANEL:PostInit()
         local presetList = GetPresetList()
         if #presetList == 0 then
             surface.PlaySound("buttons/button10.wav")
-            notification.AddLegacy("No presets saved yet!", NOTIFY_ERROR, 3)
+            notification.AddLegacy("Сохранённых наборов пока нет!", NOTIFY_ERROR, 3)
             return
         end
         local presetMenu = vgui.Create("DFrame")
-        presetMenu:SetTitle("Load Preset")
+        presetMenu:SetTitle("Загрузить набор")
         presetMenu:SetSize(ScreenScale(120), ScreenScale(100))
         presetMenu:Center()
         presetMenu:MakePopup()
@@ -987,19 +987,19 @@ function PANEL:PostInit()
                 if loadedPreset then
                     UpdateAppearance(loadedPreset)
                     surface.PlaySound("buttons/button14.wav")
-                    notification.AddLegacy("Preset '" .. presetName .. "' loaded!", NOTIFY_GENERIC, 3)
+                    notification.AddLegacy("Набор '" .. presetName .. "' loaded!", NOTIFY_GENERIC, 3)
                 else
                     surface.PlaySound("buttons/button10.wav")
-                    notification.AddLegacy("Failed to load preset!", NOTIFY_ERROR, 3)
+                    notification.AddLegacy("Не удалось загрузить набор!", NOTIFY_ERROR, 3)
                 end
                 presetMenu:Close()
             end
             function presetBtn:DoRightClick()
                 local confirmMenu = DermaMenu()
-                confirmMenu:AddOption("Delete '" .. presetName .. "'", function()
+                confirmMenu:AddOption("Удалить '" .. presetName .. "'", function()
                     DeletePreset(presetName)
                     surface.PlaySound("buttons/button15.wav")
-                    notification.AddLegacy("Preset deleted!", NOTIFY_HINT, 2)
+                    notification.AddLegacy("Набор удалён!", NOTIFY_HINT, 2)
                     presetBtn:Remove()
                 end):SetIcon("icon16/cross.png")
                 confirmMenu:Open()
@@ -1008,20 +1008,20 @@ function PANEL:PostInit()
     end
 
     local function DeleteCurrentPreset()
-        Derma_StringRequest("Delete Preset", "Preset name", main.AppearanceTable.AName or "", function(presetName)
+        Derma_StringRequest("Удалить набор", "Название набора", main.AppearanceTable.AName or "", function(presetName)
             if not isstring(presetName) then return end
             presetName = string.Trim(presetName)
             if presetName == "" then
                 surface.PlaySound("buttons/button10.wav")
-                notification.AddLegacy("Enter preset name to delete", NOTIFY_ERROR, 3)
+                notification.AddLegacy("Введите название набора для удаления", NOTIFY_ERROR, 3)
                 return
             end
             if DeletePreset(presetName) then
                 surface.PlaySound("buttons/button15.wav")
-                notification.AddLegacy("Preset '" .. presetName .. "' deleted!", NOTIFY_HINT, 3)
+                notification.AddLegacy("Набор '" .. presetName .. "' deleted!", NOTIFY_HINT, 3)
             else
                 surface.PlaySound("buttons/button10.wav")
-                notification.AddLegacy("Preset not found!", NOTIFY_ERROR, 3)
+                notification.AddLegacy("Набор не найден!", NOTIFY_ERROR, 3)
             end
         end)
     end
@@ -1034,7 +1034,7 @@ function PANEL:PostInit()
         for k, v in pairs(APmodule.PlayerModels[2] or {}) do
             models[k] = v
         end
-        OpenSelectorPanel("Model", "Model", "Select a player model", function(scroll)
+        OpenSelectorPanel("Model", "Model", "Выберите модель игрока", function(scroll)
             for k, v in SortedPairs(models) do
                 AddSelectorTextRow(scroll, k, function()
                     return main.AppearanceTable.AModel == k
@@ -1048,7 +1048,7 @@ function PANEL:PostInit()
     end
 
     local function OpenAccessorySlot(slotID, title, placements)
-        OpenSelectorPanel(title, title, "Select " .. title, function(scroll)
+        OpenSelectorPanel(title, title, "Выбрать " .. title, function(scroll)
             AddSelectorNoneRow(scroll, function()
                 return GetAttachmentValue(slotID) == "none"
             end, function()
@@ -1073,7 +1073,7 @@ function PANEL:PostInit()
     local function OpenClothesMenu(key, title, includeColor)
         local modelData = main:GetCurrentModelData()
         if not modelData then return end
-        OpenSelectorPanel(title, title, "Select " .. title, function(scroll)
+        OpenSelectorPanel(title, title, "Выбрать " .. title, function(scroll)
             for k, _ in SortedPairs(hg.Appearance.Clothes[modelData.sex and 2 or 1] or {}) do
                 local tip = hg.Appearance.ClothesDesc[k] and hg.Appearance.ClothesDesc[k].desc or nil
                 AddSelectorTextRow(scroll, k, function()
@@ -1101,7 +1101,7 @@ function PANEL:PostInit()
                     surface.DrawRect(0, 0, w, h)
                     surface.SetDrawColor(appearance_color_white.r, appearance_color_white.g, appearance_color_white.b, 120)
                     surface.DrawOutlinedRect(0, 0, w, h, 1)
-                    draw.SimpleText("Jacket Color", "ZCity_Menu_Settings_Tiny", MenuUnit(10), h * 0.5, appearance_color_text, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText("Цвет куртки", "ZCity_Menu_Settings_Tiny", MenuUnit(10), h * 0.5, appearance_color_text, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
                     local clr = main.AppearanceTable.AColor or color_white
                     surface.SetDrawColor(clr.r, clr.g, clr.b, 255)
                     surface.DrawRect(w - MenuUnit(30), MenuUnit(6), MenuUnit(18), h - MenuUnit(12))
@@ -1115,7 +1115,7 @@ function PANEL:PostInit()
     local function OpenGlovesMenu()
         local modelData = main:GetCurrentModelData()
         if not modelData then return end
-        OpenSelectorPanel("Gloves", "Gloves", "Select gloves", function(scroll)
+        OpenSelectorPanel("Gloves", "Gloves", "Выберите перчатки", function(scroll)
             for k, v in SortedPairs((hg.Appearance.Bodygroups["HANDS"] and hg.Appearance.Bodygroups["HANDS"][modelData.sex and 2 or 1]) or {}) do
                 if not lply:PS_HasItem(v["ID"]) and v[2] and not hg.Appearance.GetAccessToAll(lply) then continue end
                 AddSelectorTextRow(scroll, k, function()
@@ -1136,7 +1136,7 @@ function PANEL:PostInit()
         local facemapKey = hg.Appearance.FacemapsModels and hg.Appearance.FacemapsModels[modelData.mdl]
         local facemapSet = facemapKey and hg.Appearance.FacemapsSlots[facemapKey]
         if not facemapSet then return end
-        OpenSelectorPanel("Facemap", "Facemap", "Select facemap", function(scroll)
+        OpenSelectorPanel("Facemap", "Facemap", "Выберите лицо", function(scroll)
             for k, _ in SortedPairs(facemapSet) do
                 AddSelectorTextRow(scroll, k, function()
                     return (main.AppearanceTable.AFacemap or "Default") == k
@@ -1150,7 +1150,7 @@ function PANEL:PostInit()
     end
 
     local function ToggleRotate()
-        OpenSelectorPanel("Rotate", "Rotate", "Select silhouette direction", function(scroll)
+        OpenSelectorPanel("Rotate", "Rotate", "Выберите направление силуэта", function(scroll)
             AddSelectorTextRow(scroll, "Front", function()
                 return not main.PreviewRotated
             end, function()
@@ -1263,7 +1263,7 @@ function PANEL:PostInit()
     headerHint:SetPos(MenuUnit(25), MenuUnit(45))
     headerHint:SetFont("ZCity_Menu_Settings_Tiny")
     headerHint:SetTextColor(appearance_color_text_dim)
-    headerHint:SetText("How you look.")
+    headerHint:SetText("Как вы выглядите.")
     headerHint:SizeToContents()
 
     selectorPanel = vgui.Create("DPanel", mainPanel)
@@ -1441,9 +1441,9 @@ function PANEL:PostInit()
 
     local rotateBtn = CreateAppearanceTextButton(lowerActions, "Rotate", function() ToggleRotate() end, function() return main.ActiveSection == "Rotate" end)
     local applyBtn = CreateAppearanceTextButton(lowerActions, "Apply", function() main.ActiveSection = "Apply" CloseSelectorPanel() ApplyAppearance() end, function() return main.ActiveSection == "Apply" end)
-    local savePresetBtn = CreateAppearanceTextButton(lowerActions, "Save Preset", function() main.ActiveSection = "Save Preset" CloseSelectorPanel() SaveCurrentPreset() end, function() return main.ActiveSection == "Save Preset" end)
-    local loadPresetBtn = CreateAppearanceTextButton(lowerActions, "Load Preset", function() main.ActiveSection = "Load Preset" CloseSelectorPanel() LoadCurrentPreset() end, function() return main.ActiveSection == "Load Preset" end)
-    local deletePresetBtn = CreateAppearanceTextButton(lowerActions, "Delete Preset", function() main.ActiveSection = "Delete Preset" CloseSelectorPanel() DeleteCurrentPreset() end, function() return main.ActiveSection == "Delete Preset" end)
+    local savePresetBtn = CreateAppearanceTextButton(lowerActions, "Сохранить набор", function() main.ActiveSection = "Сохранить набор" CloseSelectorPanel() SaveCurrentPreset() end, function() return main.ActiveSection == "Сохранить набор" end)
+    local loadPresetBtn = CreateAppearanceTextButton(lowerActions, "Загрузить набор", function() main.ActiveSection = "Загрузить набор" CloseSelectorPanel() LoadCurrentPreset() end, function() return main.ActiveSection == "Загрузить набор" end)
+    local deletePresetBtn = CreateAppearanceTextButton(lowerActions, "Удалить набор", function() main.ActiveSection = "Удалить набор" CloseSelectorPanel() DeleteCurrentPreset() end, function() return main.ActiveSection == "Удалить набор" end)
     rotateBtn.HoverScale = 0.008
     applyBtn.HoverScale = 0.008
     savePresetBtn.HoverScale = 0.008

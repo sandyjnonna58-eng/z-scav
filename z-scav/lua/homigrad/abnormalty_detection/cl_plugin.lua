@@ -22,7 +22,7 @@ net.Receive("Abnormalties(ShowTranslation)", function(len, ply)
 	if(convar_newbie:GetBool())then
 		convar_newbie:SetBool(false)
 		
-		PLUGIN.ShowMessage("You've stumbled upon something abnormal, type abnormalties_help in console for help")
+		PLUGIN.ShowMessage("Вы наткнулись на нечто аномальное, введите abnormalties_help в консоли для справки")
 	end
 	
 	PLUGIN.ShowTranslation(abnormalty)
@@ -41,7 +41,7 @@ function PLUGIN.ShowTranslation(abnormalty)
 	-- Abnormalties_VGUI_AbnormaltyTimeEnd = CurTime() + 10
 	local count = 0
 	
-	chat.AddText(PLUGIN.MainColor, "I'm getting somewhere...")
+	chat.AddText(PLUGIN.MainColor, "Кажется, я к чему-то прихожу...")
 	
 	for abnormalty_name, abnormalty_amt in pairs(abnormalty) do
 		chat.AddText(PLUGIN.MainColor, abnormalty_name, " - " .. abnormalty_amt)
@@ -50,12 +50,12 @@ function PLUGIN.ShowTranslation(abnormalty)
 	end
 	
 	if(count > 1)then
-		chat.AddText(PLUGIN.MainColor, "But there's still something I need to exclude...")
+		chat.AddText(PLUGIN.MainColor, "Но есть ещё что-то, что нужно исключить...")
 	elseif(count == 1)then
-		chat.AddText(PLUGIN.MainColor, "This is it... I found it!")
-		chat.AddText(PLUGIN.MainColor, "Now, it's just a matter of chanting it over and over again in one spot...")
+		chat.AddText(PLUGIN.MainColor, "Вот оно... Я нашёл!")
+		chat.AddText(PLUGIN.MainColor, "Теперь осталось повторять это снова и снова на одном месте...")
 	elseif(count == 0)then
-		chat.AddText(PLUGIN.MainColor, "But... It's useless, I need to put meaning into words...")
+		chat.AddText(PLUGIN.MainColor, "Но... Бесполезно, нужно вложить смысл в слова...")
 	end
 end
 

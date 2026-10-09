@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_base"
-SWEP.PrintName = "Cyanide canister"
-SWEP.Instructions = "Produces gas, which prevents transport of electrons from cytochrome c to oxygen. As a result, the electron transport chain is disrupted, meaning that the cell can no longer aerobically produce ATP for energy. Tissues that depend highly on aerobic respiration, such as the central nervous system and the heart, are particularly affected."
+SWEP.PrintName = "Баллон с цианидом"
+SWEP.Instructions = "Выделяет газ, который блокирует перенос электронов от цитохрома c к кислороду. Дыхательная цепь нарушается, и клетки больше не могут получать энергию. Сильнее всего страдают ткани, зависящие от кислорода: нервная система и сердце."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -125,12 +125,12 @@ if SERVER then
 		if (not org.poison3) or (not org.alive) then return end
 		
 		if ((org.poison3 + 4) < CurTime()) and owner.Profession == "cook" then
-			org.owner:Notify("It smells like almonds in here... Perfume, perhaps?", true, "cyanide", 3)
+			org.owner:Notify("Здесь пахнет миндалём... Духи, что ли?", true, "cyanide", 3)
 		end
 
 		if (not org.poison3notificate) and ((org.poison3 + 20) < CurTime()) then
 			org.poison3notificate = true
-			org.owner:Notify("It's getting difficult to breathe... for some reason...", true, "cyanide2", 3)
+			org.owner:Notify("Почему-то становится трудно дышать...", true, "cyanide2", 3)
 			org.owner:EmitSound(ThatPlyIsFemale(org.owner) and "breathing/inhale/female/inhale_0"..math.random(5)..".wav" or "breathing/inhale/male/inhale_0"..math.random(4)..".wav",65)	
 		end
 

@@ -13,7 +13,7 @@ local function RegisterZChatConVar(name, default, description, min, max, valueTy
 	}
 end
 
-RegisterZChatConVar("zchat_maxmessagelength", 256, "Maximum message length allowed", 32, 512, "number", 0)
+RegisterZChatConVar("zchat_maxmessagelength", 256, "Максимальная длина сообщения", 32, 512, "number", 0)
 local maxLength = CreateConVar("zchat_maxmessagelength", "256", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Maximum message length allowed")
 
 if CLIENT then

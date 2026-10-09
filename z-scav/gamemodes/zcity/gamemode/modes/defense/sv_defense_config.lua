@@ -274,30 +274,30 @@ DEFENSE_COMMANDER_ECONOMY = {
 
 DEFENSE_COMMANDER_ITEMS = {
     ["Weapons"] = {
-        {name = "AK-47", entity = "weapon_akm", price = 7, desc = "Reliable assault rifle with good damage", icon = "pwb/sprites/akm" },
-        {name = "M4A1", entity = "weapon_ar15", price = 6, desc = "Accurate assault rifle with moderate damage", icon = "vgui/wep_jack_hmcd_assaultrifle"},
-        {name = "MP5", entity = "weapon_mp5", price = 3, desc = "Fast-firing SMG with controllable recoil", icon = "vgui/hud/tfa_inss_mp5a2"},
-        {name = "M249", entity = "weapon_m249", price = 15, desc = "Heavy machine gun with large magazine", icon = "pwb2/vgui/weapons/m249paratrooper"},
-        {name = "Desert Eagle", entity = "weapon_deagle", price = 2, desc = "Powerful pistol with high stopping power", icon = "pwb2/vgui/weapons/deserteagle"}
+        {name = "AK-47", entity = "weapon_akm", price = 7, desc = "Надёжная штурмовая винтовка с хорошим уроном", icon = "pwb/sprites/akm" },
+        {name = "M4A1", entity = "weapon_ar15", price = 6, desc = "Точная штурмовая винтовка со средним уроном", icon = "vgui/wep_jack_hmcd_assaultrifle"},
+        {name = "MP5", entity = "weapon_mp5", price = 3, desc = "Скорострельный пистолет-пулемёт с контролируемой отдачей", icon = "vgui/hud/tfa_inss_mp5a2"},
+        {name = "M249", entity = "weapon_m249", price = 15, desc = "Тяжёлый пулемёт с большим магазином", icon = "pwb2/vgui/weapons/m249paratrooper"},
+        {name = "Desert Eagle", entity = "weapon_deagle", price = 2, desc = "Мощный пистолет с высоким останавливающим действием", icon = "pwb2/vgui/weapons/deserteagle"}
     },
     ["Equipment"] = {
-        {name = "Medkit", entity = "weapon_medkit_sh", price = 15, desc = "Heals injuries and restores health", icon = "vgui/entities/weapon_medkit_sh"},
-        {name = "Body Armor (Lvl 4)", entity = "ent_armor_vest1", price = 15, desc = "Provides good protection against bullets", icon = "scrappers/armor1.png"},
-        {name = "Helmet ACHHC IIIA", entity = "ent_armor_helmet5", price = 10, desc = "Military grade head protection", icon = "entities/ent_jack_gmod_ezarmor_achhcblack.png"},
-        {name = "Adrenaline", entity = "weapon_adrenaline", price = 5, desc = "Temporarily increases stamina and reduces pain", icon = "vgui/entities/weapon_adrenaline"}
+        {name = "Medkit", entity = "weapon_medkit_sh", price = 15, desc = "Лечит травмы и восстанавливает здоровье", icon = "vgui/entities/weapon_medkit_sh"},
+        {name = "Бронежилет (ур. 4)", entity = "ent_armor_vest1", price = 15, desc = "Хорошо защищает от пуль", icon = "scrappers/armor1.png"},
+        {name = "Шлем ACHHC IIIA", entity = "ent_armor_helmet5", price = 10, desc = "Армейская защита головы", icon = "entities/ent_jack_gmod_ezarmor_achhcblack.png"},
+        {name = "Adrenaline", entity = "weapon_adrenaline", price = 5, desc = "Временно повышает выносливость и снижает боль", icon = "vgui/entities/weapon_adrenaline"}
     },
     ["Ammunition"] = {
-        {name = "5.56mm Ammo", entity = "ent_ammo_5.56x45mm", price = 3, desc = "Standard rifle ammunition", icon = "vgui/hud/hmcd_round_556"},
-        {name = "7.62mm Ammo", entity = "ent_ammo_7.62x39mm", price = 5, desc = "Powerful rifle ammunition", icon = "vgui/hud/hmcd_round_792"},
-        {name = "9mm Ammo", entity = "ent_ammo_9x19mmparabellum", price = 2, desc = "Standard pistol ammunition", icon = "vgui/hud/hmcd_round_9"},
-        {name = "12 Gauge Shells", entity = "ent_ammo_12/70gauge", price = 3, desc = "Shotgun ammunition", icon = "vgui/hud/hmcd_round_12"}
+        {name = "Патроны 5,56 мм", entity = "ent_ammo_5.56x45mm", price = 3, desc = "Стандартные винтовочные патроны", icon = "vgui/hud/hmcd_round_556"},
+        {name = "Патроны 7,62 мм", entity = "ent_ammo_7.62x39mm", price = 5, desc = "Мощные винтовочные патроны", icon = "vgui/hud/hmcd_round_792"},
+        {name = "Патроны 9 мм", entity = "ent_ammo_9x19mmparabellum", price = 2, desc = "Стандартные пистолетные патроны", icon = "vgui/hud/hmcd_round_9"},
+        {name = "Патроны 12 калибра", entity = "ent_ammo_12/70gauge", price = 3, desc = "Патроны для дробовика", icon = "vgui/hud/hmcd_round_12"}
     },
     ["Explosives"] = {
-        {name = "Frag Grenade", entity = "weapon_hg_grenade_tpik", price = 35, desc = "Standard fragmentation grenade", icon = "vgui/entities/weapon_hg_grenade_tpik"},
-        {name = "Claymore", entity = "weapon_claymore", price = 50, desc = "Directional anti-personnel mine", icon = "vgui/entities/weapon_claymore"},
-        {name = "Pipe Bomb", entity = "weapon_hg_pipebomb_tpik", price = 20, desc = "Improvised explosive device", icon = "vgui/entities/weapon_hg_pipebomb_tpik"}
+        {name = "Осколочная граната", entity = "weapon_hg_grenade_tpik", price = 35, desc = "Стандартная осколочная граната", icon = "vgui/entities/weapon_hg_grenade_tpik"},
+        {name = "Claymore", entity = "weapon_claymore", price = 50, desc = "Направленная противопехотная мина", icon = "vgui/entities/weapon_claymore"},
+        {name = "Самодельная бомба", entity = "weapon_hg_pipebomb_tpik", price = 20, desc = "Самодельное взрывное устройство", icon = "vgui/entities/weapon_hg_pipebomb_tpik"}
     },
     ["Tactical Support"] = {
-        {name = "Emergency Reinforcements", entity = "player_reinforcements", price = 350, desc = "Bring back fallen teammates as reinforcements to continue the fight", icon = "vgui/hud/hmcd_person", special = true}
+        {name = "Экстренное подкрепление", entity = "player_reinforcements", price = 350, desc = "Вернуть павших союзников в бой как подкрепление", icon = "vgui/hud/hmcd_person", special = true}
     }
 }

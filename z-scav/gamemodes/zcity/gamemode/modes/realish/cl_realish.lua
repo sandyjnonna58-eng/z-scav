@@ -717,7 +717,7 @@ local function GetStatLines(option)
 	local cone = primary.Cone or primary.Spread
 
 	if clip and clip > 0 then
-		local mode = primary.Automatic and "Auto" or "Semi-Auto"
+		local mode = primary.Automatic and "Auto" or "Полуавтомат"
 		local firerate = wait and math.Round(60 / wait) or "N/A"
 		local accuracy = type(cone) == "Vector" and math.max(cone.x, cone.y, cone.z) or cone
 		accuracy = isnumber(accuracy) and math.Clamp(math.Round((1 - accuracy) * 100), 0, 100) .. "%" or "N/A"
@@ -1019,23 +1019,23 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 		surface.SetDrawColor(palette.bg)
 		surface.DrawRect(0, h - 112, w, 112)
 
-		local title = "Select Class"
-		local subtitle = "Select a class and deploy when ready. Press RMB on a class to edit loadout."
+		local title = "Выбор класса"
+		local subtitle = "Выберите класс и выходите, когда готовы. ПКМ по классу - изменить снаряжение."
 		if streakMode then
-			title = "Select Killstreaks"
-			subtitle = "Pick up to " .. GetKillstreakMaxPicks() .. " killstreaks. Streaks grow with kills and reset on death."
+			title = "Выбор серий убийств"
+			subtitle = "Выберите до " .. GetKillstreakMaxPicks() .. " серий убийств. Серии растут с убийствами и сбрасываются при смерти."
 		elseif heroMode then
-			title = "Select Hero"
-			subtitle = "Pick a hero. Press RMB on the hero box to edit selection."
+			title = "Выбор героя"
+			subtitle = "Выберите героя. ПКМ по окну героя - изменить выбор."
 		elseif customize then
 			title = selectedLoadout .. (attachmentPage and " Attachments" or " Customization")
-			subtitle = "Select weapons and attachments for this class."
+			subtitle = "Выберите оружие и обвесы для этого класса."
 		end
 
 		draw.SimpleText(title, "RealishMediumLarge", w * 0.5, 28, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		draw.SimpleText(subtitle, "RealishMedium", w * 0.5, h - 152, palette.accent, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		if not heroMode and not streakMode then
-			draw.SimpleText("Armor Cost: " .. cost .. " Coins | Coins: " .. coins, "RealishMedium", w * 0.5, h - 126, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Цена брони: " .. cost .. " монет | Монеты: " .. coins, "RealishMedium", w * 0.5, h - 126, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
 
@@ -1113,9 +1113,9 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 				draw.SimpleText(line, "RealishMedium", bw * 0.08, descY + (i - 1) * 18, white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 			end
 
-			draw.SimpleText("Kills required: " .. (data.kills or 5), "RealishMedium", bw * 0.08, bh * 0.70, palette.accent, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-			draw.SimpleText("Reward: " .. GetKillstreakWeaponName(data), "RealishMedium", bw * 0.08, bh * 0.70 + 26, palette.accent, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-			draw.SimpleText("LMB to toggle selection", "RealishMedium", bw * 0.5, bh - 34, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Нужно убийств: " .. (data.kills or 5), "RealishMedium", bw * 0.08, bh * 0.70, palette.accent, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Награда: " .. GetKillstreakWeaponName(data), "RealishMedium", bw * 0.08, bh * 0.70 + 26, palette.accent, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+			draw.SimpleText("ЛКМ - выбрать/снять", "RealishMedium", bw * 0.5, bh - 34, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		local cardH = 96
@@ -1280,7 +1280,7 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 
 				DrawFittedText(hero.name, fitLargeFonts, bh, bh * 0.4, yellow, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, bw - bh - 12, bh * 0.45)
 				local sub = ""
-				if hero.teamHighlight then sub = "Giant • Team glow" end
+				if hero.teamHighlight then sub = "Гигант • Подсветка команды" end
 				if hero.meleeMult and hero.meleeMult > 1 then sub = sub .. (sub ~= "" and " • " or "") .. "Melee x" .. hero.meleeMult end
 				if hero.speedMult and hero.speedMult > 1 then sub = sub .. (sub ~= "" and " • " or "") .. "Speed x" .. hero.speedMult end
 				if sub == "" then sub = "WIP!!!" end
@@ -1352,7 +1352,7 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 				draw.SimpleText(stat[1] .. ": " .. stat[2], "RealishMedium", x, y, white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 			end
 
-			draw.SimpleText(attachmentPage and "LMB to toggle attachments" or HasAttachments(option) and "RMB to add attachments" or "No attachments available", "RealishMedium", bw * 0.5, bh - 34, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText(attachmentPage and "ЛКМ - вкл/выкл обвесы" or HasAttachments(option) and "ПКМ - добавить обвесы" or "Нет доступных обвесов", "RealishMedium", bw * 0.5, bh - 34, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		rebuildSlots = function()
@@ -1649,7 +1649,7 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 		if zb.ROUND_STATE ~= 1 then
 			text = "Waiting"
 		elseif not canDeploy then
-			text = "Deploy in " .. math.ceil(deployTime - CurTime())
+			text = "Выход через " .. math.ceil(deployTime - CurTime())
 		end
 
 		local flashAmt = math.max(0, deployFlashRed - CurTime())
@@ -1721,7 +1721,7 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 			surface.SetDrawColor(palette.accent)
 			surface.DrawOutlinedRect(0, 0, pw, ph, 1)
 			local pct = math.floor(GetMusicVolume() * 100 + 0.5)
-			DrawAutoText("Music Volume: " .. pct .. "%", "RealishMedium", pw * 0.5, 10, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, pw - 12, 20)
+			DrawAutoText("Громкость музыки: " .. pct .. "%", "RealishMedium", pw * 0.5, 10, yellow, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, pw - 12, 20)
 		end
 
 		local slider = vgui.Create("DPanel", speakerPopup)
@@ -1765,7 +1765,7 @@ local function OpenMenu(force, customize, attachmentPage, heroMode, streakMode)
 			surface.DrawRect(0, 0, bw, bh)
 			surface.SetDrawColor(255, 255, 255, 60)
 			surface.DrawOutlinedRect(0, 0, bw, bh, 1)
-			DrawAutoText(musicMuted and "Muted (click to unmute)" or "Mute", "RealishMedium", bw * 0.5, bh * 0.5, white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, bw - 8, bh - 4)
+			DrawAutoText(musicMuted and "Без звука (нажмите, чтобы включить)" or "Mute", "RealishMedium", bw * 0.5, bh * 0.5, white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, bw - 8, bh - 4)
 		end
 		muteBtn.DoClick = function()
 			ToggleMute()
@@ -1893,7 +1893,7 @@ local function DrawHeroLivesAnim(sw, sh)
 	surface.SetDrawColor(0, 0, 0, blackAlpha)
 	surface.DrawRect(0, 0, sw, sh)
 	local displayLives = p < 0.5 and heroLivesAnimFrom or heroLivesAnimTo
-	local text = "Lives: " .. displayLives
+	local text = "Жизни: " .. displayLives
 	local colR = 255
 	local colG = math.floor(255 * (1 - p) + 40 * p)
 	local colB = math.floor(255 * (1 - p) + 40 * p)
@@ -2289,8 +2289,8 @@ local tilts = introTextTilts or {}
 	end
 
 		drawElement(modeName, "RealishIntroTitle", Color(255, 255, 255), sw * 0.5, sh * 0.1, "left", 0, 220, tilts[1] or 3)
-		drawElement("You are on " .. teamName, "RealishIntroTeam", teamColor, sw * 0.5, sh * 0.5, "right", 0.7, 220, tilts[2] or -3)
-		drawElement("Eliminate the enemy team to win!!!!!!!", "RealishIntroSub", Color(255, 255, 255), sw * 0.5, sh * 0.9, "bottom", 1.4, 120, 0)
+		drawElement("Вы в команде " .. teamName, "RealishIntroTeam", teamColor, sw * 0.5, sh * 0.5, "right", 0.7, 220, tilts[2] or -3)
+		drawElement("Уничтожьте вражескую команду, чтобы победить!!!!!!!", "RealishIntroSub", Color(255, 255, 255), sw * 0.5, sh * 0.9, "bottom", 1.4, 120, 0)
 
 		return
 	end
@@ -2532,11 +2532,11 @@ local function RealishAddHitNotif(kind, victimName)
 
 	local prefix = "Killed"
 	if kind == "takedown" then
-		prefix = "Taken Down"
+		prefix = "Выведен из строя"
 	elseif kind == "assist" then
 		prefix = "Assist"
 	elseif kind == "hero_denied" then
-		prefix = "Hero not available"
+		prefix = "Герой недоступен"
 	end
 
 	realishNotifs[#realishNotifs + 1] = {

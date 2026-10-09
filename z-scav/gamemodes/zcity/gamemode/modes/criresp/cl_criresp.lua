@@ -18,13 +18,13 @@ end)
 
 local teams = {
 	[0] = {
-		objective = "Negotiations failed, eliminate the threat. 10-4",
-		name = "a SWAT Operator",
+		objective = "Переговоры провалились, устраните угрозу. Приём.",
+		name = "боец SWAT",
 		color1 = Color(68, 10, 255),
 		color2 = Color(68, 10, 255)
 	},
 	[1] = {
-		objective = "This is my fucking house, bitches, I can do what I want.",
+		objective = "Это мой чёртов дом, сучки, я делаю что хочу.",
 		name = "a Suspect",
 		color1 = Color(228, 49, 49),
 		color2 = Color(228, 49, 49)
@@ -53,8 +53,8 @@ function MODE:HUDPaint()
 	if zb.ROUND_START + 90 > CurTime() then
 		posadd = Lerp(FrameTime() * 5,posadd or 0, zb.ROUND_START + 7.3 < CurTime() and 0 or -sw * 0.4) 
 		local color = Color(255*-math.sin(CurTime()*3),25,255*math.sin(CurTime()*3))
-		draw.SimpleText( "SWAT will arrive in: "..string.FormattedTime(zb.ROUND_START + 90 - CurTime(), "%02i:%02i"	), "ZB_HomicideMedium", sw * 0.02 + posadd, sh * 0.95, Color(0,0,0), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw.SimpleText( "SWAT will arrive in: "..string.FormattedTime(zb.ROUND_START + 90 - CurTime(), "%02i:%02i"	), "ZB_HomicideMedium", (sw * 0.02) - 2 + posadd, (sh * 0.95) - 2, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText( "SWAT прибудет через: "..string.FormattedTime(zb.ROUND_START + 90 - CurTime(), "%02i:%02i"	), "ZB_HomicideMedium", sw * 0.02 + posadd, sh * 0.95, Color(0,0,0), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText( "SWAT прибудет через: "..string.FormattedTime(zb.ROUND_START + 90 - CurTime(), "%02i:%02i"	), "ZB_HomicideMedium", (sw * 0.02) - 2 + posadd, (sh * 0.95) - 2, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		local fade = math.Clamp(zb.ROUND_START + 7.5 - CurTime(), 0, 1)
 		surface.SetDrawColor(0, 0, 0, 255 * fade)
 		surface.DrawRect(-1, -1, ScrW() + 1, ScrH() + 1)
@@ -64,11 +64,11 @@ function MODE:HUDPaint()
 		if not lply:Alive() and not lply:Team() == 0 then return end
 		local fade = math.Clamp(zb.ROUND_START + 8 - CurTime(), 0, 1)
 		local team_ = lply:Team()
-		draw.SimpleText("Crisis Response", "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.1, Color(0, 162, 255, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Реагирование на кризис", "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.1, Color(0, 162, 255, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		local Rolename = teams[team_].name
 		local ColorRole = teams[team_].color1
 		ColorRole.a = 255 * fade
-		draw.SimpleText("You are " .. Rolename, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Вы — " .. Rolename, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		local Objective = teams[team_].objective
 		local ColorObj = teams[team_].color2
 		ColorObj.a = 255 * fade
@@ -80,7 +80,7 @@ function MODE:HUDPaint()
 		surface.SetDrawColor(255, 255, 255, math.random(175, 255) * fade / 2)
 		surface.DrawTexturedRect(sw * 0.25, sh * 0.44 - ScreenScale(15), sw / 2, ScreenScale(30))
 
-		draw.SimpleText("SOMEWHERE IN PLUVTOWN", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("ГДЕ-ТО В ПЛЮВТАУНЕ", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -146,9 +146,9 @@ CreateEndMenu = function(whowin)
 	hmcdEndMenu.PaintOver = function(self, w, h)
 		surface.SetFont("ZB_InterfaceMediumLarge")
 		surface.SetTextColor(col.r, col.g, col.b, col.a)
-		local lengthX, lengthY = surface.GetTextSize("Players:")
+		local lengthX, lengthY = surface.GetTextSize("Игроки:")
 		surface.SetTextPos(w / 2 - lengthX / 2, 20)
-		surface.DrawText("Players:")
+		surface.DrawText("Игроки:")
 	end
 
 	-- PLAYERS
@@ -172,30 +172,30 @@ CreateEndMenu = function(whowin)
 	surface.DrawRect(0, h / 2, w, h / 2)
 	local col = ply:GetPlayerColor():ToColor()
 	surface.SetFont("ZB_InterfaceMediumLarge")
-	local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "He quited...")
+	local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "Он вышел...")
 	surface.SetTextColor(0, 0, 0, 255)
 	surface.SetTextPos(w / 2 + 1, h / 2 - lengthY / 2 + 1)
-	surface.DrawText(ply:GetPlayerName() or "He quited...")
+	surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 	surface.SetTextColor(col.r, col.g, col.b, col.a)
 	surface.SetTextPos(w / 2, h / 2 - lengthY / 2)
-	surface.DrawText(ply:GetPlayerName() or "He quited...")
+	surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 	local col = colSpect2
 	surface.SetFont("ZB_InterfaceMediumLarge")
 	surface.SetTextColor(col.r, col.g, col.b, col.a)
-	local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "He quited...")
+	local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "Он вышел...")
 	surface.SetTextPos(15, h / 2 - lengthY / 2)
 	surface.DrawText(ply:Name() .. (ply:GetNetVar("handcuffed", false) and " - neutralized" or (not ply:Alive() and " - dead") or ""))
 	surface.SetFont("ZB_InterfaceMediumLarge")
 	surface.SetTextColor(col.r, col.g, col.b, col.a)
-	local lengthX, lengthY = surface.GetTextSize(ply:Frags() or "He quited...")
+	local lengthX, lengthY = surface.GetTextSize(ply:Frags() or "Он вышел...")
 	surface.SetTextPos(w - lengthX - 15, h / 2 - lengthY / 2)
-	surface.DrawText(ply:Frags() or "He quited...")
+	surface.DrawText(ply:Frags() or "Он вышел...")
 end
 
 
 		function but:DoClick()
 			if ply:IsBot() then
-				chat.AddText(Color(255, 0, 0), "no, you can't")
+				chat.AddText(Color(255, 0, 0), "нет, нельзя")
 				return
 			end
 

@@ -1,5 +1,5 @@
 MODE.name = "gwars"
-MODE.PrintName = "Gang Wars"
+MODE.PrintName = "Войны банд"
 
 MODE.ForBigMaps = false
 MODE.ROUND_TIME = 180
@@ -49,7 +49,7 @@ end
 
 function MODE:BoringRoundFunction()		
 	timer.Simple(2, function()
-		//PrintMessage(HUD_PRINTTALK, "IT IS A GANG SHOOTOUT FFS...")
+		//PrintMessage(HUD_PRINTTALK, "ЭТО ЖЕ ПЕРЕСТРЕЛКА БАНД, ЧЁРТ ВОЗЬМИ...")
 	end)
 end
 

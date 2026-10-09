@@ -2,7 +2,7 @@ if SERVER then AddCSLuaFile() end
 
 SWEP.Base = "weapon_bandage_sh"
 SWEP.PrintName = "Antidepressants"
-SWEP.Instructions = "Use it on yourself or RMB on someone else. Can cause overdose."
+SWEP.Instructions = "Используйте на себе или ПКМ на другом. Возможна передозировка."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1

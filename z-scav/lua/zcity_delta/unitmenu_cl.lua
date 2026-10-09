@@ -1131,13 +1131,13 @@ hook.Add("HUDPaint", "zcity_delta_unitmenu_draw", function()
     elseif hoveredLimb == "pelvis" then
         DrawLimbHint("pelvis", "pelvis", "PELVIS")
     elseif hoveredLimb == "larm" then
-        DrawLimbHint("larm", "larm", "LEFT ARM", "larmamputated", "larmdislocation")
+        DrawLimbHint("larm", "larm", "ЛЕВАЯ РУКА", "larmamputated", "larmdislocation")
     elseif hoveredLimb == "rarm" then
-        DrawLimbHint("rarm", "rarm", "RIGHT ARM", "rarmamputated", "rarmdislocation")
+        DrawLimbHint("rarm", "rarm", "ПРАВАЯ РУКА", "rarmamputated", "rarmdislocation")
     elseif hoveredLimb == "lleg" then
-        DrawLimbHint("lleg", "lleg", "LEFT LEG", "llegamputated", "llegdislocation")
+        DrawLimbHint("lleg", "lleg", "ЛЕВАЯ НОГА", "llegamputated", "llegdislocation")
     elseif hoveredLimb == "rleg" then
-        DrawLimbHint("rleg", "rleg", "RIGHT LEG", "rlegamputated", "rlegdislocation")
+        DrawLimbHint("rleg", "rleg", "ПРАВАЯ НОГА", "rlegamputated", "rlegdislocation")
     end
 
     local slotSize = 42

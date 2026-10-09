@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_base"
-SWEP.PrintName = "VX vial"
-SWEP.Instructions = "VX is an extremely toxic synthetic chemical compound in the organophosphorus class, specifically, a thiophosphonate. In the class of nerve agents, it was developed for military use in chemical warfare after translation of earlier discoveries of organophosphate toxicity in pesticide research."
+SWEP.PrintName = "Флакон VX"
+SWEP.Instructions = "VX — чрезвычайно токсичное синтетическое фосфорорганическое соединение (тиофосфонат). Из класса нервно-паралитических веществ, создан для военного применения на основе открытий токсичности фосфорорганики при исследовании пестицидов."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -127,7 +127,7 @@ if SERVER then
 		
 		if (not org.poison2notificate) and ((org.poison2 + 15) < CurTime()) then
 			org.poison2notificate = true
-			org.owner:Notify("Something stops me from breathing normally.", true, "poison2", 3)
+			org.owner:Notify("Что-то мешает мне нормально дышать.", true, "poison2", 3)
 			org.owner:EmitSound( ( ThatPlyIsFemale(org.owner) and "vo/npc/female01/moan0"..math.random(5)..".wav" ) or "vo/npc/male01/moan0"..math.random(5)..".wav")
 		end
 

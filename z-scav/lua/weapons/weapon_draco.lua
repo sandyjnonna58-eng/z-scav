@@ -72,7 +72,7 @@ function SlipWeapon(self, bullet)
 				owner:DropWeapon(self, nil, force)
 				self:SetPos(pos)
 				owner:SelectWeapon(owner:GetWeapon("weapon_hands_sh"))
-				//owner:ChatPrint("Your hand hurts really bad.")
+				//owner:ChatPrint("Рука ужасно болит.")
 				if owner.organism then
 					//owner.organism.pain = owner.organism.pain + 20
 					local dmgInfo = DamageInfo()

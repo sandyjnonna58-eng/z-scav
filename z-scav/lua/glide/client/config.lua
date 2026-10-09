@@ -388,7 +388,7 @@ concommand.Add(
     "glide_settings",
     function() Config:OpenFrame() end,
     nil,
-    "Opens the Glide settings menu."
+    "Открывает меню настроек Glide."
 )
 
 if engine.ActiveGamemode() == "sandbox" then

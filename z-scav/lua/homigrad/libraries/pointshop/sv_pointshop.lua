@@ -106,7 +106,7 @@ function plyMeta:PS_AddPoints( ammout )
         callback( self )
     end
 
-    return true, ammout .. " points added !pointshop to open a pointshop"
+    return true, ammout .. " очков добавлено, !pointshop - открыть магазин"
 end
 
 function plyMeta:PS_SetPoints( value )
@@ -126,7 +126,7 @@ function plyMeta:PS_TakePoints( ammout, callback )
     local pointshopVars = self:GetPointshopVars()
 
     if ammout > pointshopVars.points then
-        return false, "Not enough ZPoints."
+        return false, "Недостаточно ZPoints."
     end
 
     self:PS_SetPoints(pointshopVars.points - ammout)
@@ -135,7 +135,7 @@ function plyMeta:PS_TakePoints( ammout, callback )
         callback( self )
     end
 
-    return true, ammout .. " ZPoints spent."
+    return true, ammout .. " ZPoints потрачено."
 end
 
 -- ATTACK THE D POINT
@@ -153,7 +153,7 @@ function plyMeta:PS_AddDPoints( ammout )
         callback( self )
     end
 
-    return true, ammout .. " DZPoints added !pointshop to open a pointshop"
+    return true, ammout .. " DZPoints добавлено, !pointshop - открыть магазин"
 end
 
 function plyMeta:PS_SetDPoints( value )
@@ -173,7 +173,7 @@ function plyMeta:PS_TakeDPoints( ammout, callback )
     local pointshopVars = self:GetPointshopVars()
 
     if ammout > pointshopVars.donpoints then
-        return false, "Not enough DZPoints."
+        return false, "Недостаточно DZPoints."
     end
 
     self:PS_SetDPoints(pointshopVars.donpoints - ammout)
@@ -182,7 +182,7 @@ function plyMeta:PS_TakeDPoints( ammout, callback )
         callback( self )
     end
 
-    return true, ammout .. " DZPoints spent."
+    return true, ammout .. " DZPoints потрачено."
 end
 
 -- Items functions

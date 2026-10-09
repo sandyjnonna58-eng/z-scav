@@ -7,19 +7,19 @@ local models = {
 
 local bones = {
 	{1, "Spine", "ValveBiped.Bip01_Spine2"},
-	{2, "Right Upper Arm", "ValveBiped.Bip01_R_UpperArm"},
-	{3, "Left Upper Arm", "ValveBiped.Bip01_L_UpperArm"},
-	{4, "Left Forearm", "ValveBiped.Bip01_L_Forearm"},
-	{5, "Left Hand", "ValveBiped.Bip01_L_Hand"},
-	{6, "Right Forearm", "ValveBiped.Bip01_R_Forearm"},
-	{7, "Right Hand", "ValveBiped.Bip01_R_Hand"},
-	{8, "Right Thigh", "ValveBiped.Bip01_R_Thigh"},
-	{9, "Right Calf", "ValveBiped.Bip01_R_Calf"},
+	{2, "Правое плечо", "ValveBiped.Bip01_R_UpperArm"},
+	{3, "Левое плечо", "ValveBiped.Bip01_L_UpperArm"},
+	{4, "Левое предплечье", "ValveBiped.Bip01_L_Forearm"},
+	{5, "Левая кисть", "ValveBiped.Bip01_L_Hand"},
+	{6, "Правое предплечье", "ValveBiped.Bip01_R_Forearm"},
+	{7, "Правая кисть", "ValveBiped.Bip01_R_Hand"},
+	{8, "Правое бедро", "ValveBiped.Bip01_R_Thigh"},
+	{9, "Правая голень", "ValveBiped.Bip01_R_Calf"},
 	{10, "Head", "ValveBiped.Bip01_Head1"},
-	{11, "Left Thigh", "ValveBiped.Bip01_L_Thigh"},
-	{12, "Left Calf", "ValveBiped.Bip01_L_Calf"},
-	{13, "Left Foot", "ValveBiped.Bip01_L_Foot"},
-	{14, "Right Foot", "ValveBiped.Bip01_R_Foot"}
+	{11, "Левое бедро", "ValveBiped.Bip01_L_Thigh"},
+	{12, "Левая голень", "ValveBiped.Bip01_L_Calf"},
+	{13, "Левая стопа", "ValveBiped.Bip01_L_Foot"},
+	{14, "Правая стопа", "ValveBiped.Bip01_R_Foot"}
 }
 
 local boneNames = {}
@@ -58,7 +58,7 @@ local function openPostureMaker()
 	hgPostureMaker = frame
 	frame:SetSize(math.min(ScrW() - 40, 1450), math.min(ScrH() - 40, 900))
 	frame:Center()
-	frame:SetTitle("Ragdoll ShadowControl Posture Maker")
+	frame:SetTitle("Редактор поз рэгдолла ShadowControl")
 	frame:SetSizable(true)
 	frame:SetDeleteOnClose(true)
 	frame:MakePopup()
@@ -203,21 +203,21 @@ local function openPostureMaker()
 		return slider
 	end
 
-	sliders.angP = addSlider("Angle Pitch", -180, 180, 1, function(change, value) change.ang.p = value end)
-	sliders.angY = addSlider("Angle Yaw", -180, 180, 1, function(change, value) change.ang.y = value end)
-	sliders.angR = addSlider("Angle Roll", -180, 180, 1, function(change, value) change.ang.r = value end)
+	sliders.angP = addSlider("Угол Pitch", -180, 180, 1, function(change, value) change.ang.p = value end)
+	sliders.angY = addSlider("Угол Yaw", -180, 180, 1, function(change, value) change.ang.y = value end)
+	sliders.angR = addSlider("Угол Roll", -180, 180, 1, function(change, value) change.ang.r = value end)
 
 	local help = vgui.Create("DLabel", right)
 	help:Dock(TOP)
 	help:SetTall(72)
 	help:SetWrap(true)
 	help:SetContentAlignment(5)
-	help:SetText("Left-click selects a limb, right-drag rotates it, middle-drag rotates the camera. Hold Shift and use the wheel to zoom.")
+	help:SetText("ЛКМ - выбрать конечность, ПКМ с перетаскиванием - вращать её, СКМ - вращать камеру. Shift + колесо - масштаб.")
 
 	local switchModel = vgui.Create("DButton", right)
 	switchModel:Dock(TOP)
 	switchModel:SetTall(34)
-	switchModel:SetText("Switch Model")
+	switchModel:SetText("Сменить модель")
 	switchModel.DoClick = function()
 		activeModel = activeModel % #models + 1
 		showActiveModel()
@@ -227,7 +227,7 @@ local function openPostureMaker()
 	local resetSelected = vgui.Create("DButton", right)
 	resetSelected:Dock(TOP)
 	resetSelected:SetTall(34)
-	resetSelected:SetText("Reset Selected Limb")
+	resetSelected:SetText("Сбросить выбранную конечность")
 	resetSelected.DoClick = function()
 		activePose()[selected] = {ang = Angle()}
 		applyPose()
@@ -237,7 +237,7 @@ local function openPostureMaker()
 	local resetAll = vgui.Create("DButton", right)
 	resetAll:Dock(TOP)
 	resetAll:SetTall(34)
-	resetAll:SetText("Reset Entire Pose")
+	resetAll:SetText("Сбросить всю позу")
 	resetAll.DoClick = function()
 		for i = 1, #bones do
 			activePose()[bones[i][1]] = {ang = Angle()}
@@ -249,11 +249,11 @@ local function openPostureMaker()
 	local mirrorAngles = vgui.Create("DButton", right)
 	mirrorAngles:Dock(TOP)
 	mirrorAngles:SetTall(34)
-	mirrorAngles:SetText("Copy Mirrored Angles")
+	mirrorAngles:SetText("Скопировать зеркальные углы")
 	mirrorAngles.DoClick = function()
 		local opposite = oppositeBones[selected]
 		if not opposite then
-			notification.AddLegacy("Selected bone cannot mirror.", NOTIFY_ERROR, 3)
+			notification.AddLegacy("Эту кость нельзя отзеркалить.", NOTIFY_ERROR, 3)
 			return
 		end
 
@@ -268,7 +268,7 @@ local function openPostureMaker()
 	local transferModel = vgui.Create("DButton", right)
 	transferModel:Dock(TOP)
 	transferModel:SetTall(34)
-	transferModel:SetText("Transfer To Other Model")
+	transferModel:SetText("Перенести на другую модель")
 	transferModel.DoClick = function()
 		local targetModel = activeModel % #models + 1
 		for i = 1, #bones do
@@ -278,18 +278,18 @@ local function openPostureMaker()
 		end
 
 		applyPose()
-		notification.AddLegacy("Angles transferred to " .. models[targetModel].name .. ".", NOTIFY_GENERIC, 4)
+		notification.AddLegacy("Углы перенесены на " .. models[targetModel].name .. ".", NOTIFY_GENERIC, 4)
 	end
 
 	local applyPreset = vgui.Create("DButton", right)
 	applyPreset:Dock(TOP)
 	applyPreset:SetTall(34)
-	applyPreset:SetText("Apply Copied Preset")
+	applyPreset:SetText("Применить скопированную позу")
 
 	local copy = vgui.Create("DButton", right)
 	copy:Dock(BOTTOM)
 	copy:SetTall(46)
-	copy:SetText("Copy Angles")
+	copy:SetText("Скопировать углы")
 
 	local viewport = vgui.Create("DPanel", frame)
 	viewport:Dock(FILL)
@@ -458,19 +458,19 @@ local function openPostureMaker()
 		text = tostring(text or "")
 		local body = text:match("postureOffsets%s*=%s*(%b{})") or text:match("return%s*(%b{})") or text:match("^%s*(%b{})%s*$")
 		if not body then
-			notification.AddLegacy("Invalid posture preset.", NOTIFY_ERROR, 4)
+			notification.AddLegacy("Неверная поза.", NOTIFY_ERROR, 4)
 			return false
 		end
 
 		local compiled = CompileString("return " .. body, "hg_posture_preset", false)
 		if isstring(compiled) then
-			notification.AddLegacy("Invalid posture preset.", NOTIFY_ERROR, 4)
+			notification.AddLegacy("Неверная поза.", NOTIFY_ERROR, 4)
 			return false
 		end
 
 		local ok, preset = pcall(compiled)
 		if not ok or not istable(preset) then
-			notification.AddLegacy("Invalid posture preset.", NOTIFY_ERROR, 4)
+			notification.AddLegacy("Неверная поза.", NOTIFY_ERROR, 4)
 			return false
 		end
 
@@ -489,7 +489,7 @@ local function openPostureMaker()
 
 		applyPose()
 		refreshControls()
-		notification.AddLegacy("Posture preset applied.", NOTIFY_GENERIC, 4)
+		notification.AddLegacy("Поза применена.", NOTIFY_GENERIC, 4)
 		return true
 	end
 
@@ -497,7 +497,7 @@ local function openPostureMaker()
 		local pasteFrame = vgui.Create("DFrame")
 		pasteFrame:SetSize(700, 500)
 		pasteFrame:Center()
-		pasteFrame:SetTitle("Paste Posture Preset")
+		pasteFrame:SetTitle("Вставить позу")
 		pasteFrame:MakePopup()
 
 		local entry = vgui.Create("DTextEntry", pasteFrame)
@@ -510,7 +510,7 @@ local function openPostureMaker()
 		apply:Dock(BOTTOM)
 		apply:DockMargin(8, 0, 8, 8)
 		apply:SetTall(34)
-		apply:SetText("Apply Preset")
+		apply:SetText("Применить позу")
 		apply.DoClick = function()
 			if applyPresetText(entry:GetValue()) then
 				pasteFrame:Remove()
@@ -559,7 +559,7 @@ local function openPostureMaker()
 
 		output[#output + 1] = "}"
 		SetClipboardText(table.concat(output, "\n"))
-		notification.AddLegacy("ShadowControl posture angles copied.", NOTIFY_GENERIC, 4)
+		notification.AddLegacy("Углы позы ShadowControl скопированы.", NOTIFY_GENERIC, 4)
 		surface.PlaySound("buttons/button15.wav")
 	end
 

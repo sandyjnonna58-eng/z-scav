@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_tpik_base"
-SWEP.PrintName = "Duct Tape"
+SWEP.PrintName = "Скотч"
 SWEP.Instructions = "This is a roll of reinforced aluminum-colored waterproof polyethylene-coated vinyl-cloth adhesive tape. Use it to stick things together.\n\nHold LMB to stick something.\nYou can only put tape on a seam or close gap between two objects."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
@@ -330,7 +330,7 @@ function SWEP:PrimaryAttack()
 				Owner:SetAnimation(PLAYER_ATTACK1)
 				Owner:ViewPunch(Angle(3, 0, 0))
 				self:SprayDecals()
-				Owner:PrintMessage(HUD_PRINTCENTER, "Door Sealed")
+				Owner:PrintMessage(HUD_PRINTCENTER, "Дверь заклеена")
 				timer.Simple(.1, function() if self.TapeAmount <= 0 then self:Remove() end end)
 				self:SetHolding(25)
 			else
@@ -344,7 +344,7 @@ function SWEP:PrimaryAttack()
 				util.Decal("hmcd_jackatape", TrOne.HitPos + TrOne.HitNormal, TrOne.HitPos - TrOne.HitNormal)
 				util.Decal("hmcd_jackatape", TrTwo.HitPos + TrTwo.HitNormal, TrTwo.HitPos - TrTwo.HitNormal)
 				--Owner:PrintMessage(HUD_PRINTCENTER,"Bond strength: "..tostring(Strength))
-				Owner:ChatPrint("Bond strength: " .. tostring(Strength))
+				Owner:ChatPrint("Прочность крепления: " .. tostring(Strength))
 				timer.Simple(.1, function() if self.TapeAmount <= 0 then self:Remove() end end)
 				self:SetHolding(25)
 			end

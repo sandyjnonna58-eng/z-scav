@@ -30,13 +30,13 @@ end
 local sw, sh = CLIENT and ScrW() or nil, CLIENT and ScrH() or nil
 
 local oneofus = {
-	"One of us! One of us!",
-	"A new one!",
-	"We are unstoppable!",
-	"A new meaning to life itself!",
-	"Assimilation complete!",
-	"Turning into tigers, turning into wolves...",
-	"A new purpose in life!"
+	"Один из нас! Один из нас!",
+	"Новенький!",
+	"Нас не остановить!",
+	"Новый смысл самой жизни!",
+	"Ассимиляция завершена!",
+	"Превращаемся в тигров, превращаемся в волков...",
+	"Новая цель в жизни!"
 }
 
 local function Randomize(self)
@@ -94,7 +94,7 @@ function CLASS.On(self, data)
 
 		local Appearance = self.CurAppearance or hg.Appearance.GetRandomAppearance()
 
-		local name = "Specimen #" .. math.random(1, 999)
+		local name = "Образец №" .. math.random(1, 999)
 
 		self:SetNWString("PlayerName", name)
 		Appearance.AName = name

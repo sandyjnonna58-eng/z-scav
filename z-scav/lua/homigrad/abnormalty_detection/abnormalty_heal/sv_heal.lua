@@ -54,10 +54,10 @@ local function TryHeal(zone, ply)
 			PLUGIN.AddConsequencesToZoneChanters(zone, -1)
 			PLUGIN.AddConsequences(ply, -20)
 		else
-			PLUGIN.ShowMessage(ply, "There are no players within the zone")
+			PLUGIN.ShowMessage(ply, "В зоне нет игроков")
 		end
 	else
-		PLUGIN.ShowMessage(ply, "There is not enough blood in order to heal")
+		PLUGIN.ShowMessage(ply, "Недостаточно крови для исцеления")
 	end
 end
 --//
@@ -128,7 +128,7 @@ hook.Add("Think", "Abnormalties_Heal", function()
 					PLUGIN.ShowMessageInSphere("Healed " .. owner:GetNWString("PlayerName"), zone.Pos, zone.Radius)
 				end
 			else
-				PLUGIN.ShowMessageToAll("Nothing happened")
+				PLUGIN.ShowMessageToAll("Ничего не произошло")
 			end
 			
 			PLUGIN.Heal.ToHeal[ply] = nil

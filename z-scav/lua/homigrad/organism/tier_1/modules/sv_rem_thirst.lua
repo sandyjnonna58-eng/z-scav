@@ -62,10 +62,10 @@ hook.Add("Org Clear", "ZSCAV_Thirst", function(org)
 end)
 
 local THOUGHTS = {
-    [1] = {"I could use a drink.", "My mouth is dry."},
-    [2] = {"I'm really thirsty..", "My head hurts, I need water."},
-    [3] = {"I need water. Now.", "Everything feels weak.. I need a drink."},
-    [4] = {"I'm so dehydrated..", "Water.. please.."},
+    [1] = {"Я бы чего-нибудь выпил.", "Во рту пересохло."},
+    [2] = {"Очень хочется пить..", "Голова болит, мне нужна вода."},
+    [3] = {"Мне нужна вода. Сейчас.", "Всё ослабло.. Мне нужно попить."},
+    [4] = {"Я совсем обезвожен..", "Воды.. пожалуйста.."},
 }
 
 hook.Add("Org Think", "ZSCAV_Thirst", function(owner, org, timeValue)

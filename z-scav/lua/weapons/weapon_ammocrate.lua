@@ -1,8 +1,8 @@
 if SERVER then AddCSLuaFile() end
 
 SWEP.Base = "weapon_tpik1_base"
-SWEP.PrintName = "Ammo Crate"
-SWEP.Instructions = "Press LMB to take ammo for your weapons"
+SWEP.PrintName = "Ящик с патронами"
+SWEP.Instructions = "Нажмите ЛКМ, чтобы взять патроны для своего оружия"
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -156,7 +156,7 @@ if CLIENT then
 		if LocalPlayer():InVehicle() then return end
 
 		local x, y = ScrW() / 2, ScrH() / 2 + 65
-		local text = "Press LMB to take ammo"
+		local text = "Нажмите ЛКМ, чтобы взять патроны"
 		draw.SimpleText(text, "HomigradFont", x + 3, y + 2, color_black, TEXT_ALIGN_CENTER)
 		draw.SimpleText(text, "HomigradFont", x, y, color_white, TEXT_ALIGN_CENTER)
 	end

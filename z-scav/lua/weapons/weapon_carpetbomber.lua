@@ -6,8 +6,8 @@ if SERVER then
 end
 
 SWEP.Base = "weapon_callbomber"
-SWEP.PrintName = "Carpet Bomber"
-SWEP.Instructions = "Primary attack to mark an area, then aim and press primary attack again to set the bombing direction."
+SWEP.PrintName = "Ковровый бомбардировщик"
+SWEP.Instructions = "ЛКМ - отметить область, затем прицельтесь и нажмите ЛКМ ещё раз, чтобы задать направление бомбёжки."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = true

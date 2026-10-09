@@ -268,7 +268,7 @@ if CLIENT then
 		vFireEnableGlowsConVar:SetBool(vFireEnableGlowsConVar:GetDefault())
 		vFireEnableLightsConVar:SetBool(vFireEnableLightsConVar:GetDefault())
 		vFireLightMulConVar:SetFloat(vFireLightMulConVar:GetDefault())
-		vFireMessage("vFire client settings reset to default!")
+		vFireMessage("Настройки vFire клиента сброшены!")
 	end)
 end
 
@@ -438,7 +438,7 @@ if SERVER then
 		vFireEnableNPCBehaviorConVar:SetBool(vFireEnableNPCBehaviorConVar:GetDefault())
 		vFireClusterFeedConVar:SetFloat(vFireClusterFeedConVar:GetDefault())
 		
-		vFireMessage("vFire settings reset to default!")
+		vFireMessage("Настройки vFire сброшены!")
 	end)
 end
 
@@ -816,7 +816,7 @@ end
 -- Fire performs best with multicore rendering, let clients know of this in case they have it disabled
 if CLIENT then
 	if GetConVar("gmod_mcore_test"):GetInt() == 0 then
-		vFireMessage("vFire performs best with gmod_mcore_test set to 1, enable it and restart your game for changes to take effect.")
+		vFireMessage("vFire лучше всего работает с gmod_mcore_test 1: включите и перезапустите игру.")
 	end
 end
 
@@ -1180,7 +1180,7 @@ Specifics & External Support
 
 			local vextinguish = ulx.command(CATEGORY, "ulx vextinguish", ulx.vextinguish, "!vextinguish")
 			vextinguish:defaultAccess(ULib.ACCESS_ADMIN)
-			vextinguish:help("Extinguish fires you're looking at.")
+			vextinguish:help("Потушить огонь, на который вы смотрите.")
 
 			
 			--[[-------------------------------------------------------------------------
@@ -1198,7 +1198,7 @@ Specifics & External Support
 
 			local vextinguishall = ulx.command(CATEGORY, "ulx vextinguishall", ulx.vextinguishall, "!vextinguishall")
 			vextinguishall:defaultAccess(ULib.ACCESS_ADMIN)
-			vextinguishall:help("Extinguish all fires.")
+			vextinguishall:help("Потушить весь огонь.")
 
 
 			--[[-------------------------------------------------------------------------
@@ -1219,7 +1219,7 @@ Specifics & External Support
 			local vstartfire = ulx.command(CATEGORY, "ulx vstartfire", ulx.vstartfire, "!vstartfire")
 			vstartfire:addParam{ type=ULib.cmds.NumArg, min=1, default=30, hint="size", ULib.cmds.optional, ULib.cmds.round }
 			vstartfire:defaultAccess(ULib.ACCESS_ADMIN)
-			vstartfire:help("Place a fire wherever you're looking at with a given size.")
+			vstartfire:help("Разжечь огонь заданного размера там, куда вы смотрите.")
 
 		end)
 	end

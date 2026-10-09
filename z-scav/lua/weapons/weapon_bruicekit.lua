@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
-SWEP.PrintName = "Bruice kit"
-SWEP.Instructions = "A medical kit designed to restore limb condition. RMB to use on someone else."
+SWEP.PrintName = "Набор от ушибов"
+SWEP.Instructions = "Медицинский набор для восстановления конечностей. ПКМ - применить на другом."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1
@@ -21,7 +21,7 @@ SWEP.SlotPos = 1
 SWEP.mode = 1
 SWEP.modes = 1
 SWEP.modeNames = {
-	[1] = "bruise kit",
+	[1] = "набор от ушибов",
 }
 
 function SWEP:InitializeAdd()

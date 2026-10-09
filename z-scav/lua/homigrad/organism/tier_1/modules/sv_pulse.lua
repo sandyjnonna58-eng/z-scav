@@ -113,7 +113,7 @@ module[2] = function(owner, org, timeValue)
 	local o2 = org.o2
 	local o2 = halfValue2(o2[1], o2.range, o2.k)
 
-	//if org.isPly and not org.otrub and (heart == 0) then org.owner:Notify("My torso hurts.",true,"heart",6) end
+	//if org.isPly and not org.otrub and (heart == 0) then org.owner:Notify("Грудь болит.",true,"heart",6) end
 	//if org.isPly and not org.otrub and org.heartstop then org.owner:Notify("",true,"heartstop",6) end
 
 	local stamina = org.stamina
@@ -303,7 +303,7 @@ module[2] = function(owner, org, timeValue)
 	if org.heartstop then
 		org.heartstoptime = org.heartstoptime or CurTime()
 		if org.isPly then
-			//org.owner:Notify("I'm feeling dizzy...", true, "heartstop", 10)
+			//org.owner:Notify("Голова кружится...", true, "heartstop", 10)
 		end
 	else
 		if org.isPly then

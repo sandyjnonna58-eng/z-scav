@@ -5,7 +5,7 @@ COMMANDS.sendtospawn = {
 		for i, ply2 in pairs(player.GetListByName(plya)) do
 			if ply2:Alive() then
 				ply2:Spawn()
-				ply:ChatPrint( ply2:Name().. " | Sended to random spawn..." )
+				ply:ChatPrint( ply2:Name().. " | Отправлен на случайную точку..." )
 			end
 		end
 	end,
@@ -23,7 +23,7 @@ COMMANDS.give = {
                 if not IsValid(ent) then return end
 
                 ent:Use(ply2)
-				ply:ChatPrint( ply2:Name().. " | Weapon given" )
+				ply:ChatPrint( ply2:Name().. " | Оружие выдано" )
 			end
 		end
 	end,
@@ -225,14 +225,14 @@ end)
 
 net.Receive("ZB_AdminStatsSave", function(len, ply)
     if not AdminStatsAllowed(ply) then
-        SendAdminStatsSaveResult(ply, false, "Access denied")
+        SendAdminStatsSaveResult(ply, false, "Доступ запрещён")
         return
     end
 
     local steamID64 = net.ReadString()
     local data = net.ReadTable()
     if steamID64 == "" or not istable(data) then
-        SendAdminStatsSaveResult(ply, false, "Invalid stats data")
+        SendAdminStatsSaveResult(ply, false, "Неверные данные статистики")
         return
     end
 
@@ -302,7 +302,7 @@ net.Receive("ZB_AdminStatsSave", function(len, ply)
     end
 
     if not AdminStatsSQLReady() then
-        SendAdminStatsSaveResult(ply, true, "Saved in memory")
+        SendAdminStatsSaveResult(ply, true, "Сохранено в памяти")
         SendAdminStatsRows(ply, GetActiveAdminStatsRows())
         return
     end
@@ -377,7 +377,7 @@ net.Receive("ZB_AdminStatsSave", function(len, ply)
     end
 
     timer.Simple(1, function()
-        SendAdminStatsSaveResult(ply, true, "Stats saved")
+        SendAdminStatsSaveResult(ply, true, "Статистика сохранена")
         SendAdminStats(ply)
     end)
 end)

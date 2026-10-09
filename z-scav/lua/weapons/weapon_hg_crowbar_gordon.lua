@@ -1,7 +1,7 @@
 ﻿if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_melee"
 SWEP.PrintName = "Crowbar"
-SWEP.Instructions = "'I think you dropped this back in Black Mesa!'"
+SWEP.Instructions = "«Кажется, вы обронили это ещё в Чёрной Мезе!»"
 SWEP.Category = "Weapons - Melee"
 SWEP.Spawnable = false
 SWEP.AdminOnly = false

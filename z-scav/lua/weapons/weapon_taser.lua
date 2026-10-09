@@ -1,9 +1,9 @@
 SWEP.Base = "homigrad_base"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Taser X26"
+SWEP.PrintName = "Тазер X26"
 SWEP.Author = "Taser"
-SWEP.Instructions = "A TASER is a conducted energy device (CED) primarily used to incapacitate people, allowing them to be approached and handled in an unresisting and thus less-lethal manner."
+SWEP.Instructions = "Тазер — электрошоковое устройство для обездвиживания людей, чтобы к ним можно было подойти и задержать без сопротивления, почти без риска убить."
 SWEP.Category = "Weapons - Other"
 SWEP.ViewModel = ""
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"

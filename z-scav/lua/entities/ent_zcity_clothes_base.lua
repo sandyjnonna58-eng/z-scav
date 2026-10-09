@@ -5,7 +5,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Clothes base"
-ENT.Category = "ZCity Clothes"
+ENT.Category = "ZCity Одежда"
 ENT.Spawnable = false
 ENT.Model = "models/props_junk/cardboard_box003a.mdl"
 ENT.IconOverride = ""
@@ -359,13 +359,13 @@ end
                                 RunConsoleCommand("hg_drop_clothes", id)
                                 return 0
                             end,
-                            [2] = "Drop:" .. " " .. Cloth.PrintName
+                            [2] = "Снять:" .. " " .. Cloth.PrintName
                         }
                     end
                 end
                 hg.CreateRadialMenu(commands)
                 return -1
-            end, "Drop clothes"}
+            end, "Снять одежду"}
             hg.radialOptions[#hg.radialOptions + 1] = tbl
         end
     end)

@@ -29,7 +29,7 @@
 SetGlobalBool("PhysBullets_ReplaceDefault", false)
 
 PLUGIN.Name = "Physics Bullet"
-PLUGIN.Description = "Creates projectiles"
+PLUGIN.Description = "Создаёт снаряды"
 PLUGIN.Version = 1
 PLUGIN.MainMaterial = Material("sprites/splodesprite")
 PLUGIN.BulletsTable = PLUGIN.BulletsTable or {}

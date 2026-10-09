@@ -59,7 +59,7 @@ function PANEL:Paint( w, h )
     surface.SetDrawColor(border)
     surface.DrawOutlinedRect(0, 0, w, h, 1.5)
 
-    local title = "ROCK THE VOTE"
+    local title = "ГОЛОСОВАНИЕ ЗА КАРТУ"
 
     draw.SimpleTextOutlined(title, "ZCity_RTV_Title", RTVUnit(28), RTVUnit(24), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
 

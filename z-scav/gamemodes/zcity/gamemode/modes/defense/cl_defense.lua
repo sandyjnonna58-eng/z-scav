@@ -12,7 +12,7 @@ end)
 
 local teams = {
 	[1] = {
-		objective = "Defend your base from the attack of the combines.",
+		objective = "Защитите базу от атаки Альянса.",
 		name = "a Refugee",
 		color1 = Color(240,109,1),
 		color2 = Color(190,95,0)
@@ -42,7 +42,7 @@ function MODE:HUDPaint()
 		local time = string.FormattedTime(NextWave_Time - CurTime())
 		time.s = (time.s < 10 and "0" or "")..time.s
 		time.m = (time.m < 10 and "0" or "")..time.m
-		draw.SimpleText( "Next wave in ".. time.m ..":" .. time.s, "ZB_HomicideMedium", sw * 0.5, sh * (0.9 + timePos), Color(87,146,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText( "Следующая волна через ".. time.m ..":" .. time.s, "ZB_HomicideMedium", sw * 0.5, sh * (0.9 + timePos), Color(87,146,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
     if zb.ROUND_START + 8.5 < CurTime() then return end
@@ -55,7 +55,7 @@ function MODE:HUDPaint()
     local playerRole = lply:GetNWString("PlayerRole", "Refugee") 
     local roleColor = teams[team_].color1
     roleColor.a = 255 * fade
-    draw.SimpleText("You are a " .. playerRole, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, roleColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Вы — " .. playerRole, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, roleColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     local objective = teams[team_].objective
     local objectiveColor = teams[team_].color2
@@ -67,7 +67,7 @@ function MODE:HUDPaint()
 		surface.SetDrawColor(255, 255, 255, math.random(175, 255) * fade / 2)
 		surface.DrawTexturedRect(sw * 0.25, sh * 0.44 - ScreenScale(15), sw / 2, ScreenScale(30))
 
-		draw.SimpleText("SOMEWHERE IN PLUVTOWN", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("ГДЕ-ТО В ПЛЮВТАУНЕ", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -187,9 +187,9 @@ CreateEndMenu = function()
 
 		surface.SetFont( "ZB_InterfaceMediumLarge" )
 		surface.SetTextColor(col.r,col.g,col.b,col.a)
-		local lengthX, lengthY = surface.GetTextSize("Players:")
+		local lengthX, lengthY = surface.GetTextSize("Игроки:")
 		surface.SetTextPos(w / 2 - lengthX/2,20)
-		surface.DrawText("Players:")
+		surface.DrawText("Игроки:")
 	end
 
 	local DScrollPanel = vgui.Create("DScrollPanel", hmcdEndMenu)
@@ -213,33 +213,33 @@ CreateEndMenu = function()
 
             local col = ply:GetPlayerColor():ToColor()
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			
 			surface.SetTextColor(0,0,0,255)
 			surface.SetTextPos(w / 2 + 1,h/2 - lengthY/2 + 1)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
 			surface.SetTextPos(w / 2,h/2 - lengthY/2)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
             
 			local col = colSpect2
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			surface.SetTextPos(15,h/2 - lengthY/2)
-			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "He quited...")
+			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "Он вышел...")
 
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "Он вышел..." )
 			surface.SetTextPos(w - lengthX -15,h/2 - lengthY/2)
-			surface.DrawText(ply:Frags() or "He quited...")
+			surface.DrawText(ply:Frags() or "Он вышел...")
 		end
 
 		function but:DoClick()
-			if ply:IsBot() then chat.AddText(Color(255,0,0), "no, you can't") return end
+			if ply:IsBot() then chat.AddText(Color(255,0,0), "нет, нельзя") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/"..ply:SteamID64())
 		end
 
@@ -261,7 +261,7 @@ function createSupportMenu()
     local frame = vgui.Create("ZFrame")
     frame:SetSize(400, 200)
     frame:Center()
-    frame:SetTitle("What do you want to order?")
+    frame:SetTitle("Что хотите заказать?")
     frame:SetVisible(true)
     frame:SetDraggable(true)
     frame:ShowCloseButton(true)
@@ -296,7 +296,7 @@ hook.Add("radialOptions", "CommanderSupportOptions", function()
     local organism = ply.organism or {}
 
     if ply:GetNWString("PlayerRole") == "Commander" and not organism.otrub then
-        local tbl = {createSupportMenu, "Request support"}
+        local tbl = {createSupportMenu, "Запросить поддержку"}
         hg.radialOptions[#hg.radialOptions + 1] = tbl
     end
 end)
@@ -530,8 +530,8 @@ local function CreateVoteMenu()
         surface.DrawLine(50, h - 150, w - 50, h - 150)
         
 
-        draw.SimpleText("SELECT GAME MODE", "Defense_Title", w / 2, 28, Color(230, 230, 230), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Vote for the current round mode", "Defense_Subtitle", w / 2, 55, Color(200, 200, 200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("ВЫБОР РЕЖИМА", "Defense_Title", w / 2, 28, Color(230, 230, 230), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Голосуйте за режим текущего раунда", "Defense_Subtitle", w / 2, 55, Color(200, 200, 200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     
 
@@ -549,7 +549,7 @@ local function CreateVoteMenu()
         end
         
         draw.RoundedBox(6, 0, 0, w, h, Color(40, 40, 40, 180))
-        draw.SimpleText("TIME LEFT:", "Defense_Stats", w / 2, 12, Color(200, 200, 200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("ОСТАЛОСЬ ВРЕМЕНИ:", "Defense_Stats", w / 2, 12, Color(200, 200, 200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(timeLeft .. " SEC", "Defense_Timer", w / 2, 32, timeColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     
@@ -565,22 +565,22 @@ local function CreateVoteMenu()
         local zombiePercent = totalVotes > 0 and math.floor((voteResults[3] or 0) / totalVotes * 100) or 0
         
 
-        draw.SimpleText("Vote Statistics:", "Defense_Stats", 20, 20, Color(200, 200, 200), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Total votes: " .. totalVotes, "Defense_Stats", w - 20, 20, Color(200, 200, 200), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Статистика голосования:", "Defense_Stats", 20, 20, Color(200, 200, 200), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Всего голосов: " .. totalVotes, "Defense_Stats", w - 20, 20, Color(200, 200, 200), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         
 
         draw.RoundedBox(5, 170, 15, 140, 40, Color(50, 100, 200, 150))
-        draw.SimpleText("Standard: " .. standardPercent .. "%", "Defense_Stats", 240, 33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Стандартный: " .. standardPercent .. "%", "Defense_Stats", 240, 33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText("(" .. (voteResults[1] or 0) .. " votes)", "Defense_SmallText", 240, 48, Color(220, 220, 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
 
         draw.RoundedBox(5, 370, 15, 140, 40, Color(200, 100, 50, 150))
-        draw.SimpleText("Extended: " .. extendedPercent .. "%", "Defense_Stats", 440, 33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Расширенный: " .. extendedPercent .. "%", "Defense_Stats", 440, 33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText("(" .. (voteResults[2] or 0) .. " votes)", "Defense_SmallText", 440, 48, Color(220, 220, 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
 
         draw.RoundedBox(5, 570, 15, 140, 40, Color(50, 200, 50, 150))
-        draw.SimpleText("Zombie: " .. zombiePercent .. "%", "Defense_Stats", 640, 33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Зомби: " .. zombiePercent .. "%", "Defense_Stats", 640, 33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText("(" .. (voteResults[3] or 0) .. " votes)", "Defense_SmallText", 640, 48, Color(220, 220, 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     
@@ -594,38 +594,38 @@ local function CreateVoteMenu()
     
     local modeDescriptions = {
         [1] = {
-            title = "Standard Mode",
-            shortDesc = "Classic 6 waves of combine attacks",
-            longDesc = "Old Classic.",
+            title = "Стандартный режим",
+            shortDesc = "Классика: 6 волн атак Альянса",
+            longDesc = "Старая классика.",
             color = Color(50, 100, 200),
             features = {
-                "• 6 waves of combine soldiers with increasing difficulty",
-                "• Regular enemy types: Metropolice and Combine Soldiers",
-                "• Final wave includes elite Combine Soldiers",
-                "• Recommended for new players and standard gameplay"
+                "• 6 волн солдат Альянса с растущей сложностью",
+                "• Обычные враги: метрокопы и солдаты Альянса",
+                "• В последней волне — элитные солдаты Альянса",
+                "• Для новичков и обычной игры"
             }
         },
         [2] = {
-            title = "Extended Mode",
-            shortDesc = "12 waves with bosses and special enemies",
-            longDesc = "Challenge for veteran players! 12 waves of relentless bloodshed and brutality.",
+            title = "Расширенный режим",
+            shortDesc = "12 волн с боссами и особыми врагами",
+            longDesc = "Испытание для ветеранов! 12 волн беспощадной резни.",
             color = Color(200, 100, 50),
             features = {
-                "• 12 waves of intensive combat",
-                "• Special boss waves",
-                "• Much harder than Standard mode - for experienced players",
-                "• Includes turrets, manhacks and other special enemy types"
+                "• 12 волн интенсивного боя",
+                "• Особые волны с боссами",
+                "• Намного сложнее стандартного — для опытных",
+                "• Турели, мэнхаки и другие особые враги"
             }
         },
         [3] = {
-            title = "Zombie Mode",
-            shortDesc = "6 waves of zombie apocalypse",
-            longDesc = "A unique mode replacing combines with various zombie types. ",
+            title = "Зомби-режим",
+            shortDesc = "6 волн зомби-апокалипсиса",
+            longDesc = "Уникальный режим, где вместо Альянса разные зомби. ",
             color = Color(50, 200, 50),
             features = {
-                "• 6 waves of zombie hordes",
-                "• Unique challenge compared to Combine enemies",
-                "• More enemies compared to Standard mode"
+                "• 6 волн зомби-орд",
+                "• Другое испытание по сравнению с Альянсом",
+                "• Больше врагов, чем в стандартном режиме"
             }
         }
     }
@@ -694,7 +694,7 @@ local function CreateVoteMenu()
             
             if isDisabled then
                 draw.RoundedBox(4, w - 180, 10, 170, 30, Color(40, 40, 40, 180))
-                draw.SimpleText("IN DEVELOPMENT", "Defense_Stats", w - 95, 25, Color(255, 70, 70), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("В РАЗРАБОТКЕ", "Defense_Stats", w - 95, 25, Color(255, 70, 70), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
                 draw.RoundedBox(4, w - 70, 10, 60, 30, Color(40, 40, 40, 180))
                 draw.SimpleText(percent .. "%", "Defense_Stats", w - 40, 25, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -761,7 +761,7 @@ local function CreateVoteMenu()
             
 
             if isDisabled then
-                draw.SimpleText("This mode is currently under development and will be available soon!", 
+                draw.SimpleText("Этот режим ещё в разработке и скоро будет доступен!", 
                                "Defense_SmallText", w/2, h-20, Color(255, 100, 100), TEXT_ALIGN_CENTER)
             end
         end
@@ -833,22 +833,22 @@ MODE.HUDPaint = function(self)
         local description = ""
         
         if currentSubMode == "STANDARD" then
-            modeName = "Standard Mode"
+            modeName = "Стандартный режим"
             modeColor = Color(50, 150, 255)
-            description = "Classic 6 waves of combine attacks"
+            description = "Классика: 6 волн атак Альянса"
         elseif currentSubMode == "EXTENDED" then
-            modeName = "Extended Mode"
+            modeName = "Расширенный режим"
             modeColor = Color(255, 150, 50)
-            description = "12 waves with bosses and special enemies"
+            description = "12 волн с боссами и особыми врагами"
         elseif currentSubMode == "ZOMBIE" then
-            modeName = "Zombie Mode"
+            modeName = "Зомби-режим"
             modeColor = Color(50, 255, 50)
-            description = "6 waves of zombie apocalypse"
+            description = "6 волн зомби-апокалипсиса"
         end
         
         modeColor.a = alpha
         
-        local text = "Selected mode: " .. modeName
+        local text = "Выбранный режим: " .. modeName
         
         draw.SimpleText(text, "Defense_Title", ScrW() * 0.5, ScrH() * 0.3, modeColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(description, "Defense_Subtitle", ScrW() * 0.5, ScrH() * 0.35, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -997,14 +997,14 @@ local function DrawBossIncomingBanner()
     local textY = y + headerHeight / 2
     
 
-    draw.SimpleText("BOSS INCOMING", "ZB_HomicideMediumLarge", centerX + 2, textY + 2, shadowColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("ИДЁТ БОСС", "ZB_HomicideMediumLarge", centerX + 2, textY + 2, shadowColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     
 
-    draw.SimpleText("BOSS INCOMING", "ZB_HomicideMediumLarge", centerX, textY, textColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("ИДЁТ БОСС", "ZB_HomicideMediumLarge", centerX, textY, textColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     
 
     local infoY = y + headerHeight + (scaledHeight - headerHeight) / 2
-    draw.SimpleText("Prepare for a powerful enemy!", "ZB_HomicideMedium", centerX, infoY, textColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Приготовьтесь к сильному врагу!", "ZB_HomicideMedium", centerX, infoY, textColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     
 
     local barHeight = scaledHeight * 0.04

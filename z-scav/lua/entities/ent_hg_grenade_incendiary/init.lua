@@ -88,10 +88,10 @@ function ENT:BurnIdiot(ply, intensity, touched_grenade)
 
 	if touched_grenade then
 		local stupid = {
-			"OUGHH! FUCK!! I SHOULDN'T HAVE TOUCHED THAT..",
-			"OH GOD- WHY'D I TOUCH THAT?!..",
-			"I-IT'S TOO HOT!!",
-			"AUGUGAHHH!! I'M SO FUCKING STUPID!!"
+			"УУГХ! ЧЁРТ!! НЕ НАДО БЫЛО ЭТО ТРОГАТЬ..",
+			"БОЖЕ- ЗАЧЕМ Я ЭТО ТРОНУЛ?!..",
+			"С-СЛИШКОМ ГОРЯЧО!!",
+			"АУГУГААА!! КАКОЙ ЖЕ Я ИДИОТ!!"
 		}
 
 		ply:Notify(stupid[math.random(#stupid)], 0, "touched_hot_thing", 0.2)

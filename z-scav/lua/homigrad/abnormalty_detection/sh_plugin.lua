@@ -13,7 +13,7 @@
 --//
 
 PLUGIN.Name = "Abnormalties"
-PLUGIN.Description = "Adds abnormalty detection in players behaviour"
+PLUGIN.Description = "Добавляет обнаружение аномалий в поведении игроков"
 PLUGIN.Version = 1
 PLUGIN.SpellLangs = PLUGIN.SpellLangs or {}
 PLUGIN.SpecialWords = PLUGIN.SpecialWords or {}

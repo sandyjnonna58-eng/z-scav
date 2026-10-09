@@ -1,9 +1,9 @@
 SWEP.Base = "homigrad_base"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Colt M1911 Custom"
+SWEP.PrintName = "Colt M1911 (кастом)"
 SWEP.Author = "Colt"
-SWEP.Instructions = "Pistol chambered in .45 ACP"
+SWEP.Instructions = "Пистолет под .45 ACP"
 SWEP.Category = "Weapons - Pistols"
 SWEP.Slot = 2
 SWEP.SlotPos = 10

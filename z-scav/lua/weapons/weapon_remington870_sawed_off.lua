@@ -2,7 +2,7 @@
 SWEP.Base = "weapon_m4super"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Sawed-off Remington 870"
+SWEP.PrintName = "Обрез Remington 870"
 SWEP.Author = "Remington Arms"
 SWEP.Instructions = "Pump-action shotgun chambered in 12/70 caliber"
 SWEP.Category = "Weapons - Shotguns"

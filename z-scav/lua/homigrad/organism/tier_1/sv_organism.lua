@@ -713,7 +713,7 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	end
 
 	if oldPanicAttack < panicattack_threshold and org.panicattack >= panicattack_threshold and isPly and owner:Alive() then
-		owner:Notify("I can't calm down.", 2, "panicattack_start", 2, nil, Color(255, 140, 140))
+		owner:Notify("Не могу успокоиться.", 2, "panicattack_start", 2, nil, Color(255, 140, 140))
 	end
 
 	if org.panicattack >= panicattack_threshold then
@@ -725,7 +725,7 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 			org.nextPanicHeartRoll = curTime + panicattack_heart_roll_delay
 			if math.random(100) <= panicattack_heart_roll_chance then
 				org.heartstop = true
-				owner:Notify("My heart just stopped.", 2, "panicattack_heartstop", 2, nil, Color(255, 120, 120))
+				owner:Notify("Моё сердце только что остановилось.", 2, "panicattack_heartstop", 2, nil, Color(255, 120, 120))
 			end
 		end
 	else
@@ -1219,17 +1219,17 @@ hook.Add("HG_OnOtrub", "fearful", function( plya )// ЧЕ
 end)
 
 local unlucky_dislocations = {
-	"Why can't I fix this goddamn dislocation...",
-	"Please... why is it so hard.",
-	"Just go back in place already...",
-	"This is irritating",
-	"I should try again",
+	"Почему я не могу вправить этот чёртов вывих...",
+	"Ну пожалуйста... почему так сложно.",
+	"Да встань ты уже на место...",
+	"Это раздражает",
+	"Надо попробовать ещё раз",
 }
 
 local finally_fixed = {
 	"Finally.",
-	"That was harder than I thought",
-	"One dislocation away.",
+	"Это было сложнее, чем я думал",
+	"Ещё один вывих.",
 }
 
 local function fixlimb(org, key, fixer)

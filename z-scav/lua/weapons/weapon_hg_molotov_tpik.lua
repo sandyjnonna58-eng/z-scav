@@ -1,6 +1,6 @@
 ﻿if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_hg_grenade_tpik"
-SWEP.PrintName = "Molotov Cocktail"
+SWEP.PrintName = "Коктейль Молотова"
 SWEP.Instructions = 
 [[A handmade molotov cocktail is an incendiary weapon consisting of a frangible container filled with flammable substances and equipped with a fuse.
 

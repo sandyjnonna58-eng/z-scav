@@ -11,7 +11,7 @@ local ShowTextBoxInactive = CreateClientConVar("zchat_showtextboxinactive", 1, t
 hg.zchatConVars["zchat_dropcharacters"] = {
 	name = "zchat_dropcharacters",
 	default = "0",
-	description = "Show erased characters briefly when deleting text",
+	description = "Кратко показывать стёртые символы при удалении",
 	min = 0,
 	max = 1,
 	type = "bool",
@@ -21,7 +21,7 @@ hg.zchatConVars["zchat_dropcharacters"] = {
 hg.zchatConVars["zchat_showtextboxinactive"] = {
 	name = "zchat_showtextboxinactive",
 	default = "1",
-	description = "Show your unsent text while chat is inactive",
+	description = "Показывать неотправленный текст, когда чат неактивен",
 	min = 0,
 	max = 1,
 	type = "bool",
@@ -86,12 +86,12 @@ local settingsSliderWidth = 120
 local settingsNumberWidth = 60
 local settingsStringWidth = 170
 local chatHatText = {
-	"Do you feel remorse?",
-	"Hold ALT to whisper.",
-	"True wisdom.",
-	"Theres nothing you can do.",
-	"You can kick down doors eventually.",
-	"Check their pulses."
+	"Ты чувствуешь раскаяние?",
+	"Зажмите ALT, чтобы шептать.",
+	"Истинная мудрость.",
+	"Ты ничего не можешь сделать.",
+	"Со временем можно выбивать двери.",
+	"Проверьте их пульс."
 }
 
 local function RunZChatConVar(name, value)
@@ -103,9 +103,9 @@ local function GetZChatSettingTitle(data)
 	if data.name == "zchat_fontaa" then return "Anti-Aliasing" end
 	if data.name == "zchat_fontsize" then return "Font Size" end
 	if data.name == "zchat_fontweight" then return "Font Weight" end
-	if data.name == "zchat_maxmessagelength" then return "Message Length" end
-	if data.name == "zchat_dropcharacters" then return "Delete Effect" end
-	if data.name == "zchat_showtextboxinactive" then return "Show Inactive Text" end
+	if data.name == "zchat_maxmessagelength" then return "Длина сообщения" end
+	if data.name == "zchat_dropcharacters" then return "Эффект удаления" end
+	if data.name == "zchat_showtextboxinactive" then return "Показывать неактивный текст" end
 
 	local text = data.name:gsub("^zchat_", ""):gsub("_", " ")
 	return text:gsub("(%a)([%w_']*)", function(first, rest)
@@ -944,12 +944,12 @@ function PANEL:Paint(w, h)
 	surface.SetAlphaMultiplier(self:GetAlpha() / 255)
 
 	DisableClipping(true)
-		draw.SimpleText("Hold left ALT and press ENTER to whisper", "zChatFontSmall", 5, h * 1.01 + 1, black)
-		draw.SimpleText("Hold left ALT and press ENTER to whisper", "zChatFontSmall", 4, h * 1.01, gray)
+		draw.SimpleText("Зажмите левый ALT и нажмите ENTER, чтобы шептать", "zChatFontSmall", 5, h * 1.01 + 1, black)
+		draw.SimpleText("Зажмите левый ALT и нажмите ENTER, чтобы шептать", "zChatFontSmall", 4, h * 1.01, gray)
 
 		if LocalPlayer().organism and LocalPlayer().organism.otrub  then
-			draw.SimpleText("Your messages are currently not visible to anyone.", "zChatFontSmall", ScrW() * 0.3 + 1, h * 1.01 + 1, black, TEXT_ALIGN_RIGHT)
-			draw.SimpleText("Your messages are currently not visible to anyone.", "zChatFontSmall", ScrW() * 0.3, h * 1.01, gray, TEXT_ALIGN_RIGHT)
+			draw.SimpleText("Сейчас ваши сообщения никому не видны.", "zChatFontSmall", ScrW() * 0.3 + 1, h * 1.01 + 1, black, TEXT_ALIGN_RIGHT)
+			draw.SimpleText("Сейчас ваши сообщения никому не видны.", "zChatFontSmall", ScrW() * 0.3, h * 1.01, gray, TEXT_ALIGN_RIGHT)
 		end
 	DisableClipping(false)
 

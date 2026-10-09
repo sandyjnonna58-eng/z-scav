@@ -77,9 +77,9 @@ local function Tick()
 
         -- мысли на порогах
         if before < 50 and org.remDirt >= 50 then
-            ply:Notify("I'm covered in dirt.. I should wash up.", 4, "zscav_dirt", 0)
+            ply:Notify("Я весь в грязи.. надо помыться.", 4, "zscav_dirt", 0)
         elseif before > 5 and org.remDirt <= 5 and before - org.remDirt > 0 then
-            ply:Notify("Much better. I'm clean.", 3, "zscav_dirt_clean", 0)
+            ply:Notify("Так гораздо лучше. Я чистый.", 3, "zscav_dirt_clean", 0)
         end
 
         -- грязь немного портит настроение

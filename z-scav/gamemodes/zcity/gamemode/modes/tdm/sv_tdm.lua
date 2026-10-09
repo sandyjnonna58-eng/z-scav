@@ -100,7 +100,7 @@ function MODE:GiveEquipment()
 
 			if ply:Team() == 1 then
 				ply:SetPlayerClass("swat")
-				zb.GiveRole(ply, "Counter Terrorist", Color(0,0,190))
+				zb.GiveRole(ply, "Контр-террорист", Color(0,0,190))
 				ply:SetNetVar("CurPluv", "pluvberet")
 			else
 				ply:SetPlayerClass("terrorist")
@@ -184,7 +184,7 @@ local AttachmentPrice = 50
 net.Receive("tdm_buyitem",function(len,ply)
 	if CurrentRound().name ~= "tdm" then return end
 	if !CurrentRound().buymenu then return end
-	if ((zb.ROUND_START or 0) + 35 < CurTime()) then ply:ChatPrint("Time's up!") return end
+	if ((zb.ROUND_START or 0) + 35 < CurTime()) then ply:ChatPrint("Время вышло!") return end
 	local tItem = net.ReadTable()
 	if not istable(tItem) then return end
 	local category = tItem[1]
@@ -198,7 +198,7 @@ net.Receive("tdm_buyitem",function(len,ply)
 	if item.TeamBased ~= nil and item.TeamBased ~= ply:Team() then return end
 
 	if tItem[3] then
-		if not ply:HasWeapon(item.ItemClass) then ply:ChatPrint("You can't buy this attachment without a weapon.") return end
+		if not ply:HasWeapon(item.ItemClass) then ply:ChatPrint("Нельзя купить обвес без оружия.") return end
 		if ((ply:GetNWInt("TDM_Money",0) - AttachmentPrice) < 0) then ply:ChatPrint("Not enough money.") return end
 
 		local wep = ply:GetWeapon(item.ItemClass)

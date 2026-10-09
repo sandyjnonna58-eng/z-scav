@@ -11,7 +11,7 @@ elseif CLIENT then
 	end
 end
 
-SWEP.PrintName = "Enhanced Grappling Hook"
+SWEP.PrintName = "Улучшенная кошка-крюк"
 SWEP.Instructions = "LMB - throw the hook.\nRMB - attach the rope tightly (without throwing).\nRope control only in ragdoll:\nSHIFT - lift | ALT - lower | W/S - swing | SPACE - release"
 
 if CLIENT then

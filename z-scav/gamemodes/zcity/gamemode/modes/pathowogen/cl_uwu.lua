@@ -152,8 +152,8 @@ function MODE:HUDPaint()
 	if extraction then
 		local time = math.ceil(extraction - CurTime())
 		if time > 0 then
-			draw.SimpleText("Extracting in: " .. time, "ZB_ScrappersMedium", sw * 0.01 + 2, sh * 0.97 + 2, color_black, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-			draw.SimpleText("Extracting in: " .. time, "ZB_ScrappersMedium", sw * 0.01, sh * 0.97, ExtractionColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Эвакуация через: " .. time, "ZB_ScrappersMedium", sw * 0.01 + 2, sh * 0.97 + 2, color_black, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Эвакуация через: " .. time, "ZB_ScrappersMedium", sw * 0.01, sh * 0.97, ExtractionColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		end
 	end
 end

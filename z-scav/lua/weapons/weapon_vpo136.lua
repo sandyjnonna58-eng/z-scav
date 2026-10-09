@@ -5,7 +5,7 @@ SWEP.Spawnable = true
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "VPO-136"
-SWEP.Author = "Vyatskiye Polyany Machine-Building Plant"
+SWEP.Author = "Вятско-Полянский машиностроительный завод"
 SWEP.Instructions = "An AKM version converted for the Russian civilian arms market, without automatic fire capability. Сhambered in 7.62x39 mm."
 SWEP.Category = "Weapons - Carbines"
 

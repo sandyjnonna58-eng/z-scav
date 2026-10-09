@@ -35,7 +35,7 @@ local PANEL = {}
 function PANEL:Construct()
 	self:SetSkin(hg.GetMainSkin())
 	
-	self.Title = self.Title or "No title"
+	self.Title = self.Title or "Без названия"
 	local width, height = self:GetSize()
 	local dock_bottom = 5
 	

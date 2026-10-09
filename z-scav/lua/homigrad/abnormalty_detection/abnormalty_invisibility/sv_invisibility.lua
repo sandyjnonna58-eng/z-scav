@@ -45,10 +45,10 @@ local function TryInvis(zone, ply)
 			PLUGIN.AddConsequencesToZoneChanters(zone, 2)
 			PLUGIN.AddConsequences(ply, 20)
 		else
-			PLUGIN.ShowMessage(ply, "There are no players within the zone")
+			PLUGIN.ShowMessage(ply, "В зоне нет игроков")
 		end
 	else
-		PLUGIN.ShowMessage(ply, "There is not enough equalizers in order to make someone invisible")
+		PLUGIN.ShowMessage(ply, "Недостаточно эквалайзеров, чтобы сделать кого-то невидимым")
 	end
 end
 --//
@@ -150,9 +150,9 @@ hook.Add("Think", "Abnormalties_Invisibility", function()
 				
 				owner.Abnormalties_InvisibleNextFadeTime = CurTime() + 45
 				
-				PLUGIN.ShowMessageToAllExcept("You forgot about someone... (for 45 seconds)", owner)
+				PLUGIN.ShowMessageToAllExcept("Вы забыли о ком-то... (на 45 секунд)", owner)
 			else
-				PLUGIN.ShowMessageToAll("Nothing happened")
+				PLUGIN.ShowMessageToAll("Ничего не произошло")
 			end
 			
 			PLUGIN.Invisibility.ToInvis[ply] = nil
@@ -165,7 +165,7 @@ hook.Add("PlayerPostThink", "Abnormalties_Invisibility", function(ply)
 		ply.Abnormalties_InvisibleNextFadeTime = nil
 		
 		PLUGIN.Invisibility.SetInvisible(ply, false)
-		PLUGIN.ShowMessage(ply, "Your invisibility fades")
+		PLUGIN.ShowMessage(ply, "Ваша невидимость исчезает")
 	end
 end)
 
@@ -173,7 +173,7 @@ hook.Add("HomigradDamage", "Abnormalties_Invisibility", function(ply, dmg, hitgr
 	if(ply:IsPlayer() and dmg:GetDamage() > 5 and ply != attacker)then
 		if(ply.Abnormalties_Invisible)then
 			PLUGIN.Invisibility.SetInvisible(ply, false)
-			PLUGIN.ShowMessage(ply, "Your invisibility fades")
+			PLUGIN.ShowMessage(ply, "Ваша невидимость исчезает")
 		end
 		
 		local attacker = dmg:GetAttacker()
@@ -181,7 +181,7 @@ hook.Add("HomigradDamage", "Abnormalties_Invisibility", function(ply, dmg, hitgr
 		if(IsValid(attacker))then
 			if(attacker.Abnormalties_Invisible)then
 				PLUGIN.Invisibility.SetInvisible(attacker, false)
-				PLUGIN.ShowMessage(attacker, "Your invisibility fades")
+				PLUGIN.ShowMessage(attacker, "Ваша невидимость исчезает")
 			end
 		end
 	end

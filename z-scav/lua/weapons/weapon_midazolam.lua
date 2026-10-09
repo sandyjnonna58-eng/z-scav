@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
-SWEP.PrintName = "Midazolam Autoinjector"
-SWEP.Instructions = "Stops seizures. Must be administered to someone else."
+SWEP.PrintName = "Автоинъектор мидазолама"
+SWEP.Instructions = "Останавливает судороги. Вводится только другому."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1

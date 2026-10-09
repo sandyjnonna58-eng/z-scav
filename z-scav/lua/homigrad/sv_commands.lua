@@ -118,7 +118,7 @@ if SERVER then
         if not ply.organism then return end
         
         ply.organism.godmode = !ply.organism.godmode
-		ply:Notify(ply.organism.godmode and "now i'm immortal..." or "now i'm mortal")
+		ply:Notify(ply.organism.godmode and "теперь я бессмертен..." or "теперь я смертен")
 		return
     end,1}
 
@@ -129,13 +129,13 @@ if SERVER then
 		ply:DrawShadow(!ply.cloak)
 		ply:SetCollisionGroup(ply.cloak and COLLISION_GROUP_DEBRIS or COLLISION_GROUP_PLAYER)
 		ply:RemoveAllDecals()
-		ply:Notify(ply.cloak and "now i'm invisible..." or "now i'm visible") -- walking by the wall
+		ply:Notify(ply.cloak and "теперь я невидим..." or "теперь я видим") -- walking by the wall
 		return
     end,1}
 
     COMMANDS.punish = {function(ply, args)
         if #args < 1 then
-            ply:ChatPrint("Give me the name of this OwO .")
+            ply:ChatPrint("Назови имя этого OwO .")
             return
         end
 
@@ -149,7 +149,7 @@ if SERVER then
         end
 
         if not IsValid(target) then
-            ply:ChatPrint("I don't see that OwO .")
+            ply:ChatPrint("Не вижу такого OwO .")
             return
         end
 
@@ -172,7 +172,7 @@ if SERVER then
         dmg:SetDamageType(DMG_SHOCK)
         target:TakeDamageInfo(dmg)
 
-        ply:ChatPrint("Fatass " .. target:Nick() .. " has been punished.")
+        ply:ChatPrint("Толстяк " .. target:Nick() .. " наказан.")
     end, 2, "ник игрока"}
 
     COMMANDS.pluv = {function(ply, args)
@@ -182,7 +182,7 @@ if SERVER then
 
     COMMANDS.notify = {function(ply, args)
         if #args < 2 then
-            ply:ChatPrint("Usage: !notify <player> <message>")
+            ply:ChatPrint("Использование: !notify <игрок> <сообщение>")
             return
         end
 
@@ -196,7 +196,7 @@ if SERVER then
         end
 
         if not IsValid(target) then
-            ply:ChatPrint("Player not found: " .. args[1])
+            ply:ChatPrint("Игрок не найден: " .. args[1])
             return
         end
         
@@ -204,12 +204,12 @@ if SERVER then
         local message = table.concat(args, " ")
         
         if message == "" then
-            ply:ChatPrint("Message cannot be empty!")
+            ply:ChatPrint("Сообщение не может быть пустым!")
             return
         end
         
         target:Notify(message, 0)
-        ply:ChatPrint("Sent notification to " .. target:GetName() .. ": " .. message)
+        ply:ChatPrint("Уведомление отправлено: " .. target:GetName() .. ": " .. message)
 
     end, 2, "name; message"}
 
@@ -227,7 +227,7 @@ if SERVER then
 				ply2:SetSubMaterial()
 				ply2:SetPlayerColor(ply2:GetNWVector("PlayerColor", vector_origin))
 
-				ply:ChatPrint(ply2:Name().. "'s model set to " .. tostring(mdl))
+				ply:ChatPrint(ply2:Name().. ": модель установлена " .. tostring(mdl))
 			end
 		end
 	end, 0}
@@ -246,7 +246,7 @@ if SERVER then
 			if ply2:Alive() then
 				ply2:SetModelScale(scale)
 
-				ply:ChatPrint(ply2:Name().. "'s model scale set to " .. tostring(scale))
+				ply:ChatPrint(ply2:Name().. ": масштаб модели установлен " .. tostring(scale))
 			end
 		end
 	end, 0}

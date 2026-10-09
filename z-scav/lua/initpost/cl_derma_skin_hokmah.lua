@@ -229,11 +229,11 @@ function SKIN:PaintButton(panel)
 			if(!panel.IsOn(panel))then
 				surface.SetDrawColor(165, 165, 165, 255)
 				
-				text = panel.TextOn or "Switch On"
+				text = panel.TextOn or "Вкл"
 			else
 				surface.SetDrawColor(130, 130, 130, 255)
 				
-				text = panel.TextOff or "Switch Off"
+				text = panel.TextOff or "Выкл"
 				draw_on = true
 			end
 			

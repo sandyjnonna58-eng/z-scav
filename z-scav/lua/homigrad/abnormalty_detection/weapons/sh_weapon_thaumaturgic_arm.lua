@@ -5,7 +5,7 @@ SWEP.Secondary = {}
 
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_melee"
-SWEP.PrintName = "Thaumaturgic Arm"
+SWEP.PrintName = "Тауматургическая рука"
 SWEP.Instructions = [[
 Thaumaturgic arm allows for blood drainage right into user for later use in rituals.
 

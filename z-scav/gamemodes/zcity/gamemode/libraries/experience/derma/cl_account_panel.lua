@@ -183,7 +183,7 @@ function PANEL:Init()
     ContentHint:SetPos(AccountUnit(25),AccountUnit(45))
     ContentHint:SetFont(GetAccountFont("ZCity_Menu_Settings_Tiny","ZB_InterfaceMedium"))
     ContentHint:SetTextColor(account_clr_dim)
-    ContentHint:SetText("View player account stats")
+    ContentHint:SetText("Статистика аккаунта игрока")
     ContentHint:SizeToContents()
 
     local ContentHolder = vgui.Create("DPanel",Content)

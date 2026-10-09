@@ -1,5 +1,5 @@
 if SERVER then AddCSLuaFile() end
-SWEP.PrintName = "Melee Base"
+SWEP.PrintName = "База ближнего боя"
 SWEP.Instructions = ""
 SWEP.Category = "Weapons - Melee"
 SWEP.Spawnable = false

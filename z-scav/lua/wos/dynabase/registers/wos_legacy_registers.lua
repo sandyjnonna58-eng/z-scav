@@ -184,7 +184,7 @@ if CLIENT then
         local download_butt = vgui.Create( "DButton", parent )
         download_butt:SetSize( parent:GetWide(), parent:GetTall()*0.0625 )
         download_butt:Dock( TOP )
-        download_butt:SetText( "Create User Mounts from Legacy Addon (Will overwrite mounts with the same name!)" )
+        download_butt:SetText( "Создать пользовательские наборы из старого аддона (перезапишет наборы с тем же именем!)" )
         download_butt.DoClick = function(pan) 
             for wsid, data in pairs( tbl ) do
                 local ndata = {

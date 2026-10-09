@@ -219,9 +219,9 @@ local arterySize = {
 }
 
 local arteryMessages ={
-	"I can feel blood rushing from my neck...",
-	"My neck.. it's... pumping out blood.",
-	"I'm bleeding out of my neck!"
+	"Чувствую, как из шеи хлещет кровь...",
+	"Моя шея.. из неё... бьёт кровь.",
+	"У меня кровь из шеи!"
 }
 
 local slashToArtery = {

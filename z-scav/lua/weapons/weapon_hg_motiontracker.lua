@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_tpik_base"
-SWEP.PrintName = "Motion Detector"
+SWEP.PrintName = "Детектор движения"
 SWEP.Category = "ZCity Other"
 SWEP.Instructions = "A device that allows you to detect the movement of objects in the area. It is a very useful tool for security personnel.\n\nHas a paint charge capable of unlocking the infiltrator's disguise."
 SWEP.Spawnable = true

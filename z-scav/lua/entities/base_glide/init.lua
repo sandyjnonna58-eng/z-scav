@@ -377,7 +377,7 @@ do
         if ray.Hit then
             if GetDevMode() then
                 debugoverlay.Line( origin, traceData.endpos, 8, Color( 255, 0, 0 ), true )
-                debugoverlay.EntityTextAtPosition( traceData.endpos, 0, "<exit blocked>", 8, Color( 255, 0, 0 ) )
+                debugoverlay.EntityTextAtPosition( traceData.endpos, 0, "<выход заблокирован>", 8, Color( 255, 0, 0 ) )
             end
 
             return true, exitPos
@@ -392,7 +392,7 @@ do
         if ray.StartSolid then
             if GetDevMode() then
                 debugoverlay.Line( origin, traceData.endpos, 8, Color( 255, 100, 0 ), true )
-                debugoverlay.EntityTextAtPosition( traceData.endpos, 0, "<exit is too small>", 8, Color( 255, 100, 0 ) )
+                debugoverlay.EntityTextAtPosition( traceData.endpos, 0, "<выход слишком мал>", 8, Color( 255, 100, 0 ) )
             end
 
             return true, exitPos

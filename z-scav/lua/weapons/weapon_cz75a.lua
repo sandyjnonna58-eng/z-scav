@@ -2,7 +2,7 @@ SWEP.Base = "weapon_cz75"
 SWEP.Spawnable = true
 SWEP.PrintName = "ČZ 75-A"
 SWEP.Author = "Česká zbrojovka Uherský Brod"
-SWEP.Instructions = "Automatic pistol chambered in 9x19 mm"
+SWEP.Instructions = "Автоматический пистолет под 9x19 мм"
 SWEP.Category = "Weapons - Pistols"
 
 SWEP.WepSelectIcon2 = Material("pwb/sprites/cz75.png")

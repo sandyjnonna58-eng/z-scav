@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_bandage_sh"
 SWEP.PrintName = "Bloodbag"
-SWEP.Instructions = "A plastic bag containing neccesary instruments to acknowledge blood and transfuse it. Can be used to help with large blood loss."
+SWEP.Instructions = "Пластиковый пакет с инструментами для забора и переливания крови. Помогает при большой кровопотере."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.Primary.Wait = 1
@@ -55,8 +55,8 @@ SWEP.modeValuesdef = {
 SWEP.showstats = true
 
 SWEP.modeNames2 = {
-	[1] = "take blood",
-	[2] = "give blood"
+	[1] = "взять кровь",
+	[2] = "перелить кровь"
 }
 
 function SWEP:GetInfo()

@@ -1,6 +1,6 @@
 ﻿if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_hg_grenade_tpik"
-SWEP.PrintName = "Type-59 Grenade"
+SWEP.PrintName = "Граната Тип-59"
 SWEP.Instructions = 
 [[This is a cheap Chinese clone of an old Soviet RGD-5 offensive hand grenade. It has a lethality radius of 3 meters and casualty radius of 9 meters. It has a pyrotechnic delay of 3.5-4.4 seconds.
 

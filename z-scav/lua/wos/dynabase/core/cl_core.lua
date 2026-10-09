@@ -15,14 +15,14 @@ hook.Add( "PostRender", "wOS.DynaBase.PreventDataAccess", function()
 	local val = wOS.DynaBase.DataCachePass
 	wOS.DynaBase.DataCachePass = 0
 	if not val or val < WOS_DYNABASE.MAXCACHE then
-		chat.AddText( Color( 255, 0, 0 ), "[wOS-Dynabase] Can not apply animation selection due to conflicting addons. Please let us know on the Workshop Page or Discord!" )
+		chat.AddText( Color( 255, 0, 0 ), "[wOS-Dynabase] Не удалось применить выбор анимаций из-за конфликтующих аддонов. Сообщите нам в Workshop или Discord!" )
 		return
 	end
 	RunConsoleCommand( "r_flushlod" )
 	hook.Call( "PostLoadAnimations" )
 	wOS.DynaBase.ResumeRendering = CurTime() + 0.3
 	if not wOS.DynaBase.FIRST_TIME_LOADED then wOS.DynaBase.FIRST_TIME_LOADED = true return end
-	chat.AddText( Color( 0, 255, 0 ), "[wOS-Dynabase] Successfully applied animation selection to models!" )
+	chat.AddText( Color( 0, 255, 0 ), "[wOS-Dynabase] Выбор анимаций применён к моделям!" )
 end )
 
 concommand.Add( "wos_dynabase_reloadmodels", function()
@@ -82,6 +82,6 @@ end )
 
 list.Add( "DesktopWindows", {
 	icon = "wos/dynabase/widget.png",
-	title = "DynaBase Menu",
+	title = "Меню DynaBase",
 	init = function() wOS.DynaBase:OpenConfigMenu() end,
 })

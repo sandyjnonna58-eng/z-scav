@@ -316,7 +316,7 @@ local RoleConfigs = {
         exclusions = {},
         defaultPresets = {
             {
-                name = "Street Cop",
+                name = "Уличный коп",
                 loadout = {
                     weapons = {
                         "weapon_glock17",
@@ -740,7 +740,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
     clearBtn:SetFont("ZCity_Menu_Settings_Small")
     clearBtn:SetTextColor(color_whitey)
     clearBtn:SetTall(MenuUnit(42))
-    SetupAnimatedLabel(clearBtn, "Clear All", 0, 15)
+    SetupAnimatedLabel(clearBtn, "Очистить всё", 0, 15)
 
     local UpdateUI
 
@@ -787,7 +787,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
 
         local lblTitlePresets = vgui.Create("DLabel", presetsScroll)
         lblTitlePresets:Dock(TOP)
-        lblTitlePresets:SetText("DEFAULT PRESETS")
+        lblTitlePresets:SetText("СТАНДАРТНЫЕ НАБОРЫ")
         lblTitlePresets:SetFont(TRAITOR_MENU_FONT)
         lblTitlePresets:SetTextColor(Color(255, 255, 255, 150))
         lblTitlePresets:SetContentAlignment(5)
@@ -818,7 +818,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
 
         local lblCustomPresets = vgui.Create("DLabel", presetsScroll)
         lblCustomPresets:Dock(TOP)
-        lblCustomPresets:SetText("CUSTOM PRESETS")
+        lblCustomPresets:SetText("СВОИ НАБОРЫ")
         lblCustomPresets:SetFont(TRAITOR_MENU_FONT)
         lblCustomPresets:SetTextColor(Color(255, 255, 255, 150))
         lblCustomPresets:SetContentAlignment(5)
@@ -830,7 +830,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
         btnCreate:Dock(TOP)
         btnCreate:SetTall(MenuUnit(TRAITOR_PRESET_BUTTON_HEIGHT))
         btnCreate:DockMargin(MenuUnit(5), 0, MenuUnit(5), MenuUnit(5))
-        btnCreate:SetText("+ SAVE CURRENT AS PRESET")
+        btnCreate:SetText("+ СОХРАНИТЬ ТЕКУЩЕЕ КАК НАБОР")
         btnCreate:SetFont(TRAITOR_MENU_FONT)
         btnCreate:SetTextColor(Color(255, 255, 255))
         btnCreate.Paint = function(s, w, h)
@@ -840,7 +840,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
             surface.DrawOutlinedRect(0, 0, w, h)
         end
         btnCreate.DoClick = function()
-            Derma_StringRequest("New Preset", "Enter a name for the new preset:", "Custom Preset " .. (#userPresets + 1), function(text)
+            Derma_StringRequest("Новый набор", "Введите название нового набора:", "Свой набор " .. (#userPresets + 1), function(text)
                 table.insert(userPresets, {name = text, loadout = table.Copy(state.loadout)})
                 SaveUserPresets(userPresets)
                 RefreshPresetsUI()
@@ -991,7 +991,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
     lblPreviewName:SetFont(TRAITOR_MENU_FONT)
     lblPreviewName:SetTextColor(Color(255, 255, 255))
     lblPreviewName:SetContentAlignment(5)
-    lblPreviewName:SetText("Hover over an item")
+    lblPreviewName:SetText("Наведите на предмет")
     lblPreviewName:SizeToContentsY()
 
     local lblPreviewDesc = vgui.Create("DLabel", previewPanel)
@@ -1039,7 +1039,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
 
         lblPreviewName:SetText(info.name .. " (" .. info.cost .. " pts)")
 
-        local desc = info.desc or "No description available."
+        local desc = info.desc or "Описания нет."
         local swep = weapons.GetStored(id)
         if swep then
             if isstring(swep.Instructions) and swep.Instructions ~= "" then
@@ -1230,7 +1230,7 @@ local function OpenRoleEditor(parentPanel, roleId, returnPanel)
             end
         end
 
-        AddCategory("WEAPONS & ITEMS")
+        AddCategory("ОРУЖИЕ И ПРЕДМЕТЫ")
         for _, id in ipairs(config.itemOrder) do
             if not IsArmorItem(id) then
                 AddItemButton(id)
@@ -1318,7 +1318,7 @@ function hg.DrawLoadoutMenu(parentPanel)
     local subtitle = vgui.Create("DLabel", parentPanel)
     subtitle:SetFont(TRAITOR_MENU_FONT)
     subtitle:SetTextColor(Color(200, 200, 200, 180))
-    subtitle:SetText("Choose which side you want to configure.")
+    subtitle:SetText("Выберите, какую сторону настроить.")
     subtitle:SizeToContents()
     subtitle:SetPos(MenuUnit(48), MenuUnit(90))
 
@@ -1342,14 +1342,14 @@ function hg.DrawLoadoutMenu(parentPanel)
         {
             roleId = "hero",
             title = "HERO",
-            desc = "Pick the gunner weapon",
+            desc = "Выберите оружие стрелка",
             points = "16 POINTS",
             align = "left"
         },
         {
             roleId = "traitor",
             title = "TRAITOR",
-            desc = "Pick the traitor weapon",
+            desc = "Выберите оружие предателя",
             points = "30 POINTS",
             align = "right"
         }

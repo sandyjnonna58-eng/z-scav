@@ -19,14 +19,14 @@ local function voteModeDone(t)
 
     local str
     if not winner then
-        str = "Vote results: No mode won because no one voted!"
+        str = "Итоги голосования: ни один режим не победил, никто не голосовал!"
     else
         local mode = zb.modes[t.options[winner]]
         if mode and mode.CanLaunch and mode:CanLaunch() then
-            str = "Vote results: Mode '" .. t.options[winner] .. "' won. (" .. winnernum .. "/" .. t.voters .. ")"
+            str = "Итоги голосования: режим '" .. t.options[winner] .. "' won. (" .. winnernum .. "/" .. t.voters .. ")"
             NextRound(t.options[winner])
         else
-            str = "Vote results: Mode '" .. t.options[winner] .. "' cannot be launched."
+            str = "Итоги голосования: режим '" .. t.options[winner] .. "' нельзя запустить."
         end
     end
     ULib.tsay(_, str)
@@ -58,24 +58,24 @@ function ulx.votemode(calling_ply, ...)
     for _, modeName in ipairs(argv) do
         local mode = zb.modes[modeName]
         if not (mode and mode.CanLaunch and mode:CanLaunch()) then
-            ULib.tsayError(calling_ply, "Mode '" .. modeName .. "' cannot be launched.")
+            ULib.tsayError(calling_ply, "Mode '" .. modeName .. "' нельзя запустить.")
             return
         end
     end
 
     if #argv > 1 then
-        ulx.doVote("Change mode to..", argv, voteModeDone, _, _, _, argv, calling_ply)
+        ulx.doVote("Сменить режим на..", argv, voteModeDone, _, _, _, argv, calling_ply)
         ulx.fancyLogAdmin(calling_ply, "#A started a votemode with options" .. string.rep(" #s", #argv), ...)
     elseif #argv == 1 then
-        ulx.doVote("Change mode to " .. argv[1] .. "?", {"Yes", "No"}, function(t)
+        ulx.doVote("Сменить режим на " .. argv[1] .. "?", {"Yes", "No"}, function(t)
             local yesVotes = t.results[1] or 0
             local noVotes = t.results[2] or 0
             if yesVotes > noVotes then
                 voteModeDone({results = {[1] = yesVotes}, options = argv, voters = t.voters})
             else
-                ULib.tsay(_, "Vote results: Mode change to '" .. argv[1] .. "' was rejected.")
-                ulx.logString("Vote results: Mode change to '" .. argv[1] .. "' was rejected.")
-                Msg("Vote results: Mode change to '" .. argv[1] .. "' was rejected.\n")
+                ULib.tsay(_, "Итоги голосования: смена режима на '" .. argv[1] .. "' отклонена.")
+                ulx.logString("Итоги голосования: смена режима на '" .. argv[1] .. "' отклонена.")
+                Msg("Итоги голосования: смена режима на '" .. argv[1] .. "' was rejected.\n")
             end
         end, _, _, _, argv, calling_ply)
         ulx.fancyLogAdmin(calling_ply, "#A started a votemode for #s", argv[1])
@@ -87,7 +87,7 @@ end
 local votemode = ulx.command(CATEGORY_NAME, "ulx votemode", ulx.votemode, "!votemode")
 votemode:addParam{type = ULib.cmds.StringArg, completes = {"tdm", "gwars", "riot", "criresp", "defense", "hl2dm", "dm", "cstrike" }, hint = "mode", ULib.cmds.restrictToCompletes, ULib.cmds.takeRestOfLine, repeat_min = 1, repeat_max = 10}
 votemode:defaultAccess(ULib.ACCESS_ADMIN)
-votemode:help("Starts a public mode vote.")
+votemode:help("Запускает общее голосование за режим.")
 
 if SERVER then ulx.convar("votemodeSuccessratio", "0.5", _, ULib.ACCESS_ADMIN) end
 if SERVER then ulx.convar("votemodeMinvotes", "3", _, ULib.ACCESS_ADMIN) end

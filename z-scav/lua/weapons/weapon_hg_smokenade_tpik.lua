@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_hg_grenade_tpik"
-SWEP.PrintName = "Saltpeter Smoke Bomb"
+SWEP.PrintName = "Селитряная дымовая шашка"
 SWEP.Instructions = 
 [[This is a home-cooked KNO3-sugar smoke bomb, useful for visual concealment while murdering people.
 

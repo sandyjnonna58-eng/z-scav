@@ -10,7 +10,7 @@
 local MODE = MODE
 MODE.Timers = MODE.Timers or {}
 MODE.name = "defense"
-MODE.PrintName = "NPC Defense"
+MODE.PrintName = "Оборона от NPC"
 MODE.randomSpawns = true
 MODE.ROUND_TIME = 10000
 MODE.TotalWaves = 6  

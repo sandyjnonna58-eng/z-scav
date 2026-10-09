@@ -291,7 +291,7 @@ elseif CLIENT then
 					function()
 						RunConsoleCommand("hg_takearrow")
 					end,
-					"Take "..(ent and ent.PrintName or "arrow").." from yourself"
+					"Вынуть "..(ent and ent.PrintName or "arrow").." из себя"
 				}
 				hg.radialOptions[#hg.radialOptions + 1] = tbl
 			end

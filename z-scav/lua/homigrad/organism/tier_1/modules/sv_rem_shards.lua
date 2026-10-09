@@ -76,7 +76,7 @@ hook.Add("EntityTakeDamage", "ZSCAV_Shards", function(ent, dmg)
 
     local n = math.Clamp(math.floor(dmg:GetDamage() / CFG.PER_DAMAGE) + math.random(0, 1), 1, 5)
     for _ = 1, n do AddShard(ply, org, HIT_PARTS[math.random(#HIT_PARTS)]) end
-    ply:Notify(n > 1 and "Something sharp is stuck in me.." or "Something is stuck under my skin..", 5, "rem_shards", 0)
+    ply:Notify(n > 1 and "В меня воткнулось что-то острое.." or "Что-то застряло под кожей..", 5, "rem_shards", 0)
     Sync(org)
 end)
 
@@ -107,7 +107,7 @@ local function GlassShards(ply, pool, n)
     if (ply.remGlassT or 0) > CurTime() then return end
     ply.remGlassT = CurTime() + CFG.GLASS_COOLDOWN
     for _ = 1, n do AddShard(ply, org, pool[math.random(#pool)], "glass") end
-    ply:Notify(n > 1 and "Ow, glass is stuck in me.." or "A piece of glass got stuck in me..", 4, "rem_glass", 0)
+    ply:Notify(n > 1 and "Ай, в меня воткнулось стекло.." or "Осколок стекла застрял во мне..", 4, "rem_glass", 0)
     Sync(org)
 end
 

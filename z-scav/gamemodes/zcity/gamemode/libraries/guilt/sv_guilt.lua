@@ -61,7 +61,7 @@ hook.Add( "PlayerInitialSpawn","ZB_GuiltSQL", function( ply )
 
                     timer.Simple(0, function()
                         ply:Ban(5, false)
-                        ply:Kick("Your karma is too low: " .. math.Round( karma, 0 ) .. ". Try again in 5 minutes." )
+                        ply:Kick("Ваша карма слишком низкая: " .. math.Round( karma, 0 ) .. ". Попробуйте через 5 минут." )
                     end)
                 end
 			else
@@ -265,12 +265,12 @@ hook.Add("HomigradDamage", "GuiltReg", function(ply, dmgInfo, hitgroup, ent, har
 
     if shouldBanGuilt and Attacker.Guilt >= 100 then
 		-- if ULib then
-        	ULib.addBan( Attacker:SteamID(), 30, "Kicked and banned for dealing too much team damage.", Attacker:Name(), "System" )
+        	ULib.addBan( Attacker:SteamID(), 30, "Кикнут и забанен за слишком большой урон своим.", Attacker:Name(), "System" )
 		-- else
 		-- 	Attacker:Ban(30, true)
 		-- end
 
-        PrintMessage(HUD_PRINTTALK, "Player "..Attacker:Name().." has been banned for 30 minutes for RDMing in a team based gamemode.")
+        PrintMessage(HUD_PRINTTALK, "Игрок "..Attacker:Name().." забанен на 30 минут за RDM в командном режиме.")
     end
 
     if not isShove then
@@ -296,12 +296,12 @@ hook.Add("HomigradDamage", "GuiltReg", function(ply, dmgInfo, hitgroup, ent, har
             local time = math.Round(60 - karma * 4, 0)
 
 			-- if ULib then
-				ULib.addBan( steamID, 60, "Kicked and banned for having too low karma.", name, "System" )
+				ULib.addBan( steamID, 60, "Кикнут и забанен за слишком низкую карму.", name, "System" )
 			-- else
 			-- 	Attacker:Ban(60, true)
 			-- end
             
-            PrintMessage(HUD_PRINTTALK, "Player "..name.." has been banned for "..time.." minutes for having too low karma.")
+            PrintMessage(HUD_PRINTTALK, "Игрок "..name.." забанен на "..time.." минут за слишком низкую карму.")
         end)
     end
 end)
@@ -454,7 +454,7 @@ end)
 
 hook.Add("Player Spawn", "GuiltKnown",function(ply)
     if ply.Karma then
-        ply:ChatPrint("Your current karma is "..tostring(math.Round(ply.Karma)).."")
+        ply:ChatPrint("Ваша текущая карма: "..tostring(math.Round(ply.Karma)).."")
     end
 end)
 

@@ -875,7 +875,7 @@ if CLIENT then
 		lbl:DockMargin(10,0,10,10)
 
 		lbl.Paint = function(self, w, h)
-			draw.SimpleText("LMB - Add attachment | RMB - remove attachment", "ZCity_Tiny", w * 0.5, h * 0.5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("ЛКМ - Добавить обвес | ПКМ - Снять обвес", "ZCity_Tiny", w * 0.5, h * 0.5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		local scroll = makeScroll(frame)
@@ -894,7 +894,7 @@ if CLIENT then
 				if !hg.attachmentslaunguage[v[1]] then continue end
 				local but = vgui.Create("DButton")
 				but.equipped = v[2]
-				but:SetText( hg.attachmentslaunguage[v[1]]..(v[2] and " - on the weapon" or "") )
+				but:SetText( hg.attachmentslaunguage[v[1]]..(v[2] and " - на оружии" or "") )
 				but:SetFont("ZCity_Tiny")
 				but:SetTextColor(color_white)
 				but:Dock( TOP )
@@ -928,7 +928,7 @@ if CLIENT then
 
 					img:SetImage( hg.attachmentsIcons[tblcpy[k][1]] )
 
-					but:SetText( hg.attachmentslaunguage[tblcpy[k][1]]..(tblcpy[k][2] and " - on the weapon" or "") )
+					but:SetText( hg.attachmentslaunguage[tblcpy[k][1]]..(tblcpy[k][2] and " - на оружии" or "") )
 				end*/
 
 				but.DoClick = function()

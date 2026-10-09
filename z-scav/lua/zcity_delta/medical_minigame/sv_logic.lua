@@ -10,10 +10,10 @@ local GetMedicalSeverity
 local GetMedicalProgressModifier
 
 local amputationLimbNames = {
-    larm = "Left Arm",
-    rarm = "Right Arm",
-    lleg = "Left Leg",
-    rleg = "Right Leg"
+    larm = "Левая рука",
+    rarm = "Правая рука",
+    lleg = "Левая нога",
+    rleg = "Правая нога"
 }
 
 local amputationLimbBones = {
@@ -746,13 +746,13 @@ local function StartWeaponMinigameFromCommand(ply, requestedType, useTarget)
 
     local minigameType = GetMedicalMinigameType(wep)
     if not minigameType or minigameType ~= requestedType then
-        ply:ChatPrint("Wrong weapon for minigame: " .. tostring(requestedType))
+        ply:ChatPrint("Не то оружие для мини-игры: " .. tostring(requestedType))
         return
     end
 
     local target = useTarget and ResolveEyeTarget(ply) or ply
     if useTarget and not IsValid(target) then
-        ply:ChatPrint("No valid target.")
+        ply:ChatPrint("Нет подходящей цели.")
         return
     end
 
@@ -772,7 +772,7 @@ concommand.Add("hg_med_minigame", function(ply, cmd, args)
 
     if requestedType ~= "bandage" and requestedType ~= "tourniquet" and requestedType ~= "syringe" then
         if IsValid(ply) then
-            ply:ChatPrint("Usage: hg_med_minigame <bandage|tourniquet|syringe> [target]")
+            ply:ChatPrint("Использование: hg_med_minigame <bandage|tourniquet|syringe> [цель]")
         end
         return
     end
@@ -784,7 +784,7 @@ concommand.Add("hg_med_amputate", function(ply, cmd, args)
     if not IsValid(ply) then return end
     local limb = tostring(args and args[1] or "")
     if not amputationLimbNames[limb] then
-        ply:ChatPrint("Usage: hg_med_amputate <larm|rarm|lleg|rleg> [target]")
+        ply:ChatPrint("Использование: hg_med_amputate <larm|rarm|lleg|rleg> [цель]")
         return
     end
 
@@ -797,7 +797,7 @@ concommand.Add("hg_med_dislocation", function(ply, cmd, args)
     if not IsValid(ply) then return end
     local group = tonumber(args and args[1] or nil)
     if group ~= 1 and group ~= 2 and group ~= 3 then
-        ply:ChatPrint("Usage: hg_med_dislocation <1|2|3> [target]")
+        ply:ChatPrint("Использование: hg_med_dislocation <1|2|3> [цель]")
         return
     end
 
@@ -844,20 +844,20 @@ local function IsTraitsEnabled()
 end
 
 local traitDefs = {
-    { id = "trained", side = "pos", cost = 5, name = "Trained", desc = "Calmer under pressure and more dangerous up close." },
-    { id = "brawler", side = "pos", cost = 4, name = "Brawler", desc = "Violence comes naturally to you." },
-    { id = "grunt", side = "pos", cost = 2, name = "Grunt", desc = "Harder to shake with grim sights around you." },
-    { id = "in_shape", side = "pos", cost = 5, name = "In Shape", desc = "Better endurance and recovery." },
-    { id = "lucky", side = "pos", cost = 3, name = "Lucky", desc = "Things tend to go your way when it matters." },
-    { id = "medic", side = "pos", cost = 5, name = "Medic", desc = "Your treatment tends to work better than most." },
-    { id = "optimist", side = "pos", cost = 3, name = "Optimist", desc = "You hold onto the bright side a little longer." },
-    { id = "maniac", side = "pos", cost = 4, name = "Maniac", desc = "Disturbing scenes affect you in unusual ways." },
+    { id = "trained", side = "pos", cost = 5, name = "Trained", desc = "Спокойнее под давлением и опаснее вблизи." },
+    { id = "brawler", side = "pos", cost = 4, name = "Brawler", desc = "Насилие даётся вам естественно." },
+    { id = "grunt", side = "pos", cost = 2, name = "Grunt", desc = "Мрачные зрелища выбивают вас из колеи труднее." },
+    { id = "in_shape", side = "pos", cost = 5, name = "В форме", desc = "Лучше выносливость и восстановление." },
+    { id = "lucky", side = "pos", cost = 3, name = "Lucky", desc = "Когда это важно, всё обычно складывается в вашу пользу." },
+    { id = "medic", side = "pos", cost = 5, name = "Medic", desc = "Ваше лечение обычно действует лучше, чем у других." },
+    { id = "optimist", side = "pos", cost = 3, name = "Optimist", desc = "Вы чуть дольше держитесь за светлую сторону." },
+    { id = "maniac", side = "pos", cost = 4, name = "Maniac", desc = "Жуткие сцены влияют на вас необычно." },
 
-    { id = "ptsd", side = "neg", cost = -4, name = "PTSD", desc = "Loud violence leaves a deeper mark on you." },
-    { id = "depressed", side = "neg", cost = -5, name = "Depressed", desc = "It is harder to stay motivated and steady." },
-    { id = "schizophrenia", side = "neg", cost = -2, name = "Schizophrenia", desc = "Something keeps talking to you from the edge of your vision." },
-    { id = "gemophobia", side = "neg", cost = -3, name = "Gemophobia", desc = "Open wounds and injury are especially unsettling to you." },
-    { id = "unlucky", side = "neg", cost = -2, name = "Unlucky", desc = "Fortune rarely picks your side." },
+    { id = "ptsd", side = "neg", cost = -4, name = "PTSD", desc = "Громкое насилие оставляет на вас более глубокий след." },
+    { id = "depressed", side = "neg", cost = -5, name = "Depressed", desc = "Вам труднее сохранять мотивацию и устойчивость." },
+    { id = "schizophrenia", side = "neg", cost = -2, name = "Schizophrenia", desc = "Что-то говорит с вами с края поля зрения." },
+    { id = "gemophobia", side = "neg", cost = -3, name = "Gemophobia", desc = "Открытые раны и травмы особенно вас тревожат." },
+    { id = "unlucky", side = "neg", cost = -2, name = "Unlucky", desc = "Удача редко на вашей стороне." },
 }
 
 local traitDefById = {}

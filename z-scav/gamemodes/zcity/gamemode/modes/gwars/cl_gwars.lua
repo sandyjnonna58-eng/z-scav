@@ -35,14 +35,14 @@ end)
 
 local teams = {
 	[0] = {
-		objective = "Kill all groove mazafakas",
-		name = "a Bloodz Member",
+		objective = "Убейте всех ублюдков из Groove",
+		name = "член Bloodz",
 		color1 = Color(180, 0, 0),
 		color2 = Color(180, 0, 0)
 	},
 	[1] = {
-		objective = "Kill all bloodz mazafakas",
-		name = "a Groove Member",
+		objective = "Убейте всех ублюдков из Bloodz",
+		name = "член Groove",
 		color1 = Color(0, 180, 0),
 		color2 = Color(0, 180, 0)
 	},
@@ -74,12 +74,12 @@ function MODE:HUDPaint()
 		surface.SetFont("timer_Font2")
 		surface.SetDrawColor(255, 255, 255, 255)
 		local w, h = surface.GetTextSize(text)
-		local w2, h2 = surface.GetTextSize("11:11:11 time left before SWAT arrives!")
+		local w2, h2 = surface.GetTextSize("11:11:11 осталось до прибытия SWAT!")
 		surface.SetTextPos(sw * 0.5 - w2 / 2, sh * 0.05)
 		surface.DrawText(time)
 		surface.SetTextPos(sw * 0.5 - w2 / 2 + w, sh * 0.05)
-		surface.DrawText("time left before SWAT arrives!")
-		//draw.SimpleText(" left before SWAT arrives!", "timer_Font2", sw * 0.432, sh * 0.05, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		surface.DrawText("осталось до прибытия SWAT!")
+		//draw.SimpleText(" осталось до прибытия SWAT!", "timer_Font2", sw * 0.432, sh * 0.05, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		//draw.SimpleText(time, "timer_Font2", sw * 0.36, sh * 0.05, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 
@@ -134,7 +134,7 @@ function MODE:HUDPaint()
 	local Rolename = teams[team_].name
 	local ColorRole = teams[team_].color1
 	ColorRole.a = 255 * fade
-	draw.SimpleText("You are " .. Rolename, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText("Вы — " .. Rolename, "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	local Objective = teams[team_].objective
 	local ColorObj = teams[team_].color2
 	ColorObj.a = 255 * fade
@@ -145,7 +145,7 @@ function MODE:HUDPaint()
 		surface.SetDrawColor(255, 255, 255, math.random(175, 255) * fade / 2)
 		surface.DrawTexturedRect(sw * 0.25, sh * 0.44 - ScreenScale(15), sw / 2, ScreenScale(30))
 
-		draw.SimpleText("SOMEWHERE IN PLUVTOWN", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("ГДЕ-ТО В ПЛЮВТАУНЕ", "ZB_ScrappersLarge", sw / 2, sh * 0.44 - ScreenScale(2), Color(0, 0, 0, 255 * fade), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -216,9 +216,9 @@ CreateEndMenu = function()
 		BlurBackground(self)
 		surface.SetFont("ZB_InterfaceMediumLarge")
 		surface.SetTextColor(col.r, col.g, col.b, col.a)
-		local lengthX, lengthY = surface.GetTextSize("Players:")
+		local lengthX, lengthY = surface.GetTextSize("Игроки:")
 		surface.SetTextPos(w / 2 - lengthX / 2, 20)
-		surface.DrawText("Players:")
+		surface.DrawText("Игроки:")
 		surface.SetDrawColor(255, 0, 0, 128)
 		surface.DrawOutlinedRect(0, 0, w, h, 2.5)
 	end
@@ -249,29 +249,29 @@ CreateEndMenu = function()
 			surface.DrawRect(0, h / 2, w, h / 2)
 			local col = ply:GetPlayerColor():ToColor()
 			surface.SetFont("ZB_InterfaceMediumLarge")
-			local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "He quited...")
+			local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "Он вышел...")
 			surface.SetTextColor(0, 0, 0, 255)
 			surface.SetTextPos(w / 2 + 1, h / 2 - lengthY / 2 + 1)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 			surface.SetTextColor(col.r, col.g, col.b, col.a)
 			surface.SetTextPos(w / 2, h / 2 - lengthY / 2)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 			local col = colSpect2
 			surface.SetFont("ZB_InterfaceMediumLarge")
 			surface.SetTextColor(col.r, col.g, col.b, col.a)
-			local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "He quited...")
+			local lengthX, lengthY = surface.GetTextSize(ply:GetPlayerName() or "Он вышел...")
 			surface.SetTextPos(15, h / 2 - lengthY / 2)
-			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "He quited...")
+			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "Он вышел...")
 			surface.SetFont("ZB_InterfaceMediumLarge")
 			surface.SetTextColor(col.r, col.g, col.b, col.a)
-			local lengthX, lengthY = surface.GetTextSize(ply:Frags() or "He quited...")
+			local lengthX, lengthY = surface.GetTextSize(ply:Frags() or "Он вышел...")
 			surface.SetTextPos(w - lengthX - 15, h / 2 - lengthY / 2)
-			surface.DrawText(ply:Frags() or "He quited...")
+			surface.DrawText(ply:Frags() or "Он вышел...")
 		end
 
 		function but:DoClick()
 			if ply:IsBot() then
-				chat.AddText(Color(255, 0, 0), "no, you can't")
+				chat.AddText(Color(255, 0, 0), "нет, нельзя")
 				return
 			end
 

@@ -49,25 +49,25 @@ local _ZSCAV_offRadialMedical = (function()
             [1] = function()
                 RequestMedicalAmputation(target, "larm")
             end,
-            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Left Arm") or "Amputate Left Arm"
+            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Левая рука") or "Ампутировать левую руку"
         },
         {
             [1] = function()
                 RequestMedicalAmputation(target, "rarm")
             end,
-            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Right Arm") or "Amputate Right Arm"
+            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Правая рука") or "Ампутировать правую руку"
         },
         {
             [1] = function()
                 RequestMedicalAmputation(target, "lleg")
             end,
-            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Left Leg") or "Amputate Left Leg"
+            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Левая нога") or "Ампутировать левую ногу"
         },
         {
             [1] = function()
                 RequestMedicalAmputation(target, "rleg")
             end,
-            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Right Leg") or "Amputate Right Leg"
+            [2] = (target ~= ply) and ("Amputate " .. tname .. ": Правая нога") or "Ампутировать правую ногу"
         }
     }
 
@@ -76,7 +76,7 @@ local _ZSCAV_offRadialMedical = (function()
             RunConsoleCommand("hg_unitmenu", tostring(target:EntIndex()))
             return -1
         end,
-        [2] = "Unit Menu" .. suffix
+        [2] = "Меню юнита" .. suffix
     }
 
     hg.radialOptions[#hg.radialOptions + 1] = {

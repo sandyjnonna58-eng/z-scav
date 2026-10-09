@@ -11,7 +11,7 @@ zb.Points.HMCD_TDM_T = zb.Points.HMCD_TDM_T or {}
 zb.Points.HMCD_TDM_T.Color = Color(150,95,0)
 zb.Points.HMCD_TDM_T.Name = "HMCD_TDM_T"
 
-MODE.PrintName = "Team Deathmatch"
+MODE.PrintName = "Командный бой"
 
 --[[
     ["weapon_hk_usp"] = {
@@ -88,7 +88,7 @@ AddItemToBUY( "\"Deer Hunter\" Bow", "Weapon", "weapon_hg_bow", 2000, "Special",
 AddItemToBUY( "Remington-870", "Weapon", "weapon_remington870", 1700, "Shotguns", {"holo1","holo2","supressor5","holo15"} )
 AddItemToBUY( "M870", "Weapon", "weapon_m870", 1800, "Shotguns", {"holo1","holo2","holo15","supressor5"}, nil, 0 )
 AddItemToBUY( "SPAS-12", "Weapon", "weapon_spas12", 2200, "Shotguns", {"supressor5"} )
-AddItemToBUY( "Sawed-off IZh-43", "Weapon", "weapon_doublebarrel_short", 800, "Shotguns", {}, nil, 0 )
+AddItemToBUY( "Обрез ИЖ-43", "Weapon", "weapon_doublebarrel_short", 800, "Shotguns", {}, nil, 0 )
 AddItemToBUY( "IZh-43", "Weapon", "weapon_doublebarrel", 1100, "Shotguns", {}, nil, 0 )
 AddItemToBUY( "M4 Sport", "Weapon", "weapon_m4sport", 1900, "Shotguns", {"holo1","holo2","holo15","supressor5"}, nil, 1 )
 AddItemToBUY( "M590A1", "Weapon", "weapon_m590a1", 2100, "Shotguns", {"holo1","holo2","holo15","supressor5"}, nil, 1 )
@@ -107,11 +107,11 @@ AddItemToBUY( "SVD", "Weapon", "weapon_svd", 5200, "Marksman/Sniper", {"optic4"}
 AddItemToBUY( "Barrett M98B", "Weapon", "weapon_m98b", 4200, "Marksman/Sniper", {} )
 
 -- Armor
-AddItemToBUY( "IIIA Vest", "Armor", "ent_armor_vest3", 450, "Equipment", {} )
-AddItemToBUY( "III Vest", "Armor", "ent_armor_vest4", 650, "Equipment", {} )
-AddItemToBUY( "IV Vest", "Armor", "ent_armor_vest1", 1000, "Equipment", {} )
-AddItemToBUY( "ACH III Helmet", "Armor", "ent_armor_helmet1", 350, "Equipment", {} )
-AddItemToBUY( "Ballistic Mask", "Armor", "ent_armor_mask1", 650, "Equipment", {} )
+AddItemToBUY( "Жилет IIIA", "Armor", "ent_armor_vest3", 450, "Equipment", {} )
+AddItemToBUY( "Жилет III", "Armor", "ent_armor_vest4", 650, "Equipment", {} )
+AddItemToBUY( "Жилет IV", "Armor", "ent_armor_vest1", 1000, "Equipment", {} )
+AddItemToBUY( "Шлем ACH III", "Armor", "ent_armor_helmet1", 350, "Equipment", {} )
+AddItemToBUY( "Баллистическая маска", "Armor", "ent_armor_mask1", 650, "Equipment", {} )
 
 -- Other Shit
 AddItemToBUY( "NVG-GPNVG-18", "Armor", "ent_armor_nightvision1", 450, "Equipment", {} )
@@ -121,12 +121,12 @@ AddItemToBUY( "Flashlight", "Armor", "hg_flashlight", 250, "Equipment", {} )
 AddItemToBUY( "Machete", "Weapon", "weapon_hg_machete", 300, "Melee", {}, nil, 0 )
 AddItemToBUY( "Hatchet", "Weapon", "weapon_hatchet", 300, "Melee", {}, nil, 0 )
 AddItemToBUY( "Tomahawk", "Weapon", "weapon_tomahawk", 300, "Melee", {}, nil, 1 )
-AddItemToBUY( "Police Tonfa", "Weapon", "weapon_hg_tonfa", 100, "Melee", {}, nil, 1 )
-AddItemToBUY( "Battering Ram", "Weapon", "weapon_ram", 100, "Melee", {}, nil, 1 )
+AddItemToBUY( "Полицейская тонфа", "Weapon", "weapon_hg_tonfa", 100, "Melee", {}, nil, 1 )
+AddItemToBUY( "Таран", "Weapon", "weapon_ram", 100, "Melee", {}, nil, 1 )
 
 -- Medical
 AddItemToBUY( "Bandage", "Weapon", "weapon_bandage_sh", 200, "Medical", {} )
-AddItemToBUY( "Big Bandage", "Weapon", "weapon_bigbandage_sh", 400, "Medical", {} )
+AddItemToBUY( "Большой бинт", "Weapon", "weapon_bigbandage_sh", 400, "Medical", {} )
 AddItemToBUY( "Medkit", "Weapon", "weapon_medkit_sh", 650, "Medical", {} )
 AddItemToBUY( "Tourniquet", "Weapon", "weapon_tourniquet", 150, "Medical", {} )
 AddItemToBUY( "Painkillers", "Weapon", "weapon_painkillers", 200, "Medical", {} )
@@ -138,15 +138,15 @@ AddItemToBUY( "Defibrillator", "Weapon", "weapon_defibrillator", 1500, "Medical"
 AddItemToBUY( "Midazolam", "Weapon", "weapon_midazolam", 500, "Medical", {} )
 AddItemToBUY( "Mannitol", "Weapon", "weapon_mannitol", 300, "Medical", {} )
 AddItemToBUY( "Naloxone", "Weapon", "weapon_naloxone", 100, "Medical", {} )
-AddItemToBUY( "Decompression needle", "Weapon", "weapon_needle", 50, "Medical", {} )
-AddItemToBUY( "Beta-Blocker", "Weapon", "weapon_betablock", 250, "Medical", {} )
+AddItemToBUY( "Игла для декомпрессии", "Weapon", "weapon_needle", 50, "Medical", {} )
+AddItemToBUY( "Бета-блокатор", "Weapon", "weapon_betablock", 250, "Medical", {} )
 
 -- Explosive
 AddItemToBUY( "M67", "Weapon", "weapon_hg_grenade_tpik", 500, "Explosive", {} )
 AddItemToBUY( "RGD-5", "Weapon", "weapon_hg_rgd_tpik", 450, "Explosive", {} )
 AddItemToBUY( "Flashbang", "Weapon", "weapon_hg_flashbang_tpik", 250, "Explosive", {} )
 AddItemToBUY( "Molotov", "Weapon", "weapon_hg_molotov_tpik", 400, "Explosive", {}, nil, 0 )
-AddItemToBUY( "Incendiary Grenade", "Weapon", "weapon_hg_grenade_incendiary_tpik", 600, "Explosive", {}, nil, 1 )
+AddItemToBUY( "Зажигательная граната", "Weapon", "weapon_hg_grenade_incendiary_tpik", 600, "Explosive", {}, nil, 1 )
 
 --Ammo
 AddItemToBUY( "7.62x39mm (30)", "Ammo", "ent_ammo_7.62x39mm", 100, "Ammo", {}, 30)

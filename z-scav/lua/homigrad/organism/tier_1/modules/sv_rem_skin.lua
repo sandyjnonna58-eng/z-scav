@@ -133,7 +133,7 @@ hook.Add("Org Think", "ZSCAV_Skin", function(owner, org, timeValue)
                 if hg.organism.DirtInfectMul then chance = chance * hg.organism.DirtInfectMul(org) end
                 if math.Rand(0, 1) < chance * timeValue then
                     inf = 1
-                    owner:Notify("This wound looks bad.. it's getting infected.", 5, "zscav_infect", 0)
+                    owner:Notify("Рана выглядит плохо.. она воспаляется.", 5, "zscav_infect", 0)
                 end
             end
         end
@@ -159,7 +159,7 @@ hook.Add("Org Think", "ZSCAV_Skin", function(owner, org, timeValue)
     for _, p in ipairs(PARTS) do maxInf = math.max(maxInf, org.remInfect[p] or 0) end
     local sep = org.remSepsis or 0
     if maxInf >= CFG.SEPSIS_FROM then
-        if sep <= 0 then owner:Notify("I feel feverish and weak.. something is very wrong.", 6, "zscav_sepsis", 0) end
+        if sep <= 0 then owner:Notify("Меня знобит, слабость.. что-то очень не так.", 6, "zscav_sepsis", 0) end
         sep = math.min(1, sep + timeValue * CFG.SEPSIS_GROW * (maxInf / 100))
     elseif maxInf <= 0 then
         sep = math.max(0, sep - timeValue * CFG.SEPSIS_HEAL)

@@ -286,7 +286,7 @@ net.Receive("event_loot_add", function(len, ply)
     net.WriteTable(MODE.CustomLootTable[1][2])
     net.Send(recipients)
     
-    ply:ChatPrint("Added item: " .. itemData.class .. " with weight " .. itemData.weight)
+    ply:ChatPrint("Добавлен предмет: " .. itemData.class .. " с весом " .. itemData.weight)
 end)
 
 net.Receive("event_loot_remove", function(len, ply)
@@ -312,7 +312,7 @@ net.Receive("event_loot_remove", function(len, ply)
     net.WriteTable(MODE.CustomLootTable[1][2])
     net.Send(recipients)
     
-    ply:ChatPrint("Removed item: " .. removedItem)
+    ply:ChatPrint("Удалён предмет: " .. removedItem)
 end)
 
 concommand.Add("zb_event_loot_reset", function(ply, _, _, _)
@@ -335,19 +335,19 @@ concommand.Add("zb_event_loot_reset", function(ply, _, _, _)
     net.WriteTable(MODE.CustomLootTable[1][2])
     net.Send(recipients)
     
-    ply:ChatPrint("Loot table has been reset")
+    ply:ChatPrint("Таблица лута сброшена")
 end)
 
 concommand.Add("zb_event_loot_save", function(ply, _, _, _)
     if not ply:IsAdmin() then return end
     
     MODE:SaveLootTable()
-    ply:ChatPrint("Loot table saved for server: " .. serverIdentifier)
+    ply:ChatPrint("Таблица лута сохранена для сервера: " .. serverIdentifier)
 end)
 
 concommand.Add("zb_event_lootpoll", function(ply, _, _, _)
     if not ply:IsAdmin() and not MODE.EventersList[ply:SteamID()] then
-        ply:ChatPrint("You don't have access to this command")
+        ply:ChatPrint("У вас нет доступа к этой команде")
         return
     end
     
@@ -375,7 +375,7 @@ concommand.Add("zb_event_endlogic", function(ply, _, _, args)
     local logicType = tonumber(args) or 2
     logicType = math.Clamp(logicType, 1, 3)
     MODE.EndLogicType = logicType
-    ply:ChatPrint("Event end logic set to: " .. logicType)
+    ply:ChatPrint("Логика конца события: " .. logicType)
 end)
 
 concommand.Add("zb_event_loot", function(ply, _, _, args)
@@ -395,7 +395,7 @@ concommand.Add("zb_event_loot", function(ply, _, _, args)
         timer.Remove("EventLootSpawnTimer")
     end
     
-    ply:ChatPrint("Event loot " .. (enabled and "enabled" or "disabled"))
+    ply:ChatPrint("Лут события " .. (enabled and "enabled" or "disabled"))
 end)
 
 hook.Add("PlayerInitialSpawn", "ZB_EventLootSync", function(ply)
@@ -440,7 +440,7 @@ concommand.Add("zb_event_eventer_add", function(ply, _, _, args)
     
     if IsValid(target) then
         MODE.EventersList[target:SteamID()] = true
-        ply:ChatPrint("Added " .. target:Nick() .. " as an eventer")
+        ply:ChatPrint("Добавлено " .. target:Nick() .. " как организатор")
         
         if zb.ROUND_PLAYING then
             zb.GiveRole(target, "Eventer", Color(50, 200, 50))
@@ -462,7 +462,7 @@ concommand.Add("zb_event_eventer_remove", function(ply, _, _, args)
     
     if IsValid(target) then
         MODE.EventersList[target:SteamID()] = nil
-        ply:ChatPrint("Removed " .. target:Nick() .. " as an eventer")
+        ply:ChatPrint("Удалено " .. target:Nick() .. " как организатор")
         
         if zb.ROUND_PLAYING then
             zb.GiveRole(target, GetGlobalString("ZB_EventRole","Player"), Color(190,15,15))
@@ -483,9 +483,9 @@ concommand.Add("zb_event_end", function(ply, _, _, _)
     
     if zb.ROUND_PLAYING then
         MODE:EndRound()
-        ply:ChatPrint("Ending the event round...")
+        ply:ChatPrint("Завершаем раунд события...")
     else
-        ply:ChatPrint("No event round is currently active.")
+        ply:ChatPrint("Сейчас нет активного раунда события.")
     end
 end)
 

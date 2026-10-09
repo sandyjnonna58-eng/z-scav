@@ -80,7 +80,7 @@
 
 --\\ Give our guns to NPCs
 	hook.Add("PopulateMenuBar", "PopulateNPCweps", function(menubar)
-		local bar = menubar:AddOrGetMenu("Z-City Weapon Override")
+		local bar = menubar:AddOrGetMenu("Z-City замена оружия")
 		local weaponlist = weapons.GetList()
 
 		bar:AddCVar("None", "gmod_npcweapon", "none")

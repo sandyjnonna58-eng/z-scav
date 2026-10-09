@@ -1,90 +1,90 @@
 MODE.FirstCasualtyCommander = {
-	"I've just detected the first assimilation. The threat is real. Be cautious.",
-	"One already down, don't let them make you the next one. Stay sharp.",
-	"I lost tracking from one of you, most likely assimilated. Stay alert.",
-	"One of you just got assimilated. You could be next, stay vigilant and don't let them get you."
+	"Я только что засёк первую ассимиляцию. Угроза реальна. Осторожнее.",
+	"Один уже готов, не дайте им сделать следующим вас. Будьте начеку.",
+	"Потерял сигнал одного из вас, скорее всего ассимилирован. Будьте бдительны.",
+	"Одного из вас только что ассимилировали. Вы можете быть следующими, будьте бдительны."
 }
 
 MODE.HalfWayCommander = {
-	"There's only half of you left now. Stay together.",
-	"Half of you are either dead or assimilated now. May God help you all.",
-	"The pathowogen is already halfway there. Stay safe, and check your corners.",
-	"It doesn't look good, half of you are now infected. Fuck.",
+	"Вас осталась половина. Держитесь вместе.",
+	"Половина из вас мертва или ассимилирована. Да поможет вам Бог.",
+	"Патоуген уже на полпути. Берегите себя и проверяйте углы.",
+	"Дела плохи, половина из вас заражена. Чёрт.",
 }
 
 MODE.HalfWayHeliCommander = {
-	"There's only half of you left now. The extraction helicopter is on it's way now. ETA: 4-5 minutes.",
-	"Half of you are either dead or assimilated now. The extraction helicopter is coming, hang in there!",
-	"The pathowogen is already halfway there. I got the extraction helicopter ready, just stay human a little longer!",
-	"It doesn't look good, half of you are now infected. The extraction heli is now en route, fend off those creatures for a little longer.",
+	"Вас осталась половина. Вертолёт эвакуации уже в пути. Прибытие: 4-5 минут.",
+	"Половина из вас мертва или ассимилирована. Вертолёт эвакуации летит, держитесь!",
+	"Патоуген уже на полпути. Вертолёт эвакуации готов, оставайтесь людьми ещё немного!",
+	"Дела плохи, половина из вас заражена. Вертолёт эвакуации в пути, отбивайтесь от этих тварей ещё немного.",
 }
 
 MODE.HalfWayExtractCommander = {
-	"There's only half of you left now. The extraction squad is on it's way now. ETA: 2-3 minutes.",
-	"Half of you are either dead or assimilated now. The extraction squad is coming, hang in there!",
-	"The pathowogen is already halfway there. I got the extraction squad on it's way, just stay human a little longer!",
-	"It doesn't look good, half of you are now infected. The extraction squad is now en route, fend off those creatures for a little longer.",
+	"Вас осталась половина. Группа эвакуации уже в пути. Прибытие: 2-3 минуты.",
+	"Половина из вас мертва или ассимилирована. Группа эвакуации идёт, держитесь!",
+	"Патоуген уже на полпути. Группа эвакуации в пути, оставайтесь людьми ещё немного!",
+	"Дела плохи, половина из вас заражена. Группа эвакуации в пути, отбивайтесь от этих тварей ещё немного.",
 }
 
 MODE.ThreeLeftCommander = {
-	"There's only three of you now. Cover each other's backs.",
-	"Only three survivors left, including you. I hope you're ready for what's coming.",
-	"Only a trio of you is left, God help you guys.",
-	"You, and two others are still alive. Try to stick together."
+	"Вас осталось трое. Прикрывайте друг друга.",
+	"Осталось трое выживших, включая вас. Надеюсь, вы готовы к тому, что будет.",
+	"Осталась лишь тройка, помоги вам Бог.",
+	"Вы и ещё двое пока живы. Держитесь вместе."
 }
 
 MODE.ThreeLeftHeliCommander = {
-	"There's only three of you now. The helicopter should be here any minute now.",
-	"Only three survivors left, including you. I hope you're ready for extraction.",
-	"Only a trio of you is left, standy for the helicopter.",
-	"You, and two others are still alive. Stick together, the extraction helicopter is coming."
+	"Вас осталось трое. Вертолёт будет с минуты на минуту.",
+	"Осталось трое выживших, включая вас. Надеюсь, вы готовы к эвакуации.",
+	"Осталась лишь тройка, ждите вертолёт.",
+	"Вы и ещё двое живы. Держитесь вместе, вертолёт эвакуации летит."
 }
 
 MODE.TwoLeftCommander = {
-	"There's only two of you in this god forsaken place now.",
-	"You're a duo now. Fuck!",
-	"Only you left. And some other guy. God help you.",
-	"Only two of you guys are left. Don't let the despair get to you, fight till the last breath!"
+	"В этом богом забытом месте вас осталось двое.",
+	"Вас теперь двое. Чёрт!",
+	"Остались только вы. И ещё какой-то парень. Помоги вам Бог.",
+	"Вас осталось двое. Не поддавайтесь отчаянию, сражайтесь до последнего вздоха!"
 }
 
 MODE.OneLeftCommander = {
-	"You're the only one left. May god have mercy on your soul.",
-	"You're the sole survivor. Quite possibly not. You fought well.",
-	"Only you and me now, huh? Glad i'm not the one down there.",
-	"You're the last one. I'm sorry, soldier."
+	"Вы остались один. Да смилуется Бог над вашей душой.",
+	"Вы единственный выживший. А может, и нет. Вы хорошо сражались.",
+	"Теперь только мы с вами, да? Рад, что я не там внизу.",
+	"Вы последний. Мне жаль, солдат."
 }
 
 MODE.FirstCasualtyContractor = {
-	"First kill.",
-	"One already down, stay focused.",
-	"One dead survivor.",
-	"Someone is dead now. Assimilated or shot, it doesn't matter. Continue."
+	"Первое убийство.",
+	"Один уже готов, сосредоточьтесь.",
+	"Один выживший мёртв.",
+	"Кто-то мёртв. Ассимилирован или застрелен — неважно. Продолжайте."
 }
 
 MODE.HalfWayContractor = {
-	"You've made it to the half survivors. Impressive.",
-	"About half of your enemies are now dead. Just keeping you informed.",
-	"Half of 'em dead already. Good job operative, continue your mission.",
-	"Good job operative, about half of the survivors are now dead.",
+	"Вы добрались до половины выживших. Впечатляет.",
+	"Около половины врагов мертвы. Просто держу в курсе.",
+	"Половина уже мертва. Отличная работа, оперативник, продолжайте задание.",
+	"Отличная работа, оперативник, около половины выживших мертвы.",
 }
 
 MODE.ThreeLeftContractor = {
-	"There's only two more survivors left. Finish what you started.",
-	"Only two more to go. You know what to do.",
-	"Only 2 survivors left. Good job, you're almost there.",
-	"You, and two other survivors are what's left. Find 'em, and kill 'em."
+	"Осталось всего двое выживших. Закончите начатое.",
+	"Осталось двое. Вы знаете, что делать.",
+	"Осталось 2 выживших. Отличная работа, вы почти у цели.",
+	"Осталось двое выживших и вы. Найдите их и убейте."
 }
 
 MODE.TwoLeftContractor = {
-	"There's now only a single survivor. Finish him.",
-	"Only one survivor to go now. Don't mess it up.",
-	"Find and kill the last one. Your extraction awaits.",
-	"One enemy left. Find him."
+	"Остался единственный выживший. Добейте его.",
+	"Остался всего один выживший. Не облажайтесь.",
+	"Найдите и убейте последнего. Эвакуация ждёт.",
+	"Остался один враг. Найдите его."
 }
 
 MODE.OneLeftContractor = {
-	"You're the only one left in this massacre. Mission complete. Proceed to your extraction point.",
-	"You've got them all. Mission complete. Get to the extraction point.",
-	"Operative, you're the last one alive. Mission complete. Get to the extraction point.",
-	"Operative, your mission is a success. Proceed to the extraction point."
+	"Вы единственный, кто остался в этой бойне. Задание выполнено. Идите к точке эвакуации.",
+	"Вы всех достали. Задание выполнено. Идите к точке эвакуации.",
+	"Оперативник, вы последний живой. Задание выполнено. Идите к точке эвакуации.",
+	"Оперативник, задание выполнено. Идите к точке эвакуации."
 }

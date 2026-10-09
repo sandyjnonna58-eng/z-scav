@@ -10,7 +10,7 @@ end)
 
 local teams = {
 	[0] = {
-		objective = "Go to the end of the map!",
+		objective = "Идите к концу карты!",
 		name = "rebel",
 		color1 = Color(155,55,0),
 		color2 = Color(129,129,129)
@@ -32,12 +32,12 @@ function MODE:HUDPaint()
 	if startTimer > CurTime() then
 		surface.SetFont("ZB_HomicideMediumLarge")
 
-		local w, h = surface.GetTextSize("Awaiting players: ")
+		local w, h = surface.GetTextSize("Ожидание игроков: ")
 		local w2, h2 = surface.GetTextSize("00:00")
 
 		surface.SetTextPos(sw * 0.5 - (w + w2) * 0.5, sh * 0.1 - h * 0.5)
 		surface.SetTextColor(Color(0,162,255, 255))
-		surface.DrawText("Awaiting players: ")
+		surface.DrawText("Ожидание игроков: ")
 		
 		surface.SetTextPos(sw * 0.5 + (w - w2) * 0.5, sh * 0.1 - h * 0.5)
 		surface.DrawText(string.FormattedTime(startTimer - CurTime(), "%02i:%02i"))
@@ -53,9 +53,9 @@ function MODE:HUDPaint()
     local Rolename = (lply.role and lply.role.name) or "Unknown"
     local ColorRole = teams[0].color1
     ColorRole.a = 255 * fade
-    draw.SimpleText("You are "..Rolename , "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Вы — "..Rolename , "ZB_HomicideMediumLarge", sw * 0.5, sh * 0.5, ColorRole, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-    local Objective = lply.PlayerClassName == "Gordon" and "Lead the resistance to victory!" or "Follow the Gordon!"
+    local Objective = lply.PlayerClassName == "Gordon" and "Приведите сопротивление к победе!" or "Следуйте за Гордоном!"
     local ColorObj = teams[0].color2
     ColorObj.a = 255 * fade
     draw.SimpleText( Objective, "ZB_HomicideMedium", sw * 0.5, sh * 0.9, ColorObj, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -137,9 +137,9 @@ CreateEndMenu = function()
 
 		surface.SetFont( "ZB_InterfaceMediumLarge" )
 		surface.SetTextColor(col.r,col.g,col.b,col.a)
-		local lengthX, lengthY = surface.GetTextSize("Players:")
+		local lengthX, lengthY = surface.GetTextSize("Игроки:")
 		surface.SetTextPos(w / 2 - lengthX/2,20)
-		surface.DrawText("Players:")
+		surface.DrawText("Игроки:")
 
 	end
 	-- PLAYERS
@@ -170,33 +170,33 @@ CreateEndMenu = function()
 
             local col = ply:GetPlayerColor():ToColor()
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			
 			surface.SetTextColor(0,0,0,255)
 			surface.SetTextPos(w / 2 + 1,h/2 - lengthY/2 + 1)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
 			surface.SetTextPos(w / 2,h/2 - lengthY/2)
-			surface.DrawText(ply:GetPlayerName() or "He quited...")
+			surface.DrawText(ply:GetPlayerName() or "Он вышел...")
 
             
 			local col = colSpect2
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:GetPlayerName() or "Он вышел..." )
 			surface.SetTextPos(15,h/2 - lengthY/2)
-			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "He quited...")
+			surface.DrawText((ply:Name() .. (not ply:Alive() and " - died" or "")) or "Он вышел...")
 
 			surface.SetFont( "ZB_InterfaceMediumLarge" )
 			surface.SetTextColor(col.r,col.g,col.b,col.a)
-			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "He quited..." )
+			local lengthX, lengthY = surface.GetTextSize( ply:Frags() or "Он вышел..." )
 			surface.SetTextPos(w - lengthX -15,h/2 - lengthY/2)
-			surface.DrawText(ply:Frags() or "He quited...")
+			surface.DrawText(ply:Frags() or "Он вышел...")
 		end
 
 		function but:DoClick()
-			if ply:IsBot() then chat.AddText(Color(255,0,0), "no, you can't") return end
+			if ply:IsBot() then chat.AddText(Color(255,0,0), "нет, нельзя") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/"..ply:SteamID64())
 		end
 

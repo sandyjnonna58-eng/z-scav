@@ -123,7 +123,7 @@ hook.Add("HUDPaint", "ZSCAV_LastStand", function()
             surface.SetMaterial(matSplash)
             surface.DrawTexturedRect((w - dw) * 0.5 + jx, (h - dh) * 0.5 + jy, dw, dh)
         else
-            draw.SimpleText("Let's not give up just yet.", "ZSCAV_LastStand", w * 0.5, h * 0.5, Color(230, 230, 230, 255 * a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Не будем сдаваться раньше времени.", "ZSCAV_LastStand", w * 0.5, h * 0.5, Color(230, 230, 230, 255 * a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
     end
 end)

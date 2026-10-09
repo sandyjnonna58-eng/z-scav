@@ -1,9 +1,9 @@
 SWEP.Base = "weapon_nlglock17"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Non-lethal Glock 26"
+SWEP.PrintName = "Нелетальный Glock 26"
 SWEP.Author = "Glock GmbH"
-SWEP.Instructions = "Glock is a brand of polymer-framed, short recoil-operated, striker-fired, locked-breech semi-automatic pistols designed and produced by Austrian manufacturer Glock Ges.m.b.H. Thats version of Glock is subcompact 10 rounds chambered in 9x19 ammo."
+SWEP.Instructions = "Glock — пистолеты с полимерной рамкой, коротким ходом ствола и ударниковым механизмом от австрийской Glock Ges.m.b.H. Это субкомпактный Glock на 10 патронов 9x19."
 SWEP.Category = "Weapons - Pistols"
 SWEP.Slot = 2
 SWEP.SlotPos = 10

@@ -141,7 +141,7 @@ function wOS.DynaBase:OpenConfigMenu()
 	self.AnimMenu:SetSize( w*0.4, h*0.5 )
 	self.AnimMenu:Center()
 	self.AnimMenu:MakePopup()
-	self.AnimMenu:SetTitle( "wiltOS Dynamic Animation Manager" )
+	self.AnimMenu:SetTitle( "wiltOS: менеджер динамических анимаций" )
 	self.AnimMenu:ShowCloseButton( true )
 	self.AnimMenu:SetDraggable( true )
 	self.AnimMenu.OnClose = function( pan )
@@ -158,7 +158,7 @@ function wOS.DynaBase:OpenConfigMenu()
 	local scroll = vgui.Create("DScrollPanel", sheet )
 	scroll:SetSize(aw*0.9, ah*0.8)
 	local sw, sh = scroll:GetSize()
-	sheet:AddSheet( "Server Animations", scroll, "icon16/server.png" )
+	sheet:AddSheet( "Серверные анимации", scroll, "icon16/server.png" )
 
 	//placehold
 	local layout2 
@@ -286,7 +286,7 @@ function wOS.DynaBase:OpenConfigMenu()
 
 
 			local tx, th = draw.SimpleText( pan.RegisterName, "wOS.DynaBase.TitleFont", hh*0.1 + add_pad + iw + ww*0.01, hh*0.06, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP  )
-			tx, th = draw.SimpleText( pan.AddonTitle or "Local File", "wOS.DynaBase.DescFont", hh*0.1 + add_pad + iw + ww*0.01, hh*0.06 + th + hh*0.03, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP  )
+			tx, th = draw.SimpleText( pan.AddonTitle or "Локальный файл", "wOS.DynaBase.DescFont", hh*0.1 + add_pad + iw + ww*0.01, hh*0.06 + th + hh*0.03, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP  )
 				
 
 			surface.SetDrawColor( color_white )
@@ -309,7 +309,7 @@ function wOS.DynaBase:OpenConfigMenu()
 		url:SetFont( "wOS.DynaBase.URLFont" )
 		url:SetText( "" )
 		url.Paint = function( pan, ww, hh )
-			local txt = pan.URL or "No Workshop URL"
+			local txt = pan.URL or "Нет ссылки на Workshop"
 			draw.SimpleText( txt, "wOS.DynaBase.URLFont", 0, hh*0.5, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 		end
 		url:SetDisabled( true )
@@ -331,14 +331,14 @@ function wOS.DynaBase:OpenConfigMenu()
 		validated.UpdateCast = function( pan )
 			if !frame.Toggled then
 				pan:SetImage( "icon16/delete.png" )
-				icon:SetTooltip( "This item is currently disabled"  )
+				icon:SetTooltip( "Этот элемент отключён"  )
 			else
 				if data.ServerValid then
 					pan:SetImage( "icon16/accept.png" )
-					icon:SetTooltip( "This item is registered by the server and client"  )
+					icon:SetTooltip( "Этот элемент зарегистрирован сервером и клиентом"  )
 				else
 					pan:SetImage( "icon16/error.png" )		
-					icon:SetTooltip( "This item is only registered by the client and may cause unpredictable issues"  )	
+					icon:SetTooltip( "Этот элемент зарегистрирован только клиентом и может вызывать сбои"  )	
 				end
 			end
 		end
@@ -356,10 +356,10 @@ function wOS.DynaBase:OpenConfigMenu()
 
 		if data.Type == WOS_DYNABASE.REANIMATION then
 			thetype:SetImage( reanim_mat )
-			thetype:SetTooltip( "This addon replaces existing animations" )	
+			thetype:SetTooltip( "Этот аддон заменяет существующие анимации" )	
 		else
 			thetype:SetImage( extend_mat )
-			thetype:SetTooltip( "This addon includes new animations" )	
+			thetype:SetTooltip( "Этот аддон добавляет новые анимации" )	
 		end
 
 		local div = vgui.Create("DPanel", dock_bar)
@@ -387,7 +387,7 @@ function wOS.DynaBase:OpenConfigMenu()
 		maled:Dock( LEFT )
 		maled:SetImage( male_mat )
 		if data.Male then
-			maled:SetTooltip( "Male Animations" )
+			maled:SetTooltip( "Мужские анимации" )
 		else
 			maled:SetColor(Color(125, 125, 125, 125))
 		end
@@ -398,7 +398,7 @@ function wOS.DynaBase:OpenConfigMenu()
 		femaled:Dock( LEFT )
 		femaled:SetImage( female_mat )
 		if data.Female then
-			femaled:SetTooltip( "Female Animations" )
+			femaled:SetTooltip( "Женские анимации" )
 		else
 			femaled:SetColor(Color(125, 125, 125, 125))
 		end
@@ -409,7 +409,7 @@ function wOS.DynaBase:OpenConfigMenu()
 		zombied:Dock( LEFT )
 		zombied:SetImage( zombie_mat )
 		if data.Zombie then
-			zombied:SetTooltip( "Zombie Animations" )
+			zombied:SetTooltip( "Анимации зомби" )
 		else
 			zombied:SetColor(Color(125, 125, 125, 125))
 		end
@@ -450,18 +450,18 @@ function wOS.DynaBase:OpenConfigMenu()
 			local toggle = vgui.Create("DButton", dock_bar)
 			toggle:SetTall( fh*0.2 )
 			if frame.Toggled then
-				toggle:SetText( "Unmount Addon" )
+				toggle:SetText( "Отключить аддон" )
 			else
-				toggle:SetText( "Mount Addon" )
+				toggle:SetText( "Подключить аддон" )
 			end
 			toggle:SetWide( fw*0.15 )
 			toggle:Dock( LEFT )
 			toggle.DoClick = function( pan )
 				frame.Toggled = !frame.Toggled
 				if frame.Toggled then
-					pan:SetText( "Unmount Addon" )
+					pan:SetText( "Отключить аддон" )
 				else
-					pan:SetText( "Mount Addon" )
+					pan:SetText( "Подключить аддон" )
 				end
 				validated:UpdateCast()
 			end
@@ -485,12 +485,12 @@ function wOS.DynaBase:OpenConfigMenu()
 
 	local core = vgui.Create( "DPanel", sheet )
 	core:SetSize(aw*0.9, ah*0.8)
-	sheet:AddSheet( "User Animations", core, "icon16/user.png" )
+	sheet:AddSheet( "Пользовательские анимации", core, "icon16/user.png" )
 
 	local create_butt = vgui.Create( "DButton", core )
 	create_butt:SetSize( aw*0.9, ah*0.05 )
 	create_butt:Dock( TOP )
-	create_butt:SetText( "Create User Mount" )
+	create_butt:SetText( "Создать пользовательский набор" )
 
 	local scroll2 = vgui.Create("DScrollPanel", core )
 	scroll2:SetSize(aw*0.9, ah*0.69)
@@ -576,10 +576,10 @@ function wOS.DynaBase:OpenConfigMenu()
 			validated.UpdateCast = function( pan )
 				if !frame.Toggled then
 					pan:SetImage( "icon16/delete.png" )
-					pan:SetTooltip( "This item is currently disabled"  )
+					pan:SetTooltip( "Этот элемент отключён"  )
 				else
 					pan:SetImage( "icon16/accept.png" )
-					pan:SetTooltip( "This item is currently enabled"  )
+					pan:SetTooltip( "Этот элемент включён"  )
 					pan:CheckModelValidity()
 				end
 			end
@@ -587,7 +587,7 @@ function wOS.DynaBase:OpenConfigMenu()
 				for _, mdl in ipairs( pan.Models ) do
 					if file.Exists( mdl, "GAME" ) then continue end
 					pan:SetImage( "icon16/error.png" )
-					pan:SetTooltip( "This item is missing models"  )
+					pan:SetTooltip( "У этого элемента нет моделей"  )
 					return
 				end
 			end
@@ -621,7 +621,7 @@ function wOS.DynaBase:OpenConfigMenu()
 			maled:SetImage( male_mat )
 			if data.Male then
 				table.insert( mdls, data.Male )
-				maled:SetTooltip( "Male Animations" )
+				maled:SetTooltip( "Мужские анимации" )
 			else
 				maled:SetColor(Color(125, 125, 125, 125))
 			end
@@ -633,7 +633,7 @@ function wOS.DynaBase:OpenConfigMenu()
 			femaled:SetImage( female_mat )
 			if data.Female then
 				table.insert( mdls, data.Female )
-				femaled:SetTooltip( "Female Animations" )
+				femaled:SetTooltip( "Женские анимации" )
 			else
 				femaled:SetColor(Color(125, 125, 125, 125))
 			end
@@ -645,7 +645,7 @@ function wOS.DynaBase:OpenConfigMenu()
 			zombied:SetImage( zombie_mat )
 			if data.Zombie then
 				table.insert( mdls, data.Zombie )
-				zombied:SetTooltip( "Zombie Animations" )
+				zombied:SetTooltip( "Анимации зомби" )
 			else
 				zombied:SetColor(Color(125, 125, 125, 125))
 			end
@@ -751,12 +751,12 @@ function wOS.DynaBase:OpenConfigMenu()
 	scroll:SetSize(aw*0.9, ah*0.8)
 	scroll.ReloadAddons = function() PopulateEntries() end
 	local sw, sh = scroll:GetSize()
-	sheet:AddSheet( "Helper Functions", scroll, "icon16/heart.png" )
+	sheet:AddSheet( "Вспомогательные функции", scroll, "icon16/heart.png" )
 
 	local download_butt = vgui.Create( "DButton", scroll )
 	download_butt:SetSize( aw*0.9, ah*0.05 )
 	download_butt:Dock( TOP )
-	download_butt:SetText( "Convert Server to User Mounts (Will overwrite mounts with the same name!)" )
+	download_butt:SetText( "Преобразовать серверные наборы в пользовательские (перезапишет наборы с тем же именем!)" )
 	download_butt.DoClick = function(pan) 
 		for name, data in pairs( self:GetAllSources() ) do
 			if data.Core then continue end
@@ -764,7 +764,7 @@ function wOS.DynaBase:OpenConfigMenu()
 			self:CreateUserMount( data )
 		end
 		PopulateEntries()
-		chat.AddText( color_white, "[", Color( 0, 175, 255 ), "wOS-DynaBase", color_white, "] All registered server mounts have been added to your user mount list!" )
+		chat.AddText( color_white, "[", Color( 0, 175, 255 ), "wOS-DynaBase", color_white, "] Все серверные наборы добавлены в ваш список!" )
 	end
 	hook.Call( "wOS.DynaBase.PopulateHelperFunctions", nil, scroll )
 
@@ -772,14 +772,14 @@ function wOS.DynaBase:OpenConfigMenu()
 	local savebutt = vgui.Create("DButton", self.AnimMenu )
 	savebutt:SetSize(aw*0.9, ah*0.04)
 	savebutt:SetPos( aw*0.05, ah*0.86 )
-	savebutt:SetText( "Save Animation Settings" )
+	savebutt:SetText( "Сохранить настройки анимаций" )
 	sheet.OnActiveTabChanged = function( pan, old, new )
 		local txt = new:GetText()
 		if txt:find( "User" ) then
-			savebutt:SetText( "Save User Settings" )
+			savebutt:SetText( "Сохранить пользовательские настройки" )
 			savebutt:Show()
 		elseif txt:find( "Server" ) then
-			savebutt:SetText( "Save Server Settings" )
+			savebutt:SetText( "Сохранить серверные настройки" )
 			savebutt:Show()
 		else
 			savebutt:Hide()

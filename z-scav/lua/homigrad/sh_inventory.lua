@@ -225,7 +225,7 @@ if CLIENT then
 				nameStr = ent:GetPlayerName() or string.NiceName(ent:GetClass())
 			end
 		end
-		local name = isBodyInventory and (nameStr .. "'s inventory") or nameStr
+		local name = isBodyInventory and (nameStr .. ": инвентарь") or nameStr
 		local sizeX = math.floor(math.min(math.max(ScrW() * 0.62, 420), ScrW() - 20, 980))
 		local sizeY = math.floor(math.min(math.max(ScrH() * 0.74, 360), ScrH() - 20, 760))
 		plyMenu = vgui.Create("ZFrame")
@@ -273,7 +273,7 @@ if CLIENT then
 		plyMenu.PaintOver = function(self, w, h)
 			draw.DrawText(name, "ZCity_Menu_Settings_Small", 14, 12, color_white, TEXT_ALIGN_LEFT)
 
-			draw.DrawText("Hold LMB - Search | LMB - Take | RMB - Item menu", "ZCity_Tiny", w / 2, h - h*0.04 , clr_text, TEXT_ALIGN_CENTER)
+			draw.DrawText("Держать ЛКМ - Обыскать | ЛКМ - Взять | ПКМ - Меню предмета", "ZCity_Tiny", w / 2, h - h*0.04 , clr_text, TEXT_ALIGN_CENTER)
 		end
 		function plyMenu:Think()
 			local ent = self.ent
@@ -470,7 +470,7 @@ if CLIENT then
 					
 					if not functions[tab](ply, ent, i, unpack(thing1)) then
 						local OptionsMenu = DermaMenu() 
-							OptionsMenu:AddOption( "You have item like this", function() end )
+							OptionsMenu:AddOption( "У вас уже есть такой предмет", function() end )
 						OptionsMenu:Open()
 						return
 					end
@@ -496,7 +496,7 @@ if CLIENT then
 					
 					if not functions[tab](ply, ent, i, unpack(thing1)) then
 						local OptionsMenu = DermaMenu() 
-							OptionsMenu:AddOption( "You have item like this", function() end )
+							OptionsMenu:AddOption( "У вас уже есть такой предмет", function() end )
 						OptionsMenu:Open()
 						return
 					end

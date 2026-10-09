@@ -20,13 +20,13 @@ local function TryConjureBleedingMusket(zone, ply)
 	local blood_consumption = 25000
 	
 	if(PLUGIN.GetZoneOrPlyBlood(zone, ply) >= blood_consumption)then
-		PLUGIN.ShowMessageInSphere("Conjuring Bleeding Musket...", zone.Pos, zone.Radius)
+		PLUGIN.ShowMessageInSphere("Призыв Кровоточащего мушкета...", zone.Pos, zone.Radius)
 		PLUGIN.ConjureBleedingMusket.Do(ent, 5, zone)
 		PLUGIN.RemoveZoneOrPlyBlood(zone, ply, blood_consumption)
 		PLUGIN.AddConsequencesToZoneChanters(zone, -3)
 		PLUGIN.AddConsequences(ply, -50)
 	else
-		PLUGIN.ShowMessage(ply, "There is not enough blood in order to conjure Bleeding Musket")
+		PLUGIN.ShowMessage(ply, "Недостаточно крови, чтобы призвать Кровоточащий мушкет")
 	end
 end
 --//

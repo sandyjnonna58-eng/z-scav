@@ -94,13 +94,13 @@ hook.Add("WeaponEquip", "homigrad-inventory", function(wep, ply)
         wep.sling = nil
         if not inv["Weapons"]["hg_sling"] then
             inv["Weapons"]["hg_sling"] = true
-            ply:ChatPrint("You took the sling the weapon was attached to.")
+            ply:ChatPrint("Вы забрали ремень, к которому было пристёгнуто оружие.")
         else
             local sling = ents.Create("hg_sling")
             sling:SetPos(ply:EyePos())
             sling:SetVelocity(ply:GetAimVector() * 5)
             sling:Spawn()
-            ply:ChatPrint("You deattached the sling the weapon was connected to.")
+            ply:ChatPrint("Вы отстегнули ремень, к которому было пристёгнуто оружие.")
         end
     end
 
@@ -454,7 +454,7 @@ hook.Add("Player Think", "loot-fellows",function(ply)
     local ent = trace.Entity
     ent = IsValid(hg.RagdollOwner(ent)) and hg.RagdollOwner(ent) or ent
 		if IsValid(ent) and ent:IsPlayer() and ent ~= ply and ent:Alive() and ent.organism and not ent.organism.otrub then
-			if not ply.keypressed then ply:ChatPrint("You cant loot them, they are awake.") end
+			if not ply.keypressed then ply:ChatPrint("Их нельзя обыскать, они в сознании.") end
 			ply.keypressed = true
 			return
 		end

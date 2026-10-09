@@ -13,7 +13,7 @@ end
 SWEP.ViewModel = ""
 SWEP.WorldModel = "models/props_combine/combine_mine01.mdl"
 
-SWEP.PrintName = "Breach Charge"
+SWEP.PrintName = "Штурмовой заряд"
 SWEP.Instructions = "This is an explosive device used to force open closed and/or locked doors.\n\nLeft click to place on a door."
 SWEP.Category = "Weapons - Explosive"
 SWEP.Spawnable = true

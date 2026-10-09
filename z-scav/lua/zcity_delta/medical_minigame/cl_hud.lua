@@ -88,10 +88,10 @@ local syringePlungerFrames = {}
 local syringePlungerFrameDuration = 0.09
 local amputationVisualStateCache = {}
 local dislocationLimbLabels = {
-    larm = "LEFT ARM",
-    rarm = "RIGHT ARM",
-    lleg = "LEFT LEG",
-    rleg = "RIGHT LEG",
+    larm = "ЛЕВАЯ РУКА",
+    rarm = "ПРАВАЯ РУКА",
+    lleg = "ЛЕВАЯ НОГА",
+    rleg = "ПРАВАЯ НОГА",
     jaw = "JAW"
 }
 
@@ -1550,7 +1550,7 @@ function PANEL:PaintAmputation(w, h)
 
     DrawAmputationBlade(knifeX, knifeY, 455, 150, self.AmputationKnifeAngle or -14)
 
-    draw.SimpleText("The faster you move the knife, the stronger the pain.", "Trebuchet24", self.CenterX, self.CenterY + 255, Color(235, 235, 235, 210), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Чем быстрее двигаешь нож, тем сильнее боль.", "Trebuchet24", self.CenterX, self.CenterY + 255, Color(235, 235, 235, 210), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 function PANEL:PaintDislocation(w, h)
@@ -1611,9 +1611,9 @@ function PANEL:PaintDislocation(w, h)
     draw.RoundedBox(6, meterX, meterY, meterWidth, 18, Color(50, 50, 50, 220))
     draw.RoundedBox(6, meterX + 3, meterY + 3, math.max((meterWidth - 6) * forceFill, 0), 12, Color(200, 200, 200, 245))
 
-    draw.SimpleText("Push the dislocated bone back into the other bone.", "Trebuchet24", self.CenterX, self.CenterY - 170, Color(245, 245, 245, 235), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Вставьте вывихнутую кость обратно на место.", "Trebuchet24", self.CenterX, self.CenterY - 170, Color(245, 245, 245, 235), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText(self:GetDislocationLabel(), "DermaLarge", self.CenterX, self.CenterY - 128, Color(255, 230, 180, 245), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-    draw.SimpleText("Hold the bone, pull the mouse, and release to shove it that way.", "Trebuchet18", self.CenterX, self.CenterY + 205, Color(220, 220, 220, 205), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Зажмите кость, потяните мышь и отпустите, чтобы толкнуть её в ту сторону.", "Trebuchet18", self.CenterX, self.CenterY + 205, Color(220, 220, 220, 205), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     self:DrawCommonOverlays(self.Progress, false)
 end
@@ -1817,20 +1817,20 @@ hook.Add("Think", "zcity_delta_music_master_stop", function()
 end)
 
 local zcityDeltaTraitDefs = {
-    { id = "trained", side = "pos", cost = 5, name = "Trained", desc = "Calmer under pressure and more dangerous up close.", icon = "Trained.png" },
-    { id = "brawler", side = "pos", cost = 4, name = "Brawler", desc = "Violence comes naturally to you.", icon = "brawler.png" },
-    { id = "grunt", side = "pos", cost = 2, name = "Grunt", desc = "Harder to shake with grim sights around you.", icon = "grunt.png" },
-    { id = "in_shape", side = "pos", cost = 5, name = "In Shape", desc = "Better endurance and recovery.", icon = "in shape.png" },
-    { id = "lucky", side = "pos", cost = 3, name = "Lucky", desc = "Things tend to go your way when it matters.", icon = "lucky.png" },
-    { id = "medic", side = "pos", cost = 5, name = "Medic", desc = "Your treatment tends to work better than most.", icon = "medic.png" },
-    { id = "optimist", side = "pos", cost = 3, name = "Optimist", desc = "You hold onto the bright side a little longer.", icon = "optimist.png" },
-    { id = "maniac", side = "pos", cost = 4, name = "Maniac", desc = "Disturbing scenes affect you in unusual ways.", icon = "maniac.png" },
+    { id = "trained", side = "pos", cost = 5, name = "Trained", desc = "Спокойнее под давлением и опаснее вблизи.", icon = "Trained.png" },
+    { id = "brawler", side = "pos", cost = 4, name = "Brawler", desc = "Насилие даётся вам естественно.", icon = "brawler.png" },
+    { id = "grunt", side = "pos", cost = 2, name = "Grunt", desc = "Мрачные зрелища выбивают вас из колеи труднее.", icon = "grunt.png" },
+    { id = "in_shape", side = "pos", cost = 5, name = "В форме", desc = "Лучше выносливость и восстановление.", icon = "in shape.png" },
+    { id = "lucky", side = "pos", cost = 3, name = "Lucky", desc = "Когда это важно, всё обычно складывается в вашу пользу.", icon = "lucky.png" },
+    { id = "medic", side = "pos", cost = 5, name = "Medic", desc = "Ваше лечение обычно действует лучше, чем у других.", icon = "medic.png" },
+    { id = "optimist", side = "pos", cost = 3, name = "Optimist", desc = "Вы чуть дольше держитесь за светлую сторону.", icon = "optimist.png" },
+    { id = "maniac", side = "pos", cost = 4, name = "Maniac", desc = "Жуткие сцены влияют на вас необычно.", icon = "maniac.png" },
 
-    { id = "ptsd", side = "neg", cost = -4, name = "PTSD", desc = "Loud violence leaves a deeper mark on you.", icon = "PTSD.png" },
-    { id = "depressed", side = "neg", cost = -5, name = "Depressed", desc = "It is harder to stay motivated and steady.", icon = "depressed.png" },
-    { id = "schizophrenia", side = "neg", cost = -2, name = "Schizophrenia", desc = "Something keeps talking to you from the edge of your vision.", icon = "schizophrenia.png" },
-    { id = "gemophobia", side = "neg", cost = -3, name = "Hemophobia", desc = "Open wounds and injury are especially unsettling to you.", icon = "gemophobia.png" },
-    { id = "unlucky", side = "neg", cost = -2, name = "Unlucky", desc = "Fortune rarely picks your side.", icon = "unlucky.png" },
+    { id = "ptsd", side = "neg", cost = -4, name = "PTSD", desc = "Громкое насилие оставляет на вас более глубокий след.", icon = "PTSD.png" },
+    { id = "depressed", side = "neg", cost = -5, name = "Депрессия", desc = "Вам труднее сохранять мотивацию и устойчивость.", icon = "depressed.png" },
+    { id = "schizophrenia", side = "neg", cost = -2, name = "Schizophrenia", desc = "Что-то говорит с вами с края поля зрения.", icon = "schizophrenia.png" },
+    { id = "gemophobia", side = "neg", cost = -3, name = "Hemophobia", desc = "Открытые раны и травмы особенно вас тревожат.", icon = "gemophobia.png" },
+    { id = "unlucky", side = "neg", cost = -2, name = "Unlucky", desc = "Удача редко на вашей стороне.", icon = "unlucky.png" },
 }
 
 local function TraitsFromArray(arr)
@@ -3008,223 +3008,223 @@ local function SetMoodlesHtml(pnl, st)
         bleedImgPx = 52
     end
 
-    local bleedLabel = "Minor bleeding"
-    local bleedDesc = "Blood is oozing out of a relatively small wound. There is no immediate danger."
+    local bleedLabel = "Слабое кровотечение"
+    local bleedDesc = "Кровь сочится из небольшой раны. Непосредственной опасности нет."
     local bleedSrc = LocalMoodleFile("48px-Moodle_smallbleeding_0.webp")
     if bleedStage == 2 then
-        bleedLabel = "Bleeding"
-        bleedDesc = "Blood is flowing out of a decently sized wound. Unlikely to be fatal if you're healthy. Treatment recommended."
+        bleedLabel = "Кровотечение"
+        bleedDesc = "Кровь течёт из приличной раны. Вряд ли смертельно, если вы здоровы. Лечение рекомендуется."
         bleedSrc = LocalMoodleFile("48px-Moodle_bleeding_1.webp")
     elseif bleedStage == 3 then
-        bleedLabel = "Heavy bleeding"
-        bleedDesc = "A large volume of blood is haemorrhaging out of your body. Likely lethal if untreated. Treatment needed."
+        bleedLabel = "Сильное кровотечение"
+        bleedDesc = "Из тела уходит много крови. Без лечения скорее всего смертельно. Нужно лечение."
         bleedSrc = LocalMoodleFile("48px-Moodle_heavybleeding_2_critical.png")
     elseif bleedStage == 4 then
-        bleedLabel = "Catastrophic bleeding"
-        bleedDesc = "_As your life gushes out behind you, you remember that you are mortal._"
+        bleedLabel = "Катастрофическое кровотечение"
+        bleedDesc = "_Пока жизнь хлещет из вас, вы вспоминаете, что смертны._"
         bleedSrc = LocalMoodleFile("64px-Moodle_maxbleeding_3_critical.png")
     end
 
-    local fracturedLabel = "Fractured bone"
-    local fracturedDesc = "You broke something. Try not to use the affected limb, and rest as much as possible. Treatment highly recommended."
+    local fracturedLabel = "Перелом кости"
+    local fracturedDesc = "Вы что-то сломали. Не нагружайте конечность и отдыхайте как можно больше. Лечение очень рекомендуется."
     local fracturedSrc = LocalMoodleFile("48px-Moodle_brokenbone_anim.webp")
 
-    local dislocLabel = "Dislocated joint"
-    local dislocDesc = "You dislocated something. Try not to use the affected limb, and find a way to fix it. Treatment recommended."
+    local dislocLabel = "Вывих сустава"
+    local dislocDesc = "Вы что-то вывихнули. Не нагружайте конечность и найдите способ вправить. Лечение рекомендуется."
     local dislocSrc = LocalMoodleFile("48px-Moodle_dislocation_anim.webp")
 
-    local jawDislocLabel = "Dislocated jaw"
-    local jawDislocDesc = "Your jaw is dislocated, impairing your speech and making eating anything extremely painful."
+    local jawDislocLabel = "Вывих челюсти"
+    local jawDislocDesc = "Челюсть вывихнута: речь затруднена, а любая еда причиняет сильную боль."
     local jawDislocSrc = LocalMoodleFile("48px-Moodle_dislocatedjaw_anim.webp")
 
-    local unconsciousLabel = "Unconscious"
-    local unconsciousDesc = "Not responding to any external stimuli. Lights out."
+    local unconsciousLabel = "Без сознания"
+    local unconsciousDesc = "Не реагирует ни на какие раздражители. Отключка."
     local unconsciousSrc = LocalMoodleFile("48px-Unconscious_Moodle.webp")
 
     local brainStage = tonumber(st.brainDamageStage) or 0
-    local brainLabel = "Cognitive impairment"
-    local brainDesc = "Mentally impaired from damage to the brain. You feel weirdly confused..."
+    local brainLabel = "Когнитивные нарушения"
+    local brainDesc = "Нарушения психики из-за повреждения мозга. Вы странно растеряны..."
     local brainSrc = LocalMoodleFile("48px-Braindamage_Moodle_1.webp")
     if brainStage == 2 then
-        brainLabel = "Neurological damage"
-        brainDesc = "Strong mental deficit. Ability to think intelligently and self-sustain is limited. Serious brain damage present."
+        brainLabel = "Неврологическое повреждение"
+        brainDesc = "Сильный умственный дефицит. Способность здраво мыслить и обходиться без помощи ограничена. Серьёзное повреждение мозга."
         brainSrc = LocalMoodleFile("48px-Braindamage_Moodle_2.webp")
     elseif brainStage == 3 then
-        brainLabel = "Severe neurophysiological deterioration"
-        brainDesc = "reality .. stops making sense"
+        brainLabel = "Тяжёлая нейрофизиологическая деградация"
+        brainDesc = "реальность .. теряет смысл"
         brainSrc = LocalMoodleFile("48px-Braindamage_Moodle_3.webp")
     elseif brainStage == 4 then
-        brainLabel = "Comatose"
+        brainLabel = "Кома"
         brainDesc = "..."
         brainSrc = LocalMoodleFile("48px-Braindamage_Moodle_4_Crit.png")
     end
 
     local oxyStage = tonumber(st.oxygenStage) or 0
-    local oxyLabel = "Mild hypoxemia"
-    local oxyDesc = "SpO2 below 90%. While not dangerous, it could be a sign of an underlying condition."
+    local oxyLabel = "Лёгкая гипоксемия"
+    local oxyDesc = "SpO2 ниже 90%. Не опасно, но может говорить о скрытой проблеме."
     local oxySrc = LocalMoodleFile("48px-Oxygen_Moodle_1.webp")
     if oxyStage == 2 then
-        oxyLabel = "Hypoxemia"
-        oxyDesc = "SpO2 below 75%, causing tachycardia and slowly depriving the brain of oxygen. While not lethal, it does point at an underlying condition."
+        oxyLabel = "Гипоксемия"
+        oxyDesc = "SpO2 ниже 75%: тахикардия и медленное кислородное голодание мозга. Не смертельно, но указывает на проблему."
         oxySrc = LocalMoodleFile("48px-Oxygen_Moodle_2.webp")
     elseif oxyStage == 3 then
-        oxyLabel = "Severe hypoxemia"
-        oxyDesc = "SpO2 below 60%, depriving tissues of oxygen and likely causing heart arrhythmia. Lethal if left to progress."
+        oxyLabel = "Тяжёлая гипоксемия"
+        oxyDesc = "SpO2 ниже 60%: ткани голодают без кислорода, вероятна аритмия. Смертельно, если не остановить."
         oxySrc = LocalMoodleFile("48px-Oxygen_Moodle_3.webp")
     elseif oxyStage == 4 then
-        oxyLabel = "Critical hypoxemia"
-        oxyDesc = "SpO2 below 45%. Something in your body has gone horribly, horribly wrong. Lethal if left to progress."
+        oxyLabel = "Критическая гипоксемия"
+        oxyDesc = "SpO2 ниже 45%. В организме что-то пошло ужасно, ужасно не так. Смертельно, если не остановить."
         oxySrc = LocalMoodleFile("48px-Oxygen_Moodle_4.webp")
     end
 
     local painStage = tonumber(st.painStage) or 0
-    local painLabel = "Discomfort"
-    local painDesc = "Feeling mild pain."
+    local painLabel = "Дискомфорт"
+    local painDesc = "Лёгкая боль."
     local painSrc = LocalMoodleFile("48px-Pain_1.webp")
     if painStage == 2 then
-        painLabel = "Pain"
-        painDesc = "Hurting a decent bit. Unhappiness rising slowly."
+        painLabel = "Боль"
+        painDesc = "Довольно больно. Недовольство медленно растёт."
         painSrc = LocalMoodleFile("48px-Pain_2.webp")
     elseif painStage == 3 then
-        painLabel = "Severe pain"
-        painDesc = "Half-conscious, mind fogged by intense pain. Unhappiness rising."
+        painLabel = "Сильная боль"
+        painDesc = "Полусознание, разум затуманен сильной болью. Недовольство растёт."
         painSrc = LocalMoodleFile("48px-Moodle_pain_3_critical.png")
     end
 
     local agonyActive = st.agony == true
-    local agonyLabel = "Agony"
-    local agonyDesc = "Unbearable pain."
+    local agonyLabel = "Агония"
+    local agonyDesc = "Невыносимая боль."
     local agonySrc = LocalMoodleFile("48px-Moodle_pain_3_critical.png")
 
     local shockActive = (tonumber(st.shockStage) or 0) > 0
-    local shockLabel = "Shock"
-    local shockDesc = "Going into shock from agony."
+    local shockLabel = "Шок"
+    local shockDesc = "Шок от агонии."
     local shockSrc = LocalMoodleFile("48px-Shock.webp")
 
     local coldStage = tonumber(st.coldStage) or 0
     local heatStage = tonumber(st.heatStage) or 0
-    local tempLabel = "Chilly"
-    local tempDesc = "A little cold for comfort."
+    local tempLabel = "Прохладно"
+    local tempDesc = "Прохладно, некомфортно."
     local tempSrc = LocalMoodleFile("48px-Cold_1.webp")
     local tempIsCold = coldStage > 0 and heatStage == 0
     if tempIsCold then
         if coldStage == 2 then
-            tempLabel = "Cold"
-            tempDesc = "Unpleasantly cold. Your body is slowing down."
+            tempLabel = "Холодно"
+            tempDesc = "Неприятно холодно. Тело замедляется."
             tempSrc = LocalMoodleFile("48px-Cold_2.webp")
         elseif coldStage == 3 then
-            tempLabel = "Hypothermia"
-            tempDesc = "Dangerously low temperature, body and mind taken by the cold. Your entire body is slowly shutting down."
+            tempLabel = "Гипотермия"
+            tempDesc = "Опасно низкая температура, тело и разум скованы холодом. Организм медленно отключается."
             tempSrc = LocalMoodleFile("48px-Cold_3.webp")
         elseif coldStage == 4 then
-            tempLabel = "Freezing to death"
-            tempDesc = "You feel like you're burning up, but you're so tired and confused. You could go for a long nap..."
+            tempLabel = "Замерзание насмерть"
+            tempDesc = "Кажется, что вы горите, но вы так устали и растеряны. Можно было бы надолго прилечь..."
             tempSrc = LocalMoodleFile("48px-Cold_4.webp")
         end
     else
         if heatStage == 1 then
-            tempLabel = "Warm"
-            tempDesc = "A little warm for comfort."
+            tempLabel = "Тепло"
+            tempDesc = "Тепловато, некомфортно."
             tempSrc = LocalMoodleFile("48px-Heat_1.webp")
         elseif heatStage == 2 then
-            tempLabel = "Hot"
-            tempDesc = "Unpleasantly hot. Thirst increased."
+            tempLabel = "Жарко"
+            tempDesc = "Неприятно жарко. Жажда сильнее."
             tempSrc = LocalMoodleFile("48px-Heat_2.webp")
         elseif heatStage == 3 then
-            tempLabel = "Hyperthermia"
-            tempDesc = "Dangerously hot. You're struggling to go on in the heat... Thirst highly increased."
+            tempLabel = "Гипертермия"
+            tempDesc = "Опасно жарко. Вы едва держитесь в этой жаре... Жажда намного сильнее."
             tempSrc = LocalMoodleFile("48px-Heat_3.webp")
         elseif heatStage == 4 then
-            tempLabel = "Heatstroke"
-            tempDesc = "Cells are starting to die from the intense heat. Irreversible organ damage imminent."
+            tempLabel = "Тепловой удар"
+            tempDesc = "Клетки начинают гибнуть от жара. Необратимое повреждение органов близко."
             tempSrc = LocalMoodleFile("48px-Heat_4.png")
         end
     end
 
     local concStage = tonumber(st.consciousnessStage) or 0
-    local concLabel = "Confused"
-    local concDesc = "Feeling disoriented and slightly dizzy."
+    local concLabel = "Растерянность"
+    local concDesc = "Лёгкая дезориентация и головокружение."
     local concSrc = LocalMoodleFile("48px-Faint_1.webp")
     if concStage == 2 then
-        concLabel = "Very confused"
-        concDesc = "Confused and dizzy, struggling to keep up with the world around you."
+        concLabel = "Сильная растерянность"
+        concDesc = "Растерянность и головокружение, трудно поспевать за происходящим."
         concSrc = LocalMoodleFile("48px-Faint_2.webp")
     elseif concStage == 3 then
-        concLabel = "Fainting"
-        concDesc = "Barely conscious, feeling like you could collapse at any moment."
+        concLabel = "Обморок"
+        concDesc = "Едва в сознании, можете упасть в любой момент."
         concSrc = LocalMoodleFile("48px-Faint_3.webp")
     elseif concStage == 4 then
-        concLabel = "Incapacitated"
-        concDesc = "Can't stand or think. You barely feel anything."
+        concLabel = "Беспомощность"
+        concDesc = "Не можете ни стоять, ни думать. Почти ничего не чувствуете."
         concSrc = LocalMoodleFile("48px-Faint_4.webp")
     elseif concStage == 5 then
-        concLabel = "Unconscious"
-        concDesc = "Not responding to any external stimuli. Lights out."
+        concLabel = "Без сознания"
+        concDesc = "Не реагирует ни на какие раздражители. Отключка."
         concSrc = LocalMoodleFile("48px-Unconscious_Moodle.webp")
     end
 
     local tachyStage = tonumber(st.tachyStage) or 0
     local bradyStage = tonumber(st.bradyStage) or 0
-    local tachyLabel = "Tachycardia"
-    local tachyDesc = "Your heart rate feels abnormally high."
+    local tachyLabel = "Тахикардия"
+    local tachyDesc = "Пульс ненормально высокий."
     local tachySrc = LocalMoodleFile("48px-Moodle_tachycardia_anim.webp")
-    local bradyLabel = "Bradycardia"
-    local bradyDesc = "Your heart rate feels abnormally low."
+    local bradyLabel = "Брадикардия"
+    local bradyDesc = "Пульс ненормально низкий."
     local bradySrc = LocalMoodleFile("48px-Bradycardia_Moodle_Animated.gif")
 
-    local arrestLabel = "Cardiac arrest"
-    local arrestDesc = "Asystole. If you're somehow conscious, this has a low chance of being treated via defibrillation. Otherwise, cerebral hypoxia and death is soon to follow."
+    local arrestLabel = "Остановка сердца"
+    local arrestDesc = "Асистолия. Если вы каким-то чудом в сознании, есть небольшой шанс помочь дефибриллятором. Иначе вскоре гипоксия мозга и смерть."
     local arrestSrc = LocalMoodleFile("48px-Cardiacarrest_Moodle_New.png")
 
-    local amputationLabel = "Amputation"
-    local amputationDesc = "You've lost a limb. Blood loss and shock are likely. Treatment needed."
+    local amputationLabel = "Ампутация"
+    local amputationDesc = "Вы потеряли конечность. Вероятны кровопотеря и шок. Нужно лечение."
     local amputationSrc = LocalMoodleFile("48px-Amputation_Moodle.webp")
 
-    local adrenLabel = "Adrenaline"
-    local adrenDesc = "Pain numbed. You're on high alert."
+    local adrenLabel = "Адреналин"
+    local adrenDesc = "Боль притуплена. Вы начеку."
     local adrenSrc = LocalMoodleFile("48px-FightOrFlight_Moodle.gif")
     if adrenStage > 0 then
         adrenLabel = adrenLabel .. " (" .. tostring(adrenStage) .. ")"
     end
 
     local hungerStage = tonumber(st.hungerStage) or 0
-    local hungerLabel = "Peckish"
-    local hungerDesc = "Could do with a bite to eat."
+    local hungerLabel = "Хочется есть"
+    local hungerDesc = "Не помешало бы перекусить."
     local hungerSrc = LocalMoodleFile("48px-Moodle_hunger_0.webp")
     if hungerStage == 2 then
-        hungerLabel = "Hungry"
-        hungerDesc = "Uncomfortably hungry. Slightly weaker than usual."
+        hungerLabel = "Голод"
+        hungerDesc = "Неприятно голоден. Чуть слабее обычного."
         hungerSrc = LocalMoodleFile("48px-Moodle_hunger_1.webp")
     elseif hungerStage == 3 then
-        hungerLabel = "Very hungry"
-        hungerDesc = "Extremely hungry, desperate for satiation. Weaker than usual."
+        hungerLabel = "Очень голоден"
+        hungerDesc = "Ужасно голоден, отчаянно хочется есть. Слабее обычного."
         hungerSrc = LocalMoodleFile("48px-Moodle_hunger_2.webp")
     elseif hungerStage == 4 then
-        hungerLabel = "Starving"
-        hungerDesc = "Your entire body, just wasting away... Total organ failure imminent."
+        hungerLabel = "Истощение"
+        hungerDesc = "Всё тело просто истощается... Скоро откажут все органы."
         hungerSrc = LocalMoodleFile("48px-Moodle_hunger_3_anim.webp")
     end
 
     local exertStage = tonumber(st.exertionStage) or 0
-    local exertLabel = "Slightly exerted"
-    local exertDesc = "Mildly physically strained."
+    local exertLabel = "Лёгкая усталость"
+    local exertDesc = "Небольшое физическое напряжение."
     local exertSrc = LocalMoodleFile("48px-Endurance_1.webp")
     if exertStage == 2 then
-        exertLabel = "Exerted"
-        exertDesc = "Uncomfortably exerted, struggling to move and work."
+        exertLabel = "Усталость"
+        exertDesc = "Сильная усталость, трудно двигаться и работать."
         exertSrc = LocalMoodleFile("48px-Endurance_2.webp")
     elseif exertStage == 3 then
-        exertLabel = "Highly exerted"
-        exertDesc = "Barely able to move, highly physically exerted."
+        exertLabel = "Сильное изнеможение"
+        exertDesc = "Едва двигаетесь, сильное физическое изнеможение."
         exertSrc = LocalMoodleFile("48px-Endurance_3.webp")
     elseif exertStage == 4 then
-        exertLabel = "Totally exhausted"
-        exertDesc = "Barely able to breathe."
+        exertLabel = "Полное истощение"
+        exertDesc = "Едва можете дышать."
         exertSrc = LocalMoodleFile("48px-Endurance_4.png")
     end
 
-    local lastStandLabel = "Last stand"
-    local lastStandDesc = "You're not going down that easily. Something deep inside you compels you to push through."
+    local lastStandLabel = "Последний бой"
+    local lastStandDesc = "Так просто вы не сдадитесь. Что-то глубоко внутри заставляет вас прорываться."
     local lastStandSrc = LocalMoodleFile("48px-Moodlast.webp")
 
     -- Z-SCAV: значок радости (солнце) берётся из НАШЕГО настроения и виден только в плюсе.
@@ -3240,76 +3240,76 @@ local function SetMoodlesHtml(pnl, st)
         elseif m > 0.3 then moodStage = 5
         elseif m > 0.1 then moodStage = 4 end
     end
-    local moodLabel = "Satisfied"
-    local moodDesc = "Content with your current predicament."
+    local moodLabel = "Довольство"
+    local moodDesc = "Вас устраивает текущее положение."
     local moodSrc = LocalMoodleFile("48px-Happy_1.webp")
     local moodImgPx = 44
     if moodStage == 5 then
-        moodLabel = "Excited"
-        moodDesc = "Looking forward to what's around the corner."
+        moodLabel = "Воодушевление"
+        moodDesc = "Вы с интересом ждёте, что будет дальше."
         moodSrc = LocalMoodleFile("48px-Happy_2.webp")
     elseif moodStage == 6 then
-        moodLabel = "Happy"
-        moodDesc = "You've found peace in this strange land."
+        moodLabel = "Счастье"
+        moodDesc = "Вы нашли покой в этой странной земле."
         moodSrc = LocalMoodleFile("48px-Happy_3.webp")
     elseif moodStage == 7 then
-        moodLabel = "Gleeful"
-        moodDesc = "You're at the top of the world, shaping the way forward at your will. Nothing can stop you!"
+        moodLabel = "Эйфория"
+        moodDesc = "Вы на вершине мира и прокладываете путь по своей воле. Вас ничто не остановит!"
         moodSrc = LocalMoodleFile("48px-Happy_4.webp")
     elseif moodStage == 1 then
-        moodLabel = "Feeling down"
-        moodDesc = "Starting to realize the gravity of your situation. Try to distract yourself."
+        moodLabel = "Подавленность"
+        moodDesc = "Вы начинаете осознавать серьёзность положения. Постарайтесь отвлечься."
         moodSrc = LocalMoodleFile("48px-Moodle_sad_0.webp")
     elseif moodStage == 2 then
-        moodLabel = "Gloomy"
-        moodDesc = "Lacking the motivation to go on, struggling with emotions. Things really aren't looking up. Find a way to distract yourself."
+        moodLabel = "Уныние"
+        moodDesc = "Нет мотивации идти дальше, трудно справляться с эмоциями. Всё действительно плохо. Найдите, чем отвлечься."
         moodSrc = LocalMoodleFile("48px-Moodle_depression_2_anim.webp")
     elseif moodStage == 3 then
-        moodLabel = "Miserable"
-        moodDesc = "_How does it feel, knowing you're not coming back up..?_"
+        moodLabel = "Отчаяние"
+        moodDesc = "_Каково это — знать, что ты уже не поднимешься..?_"
         moodSrc = LocalMoodleFile("68px-Moodle_miserable_3_anim.webp")
         moodImgPx = 52
     end
 
     local internalBleedStage = tonumber(st.internalBleedingStage) or 0
-    local internalBleedLabel = "Internal bleeding"
-    local internalBleedDesc = "Bleeding inside the body. Often hard to detect and potentially lethal. Treatment needed."
+    local internalBleedLabel = "Внутреннее кровотечение"
+    local internalBleedDesc = "Кровотечение внутри тела. Часто его трудно заметить, может быть смертельным. Нужно лечение."
     local internalBleedSrc = LocalMoodleFile("48px-Moodle_internalbleed_anim.webp")
 
     local virusStage = tonumber(st.virusStage) or 0
-    local virusLabel = "Infected"
-    local virusDesc = "You're infected. Symptoms will worsen over time."
+    local virusLabel = "Заражение"
+    local virusDesc = "У вас инфекция. Симптомы со временем усилятся."
     local virusSrc = LocalMoodleFile("48px-Infection_1.webp")
     if virusStage >= 4 then
-        virusLabel = "Severe infection"
-        virusDesc = "Systemic infection. You're in serious danger."
+        virusLabel = "Тяжёлая инфекция"
+        virusDesc = "Системная инфекция. Вы в серьёзной опасности."
         virusSrc = LocalMoodleFile("48px-Infection_4.webp")
     elseif virusStage == 3 then
-        virusLabel = "Worsening infection"
-        virusDesc = "Feverish and weakening. Breathing issues may start."
+        virusLabel = "Инфекция усиливается"
+        virusDesc = "Жар и слабость. Могут начаться проблемы с дыханием."
         virusSrc = LocalMoodleFile("48px-Infection_3.webp")
     elseif virusStage == 2 then
-        virusLabel = "Infection"
-        virusDesc = "You're sick. Pain and weakness increasing."
+        virusLabel = "Инфекция"
+        virusDesc = "Вы больны. Боль и слабость нарастают."
         virusSrc = LocalMoodleFile("48px-Infection_2.webp")
     end
 
     local hyperStage = tonumber(st.hyperStage) or 0
     local hypoStage = tonumber(st.hypoStage) or 0
-    local bpLabel = "Hypertension"
-    local bpDesc = "Elevated blood pressure."
+    local bpLabel = "Гипертония"
+    local bpDesc = "Повышенное давление."
     local bpSrc = LocalMoodleFile("48px-Moodle_hypertension_0.webp")
     local bpActive = false
     if hypoStage > 0 then
         bpActive = true
-        bpLabel = "Hypotension"
-        bpDesc = "Low blood pressure, dizziness and fainting risk."
+        bpLabel = "Гипотония"
+        bpDesc = "Низкое давление, головокружение и риск обморока."
         bpSrc = LocalMoodleFile("48px-Moodle_hypotension_0.webp")
         if hypoStage == 2 then
-            bpDesc = "Very low blood pressure. Dangerously reduced perfusion."
+            bpDesc = "Очень низкое давление. Опасно слабое кровоснабжение."
             bpSrc = LocalMoodleFile("48px-Moodle_hypotension_2_anim.webp")
         elseif hypoStage == 3 then
-            bpDesc = "Critical hypotension. Imminent collapse."
+            bpDesc = "Критическая гипотония. Вот-вот коллапс."
             bpSrc = LocalMoodleFile("48px-Moodle_hypotension_3_critical.png")
         elseif hypoStage == 1 then
             bpSrc = LocalMoodleFile("48px-Moodle_hypotension_1.webp")
@@ -3317,10 +3317,10 @@ local function SetMoodlesHtml(pnl, st)
     elseif hyperStage > 0 then
         bpActive = true
         if hyperStage == 2 then
-            bpDesc = "High blood pressure. Strain on the heart."
+            bpDesc = "Высокое давление. Нагрузка на сердце."
             bpSrc = LocalMoodleFile("48px-Moodle_hypertension_2.webp")
         elseif hyperStage == 3 then
-            bpDesc = "Critical hypertension. Risk of organ damage."
+            bpDesc = "Критическая гипертония. Риск повреждения органов."
             bpSrc = LocalMoodleFile("48px-Moodle_hypertension_3_critical.png")
         elseif hyperStage == 1 then
             bpSrc = LocalMoodleFile("48px-Moodle_hypertension_1.webp")
@@ -3328,20 +3328,20 @@ local function SetMoodlesHtml(pnl, st)
     end
 
     local opiatedStage = tonumber(st.opiatedStage) or 0
-    local opiatedLabel = "Opiated"
-    local opiatedDesc = "Relaxed and calm. Your body feels numb."
+    local opiatedLabel = "Под опиатами"
+    local opiatedDesc = "Расслаблены и спокойны. Тело онемело."
     local opiatedSrc = LocalMoodleFile("48px-Overdose_Moodle_1.png")
     if opiatedStage == 2 then
-        opiatedLabel = "Drugged"
-        opiatedDesc = "Very relaxed and calm, but your lungs feel heavy. A little more tired than usual. This feels pretty good, for now..."
+        opiatedLabel = "Под препаратами"
+        opiatedDesc = "Очень расслаблены и спокойны, но лёгкие тяжёлые. Чуть более уставшие, чем обычно. Пока что это довольно приятно..."
         opiatedSrc = LocalMoodleFile("48px-Overdose_Moodle_2.png")
     elseif opiatedStage == 3 then
-        opiatedLabel = "Highly drugged"
-        opiatedDesc = "Breathing is difficult, but your mind is in euphoria. This definitely isn't healthy. If only it could last forever..."
+        opiatedLabel = "Сильное опьянение"
+        opiatedDesc = "Дышать трудно, но разум в эйфории. Это точно нездорово. Вот бы это длилось вечно..."
         opiatedSrc = LocalMoodleFile("48px-Overdose_Moodle_3.png")
     elseif opiatedStage >= 4 then
-        opiatedLabel = "Opioid overdose"
-        opiatedDesc = "Respiratory failure. You are experiencing a drug-filled euphoria. Asphyxiation imminent."
+        opiatedLabel = "Передозировка опиоидов"
+        opiatedDesc = "Дыхательная недостаточность. Вы в наркотической эйфории. Удушье близко."
         opiatedSrc = LocalMoodleFile("48px-Overdose_Moodle_4.png")
     end
 
@@ -3458,13 +3458,13 @@ local function SetMoodlesHtml(pnl, st)
             local e = {key = "zscav_mood", fallback = fallbackBleed, active = false, src = "", title = ""}
             local label, desc, file, shake
             if mood < -0.75 then
-                label, desc, file, shake = "Miserable", "Everything feels hopeless. Only opiates can be used from the health panel.", "102px-Moodle_miserable_3_anim.png", 2
+                label, desc, file, shake = "Отчаяние", "Всё кажется безнадёжным. Из меню здоровья можно применять только опиаты.", "102px-Moodle_miserable_3_anim.png", 2
             elseif mood < -0.5 then
-                label, desc, file, shake = "Depressed", "A heavy, grey weight on everything. You often can't bring yourself to act.", "72px-Moodle_depression_2_anim.png", 1
+                label, desc, file, shake = "Депрессия", "Тяжёлый серый груз на всём. Часто вы не можете заставить себя действовать.", "72px-Moodle_depression_2_anim.png", 1
             elseif mood < -0.3 then
-                label, desc, file = "Gloomy", "Feeling really down. You won't find the strength for a last stand.", "72px-Moodle_gloomy_1.png"
+                label, desc, file = "Уныние", "Совсем тоскливо. Сил на последний бой не найдётся.", "72px-Moodle_gloomy_1.png"
             elseif mood < -0.1 then
-                label, desc, file = "Feeling down", "Starting to realize the gravity of your situation. Try to distract yourself.", "72px-Moodle_sad_0.png"
+                label, desc, file = "Подавленность", "Вы начинаете осознавать серьёзность положения. Постарайтесь отвлечься.", "72px-Moodle_sad_0.png"
             end
             if label then
                 e.active = true
@@ -3609,39 +3609,39 @@ local function SetMoodlesHtml(pnl, st)
         local defs = {
             {"zscav_arrhythmia", N(org.arrhythmia) > 0.15 or org.fibrillation == true,
                 N(org.arrhythmia) > 0.75 and "48px-moodle_arrythmia_2_critical.png" or (N(org.arrhythmia) > 0.5 and "48px-arrhythmia_3.png" or "72px-Arrhythmia_1.png"),
-                N(org.arrhythmia) > 0.75 and "Ventricular fibrillation" or (N(org.arrhythmia) > 0.5 and "Ventricular tachycardia" or "Arrhythmia"),
-                N(org.arrhythmia) > 0.75 and "Your heart is quivering instead of pumping. Defibrillate now or it will stop."
-                    or (N(org.arrhythmia) > 0.5 and "Your heart is racing out of rhythm. Untreated, it will turn into fibrillation." or "Your heart is beating irregularly. Can be defibrillated."),
+                N(org.arrhythmia) > 0.75 and "Фибрилляция желудочков" or (N(org.arrhythmia) > 0.5 and "Желудочковая тахикардия" or "Аритмия"),
+                N(org.arrhythmia) > 0.75 and "Сердце дрожит вместо того, чтобы качать кровь. Нужен дефибриллятор, иначе оно остановится."
+                    or (N(org.arrhythmia) > 0.5 and "Сердце бьётся сбившись с ритма. Без лечения перейдёт в фибрилляцию." or "Сердце бьётся неровно. Можно дефибриллировать."),
                 N(org.arrhythmia) > 0.75 and 2 or (N(org.arrhythmia) > 0.5 and 1 or nil)},
-            {"zscav_palpitations", (N(org.arrhythmia) > 0.5 or N(org.heartbeat) > 200) and not org.heartstop, "48px-palpitations.png", "Palpitations",
-                "You can feel your heart pounding in your chest.", 1},
-            {"zscav_infection", maxInf > 0.5, "72px-Infection_3.png", "Infection", "A wound is infected. It hurts and burns.", nil},
-            {"zscav_sepsis", N(org.remSepsis) > 0.01, "72px-Sepsis_2.png", "Sepsis", "The infection has spread into the blood. Fever, weakness.", N(org.remSepsis) > 0.5 and 2 or 1},
-            {"zscav_hemothorax", N(org.pneumothorax) > 0, "72px-Moodle_hemothorax_1_anim.png", "Hemothorax", "Blood or air in the chest. Hard to breathe.", 1},
-            {"zscav_withdrawal", N(org.remComedown) > 0.05, "72px-Withdrawal_3.png", "Withdrawal", "The drugs are wearing off. You feel awful.", nil},
-            {"zscav_deaf", N(org.remDeaf) > 0.12, "72px-Deaf_2.png", "Deafened", "Your ears are ringing. You can barely hear.", nil},
+            {"zscav_palpitations", (N(org.arrhythmia) > 0.5 or N(org.heartbeat) > 200) and not org.heartstop, "48px-palpitations.png", "Сердцебиение",
+                "Чувствуете, как сердце колотится в груди.", 1},
+            {"zscav_infection", maxInf > 0.5, "72px-Infection_3.png", "Инфекция", "Рана воспалилась. Болит и жжёт.", nil},
+            {"zscav_sepsis", N(org.remSepsis) > 0.01, "72px-Sepsis_2.png", "Сепсис", "Инфекция попала в кровь. Жар, слабость.", N(org.remSepsis) > 0.5 and 2 or 1},
+            {"zscav_hemothorax", N(org.pneumothorax) > 0, "72px-Moodle_hemothorax_1_anim.png", "Гемоторакс", "Кровь или воздух в груди. Трудно дышать.", 1},
+            {"zscav_withdrawal", N(org.remComedown) > 0.05, "72px-Withdrawal_3.png", "Ломка", "Препараты отпускают. Вам ужасно.", nil},
+            {"zscav_deaf", N(org.remDeaf) > 0.12, "72px-Deaf_2.png", "Оглушение", "В ушах звенит. Вы почти ничего не слышите.", nil},
             {"zscav_concussion", N(org.brain) >= 0.05 or (N(org.disorientation) > 0.4 and (N(org.skull) > 0 or N(org.brainHemorrhage) > 0)),
-                "72px-Concussion_moodle.png", "Concussion", "Your head is spinning. Hard to think straight.", N(org.brain) >= 0.3 and 1 or nil},
+                "72px-Concussion_moodle.png", "Сотрясение", "Голова кружится. Трудно ясно думать.", N(org.brain) >= 0.3 and 1 or nil},
             {"zscav_nausea", org.vomitInThroat == true or N(org.stomach) >= 0.3 or N(org.CO) > 0.15 or N(org.remSepsis) > 0.3 or org.remToxic == true or N(org.satiety) > 115,
-                "72px-Nausea_2.png", "Nausea", "You feel sick to your stomach.", org.vomitInThroat == true and 1 or nil},
+                "72px-Nausea_2.png", "Тошнота", "Вас мутит.", org.vomitInThroat == true and 1 or nil},
             {"zscav_sleepy", not org.remSleep and N(org.remEnergy or 100) <= 35,
                 N(org.remEnergy or 100) <= 15 and "48px-sleep_3.png" or (N(org.remEnergy or 100) <= 25 and "48px-sleep_2.png" or "48px-sleep_1.png"),
-                N(org.remEnergy or 100) <= 7 and "Half-asleep" or (N(org.remEnergy or 100) <= 15 and "Very tired" or (N(org.remEnergy or 100) <= 25 and "Tired" or "Drowsy")),
-                "You need sleep. Open the health menu and press SLEEP.", N(org.remEnergy or 100) <= 7 and 1 or nil},
+                N(org.remEnergy or 100) <= 7 and "Полусон" or (N(org.remEnergy or 100) <= 15 and "Сильная сонливость" or (N(org.remEnergy or 100) <= 25 and "Усталость" or "Сонливость")),
+                "Вам нужно поспать. Откройте меню здоровья и нажмите СОН.", N(org.remEnergy or 100) <= 7 and 1 or nil},
             {"zscav_asleep", org.remSleep == true, N(org.remSleepQuality) <= 1 and "48px-badsleep_moodle.png" or "48px-asleep_moodle.png",
-                "Asleep", "You are sleeping and regaining energy.", nil},
-            {"zscav_energized", not org.remSleep and N(org.remEnergized) > CurTime(), "48px-energized.png", "Energized", "You feel awake. Energy drains slower.", nil},
+                "Сон", "Вы спите и восстанавливаете энергию.", nil},
+            {"zscav_energized", not org.remSleep and N(org.remEnergized) > CurTime(), "48px-energized.png", "Бодрость", "Вы бодры. Энергия тратится медленнее.", nil},
             -- CU: перепил и переел
             {"zscav_water", N(org.thirst) < 0,
                 N(org.thirst) <= -74 and "overhydrated.png" or (N(org.thirst) < -25 and "overhydrated.png" or "slaked.png"),
-                N(org.thirst) <= -74 and "Water-intoxicated" or (N(org.thirst) < -25 and "Overhydrated" or "Slaked"),
-                N(org.thirst) <= -74 and "Way too much water. Your blood pressure is dangerously high."
-                    or (N(org.thirst) < -25 and "Bloated with water. Moving is a bit harder." or "Fully hydrated. Thirst wears off faster for now."),
+                N(org.thirst) <= -74 and "Водная интоксикация" or (N(org.thirst) < -25 and "Перепил" or "Напился"),
+                N(org.thirst) <= -74 and "Слишком много воды. Давление опасно высокое."
+                    or (N(org.thirst) < -25 and "Раздуло от воды. Двигаться немного тяжелее." or "Полностью напились. Пока что вода уходит быстрее."),
                 N(org.thirst) <= -74 and 2 or nil},
             {"zscav_satiated", N(org.satiety) > 100, N(org.satiety) > 120 and "48px-moodle_hunger_5.png" or "48px-moodle_hunger_4.png",
-                N(org.satiety) > 120 and "Full" or "Satiated",
-                N(org.satiety) > 120 and "Stuffed. Moving around is harder, and you might throw up." or "Pleasantly full. A little slower.", nil},
-            {"zscav_toxicosis", org.remToxic == true, "72px-Toxicosis_3.png", "Toxicosis", "Something poisonous is in your body.", 1},
+                N(org.satiety) > 120 and "Объелся" or "Сыт",
+                N(org.satiety) > 120 and "Объелись. Двигаться тяжелее, может стошнить." or "Приятно сыты. Чуть медленнее.", nil},
+            {"zscav_toxicosis", org.remToxic == true, "72px-Toxicosis_3.png", "Отравление", "В организме что-то ядовитое.", 1},
         }
         for _, d in ipairs(defs) do
             local on = d[2] and true or false

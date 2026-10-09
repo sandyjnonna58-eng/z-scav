@@ -2,7 +2,7 @@
 SWEP.Base = "weapon_m4super"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Long Barrel Remington 870"
+SWEP.PrintName = "Remington 870 с длинным стволом"
 SWEP.Author = "Remington Arms"
 SWEP.Instructions = "Pump-action shotgun chambered in 12/70 caliber"
 SWEP.Category = "Weapons - Shotguns"

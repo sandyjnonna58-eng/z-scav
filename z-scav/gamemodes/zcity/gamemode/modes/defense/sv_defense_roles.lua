@@ -248,6 +248,6 @@ function SetCommanderRoleByID(playerID)
         net.WriteString("Commander")
         net.Send(ply)
         
-        ply:ChatPrint("u are cmd now")
+        ply:ChatPrint("ты теперь командир")
     end
 end

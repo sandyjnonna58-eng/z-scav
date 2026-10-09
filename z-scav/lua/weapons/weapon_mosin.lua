@@ -1,9 +1,9 @@
 SWEP.Base = "weapon_m4super"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.PrintName = "Mosin-Nagant M38"
-SWEP.Author = "Izhevsk Machine-Building Plant"
-SWEP.Instructions = "Bolt-action rifle chambered in 7.62x54 mm"
+SWEP.PrintName = "Мосин-Наган М38"
+SWEP.Author = "Ижевский машиностроительный завод"
+SWEP.Instructions = "Винтовка со скользящим затвором под 7,62x54 мм"
 SWEP.Category = "Weapons - Sniper Rifles"
 SWEP.Slot = 2
 SWEP.SlotPos = 10

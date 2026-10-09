@@ -25,7 +25,7 @@ if CLIENT then
     net.Receive("ZB_NotifyRoundListChange", function()
         local playerName = net.ReadString()
         
-        chat.AddText(Color(180, 180, 255), playerName, Color(255, 255, 255), " has modified the game mode queue")
+        chat.AddText(Color(180, 180, 255), playerName, Color(255, 255, 255), " изменил очередь режимов")
         
         net.Start("ZB_RequestRoundList")
         net.SendToServer()
@@ -156,7 +156,7 @@ if CLIENT then
         queuePanelInstance = queuePanel
         
         local titleLabel = vgui.Create("DLabel", queuePanel)
-        titleLabel:SetText("Game Mode Queue")
+        titleLabel:SetText("Очередь режимов")
         titleLabel:SetFont("DermaLarge")
         titleLabel:SetTextColor(Color(255, 200, 0))
         titleLabel:Dock(TOP)
@@ -168,7 +168,7 @@ if CLIENT then
         queueScroll:DockMargin(5, 5, 5, 5)
         
         local saveBtn = vgui.Create("DButton", queuePanel)
-        saveBtn:SetText("Apply Queue")
+        saveBtn:SetText("Применить очередь")
         saveBtn:Dock(BOTTOM)
         saveBtn:DockMargin(5, 5, 5, 5)
         saveBtn:SetTall(30)
@@ -181,14 +181,14 @@ if CLIENT then
                     net.WriteBool(true)
                 net.SendToServer()
                 
-                chat.AddText(Color(0, 255, 0), "Game mode queue has been set!")
+                chat.AddText(Color(0, 255, 0), "Очередь режимов задана!")
             //else
-                //chat.AddText(Color(255, 0, 0), "Game mode queue is empty!")
+                //chat.AddText(Color(255, 0, 0), "Очередь режимов пуста!")
             //end
         end
         
         local clearBtn = vgui.Create("DButton", queuePanel)
-        clearBtn:SetText("Clear Queue")
+        clearBtn:SetText("Очистить очередь")
         clearBtn:Dock(BOTTOM)
         clearBtn:DockMargin(5, 5, 5, 5)
         clearBtn:SetTall(30)
@@ -201,7 +201,7 @@ if CLIENT then
                 net.WriteBool(false)
             net.SendToServer()*/
             
-            chat.AddText(Color(255, 165, 0), "Game mode queue cleared!")
+            chat.AddText(Color(255, 165, 0), "Очередь режимов очищена!")
         end
         
         function queuePanel:QueueUpdate()
@@ -209,7 +209,7 @@ if CLIENT then
             
             if zb.nextround and zb.nextround ~= "" then
                 local nextRoundLabel = vgui.Create("DLabel", queueScroll)
-                nextRoundLabel:SetText("Next Mode: " .. zb.nextround)
+                nextRoundLabel:SetText("Следующий режим: " .. zb.nextround)
                 nextRoundLabel:SetFont("DermaDefaultBold")
                 nextRoundLabel:SetTextColor(Color(100, 255, 100))
                 nextRoundLabel:Dock(TOP)
@@ -243,7 +243,7 @@ if CLIENT then
         local frame = vgui.Create("ZFrame")
         frame:SetSize(700, 500)
         frame:Center()
-        frame:SetTitle("Game Mode Manager")
+        frame:SetTitle("Менеджер режимов")
         frame:MakePopup()
         
         selectedModes = {}
@@ -257,7 +257,7 @@ if CLIENT then
         StyleElement(leftPanel, Color(30, 30, 30, 200))
         
         local titleLabel = vgui.Create("DLabel", leftPanel)
-        titleLabel:SetText("Available Game Modes")
+        titleLabel:SetText("Доступные режимы")
         titleLabel:SetFont("DermaLarge")
         titleLabel:SetTextColor(Color(255, 200, 0))
         titleLabel:Dock(TOP)
@@ -265,7 +265,7 @@ if CLIENT then
         titleLabel:SetContentAlignment(5) 
         
         local searchBar = vgui.Create("DTextEntry", leftPanel)
-        searchBar:SetPlaceholderText("Search game modes...")
+        searchBar:SetPlaceholderText("Поиск режимов...")
         searchBar:Dock(TOP)
         searchBar:DockMargin(5, 5, 5, 5)
         searchBar:SetTall(25)
@@ -328,17 +328,17 @@ if CLIENT then
 
             if mode.canlaunch == 1 then
                 indicator.IndiColor = Color(0,255,34)
-                indicator:SetTooltip("This mode can launch")
+                indicator:SetTooltip("Этот режим можно запустить")
             end
 
             if inQueue then
                 indicator.IndiColor = Color(255, 155, 0, 255)
-                indicator:SetTooltip("This mode is already in queue")
+                indicator:SetTooltip("Этот режим уже в очереди")
             end
      
             if mode.canlaunch == 0 then
                 indicator.IndiColor = Color(255,0,0,255)
-                indicator:SetTooltip("This mode can't launch")
+                indicator:SetTooltip("Этот режим нельзя запустить")
             end
             
             if command == "setmode" or command == "setforcemode" then
@@ -366,7 +366,7 @@ if CLIENT then
         StyleElement(batchPanel, Color(40, 40, 40, 200))
         
         local batchTitle = vgui.Create("DLabel", batchPanel)
-        batchTitle:SetText("Batch Operations")
+        batchTitle:SetText("Групповые действия")
         batchTitle:SetFont("DermaDefaultBold")
         batchTitle:SetTextColor(Color(255, 255, 255))
         batchTitle:Dock(TOP)
@@ -374,7 +374,7 @@ if CLIENT then
         batchTitle:SetContentAlignment(5)
         
         local addToQueueBtn = vgui.Create("DButton", batchPanel)
-        addToQueueBtn:SetText("Add Selected to Beginning of Queue")
+        addToQueueBtn:SetText("Добавить выбранные в начало очереди")
         addToQueueBtn:Dock(TOP)
         addToQueueBtn:DockMargin(5, 0, 5, 5)
         addToQueueBtn:SetTall(26)
@@ -401,19 +401,19 @@ if CLIENT then
                     net.WriteBool(false)
                 net.SendToServer()*/
                 
-                chat.AddText(Color(0, 255, 0), "Added " .. selectedCount .. " modes to beginning of queue!")
+                chat.AddText(Color(0, 255, 0), "Добавлено " .. selectedCount .. " режимов в начало очереди!")
                 
                 selectedModes = {}
                 for _, item in ipairs(modeItems) do
                     item.Selected = false
                 end
             else
-                chat.AddText(Color(255, 0, 0), "No modes selected!")
+                chat.AddText(Color(255, 0, 0), "Режимы не выбраны!")
             end
         end
         
         local addToEndBtn = vgui.Create("DButton", batchPanel)
-        addToEndBtn:SetText("Add Selected to End of Queue")
+        addToEndBtn:SetText("Добавить выбранные в конец очереди")
         addToEndBtn:Dock(TOP)
         addToEndBtn:DockMargin(5, 0, 5, 0)
         addToEndBtn:SetTall(26)
@@ -435,7 +435,7 @@ if CLIENT then
                     net.WriteBool(false)
                 net.SendToServer()*/
                 
-                chat.AddText(Color(0, 255, 0), "Added " .. selectedCount .. " modes to end of queue!")
+                chat.AddText(Color(0, 255, 0), "Добавлено " .. selectedCount .. " режимов в конец очереди!")
                 
 
                 selectedModes = {}
@@ -443,12 +443,12 @@ if CLIENT then
                     item.Selected = false
                 end
             else
-                chat.AddText(Color(255, 0, 0), "No modes selected!")
+                chat.AddText(Color(255, 0, 0), "Режимы не выбраны!")
             end
         end
         
         local refreshBtn = vgui.Create("DButton", leftPanel)
-        refreshBtn:SetText("Refresh Data")
+        refreshBtn:SetText("Обновить данные")
         refreshBtn:Dock(BOTTOM)
         refreshBtn:DockMargin(5, 5, 5, 5)
         refreshBtn:SetTall(30)
@@ -501,7 +501,7 @@ if CLIENT then
         statsPanelInstance = frame
         frame:SetSize(900, 560)
         frame:Center()
-        frame:SetTitle("Player SQL Stats")
+        frame:SetTitle("SQL-статистика игроков")
         frame:MakePopup()
 
         local topPanel = vgui.Create("DPanel", frame)
@@ -511,7 +511,7 @@ if CLIENT then
 
         local search = vgui.Create("DTextEntry", topPanel)
         search:Dock(FILL)
-        search:SetPlaceholderText("Search name or SteamID64")
+        search:SetPlaceholderText("Поиск по нику или SteamID64")
 
         local refreshBtn = vgui.Create("DButton", topPanel)
         refreshBtn:Dock(RIGHT)
@@ -614,7 +614,7 @@ if CLIENT then
             saveBtn:Dock(TOP)
             saveBtn:SetTall(34)
             saveBtn:DockMargin(0, 8, 0, 0)
-            saveBtn:SetText("Save Stats")
+            saveBtn:SetText("Сохранить статистику")
             StyleElement(saveBtn)
             saveBtn.DoClick = function()
                 if not selectedRow then return end
@@ -679,11 +679,11 @@ if CLIENT then
         local frame = isMenuOpen
         frame:SetSize(300, 252)
         frame:Center()
-        frame:SetTitle("Admin Panel")
+        frame:SetTitle("Панель админа")
         frame:MakePopup()
 
         local setModeBtn = vgui.Create("DButton", frame)
-        setModeBtn:SetText("Set Next Mode")
+        setModeBtn:SetText("Задать следующий режим")
         setModeBtn:Dock(TOP)
         setModeBtn:DockMargin(5, 10, 5, 2)
         setModeBtn:SetSize(300, 40)
@@ -693,7 +693,7 @@ if CLIENT then
         end
 
         local setForceModeBtn = vgui.Create("DButton", frame)
-        setForceModeBtn:SetText("Set Auto Next Mode")
+        setForceModeBtn:SetText("Авто-выбор следующего режима")
         setForceModeBtn:Dock(TOP)
         setForceModeBtn:DockMargin(5, 2, 5, 2)
         setForceModeBtn:SetSize(300, 40)
@@ -703,7 +703,7 @@ if CLIENT then
         end
         
         local queueModeBtn = vgui.Create("DButton", frame)
-        queueModeBtn:SetText("Manage Game Mode Queue")
+        queueModeBtn:SetText("Управление очередью режимов")
         queueModeBtn:Dock(TOP)
         queueModeBtn:DockMargin(5, 2, 5, 2)
         queueModeBtn:SetSize(300, 40)
@@ -714,7 +714,7 @@ if CLIENT then
 
         if LocalPlayer():IsSuperAdmin() then
             local statsBtn = vgui.Create("DButton", frame)
-            statsBtn:SetText("Player SQL Stats")
+            statsBtn:SetText("SQL-статистика игроков")
             statsBtn:Dock(TOP)
             statsBtn:DockMargin(5, 2, 5, 2)
             statsBtn:SetSize(300, 40)
@@ -725,7 +725,7 @@ if CLIENT then
         end
 
         local endRoundBtn = vgui.Create("DButton", frame)
-        endRoundBtn:SetText("End Round")
+        endRoundBtn:SetText("Завершить раунд")
         endRoundBtn:Dock(TOP)
         endRoundBtn:DockMargin(5, 2, 5, 2)
         endRoundBtn:SetSize(300, 40)

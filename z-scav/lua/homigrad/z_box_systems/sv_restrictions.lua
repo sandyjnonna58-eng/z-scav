@@ -27,9 +27,9 @@ end
 
 -- Доставка дерьма!
 local RandomPrashe = {
-"WHAT THE HELL ARE YOU BUILDING?",
-"You realize you're not the only builder out there, right? Let us deliver to others",
-"We don't have that much means of delivery mate!",
+"ЧТО ТЫ ТАМ СТРОИШЬ?",
+"Ты же понимаешь, что ты не единственный строитель? Дай доставить и другим",
+"У нас не так много доставки, приятель!",
 "*away from the microphone* Why do we even give them everything for free? Because it's a expe... *in microphone* Oh. You here yet. We're not ready to deliver your \"PROPS\""
 }
 

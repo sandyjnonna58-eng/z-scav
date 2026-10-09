@@ -23,7 +23,7 @@ hook.Add("EntityTakeDamage", "ZSCAV_Deaf", function(ent, dmg)
     local before = org.remDeaf or 0
     org.remDeaf = math.min(1, before + add)
     if before < 0.2 and org.remDeaf >= 0.2 then
-        ply:Notify("I can't hear anything.. just ringing.", 4, "zscav_deaf", 0)
+        ply:Notify("Ничего не слышу.. только звон.", 4, "zscav_deaf", 0)
     end
     ply.fullsend = true
 end)

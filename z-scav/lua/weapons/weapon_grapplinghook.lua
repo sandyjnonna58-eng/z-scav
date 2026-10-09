@@ -12,7 +12,7 @@ elseif CLIENT then
 	end
 end
 
-SWEP.PrintName = "Grappling Hook"
+SWEP.PrintName = "Кошка-крюк"
 SWEP.Instructions = "This is a heavy steel grappling hook with an attached rope. Use it to reach high/far places or safely descend from high places. \n\nLMB to swing/throw\nLMB to pull rope taut\nLMB to pull rope in\nRMB to let rope out\nR to release rope"
 
 if CLIENT then

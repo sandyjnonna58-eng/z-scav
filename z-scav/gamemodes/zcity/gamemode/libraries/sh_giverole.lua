@@ -5,7 +5,7 @@ if SERVER then
         hook.Run( "ZB_GettingRole", ply, name )
         net.Start("ZB_GiveRole")
             net.WriteTable({
-                name = name or "WHO ARE YOU?",
+                name = name or "КТО ТЫ?",
                 color = color or color_white
             })
         net.Send(ply)

@@ -1,5 +1,5 @@
 ENT.Type = "anim"
-ENT.PrintName = "Enhanced Grappling Hook"
+ENT.PrintName = "Улучшенная кошка-крюк"
 ENT.Author = ""
 ENT.Category = "ZCity Other"
 ENT.Spawnable = false

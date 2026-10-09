@@ -152,7 +152,7 @@ function hg.ClearMapsTable()
 end
 
 COMMANDS.clearmaps = {function(ply)
-    ply:ChatPrint("Completed maps cleared!")
+    ply:ChatPrint("Пройденные карты сброшены!")
     hg.ClearMapsTable()
 end, 1}
 

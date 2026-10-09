@@ -1,8 +1,8 @@
 if SERVER then AddCSLuaFile() end
 
 SWEP.Base = "weapon_bandage_sh"
-SWEP.PrintName = "Auto-Resuscitator"
-SWEP.Instructions = "Arms an emergency autoresuscitation dose. Use it on yourself or RMB on someone else. It triggers once after cardiac arrest."
+SWEP.PrintName = "Автореаниматор"
+SWEP.Instructions = "Заряжает экстренную дозу автореанимации. Используйте на себе или ПКМ на другом. Срабатывает один раз после остановки сердца."
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = false
 SWEP.Primary.Wait = 1
@@ -71,7 +71,7 @@ if SERVER then
 		local owner = self:GetOwner()
 		if org.headamputated then
 			if IsValid(owner) and owner.Notify then
-				owner:Notify("Can't be used without a head.", 6, "autoresuscitator_nohead", 0.5)
+				owner:Notify("Нельзя использовать без головы.", 6, "autoresuscitator_nohead", 0.5)
 			end
 			return
 		end

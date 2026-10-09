@@ -46,13 +46,13 @@ if SERVER then
 
 	local function WeaponType(ply)
 		local wep = IsValid(ply) and ply:GetActiveWeapon()
-		if not IsValid(wep) then return "bare hands" end
+		if not IsValid(wep) then return "голые руки" end
 		local class = string.lower(wep:GetClass() or "")
 		local category = string.lower(wep.Category or "")
 		local printName = string.lower(wep.PrintName or "")
 		local ammo = string.lower((wep.Primary and wep.Primary.Ammo) or "")
 		local info = class .. " " .. category .. " " .. printName .. " " .. ammo
-		if class == "weapon_hands" or class == "weapon_hands_sh" or class == "weapon_hg_coolhands" then return "bare hands" end
+		if class == "weapon_hands" or class == "weapon_hands_sh" or class == "weapon_hg_coolhands" then return "голые руки" end
 		if MELEE[class] or wep.ismelee2 or wep.Base == "weapon_melee" then return "melee" end
 		if wep.IsPistolHoldType and wep:IsPistolHoldType() then return "pistol" end
 		if info:find("shotgun", 1, true) or info:find("gauge", 1, true) or info:find("m590", 1, true) or info:find("spas", 1, true) then return "shotgun" end
@@ -171,7 +171,7 @@ if SERVER then
 		attacker.RSStats.damageDealt = attacker.RSStats.damageDealt + harm
 		victim.RSStats.damageTaken = victim.RSStats.damageTaken + harm
 		local wt = WeaponType(attacker)
-		local ranged = wt ~= "melee" and wt ~= "bare hands"
+		local ranged = wt ~= "melee" and wt ~= "голые руки"
 		if ranged then
 			attacker.RSStats.shotsHit = attacker.RSStats.shotsHit + 1
 		end
@@ -554,10 +554,10 @@ if SERVER then
 	local ROLE_INNO    = Color(0, 120, 190)
 
 	local function RoleFor(ply)
-		if ply.MainTraitor then return "Main Murderer", ROLE_MAIN end
+		if ply.MainTraitor then return "Главный убийца", ROLE_MAIN end
 		if ply.isTraitor then return "Murderer", ROLE_TRAITOR end
 		if ply.isGunner then return "Hero", ROLE_HERO end
-		if ply.isPolice then return "Police Officer", ROLE_POLICE end
+		if ply.isPolice then return "Полицейский", ROLE_POLICE end
 		return "Bystander", ROLE_INNO
 	end
 
@@ -788,34 +788,34 @@ surface.CreateFont("Rem_Sum_Stat", { font = "ITC Avant Garde Gothic", size = Scr
 surface.CreateFont("Rem_Sum_Countdown", { font = "ITC Avant Garde Gothic", size = ScreenScale(23), weight = 800, antialias = true, extended = true })
 
 local AWARD_INFO = {
-	mvp          = { title = "MVP OF THE ROUND", color = Color(232, 190, 70),  desc = function(v) return "Best player around" end },
-    dm_winner    = { title = "MVP OF THE ROUND", color = Color(232, 190, 70),  desc = function(v) return "Deathmatch round winner" end },
-    dm_kills     = { title = "MOST KILLS",       color = Color(210, 80, 80),   desc = function(v) return v .. " kill" .. (v == 1 and "" or "s") end },
-    dm_headshots = { title = "MOST HEADSHOTS",   color = Color(215, 95, 70),   desc = function(v) return v .. " headshot" .. (v == 1 and "" or "s") end },
-	executioner  = { title = "THE EXECUTIONER",  color = Color(150, 20, 20),   desc = function(v) return "Killed the main traitor" end },
-	headhunter   = { title = "HEAD HUNTER",      color = Color(200, 55, 55),   desc = function(v) return v .. " headshot kill" .. (v == 1 and "" or "s") end },
-	serialkiller = { title = "SERIAL KILLER",    color = Color(170, 25, 25),   desc = function(v) return v .. " victims" end },
-	hero         = { title = "THE HERO",         color = Color(70, 130, 220),  desc = function(v) return "Slayed a traitor" end },
-	melee        = { title = "BRAWLER", color = Color(210, 120, 40), desc = function(v) return v .. " melee kill" .. (v == 1 and "" or "s") end },
-	unstoppable  = { title = "UNSTOPPABLE",      color = Color(230, 120, 45),  desc = function(v) return v .. " kills and survived" end },
+	mvp          = { title = "MVP РАУНДА", color = Color(232, 190, 70),  desc = function(v) return "Лучший игрок" end },
+    dm_winner    = { title = "MVP РАУНДА", color = Color(232, 190, 70),  desc = function(v) return "Победитель дезматча" end },
+    dm_kills     = { title = "БОЛЬШЕ ВСЕГО УБИЙСТВ",       color = Color(210, 80, 80),   desc = function(v) return v .. " kill" .. (v == 1 and "" or "s") end },
+    dm_headshots = { title = "БОЛЬШЕ ВСЕГО ХЕДШОТОВ",   color = Color(215, 95, 70),   desc = function(v) return v .. " headshot" .. (v == 1 and "" or "s") end },
+	executioner  = { title = "ПАЛАЧ",  color = Color(150, 20, 20),   desc = function(v) return "Убил главного предателя" end },
+	headhunter   = { title = "ОХОТНИК ЗА ГОЛОВАМИ",      color = Color(200, 55, 55),   desc = function(v) return v .. " убийств в голову" .. (v == 1 and "" or "s") end },
+	serialkiller = { title = "СЕРИЙНЫЙ УБИЙЦА",    color = Color(170, 25, 25),   desc = function(v) return v .. " victims" end },
+	hero         = { title = "ГЕРОЙ",         color = Color(70, 130, 220),  desc = function(v) return "Убил предателя" end },
+	melee        = { title = "BRAWLER", color = Color(210, 120, 40), desc = function(v) return v .. " убийств в ближнем бою" .. (v == 1 and "" or "s") end },
+	unstoppable  = { title = "UNSTOPPABLE",      color = Color(230, 120, 45),  desc = function(v) return v .. " убийств и выжил" end },
 	berserker    = { title = "BERSERKER",        color = Color(190, 45, 45),   desc = function(v) return v .. " kills" end },
-	sharpshooter = { title = "SHARPSHOOTER",     color = Color(60, 170, 170),  desc = function(v) return v .. " gun kills" end },
+	sharpshooter = { title = "SHARPSHOOTER",     color = Color(60, 170, 170),  desc = function(v) return v .. " убийств из оружия" end },
 	deadeye      = { title = "DEADEYE",          color = Color(232, 190, 70),  desc = function(v) return v .. "% headshots" end },
-	untouchable  = { title = "UNTOUCHABLE",      color = Color(90, 200, 220),  desc = function(v) return "Not a scratch" end },
-	gunslinger   = { title = "GUNSLINGER",       color = Color(80, 180, 210),  desc = function(v) return v .. " gun kills" end },
-	stalker      = { title = "STALKER",          color = Color(160, 80, 45),   desc = function(v) return v .. " melee kills" end },
-	headhunter2  = { title = "CRACK SHOT",       color = Color(215, 80, 60),   desc = function(v) return v .. " headshots landed" end },
-	bloodthirsty = { title = "BLOODTHIRSTY",     color = Color(150, 20, 20),   desc = function(v) return v .. " damage dealt" end },
-	warrior      = { title = "WARRIOR",          color = Color(200, 90, 50),   desc = function(v) return v .. " damage and survived" end },
-	glasscannon  = { title = "GLASS CANNON",     color = Color(235, 160, 70),  desc = function(v) return v .. " damage, barely touched" end },
-	punchingbag  = { title = "DEMOLISHED",     color = Color(130, 130, 130), desc = function(v) return v .. " damage taken" end },
-	laststand    = { title = "LAST STAND",       color = Color(180, 70, 40),   desc = function(v) return v .. " damage taken and lived" end },
-	revenant     = { title = "REVENANT",         color = Color(120, 70, 150),  desc = function(v) return v .. " damage before death" end },
-	savior       = { title = "SAVIOR",           color = Color(70, 150, 240),  desc = function(v) return v .. " traitors killed" end },
+	untouchable  = { title = "UNTOUCHABLE",      color = Color(90, 200, 220),  desc = function(v) return "Ни царапины" end },
+	gunslinger   = { title = "GUNSLINGER",       color = Color(80, 180, 210),  desc = function(v) return v .. " убийств из оружия" end },
+	stalker      = { title = "STALKER",          color = Color(160, 80, 45),   desc = function(v) return v .. " убийств в ближнем бою" end },
+	headhunter2  = { title = "МЕТКИЙ СТРЕЛОК",       color = Color(215, 80, 60),   desc = function(v) return v .. " попаданий в голову" end },
+	bloodthirsty = { title = "BLOODTHIRSTY",     color = Color(150, 20, 20),   desc = function(v) return v .. " урона нанесено" end },
+	warrior      = { title = "WARRIOR",          color = Color(200, 90, 50),   desc = function(v) return v .. " урона, и выжил" end },
+	glasscannon  = { title = "СТЕКЛЯННАЯ ПУШКА",     color = Color(235, 160, 70),  desc = function(v) return v .. " урона, почти не задет" end },
+	punchingbag  = { title = "DEMOLISHED",     color = Color(130, 130, 130), desc = function(v) return v .. " урона получено" end },
+	laststand    = { title = "ПОСЛЕДНИЙ РУБЕЖ",       color = Color(180, 70, 40),   desc = function(v) return v .. " урона получено, и выжил" end },
+	revenant     = { title = "REVENANT",         color = Color(120, 70, 150),  desc = function(v) return v .. " урона до смерти" end },
+	savior       = { title = "SAVIOR",           color = Color(70, 150, 240),  desc = function(v) return v .. " предателей убито" end },
 	menace       = { title = "MENACE",           color = Color(190, 35, 35),   desc = function(v) return v .. " victims" end },
-	firstblood   = { title = "FIRST TO FALL",    color = Color(120, 120, 120), desc = function(v) return "Died first" end },
-	pacifist     = { title = "THE PACIFIST",     color = Color(220, 220, 220), desc = function(v) return "Harmed no one" end },
-	participant  = { title = "PARTICIPANT",      color = Color(140, 140, 140), desc = function(v) return "Stood their ground" end },
+	firstblood   = { title = "ПЕРВЫЙ ПАВШИЙ",    color = Color(120, 120, 120), desc = function(v) return "Умер первым" end },
+	pacifist     = { title = "ПАЦИФИСТ",     color = Color(220, 220, 220), desc = function(v) return "Никому не навредил" end },
+	participant  = { title = "PARTICIPANT",      color = Color(140, 140, 140), desc = function(v) return "Выстоял" end },
 }
 
 local RS_GradD = Material("vgui/gradient-d")
@@ -1345,21 +1345,21 @@ local function ShowSummary(featured, winnerTeam)
 
 	local stats = data.stats or {}
 	local rows = {}
-	if stats.killedBy and stats.killedBy ~= "" then rows[#rows + 1] = "killed by: " .. stats.killedBy end
+	if stats.killedBy and stats.killedBy ~= "" then rows[#rows + 1] = "убит: " .. stats.killedBy end
 	rows[#rows + 1] = "kills: " .. (stats.kills or 0)
 	rows[#rows + 1] = "headshots: " .. (stats.headshots or 0)
 	rows[#rows + 1] = "kicks: " .. (stats.kicks or 0)
-	rows[#rows + 1] = "buttstock shoves: " .. (stats.buttstockShoves or 0)
+	rows[#rows + 1] = "ударов прикладом: " .. (stats.buttstockShoves or 0)
 	rows[#rows + 1] = "pushes: " .. (stats.pushes or 0)
 	local acc = (stats.shotsFired or 0) > 0 and math.floor(((stats.shotsHit or 0) / stats.shotsFired) * 100) or 0
 	rows[#rows + 1] = "accuracy: " .. acc .. "%"
-	rows[#rows + 1] = "shots fired: " .. (stats.shotsFired or 0)
-	rows[#rows + 1] = "preferred weapon type: " .. (stats.weaponType or "other")
-	if data.mapHasWindows then rows[#rows + 1] = "windows broken: " .. (stats.windowsBroken or 0) end
-	rows[#rows + 1] = "consumables consumed: " .. (stats.consumablesConsumed or 0)
-	rows[#rows + 1] = "current karma: " .. math.Round(stats.karmaCurrent or 100, 1)
-	rows[#rows + 1] = "karma earned: " .. math.Round(stats.karmaEarned or 0, 1)
-	rows[#rows + 1] = "karma lost: " .. math.Round(stats.karmaLost or 0, 1)
+	rows[#rows + 1] = "выстрелов: " .. (stats.shotsFired or 0)
+	rows[#rows + 1] = "любимый тип оружия: " .. (stats.weaponType or "other")
+	if data.mapHasWindows then rows[#rows + 1] = "разбито окон: " .. (stats.windowsBroken or 0) end
+	rows[#rows + 1] = "употреблено расходников: " .. (stats.consumablesConsumed or 0)
+	rows[#rows + 1] = "текущая карма: " .. math.Round(stats.karmaCurrent or 100, 1)
+	rows[#rows + 1] = "получено кармы: " .. math.Round(stats.karmaEarned or 0, 1)
+	rows[#rows + 1] = "потеряно кармы: " .. math.Round(stats.karmaLost or 0, 1)
 
 	local statPanel = vgui.Create("DPanel", container)
 	statPanel:SetPos(math.floor(sw * 0.055), math.floor(sh * 0.08))
@@ -1403,7 +1403,7 @@ local function ShowSummary(featured, winnerTeam)
 	mvpText:SetAlpha(0)
 	mvpText.Paint = function(self, w, h)
 		local a = self:GetAlpha()
-		draw.SimpleTextOutlined("MVP OF THE ROUND", "Rem_Sum_Award", w / 2, 0, Color(232, 190, 70, a), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0, 0, 0, a))
+		draw.SimpleTextOutlined("MVP РАУНДА", "Rem_Sum_Award", w / 2, 0, Color(232, 190, 70, a), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0, 0, 0, a))
 		draw.SimpleTextOutlined(string.upper(data.name or "Unknown"), "Rem_Sum_Name", w / 2, ScreenScale(20), Color(245, 245, 245, a), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0, 0, 0, a))
 	end
 	mvpText:AlphaTo(255, 0.4, 1.3)
@@ -1439,7 +1439,7 @@ local function ShowSummary(featured, winnerTeam)
 		old:Scale(Vector(scale, scale, 1))
 		old:Translate(Vector(-x, -y, 0))
 		cam.PushModelMatrix(old)
-		draw.SimpleText("next round in: " .. left, "Rem_Sum_Countdown", w, h / 2, Color(245, 245, 245), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("следующий раунд через: " .. left, "Rem_Sum_Countdown", w, h / 2, Color(245, 245, 245), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		cam.PopModelMatrix()
 	end
 
@@ -1475,7 +1475,7 @@ local function ShowSummary(featured, winnerTeam)
 				end
 			end
 			if teamInfo and teamInfo.color then col = Color(teamInfo.color.r, teamInfo.color.g, teamInfo.color.b, a) end
-			draw.SimpleTextOutlined("TEAM WON: " .. string.upper(winnerTeam), "Rem_Sum_Countdown", w2 / 2, h2 / 2, col, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0, math.min(230, a)))
+			draw.SimpleTextOutlined("ПОБЕДИЛА КОМАНДА: " .. string.upper(winnerTeam), "Rem_Sum_Countdown", w2 / 2, h2 / 2, col, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0, math.min(230, a)))
 		end
 		timer.Simple(SUMMARY_LIFETIME - 1, function()
 			if IsValid(winnerPanel) then winnerPanel:Remove() end

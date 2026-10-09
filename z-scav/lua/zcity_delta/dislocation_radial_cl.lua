@@ -39,20 +39,20 @@ local _ZSCAV_offRadialDisloc = (function()
     end
 
     if HasDislocation(ply, 1) then
-        AddOption("Fix dislocation (leg)", 1, false)
+        AddOption("Вправить вывих (нога)", 1, false)
     elseif IsValid(target) and target:IsPlayer() and HasDislocation(target, 1) then
-        AddOption("Fix " .. target:GetPlayerName() .. "'s dislocation (leg)", 1, true)
+        AddOption("Fix " .. target:GetPlayerName() .. ": вывих (нога)", 1, true)
     end
 
     if HasDislocation(ply, 2) then
-        AddOption("Fix dislocation (arm)", 2, false)
+        AddOption("Вправить вывих (рука)", 2, false)
     elseif IsValid(target) and target:IsPlayer() and HasDislocation(target, 2) then
-        AddOption("Fix " .. target:GetPlayerName() .. "'s dislocation (arm)", 2, true)
+        AddOption("Fix " .. target:GetPlayerName() .. ": вывих (рука)", 2, true)
     end
 
     if HasDislocation(ply, 3) then
-        AddOption("Fix dislocation (jaw)", 3, false)
+        AddOption("Вправить вывих (челюсть)", 3, false)
     elseif IsValid(target) and target:IsPlayer() and HasDislocation(target, 3) then
-        AddOption("Fix " .. target:GetPlayerName() .. "'s dislocation (jaw)", 3, true)
+        AddOption("Fix " .. target:GetPlayerName() .. ": вывих (челюсть)", 3, true)
     end
 end)

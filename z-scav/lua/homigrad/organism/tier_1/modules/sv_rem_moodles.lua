@@ -21,7 +21,7 @@
 local cv = CreateConVar("zscav_moodle_effects", 1, FCVAR_ARCHIVE + FCVAR_NOTIFY, "Z-SCAV: эффекты мудлов CU", 0, 1)
 local function N(v, d) return isnumber(v) and v or (d or 0) end
 
-local NAUSEA_MSG = {"I feel sick..", "My stomach is turning..", "I'm going to throw up.."}
+local NAUSEA_MSG = {"Меня тошнит..", "Живот крутит..", "Меня сейчас вырвет.."}
 
 hook.Add("Org Think", "ZSCAV_MoodleEffects", function(owner, org, timeValue)
     if not cv:GetBool() or not org.alive or not IsValid(owner) or not owner:IsPlayer() then

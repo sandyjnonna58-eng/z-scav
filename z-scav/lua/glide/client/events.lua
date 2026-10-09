@@ -13,7 +13,7 @@ concommand.Add( "glide_switch_seat", function( ply, _, args )
     Glide.StartCommand( Glide.CMD_SWITCH_SEATS )
     net.WriteUInt( seatIndex, 5 )
     net.SendToServer()
-end, nil, "Switch seats while inside a Glide vehicle." )
+end, nil, "Пересесть на другое место в транспорте Glide." )
 
 ----- Check if the local player has entered/left a Glide vehicle.
 

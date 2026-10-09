@@ -44,47 +44,47 @@ local torsoStates = setmetatable({}, {__mode = "k"})
 local splitStates = {}
 
 local initialPhrases = {
-	"WHAT THE FUCK?! MY LEGS ARE GONE!",
-	"I'M SPLIT IN TWO! OH GOD!",
-	"MY WAIST! IT'S JUST... GONE!",
-	"GOD DAMN IT! I'M CUT APART!",
-	"THERE'S NOTHING BELOW ME! FUCK!",
-	"I'M RIPPED IN HALF! HELP!",
-	"LOOK AT ME! I'M IN PIECES!",
-	"FUCK! MY BODY'S SEVERED!",
-	"HALF OF ME IS MISSING! FUCK!",
-	"OH FUCK! I'M TORN APART!",
-	"WHERE'S THE REST OF ME?!",
-	"JESUS! I'M BROKEN IN TWO!"
+	"ЧТО ЗА ЧЁРТ?! МОИХ НОГ НЕТ!",
+	"МЕНЯ РАЗОРВАЛО НАДВОЕ! БОЖЕ!",
+	"МОЯ ПОЯСНИЦА! ЕЁ... ПРОСТО НЕТ!",
+	"ЧЁРТ ВОЗЬМИ! МЕНЯ РАЗРЕЗАЛО!",
+	"ПОДО МНОЙ НИЧЕГО НЕТ! ЧЁРТ!",
+	"МЕНЯ РАЗОРВАЛО ПОПОЛАМ! ПОМОГИТЕ!",
+	"ПОСМОТРИТЕ НА МЕНЯ! Я ПО КУСКАМ!",
+	"ЧЁРТ! МОЁ ТЕЛО РАЗРУБЛЕНО!",
+	"ПОЛОВИНЫ МЕНЯ НЕТ! ЧЁРТ!",
+	"О ЧЁРТ! МЕНЯ РАЗОРВАЛО!",
+	"ГДЕ ОСТАЛЬНАЯ ЧАСТЬ МЕНЯ?!",
+	"ГОСПОДИ! МЕНЯ РАЗЛОМИЛО НАДВОЕ!"
 }
 
 local painPhrases = {
-	"GOD, THE PAIN!",
-	"I'M DRAINING OUT FAST!",
-	"PLEASE! ANYONE! HELP!",
-	"MY LEGS AREN'T RESPONDING!",
-	"DON'T BLACK OUT! STAY AWAKE!",
-	"NOTHING DOWN THERE BUT PAIN!",
-	"PUT PRESSURE ON IT! PLEASE!",
-	"THERE'S SO MUCH BLOOD!",
-	"I CAN'T GET UP! HELP ME!",
-	"EVERYTHING BELOW HURTS LIKE HELL!",
-	"I'M FREEZING... SO COLD...",
-	"STILL BREATHING! STILL HERE!",
-	"GET ME A MEDIC, NOW!",
-	"I'M SLIPPING AWAY..."
+	"БОЖЕ, КАК БОЛЬНО!",
+	"Я БЫСТРО ИСТЕКАЮ КРОВЬЮ!",
+	"ПОЖАЛУЙСТА! КТО-НИБУДЬ! ПОМОГИТЕ!",
+	"НОГИ НЕ СЛУШАЮТСЯ!",
+	"НЕ ОТКЛЮЧАЙСЯ! НЕ СПИ!",
+	"ТАМ ВНИЗУ ТОЛЬКО БОЛЬ!",
+	"ПРИЖМИТЕ РАНУ! ПОЖАЛУЙСТА!",
+	"СТОЛЬКО КРОВИ!",
+	"Я НЕ МОГУ ВСТАТЬ! ПОМОГИТЕ!",
+	"ВСЁ НИЖЕ БОЛИТ КАК В АДУ!",
+	"Я ЗАМЕРЗАЮ... ТАК ХОЛОДНО...",
+	"ЕЩЁ ДЫШУ! ЕЩЁ ЗДЕСЬ!",
+	"ВРАЧА, СРОЧНО!",
+	"Я УСКОЛЬЗАЮ..."
 }
 
 local criticalPhrases = {
-	"SHOCK... IT'S TAKING ME...",
-	"VISION'S GOING FUZZY...",
-	"SO COLD... CAN'T STOP SHAKING...",
-	"TOO MUCH BLOOD LOST...",
-	"THIS IS IT... ISN'T IT?",
-	"DARKNESS... COMING...",
-	"HEART'S RACING OUT OF CONTROL...",
-	"CAN'T FEEL MY FINGERS...",
-	"STAY... AWAKE..."
+	"ШОК... ЗАБИРАЕТ МЕНЯ...",
+	"В ГЛАЗАХ ВСЁ РАСПЛЫВАЕТСЯ...",
+	"ТАК ХОЛОДНО... НЕ МОГУ ПЕРЕСТАТЬ ТРЯСТИСЬ...",
+	"СЛИШКОМ МНОГО КРОВИ ПОТЕРЯНО...",
+	"ЭТО КОНЕЦ... ДА?",
+	"ТЬМА... ПРИБЛИЖАЕТСЯ...",
+	"СЕРДЦЕ КОЛОТИТСЯ КАК БЕШЕНОЕ...",
+	"НЕ ЧУВСТВУЮ ПАЛЬЦЕВ...",
+	"НЕ... СПАТЬ..."
 }
 
 local function PickPhrase(ply, pool, slot)

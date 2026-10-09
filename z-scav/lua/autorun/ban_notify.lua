@@ -35,7 +35,7 @@ if SERVER then
 
 	concommand.Add("remorse_ban_notify_preview", function(ply)
 		if IsValid(ply) and not isAdmin(ply) then return end
-		sendBanNotify(IsValid(ply) and ply:Nick() or "Preview Player", IsValid(ply) and ply:SteamID() or "STEAM_0:0:000000", "Preview ban notification", "for 1 hour", "Preview Admin", ply)
+		sendBanNotify(IsValid(ply) and ply:Nick() or "Предпросмотр: игрок", IsValid(ply) and ply:SteamID() or "STEAM_0:0:000000", "Предпросмотр уведомления о бане", "на 1 час", "Предпросмотр: админ", ply)
 	end)
 end
 
@@ -108,7 +108,7 @@ if CLIENT then
 		getFont(bigFont, bigSize, 900)
 		getFont(smallFont, smallSize, 700)
 
-		local line1 = banMsg.name .. " has been banned " .. banMsg.length
+		local line1 = banMsg.name .. " забанен " .. banMsg.length
 		local line2 = "Reason: " .. banMsg.reason
 		local line3 = banMsg.admin ~= "" and ("By: " .. banMsg.admin) or banMsg.steamid
 		local topY = sh * 0.07

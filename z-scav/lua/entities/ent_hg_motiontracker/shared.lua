@@ -1,6 +1,6 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Motion Detector"
+ENT.PrintName = "Детектор движения"
 ENT.Spawnable = false
 ENT.WorldModel = "models/mmod/weapons/w_slam.mdl"
 

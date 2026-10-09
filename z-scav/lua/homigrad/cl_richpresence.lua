@@ -19,7 +19,7 @@ function StartDiscordPresence(arguments)
 
 		if ip == "loopback" then
 			rpc_data["state"] = "Local Server"
-			showip = "Local Server"
+			showip = "Локальный сервер"
 		--[[else
             rpc_data["state"] = string.Replace(ip, ":27015", "")
 
@@ -82,7 +82,7 @@ function StartSteamPresence(arguments)
 
 		local updatedtext = gm .. " | " .. showip .. " | " .. (ply.exp or 0) .. " XP " .. math.Round(ply.skill or 0, 3) .. " Skill"
 		if ip == "loopback" then
-			showip = "Local Server"
+			showip = "Локальный сервер"
 		end
 
 		if richtext ~= updatedtext then

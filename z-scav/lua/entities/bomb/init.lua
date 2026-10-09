@@ -60,16 +60,16 @@ net.Receive("bomb_enter",function(len, ply)
 			local isSandbox = engine.ActiveGamemode() == "sandbox"
 			if isSandbox or BombInSite(ent:GetPos(), 1) or BombInSite(ent:GetPos(), 2) then
 				ent.code = txt
-				ply:ChatPrint("The bomb's code is: "..ent.code)
+				ply:ChatPrint("Код бомбы: "..ent.code)
 				ent:ActivateBomb()
 			else
-				ply:ChatPrint("The bomb must be planted on site")
+				ply:ChatPrint("Бомбу нужно заложить на точке")
 			end
 		else
 			if ent.code == txt then
 				ent:DisableBomb()
 				ent:SetNetVar("knowncode", "******")
-				ply:ChatPrint("The bomb has been disarmed.")
+				ply:ChatPrint("Бомба обезврежена.")
 			else
 				local bombtxt = ent.code
 				local knownnumbers = ent:GetNetVar("knowncode","******")
@@ -115,8 +115,8 @@ function ENT:ActivateBomb()
 		elseif BombInSite(self:GetPos(), 2) then
 			siteName = "B"
 		end
-		PrintMessage(HUD_PRINTTALK, "Bomb has been planted"
-			..(siteName and (" on site "..siteName) or "")
+		PrintMessage(HUD_PRINTTALK, "Бомба заложена"
+			..(siteName and (" на точке "..siteName) or "")
 			..".")
 		
 		hg.UpdateRoundTime(zb.ROUND_TIME + self.ExplodeTime + 1)
@@ -153,7 +153,7 @@ function ENT:Use(activator)
 	end
 	if self.active then
 		if activator:Team() == 0 then
-			activator:ChatPrint("The bomb's code is: "..self.code)
+			activator:ChatPrint("Код бомбы: "..self.code)
 			return
 		end
 	end

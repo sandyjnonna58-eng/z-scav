@@ -6,7 +6,7 @@ end
 ENT.Base = "projectile_base"
 ENT.Author = "Sadsalat"
 ENT.Category = "ZCity Other"
-ENT.PrintName = "RPG-7 Rocket"
+ENT.PrintName = "Ракета РПГ-7"
 ENT.Spawnable = true
 ENT.AdminOnly = true
 ENT.Model = "models/weapons/tfa_ins2/w_rpg7_projectile.mdl"
@@ -273,22 +273,22 @@ function ENT:OnTakeDamage(damage)
 end
 
 local doubt_phrases = {
-    "Should I really do this...",
-    "What if I explode",
-    "I hope this thing doesn't blow up",
-    "Hopefully it won't explode",
-    "God give me strength",
-    "If it blows up, it blows up..."
+    "Мне правда это делать...",
+    "А если я взорвусь",
+    "Надеюсь, эта штука не рванёт",
+    "Надеюсь, не взорвётся",
+    "Боже, дай мне сил",
+    "Рванёт так рванёт..."
 }
 
 local relief_phrases = {
-    "Thank God",
-    "I thought I was going to die",
-    "Lord I thought it was about to explode",
-    "What a relief",
-    "My God I thought I was going to die",
-    "Hah, not as scary as I thought",
-    "Now everything is safe"
+    "Слава богу",
+    "Я думал, что умру",
+    "Господи, я думал, оно сейчас взорвётся",
+    "Какое облегчение",
+    "Боже мой, я думал, что умру",
+    "Ха, не так страшно, как я думал",
+    "Теперь всё безопасно"
 }
 
 function ENT:Use(ply)
@@ -324,7 +324,7 @@ function ENT:Use(ply)
         if not self.ExtractStarted then
             self.ExtractStarted = true
             self.ExtractingPlayer = ply
-            ply:ChatPrint("In progress")
+            ply:ChatPrint("В процессе")
             
             local dots = ""
             timer.Create("RPGExtractDots_" .. self:EntIndex(), 1, 6, function()
@@ -342,7 +342,7 @@ function ENT:Use(ply)
                 end
                 
                 dots = dots .. "."
-                ply:ChatPrint("In progress" .. dots)
+                ply:ChatPrint("В процессе" .. dots)
                 
                 if dots == "......" then
                     timer.Remove("RPGExtractDots_" .. self:EntIndex())

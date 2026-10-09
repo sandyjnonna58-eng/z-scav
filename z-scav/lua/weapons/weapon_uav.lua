@@ -7,7 +7,7 @@ end
 
 SWEP.Base = "weapon_airstrike"
 SWEP.PrintName = "UAV"
-SWEP.Instructions = "Primary attack to mark an area. Every player inside will be marked over the head for 30 seconds."
+SWEP.Instructions = "ЛКМ - отметить область. Все игроки в ней будут подсвечены над головой 30 секунд."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false

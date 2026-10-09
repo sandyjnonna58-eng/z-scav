@@ -3,8 +3,8 @@ if(SERVER)then
 end
 
 SWEP.Base = "weapon_base"
-SWEP.PrintName = "Admin Bomber"
-SWEP.Instructions = "Primary attack to mark a point and call a B2 bomber strike."
+SWEP.PrintName = "Админский бомбардировщик"
+SWEP.Instructions = "ЛКМ - отметить точку и вызвать удар бомбардировщика B2."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = true

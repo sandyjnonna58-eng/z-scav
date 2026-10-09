@@ -52,25 +52,25 @@ end)
 CreateClientConVar(
     "deatheffect_cam_max_dist", "150",
     true, false,
-    "maximum camera follow distance in stage 2",
+    "максимальная дистанция камеры на этапе 2",
     40, 2000
 )
 CreateClientConVar(
     "deatheffect_cam_min_dist", "60",
     true, false,
-    "minimum camera follow distance in stage 2",
+    "минимальная дистанция камеры на этапе 2",
     0, 2000
 )
 CreateClientConVar(
     "deatheffect_alt_sound", "0",
     true, false,
-    "use the quieter death sound",
+    "тихий звук смерти",
     0, 1
 )
 CreateClientConVar(
     "deatheffect_death_screen", "1",
     true, false,
-    "enable the cinematic death screen",
+    "включить кинематографичный экран смерти",
     0, 1
 )
 
@@ -660,7 +660,7 @@ local function CinematicDeathBackground()
     end
 
     if inSpectator then
-        local hint = "double click [" .. reloadKeyName .. "] to respawn"
+        local hint = "двойной клик [" .. reloadKeyName .. "] - возродиться"
         surface.SetFont("DeathEffect_Hint")
         local hw = surface.GetTextSize(hint)
         surface.SetTextColor(Color(180, 180, 180, 140))
@@ -687,7 +687,7 @@ local function CinematicDeathBackground()
             local textFadeIn = math.Clamp(stageElapsed / DEATH_TEXT_FADE_IN, 0, 1)
             local textAlpha = math.floor(textFadeIn * overlayAlpha * (1 - fadeProgress))
             local text = "Deceased."
-            local desc = "You are no longer a witness to the world."
+            local desc = "Вы больше не свидетель этого мира."
             draw.SimpleText(text, "DeathEffect_HG_Large", sw / 2, sh / 2 - 40, Color(0, 0, 0, textAlpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             draw.SimpleText(desc, "DeathEffect_HG_Desc", sw / 2, sh / 2 + 45, Color(0, 0, 0, textAlpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             return
@@ -713,7 +713,7 @@ local function CinematicDeathBackground()
         local textAlpha = math.floor(textFadeIn * overlayAlpha * (1 - fadeProgress))
         local shake = 5 * (1 - textFadeIn)
         local text = "Deceased."
-        local desc = "You are no longer a witness to the world."
+        local desc = "Вы больше не свидетель этого мира."
         local slide = 1 - ((1 - textFadeIn) ^ 3)
         local textX = Lerp(slide, -650, 70) + math.sin(CurTime() * 95) * shake
         local textY = sh / 2 - 60 + math.cos(CurTime() * 110) * shake

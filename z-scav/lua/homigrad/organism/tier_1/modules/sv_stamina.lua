@@ -36,14 +36,14 @@ module[2] = function(owner, org, timeValue)
 	//org.painadd = org.painadd + painfrommoving * timeValue * 5
 
 	if painfrommoving > 0 then
-		//org.owner:Notify("I should stop moving so much...", 30, "painfrommoving", 0, nil, Color(255, 0, 0))
+		//org.owner:Notify("Надо поменьше двигаться...", 30, "painfrommoving", 0, nil, Color(255, 0, 0))
 	
 		if (org.jaw == 1) or org.jawdislocation then
-			//org.owner:Notify("My jaw is really hurting every move I make.", 60, "painfromjaw", 0, nil, Color(255, 210, 210))
+			//org.owner:Notify("Челюсть очень болит при каждом движении.", 60, "painfromjaw", 0, nil, Color(255, 210, 210))
 		end
 
 		if (org.chest > 0.25) then
-			//org.owner:Notify("Breathing is painful. Something is wrong with my ribs.", 60, "painfromribs", 0, nil, Color(255, 210, 210))
+			//org.owner:Notify("Дышать больно. Что-то с рёбрами.", 60, "painfromribs", 0, nil, Color(255, 210, 210))
 		end
 	end
 

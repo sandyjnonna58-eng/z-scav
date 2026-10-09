@@ -57,11 +57,11 @@ local tab = {
 }
 
 local alone = {
-	"Where is everyone?",
-	"Anyone here?",
-	"Where did everyone go?",
-	"Did i miss something?",
-	"It's oddly quiet."
+	"Где все?",
+	"Здесь кто-нибудь есть?",
+	"Куда все подевались?",
+	"Я что-то пропустил?",
+	"Странно тихо."
 }
 
 function MODE:CheckInDarkness(ply)
@@ -79,13 +79,13 @@ net.Receive("check_lightness", function(len)
 end)
 
 local atpeace = {
-	"I feel... At peace.",
-	"Is this the end?",
-	"What is happening?",
-	"I think i've lived long enough.",
-	"Finally, light at the end of a tunnel...",
-	"I think that's it.",
-	"Is this really how it ends?"
+	"Мне... спокойно.",
+	"Это конец?",
+	"Что происходит?",
+	"Кажется, я прожил достаточно.",
+	"Наконец, свет в конце тоннеля...",
+	"Кажется, это всё.",
+	"Неужели всё так и закончится?"
 }
 
 hg.fearphrase1 = hg.fearphrase1 or nil
@@ -187,10 +187,10 @@ local ScarySounds = {
 }
 
 local notifs = {
-	"Uh-oh...",
-	"Oh no",
-	"This isn't good",
-	"Where's everyone?",
+	"Ой-ой...",
+	"О нет",
+	"Это плохо",
+	"Где все?",
 }
 
 function MODE:Player_Death(ply)

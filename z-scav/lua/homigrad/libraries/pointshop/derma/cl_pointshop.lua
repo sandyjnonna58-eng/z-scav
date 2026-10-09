@@ -3,7 +3,7 @@ hg.PointShop = hg.PointShop or {}
 
 local function AltDonate()
     Derma_Query(
-        "We are sorry about that, but for now donation only through sadsalat",
+        "Извините, но пока пожертвования только через sadsalat",
         "Sorry...",
         "Discord",
         function() gui.OpenURL("https://discord.gg/475EmEdTgH") end,
@@ -177,7 +177,7 @@ function PANEL:Init()
     UPan:SetSize(self:GetWide(),ScreenScale(30))
 
         local lbl = vgui.Create( "DLabel", UPan )
-        lbl:SetText( "Z-City Appearance Shop" )
+        lbl:SetText( "Магазин внешности Z-City" )
         lbl:SetFont( "HomigradFontGigantoNormous" )
         lbl:SetContentAlignment(9)
         
@@ -186,7 +186,7 @@ function PANEL:Init()
         lbl:SizeToContents()
 
         local lbl = vgui.Create( "DButton", UPan )
-        lbl:SetText( "Buy points" )
+        lbl:SetText( "Купить очки" )
         lbl:SetFont( "HomigradFontLarge" )
         lbl:SetContentAlignment(5)
         

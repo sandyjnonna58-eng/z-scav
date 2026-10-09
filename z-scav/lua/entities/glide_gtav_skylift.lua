@@ -181,7 +181,7 @@ if SERVER then
                 target.VehicleType == Glide.VEHICLE_TYPE.HELICOPTER
             then
                 Glide.SendNotification( driver, {
-                    text = "You cannot grab that.",
+                    text = "Это нельзя захватить.",
                     icon = "materials/icon16/cancel.png",
                     immediate = true
                 } )
@@ -195,7 +195,7 @@ if SERVER then
 
             if volume > 30000000 then
                 Glide.SendNotification( driver, {
-                    text = "That object is too big.",
+                    text = "Этот объект слишком большой.",
                     icon = "materials/icon16/cancel.png",
                     immediate = true
                 } )

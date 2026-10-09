@@ -99,9 +99,9 @@ function CreateAdminWaveMenu(subMode, currentWave, totalWaves, isActive)
         
 
         local status = isActive and "Active" or "Prepare"
-        draw.SimpleText("Wave now: " .. currentWave .. " / " .. totalWaves, "Defense_AdminText", w/2, 70, ADMIN_MENU.TEXT_COLOR, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Sub-Mode: " .. subMode, "Defense_AdminText", w/2, 95, ADMIN_MENU.TEXT_COLOR, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Status: " .. status, "Defense_AdminText", w/2, 120, ADMIN_MENU.TEXT_COLOR, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Текущая волна: " .. currentWave .. " / " .. totalWaves, "Defense_AdminText", w/2, 70, ADMIN_MENU.TEXT_COLOR, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Подрежим: " .. subMode, "Defense_AdminText", w/2, 95, ADMIN_MENU.TEXT_COLOR, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Статус: " .. status, "Defense_AdminText", w/2, 120, ADMIN_MENU.TEXT_COLOR, TEXT_ALIGN_CENTER)
     end
     
 

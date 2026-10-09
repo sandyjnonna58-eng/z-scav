@@ -45,7 +45,7 @@ function zb.RTVMenu()
         MapButton:SetSize(0, RTVUnit(34))
         
         if v == "random" then
-            MapButton:SetText("Random Map")
+            MapButton:SetText("Случайная карта")
             MapButton.Map = "random"
             MapButton.MapIcon = Material("icon64/random.png")
             if MapButton.MapIcon:IsError() then

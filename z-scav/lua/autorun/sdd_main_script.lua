@@ -438,11 +438,11 @@ if SERVER then
 		end
 
 		if IsValid(ply) then
-			ply:ChatPrint("[SDD] Respawned " .. count .. " door(s).")
+			ply:ChatPrint("[SDD] Восстановлено " .. count .. " door(s).")
 		else
-			print("[SDD] Respawned " .. count .. " door(s).")
+			print("[SDD] Восстановлено " .. count .. " door(s).")
 		end
-	end, nil, "Immediately respawn all destroyed doors. Admin only.")
+	end, nil, "Сразу восстановить все разрушенные двери. Только админ.")
 
 	concommand.Add("sdd_reset_defaults", function(ply)
 		if IsValid(ply) and not ply:IsAdmin() then return end
@@ -455,11 +455,11 @@ if SERVER then
 		RunConsoleCommand("sdd_door_respawn_block", "0")
 
 		if IsValid(ply) then
-			ply:ChatPrint("[SDD] All settings reset to defaults.")
+			ply:ChatPrint("[SDD] Все настройки сброшены.")
 		else
-			print("[SDD] All settings reset to defaults.")
+			print("[SDD] Все настройки сброшены.")
 		end
-	end, nil, "Reset all SDD convars to default values. Admin only.")
+	end, nil, "Сбросить все настройки SDD. Только админ.")
 end
 
 if CLIENT then
@@ -467,22 +467,22 @@ if CLIENT then
 		panel:ClearControls()
 
 		panel:Help("-- Main Options --")
-		panel:CheckBox("Enable destructible doors", "sdd_enable")
-		panel:CheckBox("Allow destroying locked doors", "sdd_can_destroy_locked_door")
-		panel:NumSlider("Debris fade time (seconds, 0 = no debris)", "sdd_door_debris_fade_time", 0, 1000, 0)
+		panel:CheckBox("Включить разрушаемые двери", "sdd_enable")
+		panel:CheckBox("Разрешить ломать запертые двери", "sdd_can_destroy_locked_door")
+		panel:NumSlider("Время исчезновения обломков (сек, 0 = без обломков)", "sdd_door_debris_fade_time", 0, 1000, 0)
 
 		panel:Help("-- Respawn Options --")
-		panel:CheckBox("Enable door respawn", "sdd_door_respawn")
-		panel:NumSlider("Respawn delay (seconds)", "sdd_door_respawn_delay", 1, 600, 0)
-		panel:CheckBox("Kill players in door on respawn (off = wait)", "sdd_door_respawn_block")
+		panel:CheckBox("Включить восстановление дверей", "sdd_door_respawn")
+		panel:NumSlider("Задержка восстановления (сек)", "sdd_door_respawn_delay", 1, 600, 0)
+		panel:CheckBox("Убивать игроков в проёме при восстановлении (выкл = ждать)", "sdd_door_respawn_block")
 
 		if LocalPlayer():IsAdmin() then
 			panel:Help("-- Admin --")
-			local btn = panel:Button("Respawn All Doors Now")
+			local btn = panel:Button("Восстановить все двери сейчас")
 			btn.DoClick = function()
 				RunConsoleCommand("sdd_door_respawn_now")
 			end
-			local btn2 = panel:Button("Reset to Defaults")
+			local btn2 = panel:Button("Сбросить по умолчанию")
 			btn2.DoClick = function()
 				RunConsoleCommand("sdd_reset_defaults")
 			end
@@ -494,7 +494,7 @@ if CLIENT then
 			"Options",
 			"Simple_Destructable_Doors",
 			"Simple_Destructable_Doors",
-			"Simple Destructible Doors",
+			"Разрушаемые двери",
 			"", "",
 			SDD_BuildMenu
 		)

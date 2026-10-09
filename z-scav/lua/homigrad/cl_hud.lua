@@ -837,7 +837,7 @@ end
 hook.Add("radialOptions", "77", function()
 	local organism = lply.organism or {}
 	if not organism.otrub and IsValid(lply:GetActiveWeapon()) and lply:GetActiveWeapon():GetClass() ~= "weapon_hands_sh" then
-		local tbl = {dropWeapon, "Drop Weapon"}
+		local tbl = {dropWeapon, "Выбросить оружие"}
 		hg.radialOptions[#hg.radialOptions + 1] = tbl
 	end
 end)
@@ -1059,7 +1059,7 @@ end)
 -- No. fuc kyouy
 if game.SinglePlayer() then
 	hook.Add("HUDPaint","Exit the singleplayer",function()
-		draw.SimpleText("Z-City is not meant to be played in singleplayer, in map selection menu change SINGLEPLAYER (green button top right corner) to 2 players or any.", "HomigradFontMedium", ScrW() / 2,ScrH() / 2, nil, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		draw.SimpleText("A lot of stuff won't work and we won't provide any fixes to singleplayer EVER", "HomigradFontMedium", ScrW() / 2,ScrH() * 7 / 12, nil,TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Z-City не предназначен для одиночной игры: в меню выбора карты смените SINGLEPLAYER (зелёная кнопка справа вверху) на 2 игрока или больше.", "HomigradFontMedium", ScrW() / 2,ScrH() / 2, nil, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Многое не будет работать, и исправлять одиночную игру мы НЕ будем НИКОГДА", "HomigradFontMedium", ScrW() / 2,ScrH() * 7 / 12, nil,TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end)
 end

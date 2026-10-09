@@ -310,11 +310,11 @@ MODE.Types.standard = {
 	ChanceFunction = function() return zb.ModesChances["standard"] or zb.modes["hmcd"].Types.standard.Chance end,
 	LootTable = MODE.LootTableSingle,
 	Messages = {
-		[3] = "Everyone died.",
-		[1] = "The murderer has killed everyone.",
-		[0] = "The murderer was",
+		[3] = "Все погибли.",
+		[1] = "Убийца убил всех.",
+		[0] = "Убийцей был",
 	},
-	Message = "The murderer was ",
+	Message = "Убийцей был ",
 	TraitorLoot = function(ply)
 		ply:Give("weapon_buck200knife")
 		ply:Give("weapon_hg_type59_tpik")
@@ -382,7 +382,7 @@ MODE.Types.standard = {
 
 		ply:SetNetVar("CurPluv", "pluvberet")
 
-		zb.GiveRole(ply, "Police Officer", Color(15,15,255))
+		zb.GiveRole(ply, "Полицейский", Color(15,15,255))
 	end
 }
 MODE.Types.wildwest = {
@@ -390,11 +390,11 @@ MODE.Types.wildwest = {
 	ChanceFunction = function() return (zb.GetWorldSize() < ZBATTLE_BIGMAP) and (zb.ModesChances["wildwest"] or zb.modes["hmcd"].Types.wildwest.Chance) or 0 end,
 	LootTable = MODE.LootTableStandard,
 	Messages = {
-		[3] = "The dead silence fills the empty city...",
-		[1] = "The town has fallen into the hands of crime.",
-		[0] = "The law was settled once again. The bastard is",
+		[3] = "Мёртвая тишина заполняет пустой город...",
+		[1] = "Город попал в руки преступности.",
+		[0] = "Закон снова восторжествовал. Ублюдок —",
 	},
-	Message = "The criminal was ",
+	Message = "Преступником был ",
 	TraitorLoot = function(ply)
 		ply:Give("weapon_sogknife")
 		ply:Give("weapon_hg_type59_tpik")
@@ -517,7 +517,7 @@ MODE.Types.wildwest = {
 
 		ply:SetNetVar("CurPluv", "pluvberet")
 
-		zb.GiveRole(ply, "Police Officer", Color(15,15,255))
+		zb.GiveRole(ply, "Полицейский", Color(15,15,255))
 	end
 }
 
@@ -526,11 +526,11 @@ MODE.Types.gunfreezone = {
 	ChanceFunction = function() return (zb.GetWorldSize() < ZBATTLE_BIGMAP) and (zb.ModesChances["gunfreezone"] or zb.modes["hmcd"].Types.gunfreezone.Chance) or 0 end,
 	LootTable = MODE.LootTableStandard,
 	Messages = {
-		[3] = "Everyone died.",
-		[1] = "The murderer has killed everyone.",
-		[0] = "The murderer was",
+		[3] = "Все погибли.",
+		[1] = "Убийца убил всех.",
+		[0] = "Убийцей был",
 	},
-	Message = "The murderer was ",
+	Message = "Убийцей был ",
 	TraitorLoot = function(ply)
 		ply:Give("weapon_buck200knife")
 		ply:Give("weapon_hg_type59_tpik")
@@ -591,7 +591,7 @@ MODE.Types.gunfreezone = {
 		ply:SetNetVar("Inventory",inv)
 		ply.organism.recoilmul = 0.8
 
-		zb.GiveRole(ply, "Police Officer", Color(15,15,255))
+		zb.GiveRole(ply, "Полицейский", Color(15,15,255))
 
 		ply:SetNetVar("CurPluv", "pluvberet")
 	end
@@ -602,11 +602,11 @@ MODE.Types.soe = {
 	ChanceFunction = function() return (zb.GetWorldSize() >= ZBATTLE_BIGMAP) and (zb.ModesChances["soe"] or zb.modes["hmcd"].Types.soe.Chance) or 0 end,
 	LootTable = MODE.LootTable,
 	Messages = {
-		[3] = "Everyone died.",
-		[1] = "The traitor has killed everyone.",
-		[0] = "The traitor was",
+		[3] = "Все погибли.",
+		[1] = "Предатель убил всех.",
+		[0] = "Предателем был",
 	},
-	Message = "The traitor was ",
+	Message = "Предателем был ",
 	TraitorLoot = function(ply)
 		local p22 = ply:Give("weapon_p22")
 		hg.AddAttachmentForce(ply,p22,"supressor4")
@@ -678,10 +678,10 @@ MODE.Types.soe = {
 		local hands = ply:Give("weapon_hands_sh")
 		ply:SetActiveWeapon(hands)
 	
-		zb.GiveRole(ply, "National Guard", Color(55, 85, 0))
+		zb.GiveRole(ply, "Нацгвардия", Color(55, 85, 0))
 		ply:SetNetVar("CurPluv", "pluvberet")
 	end,
-	PoliceText = "National guards have arrived.",
+	PoliceText = "Прибыла Национальная гвардия.",
 	PoliceSound = "snd_jack_hmcd_heli2.mp3"
 }
 
@@ -707,7 +707,7 @@ net.Receive("HMCD_SetNextTraitorRole", function(_, ply)
 	if role ~= "traitor" and role ~= "assistant" then return end
 
 	MODE.NextRoundTraitorRoles[target:SteamID()] = role
-	ply:ChatPrint(target:Nick() .. " will be " .. (role == "traitor" and "traitor" or "traitor assistant") .. " next round.")
+	ply:ChatPrint(target:Nick() .. " будет " .. (role == "traitor" and "traitor" or "помощником предателя") .. " в следующем раунде.")
 end)
 
 function MODE:GetPlySpawn(ply)
@@ -1048,7 +1048,7 @@ function MODE:RoundThink()
 	
 			if spawned > 0 then
 				self.PoliceSpawned = true
-				PrintMessage(HUD_PRINTTALK, "Police have arrived.")
+				PrintMessage(HUD_PRINTTALK, "Прибыла полиция.")
 				EmitSound("snd_jack_hmcd_policesiren.wav", vector_origin, 0, CHAN_AUTO, 1, 125, 0, 100)
 			end
 		end
@@ -1070,7 +1070,7 @@ function MODE:RoundThink()
 			local count = math.min(#available, 5)
 	
 			if count > 0 then
-				PrintMessage(HUD_PRINTTALK, "SWAT team incoming!")
+				PrintMessage(HUD_PRINTTALK, "Едет спецназ SWAT!")
 				EmitSound("snd_jack_hmcd_heli2.mp3", vector_origin, 0, CHAN_AUTO, 1, 125, 0, 100)
 				MODE:SpawnForce("swat", count)
 			end
@@ -1085,7 +1085,7 @@ function MODE:RoundThink()
 			local spawned = self:SpawnForce("nationalguard", count)
 			if spawned > 0 then
 				self.PoliceSpawned = true
-				PrintMessage(HUD_PRINTTALK, self.Types[self.Type].PoliceText or "National Guard have arrived.")
+				PrintMessage(HUD_PRINTTALK, self.Types[self.Type].PoliceText or "Прибыла Национальная гвардия.")
 				EmitSound(self.Types[self.Type].PoliceSound or "snd_jack_hmcd_heli2.mp3", vector_origin, 0, CHAN_AUTO, 1, 125, 0, 100)
 			end
 		end
@@ -1178,7 +1178,7 @@ function MODE:EquipSWAT(ply, index)
     local hands = ply:Give("weapon_hands_sh")
     ply:SetActiveWeapon(hands)
 
-    zb.GiveRole(ply, "SWAT Operative", Color(30, 30, 100))
+    zb.GiveRole(ply, "Боец SWAT", Color(30, 30, 100))
 end
 
 function MODE:EquipNationalGuard(ply, index)
@@ -1215,7 +1215,7 @@ function MODE:EquipNationalGuard(ply, index)
 	ply:SetNetVar("CurPluv", "pluvberet")
     local hands = ply:Give("weapon_hands_sh")
     ply:SetActiveWeapon(hands)
-    zb.GiveRole(ply, "National Guard", Color(60, 90, 0))
+    zb.GiveRole(ply, "Нацгвардия", Color(60, 90, 0))
 end
 
 --\\
@@ -1294,7 +1294,7 @@ hook.Add("PlayerCanPickupWeapon", "HMCD_TraitorRadioPickup", function( ply, weap
         if ply:HasWeapon("weapon_walkie_talkie") then
             weapon:Remove()
 			ply:SetActiveWeapon("weapon_walkie_talkie")
-			ply:ChatPrint("You hide the additional walkie talkie.")
+			ply:ChatPrint("Вы прячете дополнительную рацию.")
         end
     end
 end)
@@ -1366,7 +1366,7 @@ function MODE:RoundStart()
 	
 	if(roles_choose)then
 		MODE.StartPlayersRoleSelection()
-		PrintMessage(HUD_PRINTTALK, "Traitor is choosing roles for " .. MODE.RoleChooseRoundStartTime ..  " seconds")
+		PrintMessage(HUD_PRINTTALK, "Предатель выбирает роли для " .. MODE.RoleChooseRoundStartTime ..  " seconds")
 	else
 		MODE.ChoosingPlayersList = {}
 
@@ -1443,7 +1443,7 @@ function MODE:EndRound()
 	if self.Type then
 		if(MODE.RoleChooseRound)then
 			if(winner ~= 1)then
-				PrintMessage(HUD_PRINTTALK, "All traitors were stopped.")
+				PrintMessage(HUD_PRINTTALK, "Все предатели остановлены.")
 				
 				for _, traitor in ipairs(traitors) do
 					net.Start("hmcd_announce_traitor_lose")
@@ -1463,17 +1463,17 @@ function MODE:EndRound()
 					traitor:GiveSkill( math.Rand(0.1,0.3) )
 					traitor:SetPData("zb_hmcd_t_wins",traitor:GetPData("zb_hmcd_t_wins",0) + 1)
 				end
-				PrintMessage(HUD_PRINTTALK, "Every innocent was murdered.")
+				PrintMessage(HUD_PRINTTALK, "Все невиновные убиты.")
 			end
 			
 			timer.Simple(2, function()
 				if(players_alive == 0)then
-					PrintMessage(HUD_PRINTTALK, "No one survived.")
+					PrintMessage(HUD_PRINTTALK, "Никто не выжил.")
 				else
 					if(players_alive == 1)then
-						PrintMessage(HUD_PRINTTALK, "Only 1 survivor left in the city.")
+						PrintMessage(HUD_PRINTTALK, "В городе остался 1 выживший.")
 					else
-						PrintMessage(HUD_PRINTTALK, players_alive .. " survivors left in the city.")
+						PrintMessage(HUD_PRINTTALK, players_alive .. " выживших осталось в городе.")
 					end
 				end
 			end)
@@ -1586,11 +1586,11 @@ hook.Add("Player_Death", "HMCD_PlayerDeath", function(ply, _)
 			if not biggest_attacker or not IsValid(ply) then return end
 			
 			if biggest_attacker == ply:Name() then
-				ply:ChatPrint("You suicided.")
+				ply:ChatPrint("Самоубийство.")
 			elseif not biggest_attacker then
-				ply:ChatPrint("You have died.")
+				ply:ChatPrint("Вы погибли.")
 			else
-				ply:ChatPrint("You were killed by "..biggest_attacker..".")
+				ply:ChatPrint("Вас убил "..biggest_attacker..".")
 			end
 		end
 	end)
@@ -1811,7 +1811,7 @@ function MODE.SpawnPlayers(spawn_with_subroles)
 					if walkie_talkie.Frequencies then
 						MODE.TraitorFrequency = MODE.TraitorFrequency or math.random(1, #walkie_talkie.Frequencies)
 						walkie_talkie.Frequency = MODE.TraitorFrequency
-						current_ply:ChatPrint("Walkie-Talkie Frequency = " .. walkie_talkie.Frequencies[MODE.TraitorFrequency])
+						current_ply:ChatPrint("Частота рации = " .. walkie_talkie.Frequencies[MODE.TraitorFrequency])
 					end
                 end
             end

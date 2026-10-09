@@ -15,7 +15,7 @@ local function CreateOptionsMenu()
     local MainFrame = vgui.Create("ZFrame") -- The name of the panel we don't have to parent it.
     MainFrame:SetPos( posX, posY ) -- Set the position to 100x by 100y. 
     MainFrame:SetSize( sizeX, sizeY ) -- Set the size to 300x by 200y.
-    MainFrame:SetTitle( "Weapon options" ) -- Set the title in the top left to "Derma Frame".
+    MainFrame:SetTitle( "Настройки оружия" ) -- Set the title in the top left to "Derma Frame".
     MainFrame:MakePopup() -- Makes your mouse be able to move around.
     function MainFrame:Paint( w, h )
         draw.RoundedBox( 0, 2.5, 2.5, w-5, h-5, Color( 0, 0, 0, 140) )

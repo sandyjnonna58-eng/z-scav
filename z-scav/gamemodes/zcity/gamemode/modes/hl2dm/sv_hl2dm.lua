@@ -248,7 +248,7 @@ net.Receive("ZB_RequestAirStrike", function(len, ply)
         local normal = ply:GetEyeTrace().HitNormal
         AirStrike(pos, normal, ply)
     else
-        ply:ChatPrint("Access denied.")
+        ply:ChatPrint("Доступ запрещён.")
     end
 end)
 

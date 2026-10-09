@@ -118,65 +118,65 @@ end
 hook.Add("OnScreenSizeChanged", "ZCity_Settings_Fonts", CreateSettingsFonts)
 CreateSettingsFonts()
 
-hg.settings:AddOpt("Gameplay","hg_newthoughts", "New thoughts")
-hg.settings:AddOpt("Gameplay","hg_showthoughts", "Show thoughts")
-hg.settings:AddOpt("Gameplay","hg_hints", "Show hints")
+hg.settings:AddOpt("Gameplay","hg_newthoughts", "Новые мысли")
+hg.settings:AddOpt("Gameplay","hg_showthoughts", "Показывать мысли")
+hg.settings:AddOpt("Gameplay","hg_hints", "Показывать подсказки")
 hg.settings:AddOpt("Gameplay","hg_gary", "HG GARY")
-hg.settings:AddOpt("Gameplay","hg_deathfadeout", "Death fade out")
-hg.settings:AddOpt("Gameplay","hg_nojogging", "Disable jogging")
-hg.settings:AddOpt("Gameplay","deatheffect_death_screen", "Cinematic death screen")
+hg.settings:AddOpt("Gameplay","hg_deathfadeout", "Затемнение при смерти")
+hg.settings:AddOpt("Gameplay","hg_nojogging", "Отключить трусцу")
+hg.settings:AddOpt("Gameplay","deatheffect_death_screen", "Кинематографичный экран смерти")
 if not game.IsDedicated() then
-	hg.settings:AddOpt("Serverside gameplay","hg_toughnpcs", "Tough npcs")
-	hg.settings:AddOpt("Serverside gameplay","hg_thirdperson", "Thirdperson (WIP)")
-	hg.settings:AddOpt("Serverside gameplay","hg_legacycam", "Legacy camera")
-	hg.settings:AddOpt("Serverside gameplay","hg_ragdollcombat", "Ragdoll combat mode")
-	hg.settings:AddOpt("Serverside gameplay","hg_movement_stamina_debuff", "Movement stamina debuff")
-	hg.settings:AddOpt("Serverside gameplay","hg_furcity", "Furcity")
-	hg.settings:AddOpt("Serverside gameplay","hg_appearance_access_for_all", "Appearance full access for all", nil, nil, "bool")
-	hg.settings:AddOpt("Serverside gameplay","hg_healanims", "Heal & food animations")
-	hg.settings:AddOpt("Serverside gameplay","hg_aimtoshoot", "DarkRP-like shoot system (aim to shoot)")
-	hg.settings:AddOpt("Serverside gameplay","hg_slings", "Sling system")
-    hg.settings:AddOpt("Serverside gameplay","homicide_traitoramount", "Homicide: Traitor Amount", nil, nil, "int")
+	hg.settings:AddOpt("Серверный геймплей","hg_toughnpcs", "Сильные NPC")
+	hg.settings:AddOpt("Серверный геймплей","hg_thirdperson", "Вид от третьего лица (WIP)")
+	hg.settings:AddOpt("Серверный геймплей","hg_legacycam", "Старая камера")
+	hg.settings:AddOpt("Серверный геймплей","hg_ragdollcombat", "Бой в рэгдолле")
+	hg.settings:AddOpt("Серверный геймплей","hg_movement_stamina_debuff", "Штраф выносливости при движении")
+	hg.settings:AddOpt("Серверный геймплей","hg_furcity", "Furcity")
+	hg.settings:AddOpt("Серверный геймплей","hg_appearance_access_for_all", "Полный доступ к внешности для всех", nil, nil, "bool")
+	hg.settings:AddOpt("Серверный геймплей","hg_healanims", "Анимации лечения и еды")
+	hg.settings:AddOpt("Серверный геймплей","hg_aimtoshoot", "Стрельба как в DarkRP (прицелься, чтобы стрелять)")
+	hg.settings:AddOpt("Серверный геймплей","hg_slings", "Система ремней")
+    hg.settings:AddOpt("Серверный геймплей","homicide_traitoramount", "Хоумисайд: число предателей", nil, nil, "int")
 end
 
-hg.settings:AddOpt("Debug","hg_show_hitposmuzzle", "Show weapon hitpos")
-hg.settings:AddOpt("Debug","hg_setzoompos", "Edit weapon zoompos, check console for results")
-hg.settings:AddOpt("Debug","hg_show_hitbox", "Show hitboxes")
+hg.settings:AddOpt("Debug","hg_show_hitposmuzzle", "Показывать точку попадания оружия")
+hg.settings:AddOpt("Debug","hg_setzoompos", "Редактировать zoompos оружия, результат в консоли")
+hg.settings:AddOpt("Debug","hg_show_hitbox", "Показывать хитбоксы")
 
-hg.settings:AddOpt("Optimization","hg_potatopc", "Potato PC Mode")
-hg.settings:AddOpt("Optimization","hg_reduce_screeneffects", "Reduce screen effects 50%")
-hg.settings:AddOpt("Optimization","hg_anims_draw_distance", "Animations Draw Distance", true, nil, "int")
-hg.settings:AddOpt("Optimization","hg_anim_fps", "Animations FPS", nil, nil, "int")
-hg.settings:AddOpt("Optimization","hg_attachment_draw_distance", "Attachment Draw Distance", true, nil, "int")
-hg.settings:AddOpt("Optimization","hg_maxsmoketrails", "Maximum Smoke Trails", nil, nil, "int")
-hg.settings:AddOpt("Optimization","hg_tpik_distance", "TPIK Render Distance", true, nil, "int")
+hg.settings:AddOpt("Optimization","hg_potatopc", "Режим слабого ПК")
+hg.settings:AddOpt("Optimization","hg_reduce_screeneffects", "Уменьшить эффекты экрана на 50%")
+hg.settings:AddOpt("Optimization","hg_anims_draw_distance", "Дальность прорисовки анимаций", true, nil, "int")
+hg.settings:AddOpt("Optimization","hg_anim_fps", "FPS анимаций", nil, nil, "int")
+hg.settings:AddOpt("Optimization","hg_attachment_draw_distance", "Дальность прорисовки обвесов", true, nil, "int")
+hg.settings:AddOpt("Optimization","hg_maxsmoketrails", "Максимум дымовых следов", nil, nil, "int")
+hg.settings:AddOpt("Optimization","hg_tpik_distance", "Дальность рендера TPIK", true, nil, "int")
 
-hg.settings:AddOpt("Blood","hg_blood_draw_distance", "Blood Draw Distance")
-hg.settings:AddOpt("Blood","hg_blood_fps", "Blood FPS")
-hg.settings:AddOpt("Blood","hg_blood_sprites", "Blood Sprites (DISABLED FOR EVERYONE)")
-hg.settings:AddOpt("Blood","hg_old_blood", "Old blood")
+hg.settings:AddOpt("Blood","hg_blood_draw_distance", "Дальность прорисовки крови")
+hg.settings:AddOpt("Blood","hg_blood_fps", "FPS крови")
+hg.settings:AddOpt("Blood","hg_blood_sprites", "Спрайты крови (ОТКЛЮЧЕНО ДЛЯ ВСЕХ)")
+hg.settings:AddOpt("Blood","hg_old_blood", "Старая кровь")
 
 hg.settings.tbl["UI"] = hg.settings.tbl["UI"] or {}
 hg.settings.tbl["UI"]["hg_font"] = nil
-hg.settings:AddOpt("UI","hg_oldradialmenu", "Old Radial Menu")
+hg.settings:AddOpt("UI","hg_oldradialmenu", "Старое радиальное меню")
 
-hg.settings:AddOpt("Weapons","hg_weaponshotblur_enable", "Shooting Blur")
-hg.settings:AddOpt("Weapons","hg_dynamic_mags", "Dynamic Ammo Inspect")
-hg.settings:AddOpt("Weapons","hg_zoomsensitivity", "Scope sensitivity")
-hg.settings:AddOpt("Weapons","hg_highpitchgunfire", "Toggle high pitched gunfire sounds inside buildings")
-hg.settings:AddOpt("Weapons","hg_gollavo_headshot_effect", "Gollavo headshot effect")
+hg.settings:AddOpt("Weapons","hg_weaponshotblur_enable", "Размытие при стрельбе")
+hg.settings:AddOpt("Weapons","hg_dynamic_mags", "Динамический осмотр патронов")
+hg.settings:AddOpt("Weapons","hg_zoomsensitivity", "Чувствительность прицела")
+hg.settings:AddOpt("Weapons","hg_highpitchgunfire", "Высокие звуки выстрелов в помещениях")
+hg.settings:AddOpt("Weapons","hg_gollavo_headshot_effect", "Эффект хедшота Gollavo")
 
-hg.settings:AddOpt("View","hg_fov", "Field Of View")
-hg.settings:AddOpt("View","hg_newspectate", "Smooth Spectator Camera")
-hg.settings:AddOpt("View","hg_cshs_fake", "C'sHS Ragdoll Camera")
-hg.settings:AddOpt("View","hg_gun_cam", "Gun Camera (ADMIN ONLY)")
+hg.settings:AddOpt("View","hg_fov", "Поле зрения (FOV)")
+hg.settings:AddOpt("View","hg_newspectate", "Плавная камера наблюдателя")
+hg.settings:AddOpt("View","hg_cshs_fake", "Камера рэгдолла C'sHS")
+hg.settings:AddOpt("View","hg_gun_cam", "Камера от оружия (ТОЛЬКО АДМИН)")
 hg.settings:AddOpt("View","hg_nofovzoom", "Disable/Enable FOV Zoom")
-hg.settings:AddOpt("View","hg_realismcam", "Realism camera (shitty)")
-hg.settings:AddOpt("View","hg_gopro", "GoPro camera")
-hg.settings:AddOpt("View","hg_newfakecam", "New fake camera")
-hg.settings:AddOpt("View","hg_leancam_mul", "Lean camera mul", true, nil, "int")
-hg.settings:AddOpt("View","hg_gun_cam", "Gun camera (WIP Admin only)")
-hg.settings:AddOpt("Sound","hg_dmusic", "Dynamic Music")
+hg.settings:AddOpt("View","hg_realismcam", "Реалистичная камера (кривая)")
+hg.settings:AddOpt("View","hg_gopro", "Камера GoPro")
+hg.settings:AddOpt("View","hg_newfakecam", "Новая камера рэгдолла")
+hg.settings:AddOpt("View","hg_leancam_mul", "Множитель камеры наклона", true, nil, "int")
+hg.settings:AddOpt("View","hg_gun_cam", "Камера от оружия (WIP, только админ)")
+hg.settings:AddOpt("Sound","hg_dmusic", "Динамическая музыка")
 hg.settings:AddOpt("Sound","hg_quietshots", "Enable/Disable Quietshoot Sounds")
 
 
@@ -293,25 +293,25 @@ local info_stat_rows = {
 local info_social_links = {
     {
         title = "Lapse",
-        subtitle = "In judgement. (Official Community Server)",
+        subtitle = "In judgement. (Официальный сервер сообщества)",
         url = DISCORD_URL or "https://discord.gg/Tgz7N58PzV",
         icon = Material("vgui/lapseinjudgement.png", "smooth")
     },
     {
-        title = "Z-CITY English Community Server",
-        subtitle = "Official community server for the Z-CITY repository. (ENG)",
+        title = "Английский сервер сообщества Z-CITY",
+        subtitle = "Официальный сервер сообщества репозитория Z-CITY. (ENG)",
         url = "https://discord.gg/SjqRcv3yYY",
         icon = Material("vgui/zcityeng.png", "smooth")
     },
     {
-        title = "Z-CITY Russian Community Server",
-        subtitle = "Official community server for the Z-CITY repository. (RUS)",
+        title = "Русский сервер сообщества Z-CITY",
+        subtitle = "Официальный сервер сообщества репозитория Z-CITY. (RUS)",
         url = "https://discord.gg/475EmEdTgH",
         icon = Material("vgui/zcityrus.png", "smooth")
     },
     {
-        title = "Community Hub (RENCHDEDSEX'S ZCITY SERVER)",
-        subtitle = "If you are looking for a more vanilla-ish BETTER alternative.",
+        title = "Хаб сообщества (СЕРВЕР ZCITY RENCHDEDSEX)",
+        subtitle = "Если ищете более ванильную ЛУЧШУЮ альтернативу.",
         url = "https://discord.gg/3UrJapj6kF",
         icon = Material("vgui/communhub.png", "smooth")
     }
@@ -842,7 +842,7 @@ function hg.DrawSettings(ParentPanel)
 
     local allowedCategories = {}
     for categoryName, _ in pairs(hg.settings.tbl) do
-        if (categoryName == "Debug" or categoryName == "Serverside gameplay") and not isSuperAdmin then
+        if (categoryName == "Debug" or categoryName == "Серверный геймплей") and not isSuperAdmin then
             continue
         end
         allowedCategories[categoryName] = true
@@ -918,7 +918,7 @@ function hg.DrawSettings(ParentPanel)
     end
 
     for categoryName, _ in SortedPairs(hg.settings.tbl) do
-        if (categoryName == "Debug" or categoryName == "Serverside gameplay") and not isSuperAdmin then
+        if (categoryName == "Debug" or categoryName == "Серверный геймплей") and not isSuperAdmin then
             continue
         end
         SettingsCreateCategoryButton(sidebar, categoryName, categoryName)
@@ -1157,7 +1157,7 @@ local function KeybindsCreateBinder(parent, bindName, slot, x, y)
         surface.DrawRect(0, 0, w, h)
         surface.SetDrawColor(settings_color_whitey.r, settings_color_whitey.g, settings_color_whitey.b, self:IsHovered() and 210 or 120)
         surface.DrawOutlinedRect(0, 0, w, h, 1)
-        draw.SimpleText(self.Trapping and "PRESS A BUTTON" or KeybindsFormatKey(self:GetValue()), "ZCity_Menu_Settings_Tiny", w / 2, h / 2, settings_color_text, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(self.Trapping and "НАЖМИТЕ КНОПКУ" or KeybindsFormatKey(self:GetValue()), "ZCity_Menu_Settings_Tiny", w / 2, h / 2, settings_color_text, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         return true
     end
 
@@ -1303,7 +1303,7 @@ function hg.DrawKeybinds(ParentPanel)
     headerHint:SetPos(MenuUnit(25), MenuUnit(45))
     headerHint:SetFont("ZCity_Menu_Settings_Tiny")
     headerHint:SetTextColor(settings_color_text_dim)
-    headerHint:SetText("If you have the buttons already binded via console you can still use these as alternatives.")
+    headerHint:SetText("Если кнопки уже назначены через консоль, эти можно использовать как запасные.")
     headerHint:SizeToContents()
 
 	local backBtn = vgui.Create("DLabel", ParentPanel)
@@ -1407,7 +1407,7 @@ function hg.DrawKeybinds(ParentPanel)
         surface.DrawRect(0, 0, w, h)
         surface.SetDrawColor(settings_color_whitey.r, settings_color_whitey.g, settings_color_whitey.b, self:IsHovered() and 210 or 120)
         surface.DrawOutlinedRect(0, 0, w, h, 1)
-        draw.SimpleText("Reset defaults", "ZCity_Menu_Settings_Tiny", w / 2, h / 2, settings_color_text, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Сбросить по умолчанию", "ZCity_Menu_Settings_Tiny", w / 2, h / 2, settings_color_text, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     resetBtn.DoClick = function()
         surface.PlaySound(SOUND_SETTINGS_CLICK)
@@ -1748,7 +1748,7 @@ function InfoRefreshContent()
         achievementsTitle:DockMargin(0, 0, 0, MenuUnit(10))
         achievementsTitle:SetFont("ZCity_Menu_Settings_Small")
         achievementsTitle:SetTextColor(settings_color_whitey)
-        achievementsTitle:SetText("OBTAINED ACHIEVEMENTS")
+        achievementsTitle:SetText("ПОЛУЧЕННЫЕ ДОСТИЖЕНИЯ")
         achievementsTitle:SetTall(MenuUnit(28))
 
         local achievementsHolder = vgui.Create("DPanel", scroll)
@@ -1760,7 +1760,7 @@ function InfoRefreshContent()
         achievementsEmpty:SetFont("ZCity_Menu_Settings_Tiny")
         achievementsEmpty:SetTextColor(settings_color_text_dim)
         achievementsEmpty:SetContentAlignment(5)
-        achievementsEmpty:SetText("NO ACHIEVEMENTS OBTAINED YET")
+        achievementsEmpty:SetText("ДОСТИЖЕНИЙ ПОКА НЕТ")
         achievementsEmpty:SetTall(MenuUnit(28))
 
         local achievementRows = {}
@@ -1849,8 +1849,8 @@ function InfoRefreshContent()
                 playerLabel:SetText(string.upper(playerName))
                 xpLabel:SetText(newExp .. " XP")
                 skillLabel:SetText(newSkill .. " Skill")
-                medalLabel:SetText("Medal: " .. string.upper((medal and medal.name) or "UNRANKED"))
-                bandLabel:SetText("Band: " .. ((band and band.name and band.name ~= "") and string.upper(band.name) or "SOON"))
+                medalLabel:SetText("Медаль: " .. string.upper((medal and medal.name) or "UNRANKED"))
+                bandLabel:SetText("Лента: " .. ((band and band.name and band.name ~= "") and string.upper(band.name) or "SOON"))
                 lastExp = newExp
                 lastSkill = newSkill
                 profileBlock:InvalidateLayout(true)
@@ -1905,7 +1905,7 @@ function InfoRefreshContent()
         title:DockMargin(0, 0, 0, MenuUnit(10))
         title:SetFont("ZCity_Menu_Settings_Small")
         title:SetTextColor(settings_color_whitey)
-        title:SetText("TOP 10 PLAYERS")
+        title:SetText("ТОП-10 ИГРОКОВ")
         title:SetTall(MenuUnit(30))
 
         local rows = {}
@@ -1925,7 +1925,7 @@ function InfoRefreshContent()
                 empty:SetFont("ZCity_Menu_Settings_Tiny")
                 empty:SetTextColor(settings_color_text_dim)
                 empty:SetContentAlignment(5)
-                empty:SetText("NO SQL LEADERBOARD DATA")
+                empty:SetText("НЕТ ДАННЫХ ТАБЛИЦЫ ЛИДЕРОВ")
                 rows[#rows + 1] = empty
                 return
             end
@@ -2053,7 +2053,7 @@ function InfoRefreshContent()
         alsoCheck:SetFont("ZCity_Menu_Settings_Small")
         alsoCheck:SetTextColor(settings_color_text)
         alsoCheck:SetContentAlignment(5)
-        alsoCheck:SetText("Also check out:")
+        alsoCheck:SetText("Загляните также:")
 
         local judgeButton = vgui.Create("DButton", bottomLogo)
         judgeButton:SetText("")
@@ -2378,7 +2378,7 @@ function hg.DrawInformation(ParentPanel)
     headerHint:SetPos(MenuUnit(25), MenuUnit(45))
     headerHint:SetFont("ZCity_Menu_Settings_Tiny")
     headerHint:SetTextColor(settings_color_text_dim)
-    headerHint:SetText("View rank and social links")
+    headerHint:SetText("Ранг и ссылки на соцсети")
     headerHint:SizeToContents()
 
     local contentHolder = vgui.Create("DPanel", mainPanel)

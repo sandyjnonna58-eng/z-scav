@@ -38,11 +38,11 @@ local function Think(owner, org, timeValue)
     if (org.remDizzy or 0) >= CFG.DIZZY_FAINT then
         org.remDizzy = 0
         if hg.LightStunPlayer then hg.LightStunPlayer(owner, CFG.FAINT_TIME) end
-        owner:Notify("Everything went dark for a second...", 5, "rem_bp_faint", 0)
+        owner:Notify("На секунду всё потемнело...", 5, "rem_bp_faint", 0)
     end
     if bp < CFG.DIZZY_BP + 5 and now >= (org.remBPThought or 0) then
         org.remBPThought = now + CFG.THOUGHT_CD + math.Rand(0, 30)
-        local t = {"I feel lightheaded..", "My legs feel weak.", "The world is spinning a bit.."}
+        local t = {"Голова лёгкая, кружится..", "Ноги слабеют.", "Мир немного кружится.."}
         owner:Notify(t[math.random(#t)], 5, "rem_bp_low", 0)
     end
 
@@ -52,7 +52,7 @@ local function Think(owner, org, timeValue)
         org.painadd = (org.painadd or 0) + timeValue * CFG.HEADACHE_PAIN * hyp
         if now >= (org.remBPThought or 0) then
             org.remBPThought = now + CFG.THOUGHT_CD + math.Rand(0, 30)
-            local t = {"My head is pounding..", "I can hear my heartbeat in my ears.", "There's a pressure behind my eyes."}
+            local t = {"Голова раскалывается..", "Я слышу стук сердца в ушах.", "Давит за глазами."}
             owner:Notify(t[math.random(#t)], 5, "rem_bp_high", 0)
         end
     end
@@ -61,7 +61,7 @@ local function Think(owner, org, timeValue)
         if hg.organism.AddWoundManual then
             hg.organism.AddWoundManual(owner, 2, vector_origin, angle_zero, "ValveBiped.Bip01_Head1", now)
         end
-        owner:Notify("My nose is bleeding.", 5, "rem_bp_nose", 0)
+        owner:Notify("У меня кровь из носа.", 5, "rem_bp_nose", 0)
     end
 end
 

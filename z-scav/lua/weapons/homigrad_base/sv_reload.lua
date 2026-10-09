@@ -35,8 +35,8 @@ function SWEP:ReloadStart()
 end
 
 local randomgovno = {
-	"Shit.. I missed...",
-	"Fuck.. I dropped it...",
+	"Чёрт.. промахнулся...",
+	"Чёрт.. уронил...",
 }
 
 -- возможно немного насралкод но работает норм

@@ -1441,7 +1441,7 @@ local function initAttachments()
 			att.Base = "attachment_base"
 			att.PrintName = CLIENT and language.GetPhrase(attachment) or attachment
 			att.name = attachment
-			att.Category = "ZCity Attachments " .. (attCategoryNames[possibleAtt] or "")
+			att.Category = "ZCity Обвесы " .. (attCategoryNames[possibleAtt] or "")
 			att.Spawnable = not (string.find(attachment, "0") or string.find(attachment, "empty") or string.find(attachment, "mount"))
 			att.Model = attData[2]
 			att.WorldModel = attData[2]

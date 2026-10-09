@@ -3,8 +3,8 @@ if(SERVER)then
 end
 
 SWEP.Base = "weapon_base"
-SWEP.PrintName = "Walkie-talkie"
-SWEP.Instructions = "Use the walkie-talkie to communicate with other people in the 4km radius. Must be on the same frequency."
+SWEP.PrintName = "Рация"
+SWEP.Instructions = "Рация для связи с другими людьми в радиусе 4 км. Нужна одинаковая частота."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -119,7 +119,7 @@ if SERVER then
 				if input:GetPos():DistToSqr(output:GetPos()) < 600000 and not output.organism.otrub and not input.organism.otrub then
 					return true
 				else
-                    input:ChatPrint("Walkie Talkie: " .. text)
+                    input:ChatPrint("Рация: " .. text)
 
 					return false
 				end
@@ -356,16 +356,16 @@ function SWEP:PrimaryAttack()
 				hg.CreateRadialMenu(tbl1)
 			end
 			return -1
-		end, "Public stations"}
-		self:MenuAddAdjuster("Change 010.0 MHz", tbl, 010.0)
-		self:MenuAddAdjuster("Change 001.0 MHz", tbl, 001.0)
-		self:MenuAddAdjuster("Change 000.1 MHz", tbl, 000.1)
+		end, "Общие каналы"}
+		self:MenuAddAdjuster("Изменить на 010.0 МГц", tbl, 010.0)
+		self:MenuAddAdjuster("Изменить на 001.0 МГц", tbl, 001.0)
+		self:MenuAddAdjuster("Изменить на 000.1 МГц", tbl, 000.1)
 	end
 
 	tbl[#tbl + 1] = {function()
 		RunConsoleCommand("+reload")
 		timer.Simple(0,function() RunConsoleCommand("-reload") end)
-	end, self:GetIsOn() and "Turn off Walkie-Talkie" or "Turn on Walkie-Talkie"}
+	end, self:GetIsOn() and "Выключить рацию" or "Включить рацию"}
 	hg.CreateRadialMenu(tbl)
 end
 

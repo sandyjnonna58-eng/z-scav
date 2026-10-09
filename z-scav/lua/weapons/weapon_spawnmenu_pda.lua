@@ -4,7 +4,7 @@ SWEP.Base = "weapon_tpik1_base"
 SWEP.PrintName = "Tablet"
 SWEP.Instructions = ""
 SWEP.Category = "Weapons - Other"
-SWEP.Instructions = "Just a tablet"
+SWEP.Instructions = "Просто планшет"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 SWEP.Slot = 1
@@ -133,7 +133,7 @@ if SERVER then
         local wep = IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon() or false
         if not wep or wep:GetClass() ~= "weapon_spawnmenu_pda" then return end
         ply.DeliverCD = ply.DeliverCD or 0
-        if ply.DeliverCD > CurTime() then wep:AddNotificate("You can't exucute new deliver. Wait "..( math.Round((ply.DeliverCD - CurTime())/300, 1)).. " min" ) return end
+        if ply.DeliverCD > CurTime() then wep:AddNotificate("Нельзя оформить новую доставку. Подождите "..( math.Round((ply.DeliverCD - CurTime())/300, 1)).. " min" ) return end
 
         local Cart = net.ReadTable()
         local CartWeight = 0
@@ -147,10 +147,10 @@ if SERVER then
             if not item[1] or BlackList[item[1]] then wep:AddNotificate("No.") return end
         end
 
-        if CartWeight > 140 then wep:AddNotificate("Too much weight to ship.") return end
+        if CartWeight > 140 then wep:AddNotificate("Слишком большой вес для доставки.") return end
 
         local Time = (CartWeight/KgInTime)*60
-        if Time == 0 then wep:AddNotificate("First, get stuff in your cart.") return end
+        if Time == 0 then wep:AddNotificate("Сначала положите что-нибудь в корзину.") return end
 
         local pos = hg.eyeTrace(ply).HitPos
         local tr = util.TraceLine({
@@ -159,9 +159,9 @@ if SERVER then
             mask = MASK_SOLID_BRUSHONLY,
         })
         if tr.HitSky then
-            wep:AddNotificate("Your order is being assembled, please wait.")
+            wep:AddNotificate("Ваш заказ собирается, подождите.")
             timer.Create(ply:EntIndex().."_Deliver",Time,1,function()
-                wep:AddNotificate("Your package arrived. You have 5 minutes to pick up your stuff.")
+                wep:AddNotificate("Посылка прибыла. У вас 5 минут, чтобы забрать вещи.")
                 --ply:ChatPrint("Weapon was called, estimated time of delivery 5-7 seconds.")
                 if not IsValid(ply) then return end
                 local ent = ents.Create("zbox_lootbox")
@@ -183,7 +183,7 @@ if SERVER then
 
             ply.DeliverCD = CurTime() + Time
         else
-            wep:AddNotificate("We can't deliver it to you until you're outside.")
+            wep:AddNotificate("Мы не можем доставить, пока вы не на улице.")
         end
 
     end)
@@ -241,7 +241,7 @@ function SWEP:CreateMenu()
     self.menu:Center()
     self.menu:SetY(ScrH()-470)
     -- увы пока только такой костыль...
-    self.menu:SetTitle("Order menu")
+    self.menu:SetTitle("Меню заказа")
     self.menu:SetDraggable(false)
     local tablet = self
     function self.menu:Think()

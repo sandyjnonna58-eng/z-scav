@@ -202,7 +202,7 @@ function PLAYER:LegAttack()
 
     local hands = self:GetWeapon(handClass)
     if not IsValid(hands) then
-        self:Notify("Where is your hands swep???", 1, "WHERE YOUR HANDS AT??", 0)
+        self:Notify("Где твой SWEP рук???", 1, "ГДЕ ТВОИ РУКИ??", 0)
     return end
 
     local anim = "kick_pistol_base"

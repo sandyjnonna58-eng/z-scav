@@ -40,11 +40,11 @@ CFG.AIMPULL_TIME     = 4        -- сек на то, чтобы отвести �
 util.AddNetworkString("zscav_aimpull")
 
 local PHRASES = {
-    "My hands.. moved on their own..",
-    "I didn't mean to.. I didn't..",
-    "What am I doing?!",
-    "Something took over..",
-    "Stop.. STOP!",
+    "Мои руки.. двигались сами..",
+    "Я не хотел.. Я не...",
+    "Что я делаю?!",
+    "Что-то взяло верх..",
+    "Стой.. СТОЙ!",
 }
 
 local function HasTrait(ply, id)
@@ -144,7 +144,7 @@ function hg.organism.StartAimPull(ply)
         net.WriteEntity(target)
         net.WriteFloat(CFG.AIMPULL_TIME)
     net.Send(ply)
-    local t = {"They're all against me..", "It would be so easy..", "Why are they looking at me like that..", "My hand won't listen.."}
+    local t = {"Они все против меня..", "Это было бы так просто..", "Почему они так на меня смотрят..", "Рука не слушается.."}
     ply:Notify(t[math.random(#t)], 4, "zscav_aimpull", 0)
     return true
 end

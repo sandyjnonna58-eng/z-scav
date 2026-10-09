@@ -218,7 +218,7 @@ function zb:ShouldRoundEnd()
 		local boringround = (zb.ROUND_START + time) < CurTime()
 
 		if boringround and CurrentRound().BoringRoundFunction then
-			PrintMessage(HUD_PRINTTALK, "Stopping round because it was TOO boring.")
+			PrintMessage(HUD_PRINTTALK, "Раунд остановлен, потому что было СЛИШКОМ скучно.")
 
 			CurrentRound():BoringRoundFunction()
 		end
@@ -363,9 +363,9 @@ end)
 
 COMMANDS.bigmap = {
 	function(ply, args)
-		if not ply:IsAdmin() then ply:ChatPrint("You don't have access") return end
+		if not ply:IsAdmin() then ply:ChatPrint("У вас нет доступа") return end
 		ZBATTLE_BIGMAP = tonumber(args[1])
-		ply:ChatPrint("Distance for big map: " .. ZBATTLE_BIGMAP)
+		ply:ChatPrint("Дистанция для большой карты: " .. ZBATTLE_BIGMAP)
 		zb.RerollChances()
 
 		file.CreateDir("zbattle")
@@ -376,7 +376,7 @@ COMMANDS.bigmap = {
 
 		file.Write("zbattle/mapsizes.json", util.TableToJSON(tbl))
 
-		ply:ChatPrint("Saved into a file")
+		ply:ChatPrint("Сохранено в файл")
 	end,
 	0
 }
@@ -545,7 +545,7 @@ function zb.CheckChances()
 		end
 	else
 		for i=1,#zb.RoundList do
-			print("Round "..(i+1).." will be "..zb.GetRoundName(zb.RoundList[i]).." ("..zb.RoundList[i]..")")
+			print("Раунд "..(i+1).." будет "..zb.GetRoundName(zb.RoundList[i]).." ("..zb.RoundList[i]..")")
 		end
 	end
 end
@@ -762,7 +762,7 @@ net.Receive("AdminSetGameMode", function(len, ply)
 
 	if command == "setmode" then
                 NextRound(modeKey, true)
-		ply:ChatPrint("Game mode set to: " .. modeKey)
+		ply:ChatPrint("Режим игры: " .. modeKey)
 
 		if addToQueue and #zb.QueuedModes < 12 then
 			table.insert(zb.QueuedModes, modeKey)
@@ -773,7 +773,7 @@ net.Receive("AdminSetGameMode", function(len, ply)
 	elseif command == "setforcemode" then
 		forcemode = modeKey
                 NextRound(forcemode, true)
-		ply:ChatPrint("Force mode set to: " .. modeKey)
+		ply:ChatPrint("Принудительный режим: " .. modeKey)
 
 		if addToQueue then
 			table.insert(zb.QueuedModes, modeKey)
@@ -787,7 +787,7 @@ end)
 net.Receive("AdminEndRound", function(len, ply)
 	if not ply:IsAdmin() then return end
 
-	ply:ChatPrint("Round ended!")
+	ply:ChatPrint("Раунд окончен!")
         zb:EndRound(true)
 end)
 
@@ -806,7 +806,7 @@ net.Receive("AdminSetGameQueue", function(len, ply)
 	zb.QueuedModes = modeQueue
 
 	if #modeQueue == 0 then
-		ply:ChatPrint("Game mode queue has been cleared")
+		ply:ChatPrint("Очередь режимов очищена")
 		zb.NotifyQueueModified(ply, "cleared")
 
 
@@ -815,7 +815,7 @@ net.Receive("AdminSetGameQueue", function(len, ply)
 			net.Send(zb.GetAllAdmins())
 		end)
 	else
-		ply:ChatPrint("Game mode queue set with " .. #modeQueue .. " modes")
+		ply:ChatPrint("Очередь режимов задана: " .. #modeQueue .. " modes")
 		zb.NotifyQueueModified(ply, "updated")
 	end
 
@@ -866,7 +866,7 @@ end
 
 COMMANDS.setmode = {
 	function(ply, args)
-		if not ply:IsAdmin() then ply:ChatPrint("You don't have access") return end
+		if not ply:IsAdmin() then ply:ChatPrint("У вас нет доступа") return end
 		if not args[1] or (not zb:GetMode(args[1]) and args[1]~="random") then return end
 		ply:ChatPrint(args[1])
                 NextRound(args[1], true)
@@ -876,7 +876,7 @@ COMMANDS.setmode = {
 
 COMMANDS.setforcemode = {
 	function(ply, args)
-		if not ply:IsAdmin() then ply:ChatPrint("You don't have access") return end
+		if not ply:IsAdmin() then ply:ChatPrint("У вас нет доступа") return end
 		if not args[1] or (not zb:GetMode(args[1]) and args[1]~="random") then return end
 		ply:ChatPrint(args[1])
 		forcemode = args[1]
@@ -889,7 +889,7 @@ COMMANDS.setforcemode = {
 COMMANDS.endround = {
 	function(ply, args)
 		if not ply:IsAdmin() then
-			ply:ChatPrint("You don't have access")
+			ply:ChatPrint("У вас нет доступа")
 			return
 		end
                 zb:EndRound(true)
@@ -926,16 +926,16 @@ if SERVER then
 		local modeKey = net.ReadString()
 		local addToQueue = net.ReadBool() or false
 		if command ~= "setmode" and command ~= "setforcemode" then return end
-		if not isstring(modeKey) or not zb.modes[modeKey] then ply:ChatPrint("Invalid game mode") return end
+		if not isstring(modeKey) or not zb.modes[modeKey] then ply:ChatPrint("Неверный режим") return end
 
 		if !(ply:IsSuperAdmin() or ply:IsAdmin()) and not zb.modes[modeKey]:CanLaunch() then
-			ply:ChatPrint("This mode can't launch (No points or Is blocked): " .. modeKey)
+			ply:ChatPrint("Этот режим нельзя запустить (нет точек или заблокирован): " .. modeKey)
 			return
 		end
 
 		if command == "setmode" then
                         NextRound(modeKey, true)
-			ply:ChatPrint("Game mode set to: " .. modeKey)
+			ply:ChatPrint("Режим игры: " .. modeKey)
 
 			if addToQueue and #zb.QueuedModes < 12 then
 				table.insert(zb.QueuedModes, modeKey)
@@ -946,7 +946,7 @@ if SERVER then
 		elseif command == "setforcemode" then
 			forcemode = modeKey
                         NextRound(forcemode, true)
-			ply:ChatPrint("Force mode set to: " .. modeKey)
+			ply:ChatPrint("Принудительный режим: " .. modeKey)
 
 			if addToQueue and #zb.QueuedModes < 12 then
 				table.insert(zb.QueuedModes, modeKey)
@@ -980,7 +980,7 @@ if SERVER then
 		zb.QueuedModes = modeQueue
 
 		if #modeQueue == 0 then
-			ply:ChatPrint("Game mode queue has been cleared")
+			ply:ChatPrint("Очередь режимов очищена")
 			zb.NotifyQueueModified(ply, "cleared")
 
 
@@ -989,7 +989,7 @@ if SERVER then
 				net.Send(zb.GetAllAdmins())
 			end)
 		else
-			ply:ChatPrint("Game mode queue set with " .. #modeQueue .. " modes")
+			ply:ChatPrint("Очередь режимов задана: " .. #modeQueue .. " modes")
 			zb.NotifyQueueModified(ply, "updated")
 		end
 

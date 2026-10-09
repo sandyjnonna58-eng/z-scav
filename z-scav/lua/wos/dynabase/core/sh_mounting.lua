@@ -233,7 +233,7 @@ local function AdjustMountOrder( tbl, typ )
 	local new_tbl = {}
 
 	if WOS_DYNABASE_ENFORCECONTENT_CVAR:GetInt() > 0 then
-		local cust_mount = wOS.DynaBase:GetSource( "Local Player Animations" )
+		local cust_mount = wOS.DynaBase:GetSource( "Анимации локального игрока" )
 		if cust_mount then
 			if typ == WOS_DYNABASE.MALE then
 				table.RemoveByValue( tbl, cust_mount.Male )

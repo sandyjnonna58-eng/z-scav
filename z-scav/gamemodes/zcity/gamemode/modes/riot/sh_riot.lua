@@ -16,18 +16,18 @@ RIOT_INTENSITIES = RIOT_INTENSITIES or {
 		id = "CONTAINED",
 		name = "Contained",
 		color = Color(120, 170, 255),
-		description = "Things are getting aggressive."
+		description = "Становится агрессивно."
 	},
 	[2] = {
 		id = "ESCALATED",
 		name = "Escalated",
 		color = Color(255, 190, 90),
-		description = "Some people are armed, the fire is rising."
+		description = "Некоторые вооружены, огонь разгорается."
 	},
 	[3] = {
 		id = "ANARCHY",
 		name = "Anarchy",
 		color = Color(255, 90, 90),
-		description = "This is civil war now."
+		description = "Это уже гражданская война."
 	}
 }

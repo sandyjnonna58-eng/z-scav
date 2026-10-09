@@ -224,7 +224,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 					knowledge["consequences"] = true
 					knowledge_changed = true
 					
-					PLUGIN.ShowMessage(ply, "You are now able to read page 8")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 8")
 				end
 			end
 			
@@ -233,7 +233,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 					knowledge["instabillity"] = true
 					knowledge_changed = true
 					
-					PLUGIN.ShowMessage(ply, "You are now able to read page 9")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 9")
 				end
 			end
 			
@@ -242,8 +242,8 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 					knowledge["positive_instabillity"] = true
 					knowledge_changed = true
 					
-					PLUGIN.ShowMessage(ply, "You are now able to read page 13")
-					PLUGIN.ShowMessage(ply, "You are now able to read page 15")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 13")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 15")
 				end
 			end
 			
@@ -252,8 +252,8 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 					knowledge["negative_instabillity"] = true
 					knowledge_changed = true
 					
-					PLUGIN.ShowMessage(ply, "You are now able to read page 14")
-					PLUGIN.ShowMessage(ply, "You are now able to read page 16")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 14")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 16")
 				end
 			end
 			
@@ -262,7 +262,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 					knowledge["insanity"] = true
 					knowledge_changed = true
 					
-					PLUGIN.ShowMessage(ply, "You are now able to read page 10")
+					PLUGIN.ShowMessage(ply, "Теперь вы можете прочитать страницу 10")
 				end
 			end
 			
@@ -879,7 +879,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 							if(!PLUGIN.HotZones[zone_id])then
 								PLUGIN.HotZones[zone_id] = true
 								
-								PLUGIN.ShowMessageInSphere("Zone grew enough to start phrase accumulation and rituals", zone.Pos, zone.Radius)
+								PLUGIN.ShowMessageInSphere("Зона выросла достаточно для накопления фраз и ритуалов", zone.Pos, zone.Radius)
 							end
 							
 							for abnormalty_name, amt in pairs(abnormalty) do
@@ -988,7 +988,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 					if(!PLUGIN.HotZones[zone_id])then
 						PLUGIN.HotZones[zone_id] = true
 						
-						PLUGIN.ShowMessageInSphere("Zone grew enough to start phrase accumulation and rituals", zone.Pos, zone.Radius)
+						PLUGIN.ShowMessageInSphere("Зона выросла достаточно для накопления фраз и ритуалов", zone.Pos, zone.Radius)
 					end
 					
 					for abnormalty_name, amt in pairs(abnormalty) do
@@ -1147,10 +1147,10 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 								end)
 								
 								if(!found_zone)then
-									PLUGIN.ShowMessage(ply, "No zones found")
+									PLUGIN.ShowMessage(ply, "Зоны не найдены")
 								end
 							else
-								PLUGIN.ShowMessage(ply, "Your words seem to fade into the nothingness")
+								PLUGIN.ShowMessage(ply, "Ваши слова растворяются в пустоте")
 							end
 						else
 							PLUGIN.LoadConsequences(ply)
@@ -1175,7 +1175,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 	ABNO Equalizers: ]] .. math.Round(ply.Abnormalties_Equalizers or 0) .. [[
 								]])
 							else
-								PLUGIN.ShowMessage(ply, "Your words seem to fade into the nothingness")
+								PLUGIN.ShowMessage(ply, "Ваши слова растворяются в пустоте")
 							end
 						else
 							PLUGIN.LoadConsequences(ply)
@@ -1198,10 +1198,10 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 								local abnormalty_name = string.Trim(string.sub(text, #cmd_find_phrase + 1))
 								local phrase, success = PLUGIN.FindValidPhrase(abnormalty_name, 40, "")
 								
-								PLUGIN.ShowMessage(ply, "Something whispers:")
+								PLUGIN.ShowMessage(ply, "Что-то шепчет:")
 								PLUGIN.ShowMessage(ply, phrase)
 							else
-								PLUGIN.ShowMessage(ply, "Your words seem to fade into the nothingness")
+								PLUGIN.ShowMessage(ply, "Ваши слова растворяются в пустоте")
 							end
 						else
 							PLUGIN.LoadConsequences(ply)
@@ -1230,7 +1230,7 @@ util.AddNetworkString("Abnormalties(SendOpenedPage)")
 						
 						ply.Abnormalties_PhraseAmtToShow = 2
 					else
-						PLUGIN.ShowMessage(ply, "There is no meaning in these letters...")
+						PLUGIN.ShowMessage(ply, "В этих буквах нет смысла...")
 					end
 				end
 			end

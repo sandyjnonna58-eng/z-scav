@@ -35,7 +35,7 @@ function SWEP:PrimaryAttack()
     local now = CurTime()
     org.remAntibioticsUntil = math.min(math.max(org.remAntibioticsUntil or 0, now) + DOSE_TIME, now + MAX_TIME)
     ply:EmitSound("snd_jack_hmcd_pillsuse.wav", 60, math.random(95, 105))
-    ply:Notify("Antibiotics.. my body is fighting back.", 4, "zscav_antibiotics", 0)
+    ply:Notify("Антибиотики.. организм сопротивляется.", 4, "zscav_antibiotics", 0)
     self.Pills = (self.Pills or PILLS) - 1
     if self.Pills <= 0 then
         ply:SelectWeapon("weapon_hands_sh")

@@ -68,44 +68,44 @@ local huyasd = {
 }
 
 local broke_arm = {
-	"AAAAH OH GOD, IT'S BROKEN! MY ARM! IT'S BROKEN!",
-	"FUCK MY FUCKING ARM IS BROKEN!",
-	"NONONO MY ARM IS BENT ALL WRONG!",
-	"IT'S.. MY ARM.. SNAPPED- I HEARD IT SNAP!",
-	"MY ARM IS NOT SUPPOSED TO BEND IN HALF!",
+	"ААААА БОЖЕ, ОНА СЛОМАНА! МОЯ РУКА! СЛОМАНА!",
+	"ЧЁРТ, МОЯ ЧЁРТОВА РУКА СЛОМАНА!",
+	"НЕТНЕТНЕТ РУКА ВЫГНУТА СОВСЕМ НЕ ТАК!",
+	"ЭТО.. МОЯ РУКА.. ХРУСТНУЛА- Я СЛЫШАЛ ХРУСТ!",
+	"РУКА НЕ ДОЛЖНА ГНУТЬСЯ ПОПОЛАМ!",
 }
 
 local dislocated_arm = {
-	"MY ARM- GOD, IT'S POPPED OUT OF THE SOCKET!",
-	"FUCK- THE SHOULDER'S JUST- HANGING LOOSE!",
-	"MY ARM..! IT'S DISLOCATED! I CAN SEE THE BULGE WHERE IT'S WRONG!",
-	"THE ARM'S JUST- DEAD WEIGHT- IT'S NOT ATTACHED RIGHT!",
-	"SHIT! I CAN FEEL THE BONE OUT OF PLACE!",
+	"МОЯ РУКА- БОЖЕ, ОНА ВЫСКОЧИЛА ИЗ СУСТАВА!",
+	"ЧЁРТ- ПЛЕЧО ПРОСТО- БОЛТАЕТСЯ!",
+	"МОЯ РУКА..! ВЫВИХ! ВИЖУ, ГДЕ ВЫПИРАЕТ!",
+	"РУКА ПРОСТО- МЁРТВЫЙ ГРУЗ- ОНА НЕ НА МЕСТЕ!",
+	"ЧЁРТ! ЧУВСТВУЮ, КАК КОСТЬ НЕ НА МЕСТЕ!",
 }
 
 local broke_leg = {
-	"MY LEG- FUCK, IT'S BROKEN- I HEARD THE SNAP!",
-	"FUCK! THE SHIN'S SNAPPED CLEAN THROUGH!",
-	"THE KNEE'S WRONG- THE WHOLE LEG'S TWISTED WRONG!",
-	"MY LEG..! IT'S JUST- HANGING BY MUSCLE AND SKIN!",
-	"THE PAIN'S SHOOTING UP TO MY HIP- FUCK, IT'S BAD!",
-	"I CAN'T MOVE MY FOOT- THE ANKLE'S BROKEN TOO!",
+	"МОЯ НОГА- ЧЁРТ, СЛОМАНА- Я СЛЫШАЛ ХРУСТ!",
+	"ЧЁРТ! ГОЛЕНЬ ПЕРЕЛОМИЛАСЬ НАСКВОЗЬ!",
+	"КОЛЕНО НЕ ТАК- ВСЯ НОГА ВЫВЕРНУТА!",
+	"МОЯ НОГА..! ОНА ПРОСТО- ВИСИТ НА МЫШЦАХ И КОЖЕ!",
+	"БОЛЬ ОТДАЁТ В БЕДРО- ЧЁРТ, ВСЁ ПЛОХО!",
+	"НЕ МОГУ ПОШЕВЕЛИТЬ СТОПОЙ- ЛОДЫЖКА ТОЖЕ СЛОМАНА!",
 }
 
 local dislocated_leg = {
-	"MY LEG- FUCK, IT'S DISLOCATED AT THE KNEE!",
-	"I CAN SEE THE KNEECAP IN THE WRONG PLACE!",
-	"AGHH- THE HIP'S POPPED OUT- IT'S STUCK OUTWARD!",
-	"IT'S BENT BACKWARD- THE KNEE SHOULDN'T BEND THIS WAY!",
-	"FUCK! THE HIP'S DISLOCATED!",
-	"THE ANKLE'S TWISTED- BUT THE KNEE'S THE REAL PROBLEM!",
+	"МОЯ НОГА- ЧЁРТ, ВЫВИХ В КОЛЕНЕ!",
+	"КОЛЕННАЯ ЧАШЕЧКА НЕ НА МЕСТЕ!",
+	"АГХХ- БЕДРО ВЫСКОЧИЛО- ТОРЧИТ НАРУЖУ!",
+	"ОНО ВЫГНУТО НАЗАД- КОЛЕНО ТАК НЕ ГНЁТСЯ!",
+	"ЧЁРТ! ВЫВИХ БЕДРА!",
+	"ЛОДЫЖКА ВЫВЕРНУТА- НО ГЛАВНОЕ - КОЛЕНО!",
 }
 
 local limbName = {
-	rleg = "right leg",
-	lleg = "left leg",
-	rarm = "right arm",
-	larm = "left arm",
+	rleg = "правая нога",
+	lleg = "левая нога",
+	rarm = "правая рука",
+	larm = "левая рука",
 }
 
 local function sendThought(org, msg, key, delay, clr)
@@ -154,7 +154,7 @@ local function legs(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(broke_leg[math.random(#broke_leg)], 1, "broke"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " is broken.", "thought_broke" .. key, 1, Color(255, 210, 210))
+		sendThought(org, "Your " .. limbName[key] .. " сломана.", "thought_broke" .. key, 1, Color(255, 210, 210))
 
 		timer.Simple(0, function() hg.LightStunPlayer(org.owner,2) end)
 		playBoneFractureSound(org.owner)
@@ -173,7 +173,7 @@ local function legs(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(dislocated_leg[math.random(#dislocated_leg)], 1, "dislocated"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " is dislocated.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
+		sendThought(org, "Your " .. limbName[key] .. " вывихнута.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
 
 		timer.Simple(0, function() hg.LightStunPlayer(org.owner,2) end)
 		playBoneFractureSound(org.owner)
@@ -221,7 +221,7 @@ local function arms(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(broke_arm[math.random(#broke_arm)], 1, "broke"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " is broken.", "thought_broke" .. key, 1, Color(255, 210, 210))
+		sendThought(org, "Your " .. limbName[key] .. " сломана.", "thought_broke" .. key, 1, Color(255, 210, 210))
 
 		--timer.Simple(0, function() hg.LightStunPlayer(org.owner,1) end)
 		playBoneFractureSound(org.owner)
@@ -239,7 +239,7 @@ local function arms(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(dislocated_arm[math.random(#dislocated_arm)], 1, "dislocated"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " is dislocated.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
+		sendThought(org, "Your " .. limbName[key] .. " вывихнута.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
 
 		--timer.Simple(0, function() hg.LightStunPlayer(org.owner,1) end)
 		playBoneFractureSound(org.owner)
@@ -288,7 +288,7 @@ local function spine(org, bone, dmg, dmgInfo, number, boneindex, dir, hit, ricoc
 			org.owner:Notify(huyasd[name], true, name, 2)
 		end
 		if org.owner:IsPlayer() then
-			sendThought(org, "Your spine is broken.", "thought_" .. name, 4, Color(255, 210, 210))
+			sendThought(org, "Ваш позвоночник сломан.", "thought_" .. name, 4, Color(255, 210, 210))
 		end
 		org.painadd = org.painadd + 25
 	end
@@ -304,16 +304,16 @@ local function spine(org, bone, dmg, dmgInfo, number, boneindex, dir, hit, ricoc
 end
 
 local jaw_broken_msg = {
-	"I FEEL PIECES OF MY JAW... FUCK-FUCK-FUCK",
-	"MY JAW IS FUCKING FLOATING IN MY HEAD",
-	"MY JAW... OHH IT HURTS REALLY BAD... I FEEL PIECES OF IT MOVING",
+	"Я ЧУВСТВУЮ ОСКОЛКИ ЧЕЛЮСТИ... ЧЁРТ-ЧЁРТ-ЧЁРТ",
+	"МОЯ ЧЕЛЮСТЬ БОЛТАЕТСЯ В ГОЛОВЕ",
+	"МОЯ ЧЕЛЮСТЬ... ОХ КАК БОЛЬНО... ЧУВСТВУЮ, КАК ДВИГАЮТСЯ ОСКОЛКИ",
 }
 
 local jaw_dislocated_msg = {
-	"I CAN'T CLOSE MY JAW... IT FUCKING HURTS",
+	"НЕ МОГУ ЗАКРЫТЬ РОТ... ЧЁРТ, КАК БОЛЬНО",
 	"MY JAW... ITS JUST STUCK THERE-- OH ITS PAINING",
-	"I CANT MOVE MY JAW AT ALL... AND ITS REALLY ACHING",
-	//"I CANT EVEN SPEAK, I NEED TO PUNCH IT BACK IN PLACE... BUT IT HURTS REAL BAD",
+	"НЕ МОГУ ПОШЕВЕЛИТЬ ЧЕЛЮСТЬЮ... И ОНА УЖАСНО НОЕТ",
+	//"НЕ МОГУ ДАЖЕ ГОВОРИТЬ, НАДО ВПРАВИТЬ ЕЁ УДАРОМ... НО ЭТО ОЧЕНЬ БОЛЬНО",
 }
 
 local input_list = hg.organism.input_list
@@ -326,7 +326,7 @@ input_list.jaw = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricochet
 
 	if org.jaw == 1 and (org.jaw - oldDmg) > 0 and org.isPly then
 		if !hasNewThoughts(org) then org.owner:Notify(jaw_broken_msg[math.random(#jaw_broken_msg)], true, "jaw", 2) end
-		sendThought(org, "Your jaw is broken.", "thought_jaw", 4, Color(255, 210, 210))
+		sendThought(org, "Ваша челюсть сломана.", "thought_jaw", 4, Color(255, 210, 210))
 	end
 
 	local dislocated = (org.jaw - oldDmg) > math.Rand(0.1, 0.3)
@@ -356,7 +356,7 @@ input_list.jaw = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricochet
 
 		if org.isPly then
 			if !hasNewThoughts(org) then org.owner:Notify(jaw_dislocated_msg[math.random(#jaw_dislocated_msg)], true, "jaw", 2) end
-			sendThought(org, "Your jaw is dislocated.", "thought_jawdislocated", 4, Color(255, 220, 220))
+			sendThought(org, "Ваша челюсть вывихнута.", "thought_jawdislocated", 4, Color(255, 220, 220))
 		end
 	end
 
@@ -371,7 +371,7 @@ hook.Add("CanListenOthers", "CantHaveShitInDetroit", function(output, input, isC
 	if IsValid(output) and output.organism and (output.organism.jaw == 1 or output.organism.jawdislocation) and output:Alive() and (output:IsSpeaking() or isChat) then
 		-- and !isChat and output:IsSpeaking()
 		output.organism.painadd = output.organism.painadd + 2 * (output:IsSpeaking() and 1 or (isChat and 5 or 0))
-		if output:GetInfoNum("hg_newthoughts", 0) <= 0 then output:Notify("My jaw is really hurting when I speak.", 60, "painfromjawspeak", 0, nil, Color(255, 210, 210)) end
+		if output:GetInfoNum("hg_newthoughts", 0) <= 0 then output:Notify("Челюсть очень болит, когда я говорю.", 60, "painfromjawspeak", 0, nil, Color(255, 210, 210)) end
 	end
 end)
 
@@ -389,7 +389,7 @@ input_list.skull = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricoch
 
 		if oldDmg != 1 then
 			playSkullFractureSound(org.owner)
-			sendThought(org, "Your skull is broken.", "thought_skull", 4, Color(255, 180, 180))
+			sendThought(org, "Ваш череп проломлен.", "thought_skull", 4, Color(255, 180, 180))
 		end
 	end
 
@@ -448,10 +448,10 @@ input_list.skull = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricoch
 end
 
 local ribs = {
-	"MY CHEST... SNAPPED",
-	"SOMETHING SNAPPED IN MY TORSO",
-	"THERE'S SOMETHING SHARP IN MY CHEST...",
-	"I FEEL SOMETHING SHARP IN MY TORSO",
+	"МОЯ ГРУДЬ... ХРУСТНУЛА",
+	"В ГРУДИ ЧТО-ТО ХРУСТНУЛО",
+	"В ГРУДИ ЧТО-ТО ОСТРОЕ...",
+	"ЧУВСТВУЮ ЧТО-ТО ОСТРОЕ В ГРУДИ",
 }
 
 input_list.chest = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricochet)	
@@ -471,7 +471,7 @@ input_list.chest = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricoch
 		
 		if org.brokenribs > 0 then
 			//org.owner:Notify(ribs[math.random(#ribs)], 5, "ribs", 4)
-			sendThought(org, "You broke " .. org.brokenribs .. " ribs.", "thought_ribs", 3, Color(255, 210, 210))
+			sendThought(org, "Вы сломали " .. org.brokenribs .. " ribs.", "thought_ribs", 3, Color(255, 210, 210))
 
 			playBoneFractureSound(org.owner)
 			if hg.QueuePainScream then hg.QueuePainScream(org.owner, 0.8) end
@@ -493,8 +493,8 @@ input_list.pelvis = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricoc
 	hg.AddHarmToAttacker(dmgInfo, (org.pelvis - oldDmg) / 2, "Pelvis bone damage harm")
 
 	if org.isPly and org.pelvis == 1 then
-		//org.owner:Notify("My pelvis is agonizingly hurting.", true, "pelvis", 4)
-		sendThought(org, "Your pelvis is broken.", "thought_pelvis", 4, Color(255, 210, 210))
+		//org.owner:Notify("Таз ужасно болит.", true, "pelvis", 4)
+		sendThought(org, "Ваш таз сломан.", "thought_pelvis", 4, Color(255, 210, 210))
 	end
 
 	return result

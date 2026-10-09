@@ -45,7 +45,7 @@ function hg.organism.LastStandChance(mood100)
     return 1
 end
 
-local PHRASES = {"Not like this.. NOT LIKE THIS!", "Get up. GET UP!", "I'm not dying here!", "Not yet.. not yet!"}
+local PHRASES = {"Только не так.. ТОЛЬКО НЕ ТАК!", "Вставай. ВСТАВАЙ!", "Я здесь не умру!", "Ещё нет.. ещё нет!"}
 
 local function Activate(owner, org)
     local now = CurTime()

@@ -39,12 +39,12 @@ net.Receive("HMCD_RoundStart",function()
 
 	if(lply.isTraitor and screen_time_is_default)then
 		if(MODE.TraitorExpectedAmt == 1)then
-			chat.AddText("You are alone on your mission.")
+			chat.AddText("Вы один на задании.")
 		else
 			if(MODE.TraitorExpectedAmt == 2)then
-				chat.AddText("You have 1 accomplice")
+				chat.AddText("У вас 1 сообщник")
 			else
-				chat.AddText("There are(is) " .. MODE.TraitorExpectedAmt - 1 .. " traitor(s) besides you")
+				chat.AddText("Кроме вас есть ещё " .. MODE.TraitorExpectedAmt - 1 .. " предатель(ей)")
 			end
 
 			chat.AddText("Traitor secret words are: \"" .. MODE.TraitorWord .. "\" and \"" .. MODE.TraitorWordSecond .. "\".")
@@ -68,7 +68,7 @@ net.Receive("HMCD_RoundStart",function()
 
 		if(lply.MainTraitor)then
 			if(MODE.TraitorExpectedAmt > 1)then
-				chat.AddText("Traitor names (only you, as a main traitor can see them):")
+				chat.AddText("Имена предателей (их видите только вы, как главный предатель):")
 			end
 
 			for _, traitor_info in ipairs(MODE.TraitorsLocal) do
@@ -180,21 +180,21 @@ surface.CreateFont("ZB_HomicideHumongous", {
 MODE.TypeObjectives = {}
 MODE.TypeObjectives.standard = {
 	traitor = {
-		objective = "You're geared up with items, poisons, explosives and weapons hidden in your pockets. Murder everyone here.",
+		objective = "У вас в карманах спрятаны предметы, яды, взрывчатка и оружие. Убейте всех здесь.",
 		name = "a Murderer",
 		color1 = Color(190,0,0),
 		color2 = Color(190,0,0)
 	},
 
 	gunner = {
-		objective = "You are a hero. You've tasked yourself to help police find the criminal faster.",
+		objective = "Вы герой. Вы решили помочь полиции быстрее найти преступника.",
 		name = "a Hero",
 		color1 = Color(158,0,190),
 		color2 = Color(158,0,190)
 	},
 
 	innocent = {
-		objective = "You are a bystander of a murder scene, although it didn't happen to you, you better be cautious.",
+		objective = "Вы свидетель места убийства. Хоть это случилось не с вами, лучше быть осторожнее.",
 		name = "a Bystander",
 		color1 = Color(0,120,190)
 	},
@@ -216,10 +216,10 @@ function MODE:RenderScreenspaceEffects()
 end
 
 local handicap = {
-	[1] = "You are handicapped: your right leg is broken.",
-	[2] = "You are handicapped: you are suffering from severe obesity.",
-	[3] = "You are handicapped: you are suffering from hemophilia.",
-	[4] = "You are handicapped: you are physically incapacitated."
+	[1] = "Вы с ограничением: у вас сломана правая нога.",
+	[2] = "Вы с ограничением: у вас тяжёлое ожирение.",
+	[3] = "Вы с ограничением: у вас гемофилия.",
+	[4] = "Вы с ограничением: вы физически немощны."
 }
 
 local function hmcd_ease_out(x)
@@ -468,7 +468,7 @@ function MODE:HUDPaint()
 	end
 
 	add("Homicide", "ZB_HomicideHeader", Color(255, 255, 255), sw * 0.5, sh * 0.1, "left", 0, 0.9)
-	add("You are " .. Rolename, "ZB_HomicideMediumLarge", ColorRole, sw * 0.5, sh * 0.5, "right", 0.7, 1.1)
+	add("Вы — " .. Rolename, "ZB_HomicideMediumLarge", ColorRole, sw * 0.5, sh * 0.5, "right", 0.7, 1.1)
 
 	local cur_y = sh * 0.5
 	local stack_delay = 1.1
@@ -491,7 +491,7 @@ function MODE:HUDPaint()
 		MODE.TraitorsLocal = MODE.TraitorsLocal or {}
 
 		if(#MODE.TraitorsLocal > 0)then
-			add("Traitors list:", "ZB_HomicideMedium", ColorRole, sw * 0.5, cur_y, "right", stack_delay, 1.05)
+			add("Список предателей:", "ZB_HomicideMedium", ColorRole, sw * 0.5, cur_y, "right", stack_delay, 1.05)
 			stack_delay = stack_delay + 0.15
 
 			for _, traitor_info in ipairs(MODE.TraitorsLocal) do
@@ -500,7 +500,7 @@ function MODE:HUDPaint()
 				stack_delay = stack_delay + 0.15
 			end
 		elseif(!lply.MainTraitor)then
-			add("Traitor secret words:", "ZB_HomicideMedium", ColorRole, sw * 0.5, cur_y, "right", stack_delay, 1.05)
+			add("Секретные слова предателей:", "ZB_HomicideMedium", ColorRole, sw * 0.5, cur_y, "right", stack_delay, 1.05)
 			stack_delay = stack_delay + 0.15
 
 			cur_y = cur_y + ScreenScale(15)
@@ -534,12 +534,12 @@ function MODE:HUDPaint()
 	end
 
 	if(!lply.MainTraitor and lply.isTraitor)then
-		Objective = "You are equipped with nothing. Help other traitors win."
+		Objective = "У вас нет снаряжения. Помогите другим предателям победить."
 	end
 
 	--; WARNING Traitor's objective is not lined up with SubRole's
 	if(!MODE.RoleEndedChosingState)then
-		Objective = "Round is starting..."
+		Objective = "Раунд начинается..."
 	end
 
 	add(Objective, "ZB_HomicideMedium", Color(255, 255, 255), sw * 0.5, sh * 0.9, "bottom", 1.4, 1.3, true)
@@ -581,7 +581,7 @@ function MODE:HUDPaint()
 		surface.SetDrawColor(255, 255, 255, math.random(175, 255) * pluv_a / 2)
 		surface.DrawTexturedRect(sw * 0.25 + cox, sh * 0.44 - ScreenScale(15) + coy, sw / 2, ScreenScale(30))
 
-		draw.SimpleText("SOMEWHERE IN PLUVTOWN", "ZB_ScrappersLarge", sw / 2 + cox, sh * 0.44 - ScreenScale(2) + coy, Color(0, 0, 0, 255 * pluv_a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("ГДЕ-ТО В ПЛЮВТАУНЕ", "ZB_ScrappersLarge", sw / 2 + cox, sh * 0.44 - ScreenScale(2) + coy, Color(0, 0, 0, 255 * pluv_a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -625,7 +625,7 @@ net.Receive("hmcd_announce_traitor_lose", function()
 	local traitor_alive = net.ReadBool()
 
 	if(IsValid(traitor))then
-		chat.AddText(color_white, (traitor_alive and "" or "Traitor "), traitor:GetPlayerColor():ToColor(), traitor:GetPlayerName() .. ", " .. traitor:Nick(), color_white, " was " .. (traitor_alive and "a Traitor." or "killed."))
+		chat.AddText(color_white, (traitor_alive and "" or "Предатель "), traitor:GetPlayerColor():ToColor(), traitor:GetPlayerName() .. ", " .. traitor:Nick(), color_white, " was " .. (traitor_alive and "a Traitor." or "killed."))
 	end
 end)
 
@@ -723,9 +723,9 @@ CreateEndMenu = function(traitor)
 	hmcdEndMenu.PaintOver = function(self,w,h)
 		surface.SetFont( "ZB_InterfaceMediumLarge" )
 		surface.SetTextColor(col.r,col.g,col.b,col.a)
-		local lengthX, lengthY = surface.GetTextSize(traitorName .. " was a traitor ("..traitorNick..")")
+		local lengthX, lengthY = surface.GetTextSize(traitorName .. " был предателем ("..traitorNick..")")
 		surface.SetTextPos(w / 2 - lengthX / 2, 20)
-		surface.DrawText(traitorName .. " was a traitor ("..traitorNick..")")
+		surface.DrawText(traitorName .. " был предателем ("..traitorNick..")")
 	end
 
 	-- PLAYERS
@@ -778,7 +778,7 @@ CreateEndMenu = function(traitor)
 		end
 
 		function but:DoClick()
-			if info.steamid == "BOT" then chat.AddText(Color(255, 0, 0), "That's a bot.") return end
+			if info.steamid == "BOT" then chat.AddText(Color(255, 0, 0), "Это бот.") return end
 			gui.OpenURL("https://steamcommunity.com/profiles/"..info.steamid)
 		end
 

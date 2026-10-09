@@ -2,7 +2,7 @@ if SERVER then AddCSLuaFile() end
 
 SWEP.Base = "weapon_tpik1_base"
 SWEP.PrintName = "AED"
-SWEP.Instructions = "Attach to chest"
+SWEP.Instructions = "Прикрепить к груди"
 SWEP.Category = "ZCity Medicine"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -922,14 +922,14 @@ if CLIENT then
 		if LocalPlayer():InVehicle() then return end
 
 		local x, y = ScrW() / 2, ScrH() / 2 + 65
-		local text = "Hold RMB to place AED on yourself"
+		local text = "Удерживайте ПКМ, чтобы закрепить дефибриллятор на себе"
 		draw.SimpleText(text, "HomigradFont", x + 3, y + 26, color_black, TEXT_ALIGN_CENTER)
 		draw.SimpleText(text, "HomigradFont", x, y + 24, color_white, TEXT_ALIGN_CENTER)
 
 		local target, ply = TraceDefibTarget(LocalPlayer(), self.DefibRange)
 		if not IsValid(target) or target == LocalPlayer() or ply == LocalPlayer() then return end
 
-		draw.SimpleText("Hold LMB to place AED", "HomigradFont", x + 3, y + 2, color_black, TEXT_ALIGN_CENTER)
-		draw.SimpleText("Hold LMB to place AED", "HomigradFont", x, y, color_white, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Удерживайте ЛКМ, чтобы закрепить дефибриллятор", "HomigradFont", x + 3, y + 2, color_black, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Удерживайте ЛКМ, чтобы закрепить дефибриллятор", "HomigradFont", x, y, color_white, TEXT_ALIGN_CENTER)
 	end
 end

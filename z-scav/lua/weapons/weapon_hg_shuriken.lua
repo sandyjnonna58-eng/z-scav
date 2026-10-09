@@ -1,7 +1,7 @@
 ﻿if SERVER then AddCSLuaFile() end
 SWEP.PrintName = "Shuriken"
 SWEP.Category = "ZCity Other"
-SWEP.Instructions = "Shuriken, also called throwing stars, or ninja stars, are a Japanese concealed weapon used by samurai or ninja or in martial arts as a hidden dagger to distract or misdirect."
+SWEP.Instructions = "Сюрикэны, они же метательные звёзды, — японское скрытое оружие самураев и ниндзя, использовалось как метательный кинжал, чтобы отвлечь или сбить с толку."
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 SWEP.Primary.ClipSize = -1

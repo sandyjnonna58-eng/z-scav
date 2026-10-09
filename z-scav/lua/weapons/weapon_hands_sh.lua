@@ -593,13 +593,13 @@ else
 
 			surface.SetFont("HomigradFontLarge")
 			surface.SetTextColor(255, 255, 255, lerpalpha)
-			local txt = "Afflictions shown for "..ent:GetPlayerName()..":"
+			local txt = "Травмы показаны на "..ent:GetPlayerName()..":"
 			local w1, h1 = surface.GetTextSize(txt)
 			surface.SetTextPos(scrw * 0.05, scrh * 0.95 - h - h1)
 			surface.DrawText(txt)
 
 			if org.blood and org.blood < 4000 then
-				hg.DrawAffliction(posx + add_x, posy - h, w, h, (4000 - org.blood) / 4000, hg.afflictions.pale, lerpalpha, "Pale skin")
+				hg.DrawAffliction(posx + add_x, posy - h, w, h, (4000 - org.blood) / 4000, hg.afflictions.pale, lerpalpha, "Бледная кожа")
 
 				add_x = add_x + w + add
 			end
@@ -617,25 +617,25 @@ else
 			end
 
 			if org.rleg and org.rleg > 0 then
-				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rleg, org.rleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.rleg > 0.999 and "Right leg fracture" or "Right leg blunt trauma")
+				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rleg, org.rleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.rleg > 0.999 and "Перелом правой ноги" or "Ушиб правой ноги")
 
 				add_x = add_x + w + add
 			end
 
 			if org.lleg and org.lleg > 0 then
-				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.lleg, org.lleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.lleg > 0.999 and "Left leg fracture" or "Left leg blunt trauma")
+				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.lleg, org.lleg > 0.999 and hg.afflictions.lfracture or hg.afflictions.lblunt, lerpalpha, org.lleg > 0.999 and "Перелом левой ноги" or "Ушиб левой ноги")
 
 				add_x = add_x + w + add
 			end
 
 			if org.rarm and org.rarm > 0 then
-				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rarm, org.rarm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.rarm > 0.999 and "Right arm fracture" or "Right arm blunt trauma")
+				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.rarm, org.rarm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.rarm > 0.999 and "Перелом правой руки" or "Ушиб правой руки")
 
 				add_x = add_x + w + add
 			end
 
 			if org.larm and org.larm > 0 then
-				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.larm, org.larm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.larm > 0.999 and "Left arm fracture" or "Left arm blunt trauma")
+				hg.DrawAffliction(posx + add_x, posy - h, w, h, org.larm, org.larm > 0.999 and hg.afflictions.afracture or hg.afflictions.ablunt, lerpalpha, org.larm > 0.999 and "Перелом левой руки" or "Ушиб левой руки")
 
 				add_x = add_x + w + add
 			end
@@ -647,7 +647,7 @@ else
 			end
 
 			if org.o2 and org.o2[1] < 5 then
-				hg.DrawAffliction(posx + add_x, posy - h, w, h, (5 - org.o2[1]) / 5, hg.afflictions.lung_failure, lerpalpha, "Lung failure")
+				hg.DrawAffliction(posx + add_x, posy - h, w, h, (5 - org.o2[1]) / 5, hg.afflictions.lung_failure, lerpalpha, "Отказ лёгких")
 
 				add_x = add_x + w + add
 			end
@@ -658,7 +658,7 @@ else
 				surface.SetFont("HomigradFontLarge")
 				surface.SetTextColor(255, 255, 255, lerpalpha)
 				surface.SetTextPos(scrw * 0.05, scrh * 0.95 - h)
-				surface.DrawText("No afflictions.")
+				surface.DrawText("Травм нет.")
 			end
 		end
 	end
@@ -946,21 +946,21 @@ function SWEP:ApplyForce()
 						end
 
 						if (org.last_heartbeat + 60) > CurTime() then
-							ply:ChatPrint("The body is still warm.")
+							ply:ChatPrint("Тело ещё тёплое.")
 						else
-							ply:ChatPrint((org.last_heartbeat + 180) < CurTime() and "The body has been here for awhile." or "The body is slightly warm")
+							ply:ChatPrint((org.last_heartbeat + 180) < CurTime() and "Тело лежит здесь уже давно." or "Тело слегка тёплое")
 						end
 
 						if org.blood < 3500 then
 							//if org.blood < 1000 then
-								//ply:ChatPrint("The skin looks almost white.")
+								//ply:ChatPrint("Кожа почти белая.")
 							//else
-								ply:ChatPrint("The skin is pale.")
+								ply:ChatPrint("Кожа бледная.")
 							//end
 						end
 
 						if org.bleed > 0 then
-							ply:ChatPrint("The body is bleeding "..((org.bleed > 10 and "profusely.") or (org.bleed > 5 and "moderately.") or "slightly."))
+							ply:ChatPrint("Тело кровоточит "..((org.bleed > 10 and "profusely.") or (org.bleed > 5 and "moderately.") or "slightly."))
 						end
 
 						//org.bulletwounds = 0
@@ -971,27 +971,27 @@ function SWEP:ApplyForce()
 						//org.explosionwounds = 0
 
 						if org.bulletwounds > 0 then
-							ply:ChatPrint("You notice "..org.bulletwounds.." bullet wounds on this body.")
+							ply:ChatPrint("Вы замечаете "..org.bulletwounds.." огнестрельных ран на теле.")
 						end
 
 						if org.stabwounds > 0 then
-							ply:ChatPrint("You notice "..org.stabwounds.." stab wounds on this body.")//28 STAB WOUNDS. YOU WOULDNT LEAVE HIM A CHANCE, HUH?
+							ply:ChatPrint("Вы замечаете "..org.stabwounds.." колотых ран на теле.")//28 STAB WOUNDS. YOU WOULDNT LEAVE HIM A CHANCE, HUH?
 						end
 
 						if org.slashwounds > 0 then
-							ply:ChatPrint("You notice "..org.slashwounds.." slashes on this body.")
+							ply:ChatPrint("Вы замечаете "..org.slashwounds.." резаных ран на теле.")
 						end
 
 						if org.bruises > 0 then
-							ply:ChatPrint("You notice "..org.bruises.." bruises on this body.")
+							ply:ChatPrint("Вы замечаете "..org.bruises.." синяков на теле.")
 						end
 
 						if org.burns > 0 then
-							ply:ChatPrint("The body was burned.")
+							ply:ChatPrint("Тело обожжено.")
 						end
 
 						if org.explosionwounds > 0 then
-							ply:ChatPrint("The body appears to have blast trauma.")
+							ply:ChatPrint("На теле следы взрывной травмы.")
 						end
 
 						if (bone == "ValveBiped.Bip01_Head1") then
@@ -1004,14 +1004,14 @@ function SWEP:ApplyForce()
 							--ply:ChatPrint(org.otrub and "No reaction." or "Reaction present.")
 
 							if org.isPly and not org.otrub then
-								org.owner:ChatPrint("You were checked for reaction.")
+								org.owner:ChatPrint("Вас проверили на реакцию.")
 							end
 						end
 					end
 
 					self.Checking = math.min(self.Checking + FrameTime() * 2, 10)
 				else
-					ply:Notify("I dont think I need to check their vitals.", 10)
+					ply:Notify("Не думаю, что нужно проверять их пульс.", 10)
 				end
 			end
 		end
@@ -1037,9 +1037,9 @@ function SWEP:ApplyForce()
 				if org and bone == "ValveBiped.Bip01_Spine2" and trace.Hit then
 					if self.firstTimePrint then
 						if not ply2.noHead then
-							ply:ChatPrint("You are beginning to perform CPR.")
+							ply:ChatPrint("Вы начинаете сердечно-лёгочную реанимацию.")
 						else
-							ply:Notify("I dont think CPR would help here...", 10)
+							ply:Notify("Не думаю, что реанимация тут поможет...", 10)
 						end
 					end
 

@@ -64,7 +64,7 @@ function PANEL:SetPlayer( ply )
     
     self.MedalPanel.Band = Band
     self.MedalPanel.Medal = Medal
-    self.PlyLabel:SetText( ply:Nick().."'s medal" )
+    self.PlyLabel:SetText( ply:Nick()..": медаль" )
     self.ExpLabel:SetText( (ply.exp or 0).." XP ".. math.Round(ply.skill or 0,3) .. " Skill" )
     local oldexp = 0
     function self.ExpLabel:Think()

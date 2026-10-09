@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 SWEP.Base = "weapon_base"
 SWEP.PrintName = "Suit"
-SWEP.Instructions = "A simple costume, along with a mask, can help hide your identity, your clothes will stay in the suitcase in the future you can put them back on."
+SWEP.Instructions = "Простой костюм с маской помогает скрыть личность, а ваша одежда останется в чемодане, потом её можно надеть обратно."
 SWEP.Category = "ZCity Other"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -42,14 +42,14 @@ SWEP.AvailableCostumes = {
     {
         Name = "Ghostface",
         Model = "models/distac/player/ghostface.mdl",
-        Description = "Classic horror movie villain costume",
+        Description = "Костюм классического злодея из фильмов ужасов",
         Color = Color(255, 0, 0),
         ttachments = {}
     },
     {
-        Name = "Jason Voorhees",
+        Name = "Джейсон Вурхиз",
         Model = "models/eu_homicide/mkx_jajon.mdl",
-        Description = "Stop fucking in my lake!",
+        Description = "Хватит трахаться в моём озере!",
         Color = Color(255, 255, 255),
         Attachments = {}
     }
@@ -123,7 +123,7 @@ if CLIENT then
 	local color_white = Color(255, 255, 255)
     function SWEP:OpenCostumeMenu()
         if self.IsCostumeActive then
-            notification.AddLegacy("You must remove your current costume first!", NOTIFY_ERROR, 3)
+            notification.AddLegacy("Сначала снимите текущий костюм!", NOTIFY_ERROR, 3)
             --surface.PlaySound("buttons/button10.wav")
             return
         end
@@ -139,7 +139,7 @@ if CLIENT then
         self.CostumeMenu = vgui.Create("ZFrame")
         self.CostumeMenu:SetSize(menuW, menuH)
         self.CostumeMenu:Center()
-        self.CostumeMenu:SetTitle("Costume Selection")
+        self.CostumeMenu:SetTitle("Выбор костюма")
         self.CostumeMenu:SetDraggable(true)
         self.CostumeMenu:ShowCloseButton(true)
         self.CostumeMenu:MakePopup()

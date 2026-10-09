@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"bbuster/bones"
+	"$bumpmap" 		"bbuster/bones_bump"
+	"$nocull"		"1"
+
+	"$phong" "1"
+	"$phongexponent" "12"
+	"$phongalbedotint" "1"
+	"$phongboost" ".08" 
+	"$phongfresnelranges"	"[8 40 180]"
+
+	"$detailscale" "2.4"
+	"$detailblendfactor" "1.4"
+	"$detailblendmode" "0"
+}

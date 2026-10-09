@@ -148,6 +148,8 @@ local function legs(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		if hg.fakeBoneFlop then
 			hg.fakeBoneFlop.SetLimbSegmentState(org, key, segment, true)
 		end
+		-- Z-SCAV: открытый перелом с шансом - кость торчит наружу (modules/sv_rem_openfracture.lua)
+		if hg.ZSCAVOpenFracture then hg.ZSCAVOpenFracture(org, key, dmgInfo) end
 
 		org.painadd = org.painadd + 40
 		org.owner:AddNaturalAdrenaline(1)
@@ -155,7 +157,7 @@ local function legs(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(broke_leg[math.random(#broke_leg)], 1, "broke"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " сломана.", "thought_broke" .. key, 1, Color(255, 210, 210))
+		sendThought(org, "Ваша " .. limbName[key] .. " сломана.", "thought_broke" .. key, 1, Color(255, 210, 210))
 
 		timer.Simple(0, function() hg.LightStunPlayer(org.owner,2) end)
 		playBoneFractureSound(org.owner)
@@ -174,7 +176,7 @@ local function legs(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(dislocated_leg[math.random(#dislocated_leg)], 1, "dislocated"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " вывихнута.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
+		sendThought(org, "Ваша " .. limbName[key] .. " вывихнута.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
 
 		timer.Simple(0, function() hg.LightStunPlayer(org.owner,2) end)
 		playBoneFractureSound(org.owner)
@@ -216,13 +218,15 @@ local function arms(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		if hg.fakeBoneFlop then
 			hg.fakeBoneFlop.SetLimbSegmentState(org, key, segment, true)
 		end
+		-- Z-SCAV: открытый перелом с шансом - кость торчит наружу (modules/sv_rem_openfracture.lua)
+		if hg.ZSCAVOpenFracture then hg.ZSCAVOpenFracture(org, key, dmgInfo) end
 
 		org.painadd = org.painadd + 40
 		org.owner:AddNaturalAdrenaline(1)
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(broke_arm[math.random(#broke_arm)], 1, "broke"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " сломана.", "thought_broke" .. key, 1, Color(255, 210, 210))
+		sendThought(org, "Ваша " .. limbName[key] .. " сломана.", "thought_broke" .. key, 1, Color(255, 210, 210))
 
 		--timer.Simple(0, function() hg.LightStunPlayer(org.owner,1) end)
 		playBoneFractureSound(org.owner)
@@ -240,7 +244,7 @@ local function arms(org, bone, dmg, dmgInfo, key, segment, boneindex, dir, hit, 
 		org.fearadd = org.fearadd + 0.5
 
 		--if org.isPly and !org[key.."amputated"] then org.owner:Notify(dislocated_arm[math.random(#dislocated_arm)], 1, "dislocated"..key, 1, nil, nil) end
-		sendThought(org, "Your " .. limbName[key] .. " вывихнута.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
+		sendThought(org, "Ваша " .. limbName[key] .. " вывихнута.", "thought_dislocated" .. key, 1, Color(255, 220, 220))
 
 		--timer.Simple(0, function() hg.LightStunPlayer(org.owner,1) end)
 		playBoneFractureSound(org.owner)
@@ -496,11 +500,14 @@ input_list.chest = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricoch
 	org.shock = org.shock + dmg * 1
 
 	if org.isPly and (not org.brokenribs or (org.brokenribs ~= math.Round(org.chest * 3))) then
+		local prevRibs = org.brokenribs or 0
 		org.brokenribs = math.Round(org.chest * 3)
+		-- Z-SCAV: сломанное ребро может проткнуть кожу (modules/sv_rem_openfracture.lua)
+		if org.brokenribs > prevRibs and hg.ZSCAVOpenFracture then hg.ZSCAVOpenFracture(org, "ribs", dmgInfo) end
 		
 		if org.brokenribs > 0 then
 			//org.owner:Notify(ribs[math.random(#ribs)], 5, "ribs", 4)
-			sendThought(org, "Вы сломали " .. org.brokenribs .. " ribs.", "thought_ribs", 3, Color(255, 210, 210))
+			sendThought(org, "Вы сломали рёбер: " .. org.brokenribs .. ".", "thought_ribs", 3, Color(255, 210, 210))
 
 			playBoneFractureSound(org.owner)
 			if hg.QueuePainScream then hg.QueuePainScream(org.owner, 0.8) end

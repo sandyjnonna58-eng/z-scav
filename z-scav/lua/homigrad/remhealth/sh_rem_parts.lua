@@ -46,6 +46,7 @@ function hg.RemIsMedicine(wepOrClass)
     local cls = isstring(wepOrClass) and wepOrClass or (IsValid(wepOrClass) and wepOrClass:GetClass())
     if not cls then return false end
     if cls == "weapon_bandage_sh" then return true end
+    if cls == "weapon_zscav_antiseptic" then return true end -- Z-SCAV: антисептик (на часть тела)
     -- еда и напитки построены на основе бинта, но это не медицина
     if cls == "weapon_bigconsumable" or weapons.IsBasedOn(cls, "weapon_bigconsumable") then return false end
     return weapons.IsBasedOn(cls, "weapon_bandage_sh") == true

@@ -124,12 +124,23 @@ net.Receive("rem_med_use", function(_, ply)
     end
     ply.remMedNextUse = CurTime() + 0.5
 
+    -- Z-SCAV: антисептик - сразу на выбранную часть
+    if wep:GetClass() == "weapon_zscav_antiseptic" then
+        if hg.ZSCAVAntiseptic then hg.ZSCAVAntiseptic(ply, partId, wep) end
+        return
+    end
+
     ply.remMedPart = partId
     ply.remMedPartT = CurTime()
     -- бинт/аптечка на часть = дезинфекция (иммунитет и инфекции, sv_rem_immunity.lua)
     local cls = wep:GetClass()
     if hg.organism.Disinfect and (string.find(cls, "bandage", 1, true) or string.find(cls, "medkit", 1, true)) then
         hg.organism.Disinfect(ply.organism, partId)
+    end
+    -- Z-SCAV: бинт и аптечка восстанавливают кожу на этой части
+    if hg.organism.HealSkin then
+        if string.find(cls, "medkit", 1, true) then hg.organism.HealSkin(ply.organism, partId, 40)
+        elseif string.find(cls, "bandage", 1, true) then hg.organism.HealSkin(ply.organism, partId, 25) end
     end
     -- предмет должен быть в руках (у многих лечение завязано на активное оружие)
     if ply:GetActiveWeapon() ~= wep then ply:SelectWeapon(wep:GetClass()) end

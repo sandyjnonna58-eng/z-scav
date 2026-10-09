@@ -53,6 +53,12 @@ local function PartOfBone(owner, bone)
     return bone and hg.RemPartByBone and hg.RemPartByBone[bone]
 end
 
+-- Z-SCAV: бинт / аптечка подлечивают кожу части тела
+function hg.organism.HealSkin(org, part, amount)
+    if not org or not org.remSkin or not org.remSkin[part] then return end
+    org.remSkin[part] = math.Clamp(org.remSkin[part] + amount, 0, 100)
+end
+
 function hg.organism.DamageSkin(org, part, amount)
     if not org or not org.remSkin or not org.remSkin[part] then return end
     org.remSkin[part] = math.Clamp(org.remSkin[part] - amount, 0, 100)

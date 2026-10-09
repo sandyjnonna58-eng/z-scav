@@ -641,9 +641,11 @@ hook.Add("Player_Death", "FLASHLIGHTHUY", function(ply)
 end)
 
 concommand.Add("hg_dropflashlight",function(ply)
-	if !ply:Alive() or !ply.organism.canmove then return end
+	if not IsValid(ply) or !ply:Alive() or !istable(ply.organism) or !ply.organism.canmove then return end
+	if (ply.DropEquipCD or 0) > CurTime() then return end
+	ply.DropEquipCD = CurTime() + 0.35
 	local inv = ply:GetNetVar("Inventory")
-	if not inv["Weapons"]["hg_flashlight"] then return end
+	if not istable(inv) or not inv["Weapons"] or not inv["Weapons"]["hg_flashlight"] then return end
 	local ent = ents.Create("hg_flashlight")
 	ent:SetPos(ply:EyePos())
 	ent:SetAngles(ply:EyeAngles())
@@ -661,9 +663,11 @@ concommand.Add("hg_dropflashlight",function(ply)
 end)
 
 concommand.Add("hg_dropsling",function(ply)
-	if !ply:Alive() or !ply.organism.canmove then return end
+	if not IsValid(ply) or !ply:Alive() or !istable(ply.organism) or !ply.organism.canmove then return end
+	if (ply.DropEquipCD or 0) > CurTime() then return end
+	ply.DropEquipCD = CurTime() + 0.35
 	local inv = ply:GetNetVar("Inventory")
-	if not inv["Weapons"] or not inv["Weapons"]["hg_sling"] then return end
+	if not istable(inv) or not inv["Weapons"] or not inv["Weapons"]["hg_sling"] then return end
 	local ent = ents.Create("hg_sling")
 	ent:SetPos(ply:EyePos())
 	ent:SetAngles(ply:EyeAngles())
@@ -686,9 +690,11 @@ concommand.Add("hg_dropsling",function(ply)
 end)
 
 concommand.Add("hg_dropkastet",function(ply)
-	if not ply:Alive() then return end
+	if not IsValid(ply) or not ply:Alive() then return end
+	if (ply.DropEquipCD or 0) > CurTime() then return end
+	ply.DropEquipCD = CurTime() + 0.35
 	local inv = ply:GetNetVar("Inventory")
-	if not inv["Weapons"] or not inv["Weapons"]["hg_brassknuckles"] then return end
+	if not istable(inv) or not inv["Weapons"] or not inv["Weapons"]["hg_brassknuckles"] then return end
     local kastet = inv["Weapons"]["hg_brassknuckles"]
     local count = isnumber(kastet) and kastet or (kastet and 1 or 0)
 	local ent = ents.Create("hg_brassknuckles")

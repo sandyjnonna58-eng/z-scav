@@ -15,7 +15,10 @@ MODE.LootSpawn = true
 MODE.LootOnTime = true
 
 MODE.Chance = 0.2 -- this is mostly unused
-MODE.LootDivTime = 500
+MODE.LootDivTime = 700
+MODE.LootAmountMul = 0.75
+MODE.EmptyBoxChance = 0.15
+MODE.LootLooseSkip = 0.25
 MODE.SingleModeStrongLootCategoryMul = 0.35
 MODE.SingleModeStrongLootItemMul = 0.45
 

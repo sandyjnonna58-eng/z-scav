@@ -38,6 +38,7 @@ function hg.organism.Add(ent)
 end
 
 function hg.organism.Clear(org)
+	if not istable(org) then return end
 	hook_Run("Org Clear", org)//.owner.organism_internal)
 	if IsValid(org.owner) then org.owner.fullsend = true end
 	hg.send_organism(org)

@@ -55,6 +55,10 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 	local hg_movement_speed_gain_mul = CreateConVar("hg_movement_speed_gain_mul", "1", {FCVAR_REPLICATED,FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Multiply speed gain", 0.01, 5)
 	local hg_movement_speed_lose_mul = CreateConVar("hg_movement_speed_lose_mul", "1", {FCVAR_REPLICATED,FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Multiply speed lose", 0.01, 5)
 	local hg_movement_lagcomp = CreateConVar("hg_movement_lagcomp", "1", {FCVAR_REPLICATED,FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Compensate movement inertia for latency", 0, 1)
+	local function hg_NetPing(ply)
+		return ply:GetNWInt("hg_ping", ply:Ping())
+	end
+
 	local function hg_GetMovementLagComp(ply)
 		if not hg_movement_lagcomp:GetBool() or not IsValid(ply) then return 1, 0 end
 
@@ -240,13 +244,21 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 	local vomitVPAng, vecZero = Angle(1, 0, 0), Vector()
 	hook.Add("SetupMove", "HG(StartCommand)", function(ply, mv, cmd)
 		local curTime = CurTime()
-		local sysTime = SysTime()
-		--\\ DeltaTime
-			ply.LastStartCommand = ply.LastStartCommand or sysTime
 		local tick_interval = engine.TickInterval()
-		local delta_time = math_Clamp(sysTime - ply.LastStartCommand, 0, tick_interval * 1.25)--FrameTime()
-			ply.LastStartCommand = sysTime
-		--//
+		local tickCount = cmd:TickCount()
+		local delta_time = tick_interval
+		local last_tick = ply.hg_LastMoveTick
+
+		if last_tick then
+			if tickCount > last_tick then
+				delta_time = math_Clamp((tickCount - last_tick) * tick_interval, 0, tick_interval * 1.25)
+			else
+				delta_time = 0
+			end
+		end
+
+		ply.hg_LastMoveTick = tickCount > 0 and tickCount or nil
+		ply.LastStartCommand = nil
 
 		if(not IsValid(ply) or not ply:Alive())then
 			return
@@ -297,7 +309,6 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			return
 		end
 
-		local tickCount = cmd:TickCount()
 		local move_time = tickCount > 0 and tickCount * tick_interval or curTime
 		local in_speed = cmd:KeyDown(IN_SPEED)
 		local crouching = ply:Crouching()
@@ -338,6 +349,10 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			if ply.hg_LastIsJogging ~= ply.hg_isJogging then
 				ply.hg_LastIsJogging = ply.hg_isJogging
 				ply:SetNWBool("hg_isJogging", ply.hg_isJogging)
+			end
+			if not ply.hg_NextPingSync or curTime >= ply.hg_NextPingSync then
+				ply.hg_NextPingSync = curTime + 0.5
+				ply:SetNWInt("hg_ping", ply:Ping())
 			end
 		end
 
@@ -607,7 +622,7 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			//local new_inertia = approach_vector_smooth(ply.MovementInertia, inertia_to, hg.lerpFrameTime2(0.075, delta_time))
 		if !on_ground then
 			ply.MovementInertia = ply.LastVelocity
-			local ping = ply:Ping()
+			local ping = hg_NetPing(ply)
 			if ping >= 45 and ply.MovementInertia:Length2D() > run_speed * 1.25 then
 				ply.MovementInertia = ply.MovementInertia:GetNormalized() * run_speed * 1.25
 			end
@@ -828,7 +843,7 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 			inertia_len = inertia_len * (0.7 + 0.3 * (bp - 35) / 30)
 		end
 
-		if CLIENT and ply:Ping() >= 45 and ply.hg_LastLandingTime and ply.hg_LastLandingTime + 0.35 > curTime then
+		if CLIENT and hg_NetPing(ply) >= 45 and ply.hg_LastLandingTime and ply.hg_LastLandingTime + 0.35 > curTime then
 			inertia_len = math_min(inertia_len, run_speed * 1.1)
 		end
 		
@@ -858,7 +873,6 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 	local gamemod = engine.ActiveGamemode()
 	hook.Add("PlayerSpawn", "RemoveSandboxJumpBoost", function(ply)
 		if (gamemod != "sandbox") then return end
-
 		local PLAYER = baseclass.Get("player_sandbox")
 
 		PLAYER.FinishMove           = nil       -- Disable boost
@@ -870,6 +884,22 @@ local math_abs, math_Approach, math_AngleDifference, math_Clamp, math_cos, math_
 		PLAYER.DuckSpeed			= 0.3		-- How fast to go from not ducking, to ducking
 		PLAYER.UnDuckSpeed			= 0.3		-- How fast to go from ducking, to not ducking
 		PLAYER.JumpPower			= 200		-- How powerful our jump should be
+	end)
+--//
+
+--\\ Reset movement state on spawn
+	hook.Add("PlayerSpawn", "HG_MovementStateReset", function(ply)
+		if not IsValid(ply) then return end
+
+		ply.hg_LastMoveTick = nil
+		ply.hg_LastMovementCommand = nil
+		ply.MovementInertia = nil
+		ply.CurrentSpeed = nil
+		ply.LastVelocity = nil
+		ply.LastVelocityLen = nil
+		ply.was_in_speed = nil
+		ply.isSprintingState = nil
+		ply.hg_NextPingSync = nil
 	end)
 --//
 

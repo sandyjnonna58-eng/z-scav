@@ -125,10 +125,28 @@ local function GetActiveAdminStatsRows()
     return rows
 end
 
+local ADMIN_STATS_CHUNK_SIZE = 15
+
 local function SendAdminStatsRows(ply, rows)
-    net.Start("ZB_AdminStatsSend")
-        net.WriteTable(rows)
-    net.Send(ply)
+    local total = #rows
+    local chunks = math.max(1, math.ceil(total / ADMIN_STATS_CHUNK_SIZE))
+
+    for index = 1, chunks do
+        local from = (index - 1) * ADMIN_STATS_CHUNK_SIZE + 1
+        local to = math.min(from + ADMIN_STATS_CHUNK_SIZE - 1, total)
+        local part = {}
+
+        for i = from, to do
+            part[#part + 1] = rows[i]
+        end
+
+        net.Start("ZB_AdminStatsSend")
+            net.WriteUInt(total, 16)
+            net.WriteUInt(chunks, 16)
+            net.WriteUInt(index, 16)
+            net.WriteTable(part)
+        net.Send(ply)
+    end
 end
 
 local function SendAdminStatsSaveResult(ply, ok, message)

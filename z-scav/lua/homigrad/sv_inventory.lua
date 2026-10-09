@@ -148,8 +148,10 @@ hook.Add("PlayerDropWeapon", "homigrad-inventory", function(ply)
     wep:SetCollisionGroup(COLLISION_GROUP_WORLD)
     ply:DropWeapon(wep, ply:EyePos(), vecZero)
     wep:SetPos(ply:EyePos())
-    ply.inventory.Weapons[wep:GetClass()] = nil
-    ply:SetNetVar("Inventory", ply.inventory)
+    if ply.inventory then
+        ply.inventory.Weapons[wep:GetClass()] = nil
+        ply:SetNetVar("Inventory", ply.inventory)
+    end
     ply:SetActiveWeapon(NULL)
 	if ply.organism and ishgweapon(wep) then ply.organism.postureGunfireWeapon = wep end
 
@@ -272,6 +274,8 @@ end)
 
 local functions = {
     ["Weapons"] = function(ply, ent, wep)
+        if not istable(ent.inventory) or not istable(ent.inventory.Weapons) then return end
+        if not isstring(wep) or not ent.inventory.Weapons[wep] then return end
         if (ent:IsPlayer() and IsValid(ent:GetActiveWeapon()) and ent:GetActiveWeapon():GetClass() == wep) then return end
         if (not ent.inventory.Weapons[wep]) then return end
 
@@ -344,18 +348,27 @@ local functions = {
         if not weapon.DontEquipInstantly then timer.Simple(0,function() ply:SelectWeapon(weapon:GetClass()) end) end
     end,
     ["Ammo"] = function(ply, ent, ammo, amt)
-        local amt2 = ent.inventory.Ammo[tonumber(ammo)]
+        if not istable(ent.inventory) or not istable(ent.inventory.Ammo) then return end
+        if not isstring(ammo) or not isnumber(amt) then return end
+        local id = tonumber(ammo)
+        if not id or (id % 1 != 0) or id < 1 or id > 255 then return end
+        local amt2 = ent.inventory.Ammo[id]
         if not amt2 or amt != amt2 then return end
 
-        ply:GiveAmmo(amt2, game.GetAmmoName(ammo), true)
+        local ammoName = game.GetAmmoName(id)
+        if not ammoName then return end
+
+        ply:GiveAmmo(amt2, ammoName, true)
         --ent.inventory.Ammo[tonumber(ammo)] = nil
         if ent:IsPlayer() then
-            ent:SetAmmo(0, game.GetAmmoName(ammo))
+            ent:SetAmmo(0, ammoName)
         else
-            ent.inventory.Ammo[tonumber(ammo)] = nil
+            ent.inventory.Ammo[id] = nil
         end
     end,
     ["Armor"] = function(ply, ent, placement, armor)
+        if not isstring(placement) or not isstring(armor) then return end
+        if not istable(hg.armor) or not istable(hg.armor[placement]) or not istable(hg.armor[placement][armor]) then return end
         if hg.armor[placement][armor].nodrop then return end
         if (not ent.armors[placement]) or (ent.armors[placement] ~= armor) or ply.armors[placement] then return end
         if !hg.AddArmor(ply, armor) then return end
@@ -369,7 +382,9 @@ local functions = {
         hook.Run("ItemTransfer",ply, ent, placement, armor)
     end,
     ["Attachments"] = function(ply, ent, att)
+        if not istable(ent.inventory) or not istable(ent.inventory.Attachments) then return end
         att = tonumber(att)
+        if not att or (att % 1 != 0) or att < 1 or att > 100 then return end
         if not ent.inventory.Attachments[att] then return end
         ply.inventory.Attachments[#ply.inventory.Attachments + 1] = ent.inventory.Attachments[att]
         ent.inventory.Attachments[att] = nil
@@ -395,8 +410,20 @@ net.Receive("ply_take_item", function(len, ply)
     if ent:IsPlayer() and not IsValid(ent.FakeRagdoll) then return end
 
     if ent:GetPos():Distance(ply:GetPos()) > 125 then return end
+    if not istable(ent.inventory) or not istable(ply.inventory) or not istable(ply.armors) or not istable(ent.armors) then return end
+
+    local args = {}
+    if istable(tbl) then
+        for i = 1, 4 do
+            local v = tbl[i]
+            if v == nil then break end
+            args[i] = v
+        end
+    end
+
+    if not (tblIndex == "Weapons" or tblIndex == "Ammo" or tblIndex == "Armor" or tblIndex == "Attachments") then return end
     local func = functions[tblIndex]
-    if func then func(ply, ent, thing, unpack(tbl)) end
+    if func then func(ply, ent, thing, unpack(args)) end
     ply:SetNetVar("Inventory", ply.inventory)
     ent:SetNetVar("Inventory", ent.inventory)
     ply:SyncArmor()

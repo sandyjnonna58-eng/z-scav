@@ -434,8 +434,20 @@ hook.Add("ZB_InventoryChecked", "LootSpawn", function(ply, ent)
 
 	ent.was_opened = true
 
+	local curRound = CurrentRound()
+	if curRound.EmptyBoxChance and math.Rand(0, 1) < curRound.EmptyBoxChance then
+		ent:SetNetVar("Armor", ent.armors)
+		ent:SetNetVar("Inventory", ent.inventory)
+		return
+	end
+
 	local chance = hg.loot_amount[lootData[1]] or {0,1}
 	local amount = math.random(chance[1],chance[2])
+
+	local mul = curRound.LootAmountMul
+	if mul and mul < 1 then
+		amount = math.floor(amount * mul + (math.random() < (amount * mul % 1) and 1 or 0))
+	end
 	
 	for i = 0,amount-1 do
 		local entName, AmmoCount, Tab = hg.GenerateLoot(ply,ent)
@@ -719,6 +731,8 @@ hook.Add("Boxes Think", "SpawnBoxes", function()
 		--huy.stats = stats--длина и тип спавна лута (для рп дополнения...)
 		return
 	end
+
+	if round.LootLooseSkip and math.Rand(0, 1) < round.LootLooseSkip then return end
 
 	local entName, AmmoCount, Tab = hg.GenerateLoot()
 	//print(entName)

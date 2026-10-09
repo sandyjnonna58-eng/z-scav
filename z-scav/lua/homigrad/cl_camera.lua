@@ -35,7 +35,7 @@ local sideMul = 5
 local eyeAngL = Angle(0, 0, 0)
 local IsValid = IsValid
 
-local hg_fov = ConVarExists("hg_fov") and GetConVar("hg_fov") or CreateClientConVar("hg_fov", "70", true, false, "Change first-person field of view", 75, 100)
+local hg_fov = ConVarExists("hg_fov") and GetConVar("hg_fov") or CreateClientConVar("hg_fov", "70", true, false, "Change first-person field of view", 75, 120)
 local hg_realismcam = ConVarExists("hg_realismcam") and GetConVar("hg_realismcam") or CreateClientConVar("hg_realismcam", "0", true, false, "Toggle realism first-person camera view", 0, 1)
 local hg_gopro = ConVarExists("hg_gopro") and GetConVar("hg_gopro") or CreateClientConVar("hg_gopro", "0", true, false, "Toggle GoPro-like first-person camera view", 0, 1)
 
@@ -368,7 +368,12 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 				--lply:SetEyeAngles(ply:EyeAngles())
 			end
 		else
-			return hook.Run("HG_CalcView", lply, origin, angles, fov, znear, zfar)
+			local fova = {fov}
+			local result = hook.Run("HG_CalcView", lply, origin, angles, fova, znear, zfar)
+
+			if istable(result) then return result end
+
+			return {origin = origin, angles = angles, fov = fova[1], znear = znear, zfar = zfar, drawviewer = false}
 		end
 	end
 
@@ -496,7 +501,7 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 
 	view.znear = 1 -- 3
 	view.zfar = zfar
-	view.fov = math.Clamp(hg_fov:GetFloat(),75,100) + fova[1] + lerpfovadd + lerpfovadd2 - depFovAdd
+	view.fov = math.Clamp(hg_fov:GetFloat(),75,120) + fova[1] + lerpfovadd + lerpfovadd2 - depFovAdd
 	view.drawviewer = true--not hullcheck.Hit
 	view.origin = origin
 	view.angles = angles

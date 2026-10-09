@@ -1629,8 +1629,8 @@ local function velocityDamage(ent, data)
 		if hitgroup == HITGROUP_STOMACH and (dmg * 3 > 0.25) then hg.organism.input_list.pelvis(org, bone, dmg * 3, dmgInfo) end
 		local physAng = data.PhysObject:GetAngles()
 		
-		if hitgroup == HITGROUP_STOMACH and physAng:Forward():Dot(data.HitNormal) > 0.6 then hg.organism.input_list.spine1(org, bone, dmg * (math.random(3) > 1 and 1 or 0) * 3, dmgInfo) end -- | И В ПРАВДУ ПОЧЕМУ У НАС СПИНА ЛОМАЕТСЯ ОТ ПАДЕНИЯ НА ГРУДЬ ИЛИ ЖИВОТ...
-		if hitgroup == HITGROUP_CHEST and physAng:Forward():Dot(data.HitNormal) > 0.6 then hg.organism.input_list.spine2(org, bone, dmg * (math.random(3) > 1 and 1 or 0) * 3, dmgInfo) end
+		if hitgroup == HITGROUP_STOMACH and physAng:Forward():Dot(data.HitNormal) > 0.6 then hg.organism.input_list.spine1(org, bone, dmg * (math.random(6) == 1 and 1 or 0) * 2, dmgInfo) end -- | И В ПРАВДУ ПОЧЕМУ У НАС СПИНА ЛОМАЕТСЯ ОТ ПАДЕНИЯ НА ГРУДЬ ИЛИ ЖИВОТ...
+		if hitgroup == HITGROUP_CHEST and physAng:Forward():Dot(data.HitNormal) > 0.6 then hg.organism.input_list.spine2(org, bone, dmg * (math.random(6) == 1 and 1 or 0) * 2, dmgInfo) end
 
 
 		--print(dmg * 3, dmg * 80)
@@ -1659,7 +1659,7 @@ local function velocityDamage(ent, data)
 			local neck_not_broken = org.spine3 < 0.8
 			
 			//if dmg > 0.5 then
-				hg.organism.input_list.spine3(org, bone, dmg * (math.random(4) == 1 and 1 or 0) * 3 * (hadhelmet and 0.5 or 1), dmgInfo)
+				hg.organism.input_list.spine3(org, bone, dmg * (math.random(8) == 1 and 1 or 0) * 2 * (hadhelmet and 0.5 or 1), dmgInfo)
 			//end
 			if dmg > head_otrub_min_damage and !hadhelmet and math.Rand(0, 1) < head_otrub_chance then
 				org.needotrub = true

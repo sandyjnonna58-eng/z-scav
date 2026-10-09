@@ -16,7 +16,7 @@ hg.TraitorLoot = {
 
 if CLIENT then
 	hook.Add("Player_Death","foundloot",function(ply)
-		if IsValid(ply.FakeRagdoll) then ply.FakeRagdoll.foundloot = table.Copy(ply.foundloot) end
+		if IsValid(ply.FakeRagdoll) then ply.FakeRagdoll.foundloot = table.Copy(ply.foundloot or {}) end
 		ply.foundloot = {}
 	end)
 
@@ -410,7 +410,8 @@ if CLIENT then
 			table.sort(keys,function(a,b)
 				local atbl = weapons.Get(a)
 				local wep = atbl and atbl.holsteredBone and not atbl.shouldntDrawHolstered
-				return (ent.foundloot[a] and 1 or 0) > (ent.foundloot[b] and 1 or 0)//(hg.TraitorLoot[a] or 0) < (hg.TraitorLoot[b] or (wep and 1 or 0) or 0)
+				local fl = ent.foundloot or {}
+				return (fl[a] and 1 or 0) > (fl[b] and 1 or 0)//(hg.TraitorLoot[a] or 0) < (hg.TraitorLoot[b] or (wep and 1 or 0) or 0)
 			end)
 			
 			for k, i in ipairs(keys) do
@@ -445,6 +446,8 @@ if CLIENT then
 				button:SetSize(blockW * cell + (blockW - 1) * gap, blockH * cell + (blockH - 1) * gap)
 				button.RevealTime = math.Clamp(0.45 + revealWeight * 0.24, 0.65, 4)
 				button.Think = function(self)
+					if not IsValid(ent) then return end
+					ent.foundloot = ent.foundloot or {}
 					if ent.foundloot[i] then return end
 					if self:IsHovered() and input.IsMouseDown(MOUSE_LEFT) then
 						self.RevealStart = self.RevealStart or CurTime()
@@ -463,7 +466,8 @@ if CLIENT then
 				
 				button.DoClick = function()
 					if button.HoldLock then button.HoldLock = nil return end
-					if not ent.foundloot[i] then return end
+					if not IsValid(ent) then return end
+					if not (ent.foundloot or {})[i] then return end
 					if cooldown > CurTime() then return end
 
 					cooldown = CurTime() + 0.5
@@ -488,7 +492,8 @@ if CLIENT then
 				end
 
 				button.DoRightClick = function()
-					if not ent.foundloot[i] then return end
+					if not IsValid(ent) then return end
+					if not (ent.foundloot or {})[i] then return end
 					if cooldown > CurTime() then return end
 
 					cooldown = CurTime() + 0.5
@@ -518,7 +523,8 @@ if CLIENT then
 				local name = nameThings(i, thing)
 				button.col1 = 100
 				button.Paint = function(self, w, h)
-					local found = ent.foundloot[i]
+					if not IsValid(ent) then return end
+					local found = (ent.foundloot or {})[i]
 					button.col1 = Lerp(0.1, button.col1, button:IsHovered() and 180 or 100)
 					if button:IsHovered() then
 						button.SoundKD = button.SoundKD or 0

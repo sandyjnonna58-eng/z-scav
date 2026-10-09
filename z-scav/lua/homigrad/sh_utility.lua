@@ -865,15 +865,37 @@ local IsValid = IsValid
 
 --\\ Suicide
 	if SERVER then
+		util.AddNetworkString("rem_suicide_attempt")
+
+		local suicide_call_delay = 0.5
+		local suicide_call_window = 3
+		local suicide_calls_needed = 4
+
 		concommand.Add("suicide", function(ply)
 			if not IsValid(ply) or not ply:IsPlayer() then return end
 			if ply:GetNWFloat("rem_urges_end", 0) > CurTime() then return end
 			if ply.remUrgeEnd then return end
-			if not ply.suiciding and ply.organism and (ply.organism.depression or 0) < 0.5 then
-				if ply:GetInfoNum("hg_newthoughts", 0) > 0 then
-					ply:Thought("Тебе не стоит этого делать.", 6, "depression_block_suicide", 0)
-				else
-					ply:Notify("Мне не стоит этого делать", 6, "depression_block_suicide", 0)
+			if hg.organism.IsMentalDisabled and hg.organism.IsMentalDisabled() then return end
+
+			local now = CurTime()
+			if (ply.suicideCallNext or 0) > now then return end
+
+			local org = ply.organism
+
+			if not ply.suiciding and org and (org.depression or 0) < 0.5 then
+				if (ply.suicideCallLast or 0) + suicide_call_window < now then ply.suicideCallCount = 0 end
+
+				ply.suicideCallLast = now
+				ply.suicideCallNext = now + suicide_call_delay
+				ply.suicideCallCount = (ply.suicideCallCount or 0) + 1
+
+				net.Start("rem_suicide_attempt")
+				net.WriteFloat(math.Clamp((ply.suicideCallCount - 1) / (suicide_calls_needed - 1), 0, 1))
+				net.Send(ply)
+
+				if ply.suicideCallCount >= suicide_calls_needed then
+					ply.suicideCallCount = 0
+					hg.StartSuicideUrge(ply, true)
 				end
 				return
 			end

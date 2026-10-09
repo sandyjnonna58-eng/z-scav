@@ -204,7 +204,7 @@ fakeTimer = fakeTimer or nil
 local hg_cshs_fake = CreateConVar("hg_cshs_fake", "0", FCVAR_ARCHIVE, "Toggle C'SHS-like ragdoll camera view", 0, 1)
 local hg_firstperson_death = { GetBool = function() return false end }
 local hg_firstperson_ragdoll = CreateConVar("hg_firstperson_ragdoll", "0", FCVAR_ARCHIVE, "Toggle first-person ragdoll camera view", 0, 1)
-local hg_fov = CreateClientConVar("hg_fov", "70", true, false, "Change first-person field of view", 75, 100)
+local hg_fov = CreateClientConVar("hg_fov", "70", true, false, "Change first-person field of view", 75, 120)
 local hg_gopro = CreateClientConVar("hg_gopro", "0", true, false, "Toggle GoPro-like camera view", 0, 1)
 local hg_thirdperson = CreateConVar("hg_thirdperson", "0", FCVAR_REPLICATED, "Toggle third-person camera view", 0, 1)
 
@@ -234,7 +234,12 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 	end
 	
 	if not lply:Alive() and not follow then
-		return hook.Run("HG_CalcView", ply, origin, angles, fov, znear, zfar)
+		local fova = {fov}
+		local result = hook.Run("HG_CalcView", ply, origin, angles, fova, znear, zfar)
+
+		if istable(result) then return result end
+
+		return {origin = origin, angles = angles, fov = fova[1], znear = znear, zfar = zfar, drawviewer = false}
 	end
 
 	if LocalPlayer().lean and math.abs(LocalPlayer().lean) < 0.01 then
@@ -371,7 +376,7 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 	view.angles[3] = view.angles[3] + GetViewPunchAngles4()[3]
 	view.angles:RotateAroundAxis(view.angles:Up(),-LookX)
 	view.angles:RotateAroundAxis(view.angles:Right(),-LookY)
-	view.fov = math.Clamp(hg_fov:GetFloat(),75,100) + lerpfovadd + lerpfovadd2
+	view.fov = math.Clamp(hg_fov:GetFloat(),75,120) + lerpfovadd + lerpfovadd2
 	view.znear = 1
 
 	if ply.gettingup and (ply.gettingup + 1 - CurTime()) > 0 then

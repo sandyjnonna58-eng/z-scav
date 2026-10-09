@@ -33,6 +33,15 @@ local seizure_brain_roll_delay = 20
 local seizure_brain_roll_chance = 15
 local seizure_brain_roll_gain_min = 0.04
 local seizure_brain_roll_gain_max = 0.11
+
+function hg.organism.IsMentalDisabled()
+	if not CurrentRound then return false end
+
+	local ok, mode = pcall(CurrentRound)
+	if not ok or not mode then return false end
+
+	return mode.DisableMental == true
+end
 hook.Add("Org Clear", "Main", function(org)
 	org.alive = true
 	org.otrub = false
@@ -436,6 +445,7 @@ end
 
 function hg.organism.AddPanicAttack(org, amount, silent)
 	if not org then return 0 end
+	if hg.organism.IsMentalDisabled() then return org.panicattackadd or 0 end
 	if not isnumber(amount) or amount <= 0 then return org.panicattackadd or 0 end
 	if math.random(panicattack_gain_chance) != 1 then return org.panicattackadd or 0 end
 
@@ -507,6 +517,7 @@ local function resolve_panic_attacker(victim, attacker)
 end
 
 local function panic_witness_event(victim, attacker, amount, radius)
+	if hg.organism.IsMentalDisabled() then return end
 	if not IsValid(victim) then return end
 	if not isnumber(amount) or amount <= 0 then return end
 
@@ -577,6 +588,7 @@ hook.Add("HomigradDamage", "Berserk", function(ply, dmgInfo, hitgroup, ent)
 end)
 
 hook.Add("HomigradDamage", "PanicAttackDamage", function(ply, dmgInfo)
+	if hg.organism.IsMentalDisabled() then return end
 	if not IsValid(ply) or not ply:IsPlayer() or not ply:Alive() then return end
 	if not ply.organism then return end
 
@@ -685,8 +697,15 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	org.berserk = math.Approach(org.berserk, 0, timeValue / 60)
 	org.noradrenaline = math.Approach(org.noradrenaline, 0, timeValue / 45)
 	local oldPanicAttack = org.panicattack or 0
-	org.panicattackadd = math.Approach(org.panicattackadd or 0, 0, timeValue / panicattack_add_decay_time)
-	org.panicattack = math.Approach(oldPanicAttack, org.panicattackadd or 0, timeValue / ((org.panicattackadd or 0) > oldPanicAttack and panicattack_rise_time or panicattack_decay_time))
+	if hg.organism.IsMentalDisabled() then
+		org.panicattackadd = math.Approach(org.panicattackadd or 0, 0, timeValue * 0.1)
+		org.panicattack = math.Approach(oldPanicAttack, 0, timeValue * 0.1)
+		org.panicattackActive = false
+		org.nextPanicHeartRoll = curTime + panicattack_heart_roll_delay
+	else
+		org.panicattackadd = math.Approach(org.panicattackadd or 0, 0, timeValue / panicattack_add_decay_time)
+		org.panicattack = math.Approach(oldPanicAttack, org.panicattackadd or 0, timeValue / ((org.panicattackadd or 0) > oldPanicAttack and panicattack_rise_time or panicattack_decay_time))
+	end
 	local oldSeizureBrain = org.lastSeizureBrain or (org.brain or 0)
 	local lobeDamage = getSeizureLobeDamage(org)
 	local oldSeizureLobeDamage = org.lastSeizureLobeDamage or lobeDamage
@@ -712,25 +731,27 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 		org.noradrenalineActive = false
 	end
 
-	if oldPanicAttack < panicattack_threshold and org.panicattack >= panicattack_threshold and isPly and owner:Alive() then
-		owner:Notify("Не могу успокоиться.", 2, "panicattack_start", 2, nil, Color(255, 140, 140))
-	end
-
-	if org.panicattack >= panicattack_threshold then
-		org.panicattackActive = true
-		org.disorientation = math.max(org.disorientation, 0.6 + panicattack_disorientation * org.panicattack)
-		org.adrenalineAdd = math.Approach(org.adrenalineAdd or 0, math.Remap(org.panicattack, panicattack_threshold, 1, panicattack_adrenaline_add_target * 0.5, panicattack_adrenaline_add_target), timeValue / panicattack_adrenaline_add_rise_time)
-
-		if isPly and curTime >= (org.nextPanicHeartRoll or 0) then
-			org.nextPanicHeartRoll = curTime + panicattack_heart_roll_delay
-			if math.random(100) <= panicattack_heart_roll_chance then
-				org.heartstop = true
-				owner:Notify("Моё сердце только что остановилось.", 2, "panicattack_heartstop", 2, nil, Color(255, 120, 120))
-			end
+	if not hg.organism.IsMentalDisabled() then
+		if oldPanicAttack < panicattack_threshold and org.panicattack >= panicattack_threshold and isPly and owner:Alive() then
+			owner:Notify("Не могу успокоиться.", 2, "panicattack_start", 2, nil, Color(255, 140, 140))
 		end
-	else
-		org.panicattackActive = false
-		org.nextPanicHeartRoll = curTime + panicattack_heart_roll_delay
+
+		if org.panicattack >= panicattack_threshold then
+			org.panicattackActive = true
+			org.disorientation = math.max(org.disorientation, 0.6 + panicattack_disorientation * org.panicattack)
+			org.adrenalineAdd = math.Approach(org.adrenalineAdd or 0, math.Remap(org.panicattack, panicattack_threshold, 1, panicattack_adrenaline_add_target * 0.5, panicattack_adrenaline_add_target), timeValue / panicattack_adrenaline_add_rise_time)
+
+			if isPly and curTime >= (org.nextPanicHeartRoll or 0) then
+				org.nextPanicHeartRoll = curTime + panicattack_heart_roll_delay
+				if math.random(100) <= panicattack_heart_roll_chance then
+					org.heartstop = true
+					owner:Notify("Моё сердце только что остановилось.", 2, "panicattack_heartstop", 2, nil, Color(255, 120, 120))
+				end
+			end
+		else
+			org.panicattackActive = false
+			org.nextPanicHeartRoll = curTime + panicattack_heart_roll_delay
+		end
 	end
 
 	local brainDelta = (org.brain or 0) - oldSeizureBrain
@@ -860,6 +881,20 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 
 	org.canmove = (org.spine2 < hg.organism.fake_spine2 and org.spine3 < hg.organism.fake_spine3) and not org.otrub
 	org.canmovehead = (org.spine3 < hg.organism.fake_spine3) and not org.otrub
+
+	local spineDis = 0
+	if isPly and alive and not org.otrub then
+		local s1, s2, s3 = org.spine1 or 0, org.spine2 or 0, org.spine3 or 0
+		local f1, f2, f3 = hg.organism.fake_spine1, hg.organism.fake_spine2, hg.organism.fake_spine3
+		if s1 < f1 and s1 >= f1 * 0.5 then spineDis = spineDis + (s1 - f1 * 0.5) / (f1 * 0.5) end
+		if s2 < f2 and s2 >= f2 * 0.5 then spineDis = spineDis + (s2 - f2 * 0.5) / (f2 * 0.5) end
+		if s3 < f3 and s3 >= f3 * 0.5 then spineDis = spineDis + (s3 - f3 * 0.5) / (f3 * 0.5) end
+		spineDis = math.min(spineDis, 1)
+	end
+	if math.abs(spineDis - (org.spineDisorient or -1)) > 0.004 then
+		org.spineDisorient = spineDis
+		owner:SetNWFloat("hg_spineDisorient", spineDis)
+	end
 	
 	if not (org.canmove and org.canmovehead and (org.stun - curTime) < 0) then org.needfake = true end
 	if (org.blood < 2700) then org.needfake = true end

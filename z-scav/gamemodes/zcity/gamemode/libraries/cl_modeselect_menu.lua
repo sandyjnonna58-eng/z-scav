@@ -478,8 +478,26 @@ if CLIENT then
     local statsPanelInstance = nil
     local adminStatsRows = {}
 
+    local adminStatsChunks = {}
+
     net.Receive("ZB_AdminStatsSend", function()
-        adminStatsRows = net.ReadTable() or {}
+        local chunks = net.ReadUInt(16)
+        local index = net.ReadUInt(16)
+        local part = net.ReadTable() or {}
+
+        adminStatsChunks[index] = part
+
+        for i = 1, chunks do
+            if not adminStatsChunks[i] then return end
+        end
+
+        adminStatsRows = {}
+        for i = 1, chunks do
+            for _, row in ipairs(adminStatsChunks[i]) do
+                adminStatsRows[#adminStatsRows + 1] = row
+            end
+        end
+        adminStatsChunks = {}
 
         if IsValid(statsPanelInstance) and statsPanelInstance.RefreshRows then
             statsPanelInstance:RefreshRows()

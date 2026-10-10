@@ -27,6 +27,9 @@
                      zscav_disease_list [ник]
 ]]
 
+-- Z-SCAV: гейммод грузится из autorun/loader.lua РАНЬШЕ, чем autorun/sh_zscav_diseases.lua
+-- (по алфавиту), поэтому список болезней подгружаем сами - иначе он пустой и команды не работают
+if not ZSCAV_DISEASES then include("autorun/sh_zscav_diseases.lua") end
 local D = ZSCAV_DISEASES or {}
 local ORDER = ZSCAV_DISEASE_ORDER or {}
 local SYM_AT = ZSCAV_DISEASE_SYMPTOM_AT or 0.12

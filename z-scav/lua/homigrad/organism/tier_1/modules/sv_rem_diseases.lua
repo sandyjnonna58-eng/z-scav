@@ -248,8 +248,8 @@ end
 SYM.ncc = function(owner, org, st, s, dt, now)
     Coordination(org, s)
     HeadachePain(org, s, 35)
-    -- ВЧД: мозг понемногу страдает
-    if (org.brain or 0) < 0.45 then org.brain = (org.brain or 0) + dt * 0.00015 * s end
+    -- ВЧД: повышает внутричерепное давление (sv_rem_icp.lua), а уже оно бьёт по мозгу
+    org.remICPAdd = math.max(org.remICPAdd or 0, 12 + 26 * s)
     if s > 0.4 and Every(st, "nextVomit", now, 110, 200) then Vomit(owner, org) end
     if hg.organism.AddSeizure and math.Rand(0, 1) < dt * 0.0025 * s then hg.organism.AddSeizure(org, 1) end
     if Every(st, "nextLine", now, 70, 120) then Say(owner, table.Random({"Голову распирает...", "В глазах темнеет.", "Давит изнутри черепа."})) end

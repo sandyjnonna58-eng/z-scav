@@ -315,6 +315,7 @@ local function send_organism(org, ply)
 	sendtable.remSleepQuality = org.remSleepQuality or 1
 	sendtable.remEnergized = org.remEnergized or 0
 	sendtable.remVicAddict = org.remVicAddict or 0
+	sendtable.remICP = math.Round(org.remICP or 10)
 	-- Z-SCAV: болезни - клиенту только проявившиеся (id -> прогресс)
 	local dis
 	for id, st in pairs(org.remDis or {}) do
@@ -886,6 +887,8 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 
 	-- Z-SCAV: болезни (modules/sv_rem_diseases.lua)
 	if hg.organism.DiseaseThink then hg.organism.DiseaseThink(owner, org, timeValue, isPly) end
+	-- Z-SCAV: внутричерепное давление (modules/sv_rem_icp.lua)
+	if hg.organism.ICPThink then hg.organism.ICPThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: викодин - зависимость и ломка (modules/sv_rem_vicodin.lua)
 	if hg.organism.VicodinThink then hg.organism.VicodinThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: последний рубеж организма (modules/sv_rem_laststand.lua)

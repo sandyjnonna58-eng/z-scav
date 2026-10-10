@@ -10,6 +10,20 @@ hook.Add("HUDPaintBackground", "ZSCAV_DiseaseFX", function()
     local ply = LocalPlayer()
     if not IsValid(ply) or not ply:Alive() then return end
     local org = ply.organism
+    -- Z-SCAV: высокое внутричерепное давление - всё плывёт
+    local icp = org and tonumber(org.remICP) or 10
+    if icp > 25 then
+        local k = math.Clamp((icp - 25) / 20, 0, 1)
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetMaterial(blur)
+        for i = 1, 2 do
+            blur:SetFloat("$blur", (0.6 + k * 2.5) * i * (0.8 + 0.2 * math.sin(CurTime() * 1.3)))
+            blur:Recompute()
+            render.UpdateScreenEffectTexture()
+            surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+        end
+    end
+
     local dis = org and org.remDis
     if not istable(dis) then return end
 

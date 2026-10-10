@@ -175,6 +175,7 @@ module[2] = function(owner, org, timeValue)
 	heartbeat = heartbeat + 0.5 * ((org.temperature or 37) - 37)
 	heartbeat = heartbeat + math.max(org.pain or 0, 0)
 	heartbeat = heartbeat + (org.remDisHR or 0) -- Z-SCAV: тахикардия от болезней (бешенство)
+	heartbeat = heartbeat + (org.remICPHR or 0) -- Z-SCAV: ВЧД - брадикардия (триада Кушинга)
 	-- немного от гейммода: страх и попытка самоубийства (старое)
 	heartbeat = heartbeat + 15 * Clamp(org.fear or 0, 0, 1)
 	-- нерегулярный ритм заметен на ЭКГ

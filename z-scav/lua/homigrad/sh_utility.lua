@@ -874,6 +874,9 @@ local IsValid = IsValid
 		local suicide_calls_needed = 4
 
 		concommand.Add("suicide", function(ply)
+			-- Z-SCAV: режим "оружие на себя" отключён полностью (команда оставлена пустой)
+			if IsValid(ply) then ply.suiciding = false end
+			do return end
 			if not IsValid(ply) or not ply:IsPlayer() then return end
 			if ply:GetNWFloat("rem_urges_end", 0) > CurTime() then return end
 			if ply.remUrgeEnd then return end
@@ -910,6 +913,7 @@ local IsValid = IsValid
 	end
 
 	function hg.CanSuicide(ply)
+		do return false end -- Z-SCAV: режим "оружие на себя" отключён
 		if not IsValid(ply) or not ply.GetActiveWeapon then return false end
 		local wep = ply:GetActiveWeapon()
 		return ishgweapon(wep) and wep.CanSuicide and not wep.reload

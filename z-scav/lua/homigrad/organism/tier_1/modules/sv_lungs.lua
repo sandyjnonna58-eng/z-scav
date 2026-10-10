@@ -371,6 +371,10 @@ module[2] = function(owner, org, timeValue)
 	org.immobilization = math.max(org.immobilization, parietal * 8)
 	org.consciousness = math.min(org.consciousness, 1 - frontal * 0.35 - temporal * 0.15)
 	if hemorrhage > 0 then
+		-- Z-SCAV: небольшое кровоизлияние со временем рассасывается
+		if hemorrhage < 0.3 and bleedRate <= 0.0002 then
+			org.brainHemorrhage = max(hemorrhage - timeValue / 1200, 0)
+		end
 		org.brain = min(org.brain + timeValue * hemorrhage / (hemorrhage < 0.3 and 900 or 300), 1)
 		org.disorientation = math.max(org.disorientation, hemorrhage * 0.9)
 		org.consciousness = math.min(org.consciousness, 1 - hemorrhage * 0.45)
@@ -384,7 +388,9 @@ module[2] = function(owner, org, timeValue)
 	if bleedRate > 0 then
 		org.brainHemorrhage = min(hemorrhage + timeValue * bleedRate * 0.4, 1)
 		org.brain = min(org.brain + timeValue * bleedRate * (1 + hemorrhage), 1)
-		org.brainBleedRate = max(bleedRate - timeValue / 600000, 0)
+		-- Z-SCAV: кровотечение в мозг затихает само (полураспад ~1 мин; раньше практически не затихало)
+		org.brainBleedRate = bleedRate * math.exp(-timeValue / 90)
+		if org.brainBleedRate < 0.00002 then org.brainBleedRate = 0 end
 	end
 
 	if occipital > 0.35 then

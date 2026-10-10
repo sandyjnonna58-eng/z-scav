@@ -16,16 +16,17 @@ local panicattack_heart_roll_chance = 1
 local panicattack_damage_scale = 0.006
 local panicattack_witness_radius = 850
 local panicattack_death_radius = 900
-local seizure_duration = 90
-local seizure_brain_damage_start = 80
-local seizure_brain_damage_final = 0.99
+-- Z-SCAV: приступ короче и сам по себе мозг не убивает (было 90 с и мозг -> 99% к концу)
+local seizure_duration = 40
+local seizure_brain_damage_start = 30
+local seizure_brain_damage_final = 0.3
 local seizure_pose_force = 850
 local seizure_pose_damp = 42
 local seizure_leg_buckle = 46
 local seizure_shake_freq = 5.8
 local seizure_shake_amp = 1.35
-local seizure_brain_trauma_gain_mul = 2
-local seizure_brain_heal_gain_mul = 1.1
+local seizure_brain_trauma_gain_mul = 1 -- Z-SCAV: было 2
+local seizure_brain_heal_gain_mul = 0.3 -- Z-SCAV: было 1.1 (заживление мозга само вызывало приступы)
 local seizure_temperature_gain_mul = 0.013
 local seizure_temperature_low_start = 35
 local seizure_temperature_high_start = 39
@@ -815,6 +816,11 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 			stop_seizure(owner, org)
 			if IsValid(owner) then owner.fakecd = 0 end
 		end
+	end
+
+	-- Z-SCAV: "заряд" приступа сам уходит со временем (раньше копился навсегда)
+	if not org.seizureActive and (org.seizure or 0) > 0 then
+		org.seizure = math.max(org.seizure - timeValue / 300, 0)
 	end
 
 	if org.seizure >= 1 and !org.seizureActive and isPly and owner:Alive() then

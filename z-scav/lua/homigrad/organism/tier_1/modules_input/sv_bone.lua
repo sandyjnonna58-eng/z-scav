@@ -420,7 +420,7 @@ input_list.skull = function(org, bone, dmg, dmgInfo, boneindex, dir, hit, ricoch
 	local rnd = math.random(10) == 1 or dmgInfo:IsDamageType(DMG_CRUSH)
 	org.consciousness = math.Approach(org.consciousness, 0, rnd and dmg * 2 or 0)
 
-	org.brain = math.min(org.brain + (rnd and dmg * 0.05 or 0), 1)
+	org.brain = math.min(org.brain + ((rnd and dmg > 0.1) and dmg * 0.015 or 0), 1) -- Z-SCAV: было dmg*0.05 за любой ушиб
 
 	if dmgInfo:IsDamageType(DMG_BULLET + DMG_BUCKSHOT) and org.skull > oldDmg then
 		local delta = org.skull - oldDmg

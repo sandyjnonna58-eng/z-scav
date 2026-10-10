@@ -107,13 +107,16 @@ local function damageBrainLobe(org, bone, dmg, dmgInfo, key)
 	local profile = brainLobeProfiles[key]
 	if not profile then return 0 end
 	if dmgInfo:IsDamageType(DMG_BLAST) then dmg = dmg / 50 end
+	-- Z-SCAV: тупые удары (кулак, падение, ушиб) бьют по долям мозга намного слабее пуль
+	local blunt = not dmgInfo:IsDamageType(DMG_BULLET + DMG_BUCKSHOT)
+	if blunt then dmg = dmg * 0.4 end
 
 	local oldBrainLobeDamage = getBrainLobeDamage(org)
 	local oldDmg = org[key] or 0
 	local result = damageOrgan(org, dmg, dmgInfo, key)
 	local delta = (org[key] or 0) - oldDmg
 
-	org.brain = math.min((org.brain or 0) + (getBrainLobeDamage(org) - oldBrainLobeDamage) * 1.5, 1)
+	org.brain = math.min((org.brain or 0) + (getBrainLobeDamage(org) - oldBrainLobeDamage) * (blunt and 0.6 or 1.5), 1)
 	org.consciousness = math.Approach(org.consciousness, 0, delta * profile.consciousness)
 	org.disorientation = org.disorientation + delta * profile.disorientation
 	org.shock = org.shock + dmg * profile.shock

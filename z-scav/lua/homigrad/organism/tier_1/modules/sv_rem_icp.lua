@@ -3,7 +3,7 @@
 
     Что поднимает:
       * кровоизлияние в мозг (org.brainHemorrhage)      до +35
-      * повреждение мозга (отёк)                         до +25
+      * повреждение мозга (отёк)                         до +8
       * перелом черепа (гематома)                        +6
       * нехватка кислорода (углекислота расширяет сосуды) до +12
       * высокое давление (систолическое > 160)           +0.1 за мм
@@ -16,7 +16,7 @@
       > 25  рвота, мутное зрение
       > 30  триада Кушинга: пульс падает, давление растёт; сознание мутнеет
       > 35  судороги
-      > 40  вклинение мозга - мозг повреждается (чем выше, тем быстрее), может убить
+      > 45  вклинение мозга - мозг повреждается (чем выше, тем быстрее), может убить
     zscav_icp 0 - выключить. Админ: zscav_icp_set <мм> - выставить себе.
 ]]
 
@@ -40,7 +40,7 @@ local LINES = {
 local function Target(org)
     local t = CFG.BASE
     t = t + (org.brainHemorrhage or 0) * 35
-    t = t + math.Clamp(org.brain or 0, 0, 1) * 25
+    t = t + math.Clamp(org.brain or 0, 0, 1) * 8 -- отёк (небольшой вклад, чтобы не было замкнутого круга)
     if (org.skull or 0) >= 1 then t = t + 6 end
     local o2 = istable(org.o2) and org.o2[1] or 30
     if o2 < 15 then t = t + (15 - o2) * 0.8 end
@@ -101,8 +101,8 @@ function hg.organism.ICPThink(owner, org, timeValue, isPly)
     end
 
     -- вклинение: мозг повреждается
-    if icp > 40 then
-        org.brain = math.min((org.brain or 0) + dt * (icp - 40) * 0.00025, 1)
+    if icp > 45 then
+        org.brain = math.min((org.brain or 0) + dt * (icp - 45) * 0.0002, 1)
     end
 end
 

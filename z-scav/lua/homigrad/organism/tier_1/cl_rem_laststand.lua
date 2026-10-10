@@ -15,7 +15,13 @@ local startT, lastEnd = nil, 0
 
 -- заставка срабатывания: чёрный экран с надписью "Let's not give up just yet."
 local matSplash = Material("zscav/last_stand.png", "smooth")
-local SPLASH_IN, SPLASH_HOLD, SPLASH_OUT = 0.25, 2.8, 1.2
+-- как в CU: экран сразу чернеет, надпись медленно проступает "мелом", мерцает и дрожит, потом уходит
+local SPLASH_BLACK = 0.15  -- чернеет
+local SPLASH_DELAY = 0.45  -- пауза в темноте перед надписью
+local SPLASH_IN    = 1.9   -- надпись проступает
+local SPLASH_HOLD  = 4.0
+local SPLASH_OUT   = 1.6
+local boilSeed, boilNext = 0, 0
 
 -- звук последнего рубежа: играет с момента срабатывания, к концу эффекта плавно затихает
 local DRONE_PATH = "sound/remorse/laststand_drone.ogg"
@@ -102,28 +108,60 @@ hook.Add("HUDPaint", "ZSCAV_LastStand", function()
     surface.SetTexture(gradL) surface.DrawTexturedRect(w - s, 0, s, h)
 
 
-    -- заставка: на весь экран (с сохранением пропорций), потом плавно уходит
+    -- заставка: чёрный экран, надпись проступает мелом (как в CU), мерцает, потом всё уходит
     local since = t - startT
-    local total = SPLASH_IN + SPLASH_HOLD + SPLASH_OUT
+    local textStart = SPLASH_BLACK + SPLASH_DELAY
+    local total = textStart + SPLASH_IN + SPLASH_HOLD + SPLASH_OUT
     if since < total then
-        local a
-        if since < SPLASH_IN then a = since / SPLASH_IN
-        elseif since < SPLASH_IN + SPLASH_HOLD then a = 1
-        else a = 1 - (since - SPLASH_IN - SPLASH_HOLD) / SPLASH_OUT end
-        a = math.Clamp(a, 0, 1)
-        surface.SetDrawColor(0, 0, 0, 255 * a)
+        local outStart = textStart + SPLASH_IN + SPLASH_HOLD
+        -- чёрный фон
+        local bg = since < SPLASH_BLACK and since / SPLASH_BLACK or (since < outStart and 1 or 1 - (since - outStart) / SPLASH_OUT)
+        bg = math.Clamp(bg, 0, 1)
+        surface.SetDrawColor(0, 0, 0, 255 * bg)
         surface.DrawRect(0, 0, w, h)
-        if matSplash and not matSplash:IsError() then
-            local iw, ih = matSplash:Width(), matSplash:Height()
-            local sc = math.max(w / iw, h / ih)
-            local dw, dh = iw * sc, ih * sc
-            -- лёгкое "дрожание" плёнки
-            local jx, jy = math.Rand(-1, 1), math.Rand(-1, 1)
-            surface.SetDrawColor(255, 255, 255, 255 * a)
-            surface.SetMaterial(matSplash)
-            surface.DrawTexturedRect((w - dw) * 0.5 + jx, (h - dh) * 0.5 + jy, dw, dh)
-        else
-            draw.SimpleText("Не будем сдаваться раньше времени.", "ZSCAV_LastStand", w * 0.5, h * 0.5, Color(230, 230, 230, 255 * a), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+        -- надпись: плавное проявление (ease-in), мерцание плёнки
+        local ta = 0
+        if since >= textStart then
+            ta = math.Clamp((since - textStart) / SPLASH_IN, 0, 1)
+            ta = ta * ta * (3 - 2 * ta)
+        end
+        if since >= outStart then ta = math.Clamp(1 - (since - outStart) / (SPLASH_OUT * 0.8), 0, 1) end
+        -- "кипение" линий: смещение меняется рывками ~8 раз в секунду, как покадровая рисовка
+        if RealTime() >= boilNext then
+            boilNext = RealTime() + 0.12
+            boilSeed = math.random(1, 1000)
+        end
+        local flick = 0.86 + 0.14 * ((boilSeed * 7919) % 100) / 100
+        ta = ta * flick
+
+        if ta > 0.003 then
+            if matSplash and not matSplash:IsError() then
+                local iw, ih = matSplash:Width(), matSplash:Height()
+                local sc = math.max(w / iw, h / ih)
+                local dw, dh = iw * sc, ih * sc
+                local x0, y0 = (w - dw) * 0.5, (h - dh) * 0.5
+                local jx = ((boilSeed % 7) - 3) * 0.6
+                local jy = ((math.floor(boilSeed / 7) % 5) - 2) * 0.6
+                surface.SetMaterial(matSplash)
+                -- основной слой + слабый "второй штрих" со сдвигом (меловая неровность)
+                surface.SetDrawColor(255, 255, 255, 255 * ta)
+                surface.DrawTexturedRect(x0 + jx, y0 + jy, dw, dh)
+                surface.SetDrawColor(255, 255, 255, 70 * ta)
+                surface.DrawTexturedRect(x0 - jx * 1.5 + 1, y0 - jy * 1.5, dw, dh)
+            else
+                local jx = ((boilSeed % 7) - 3) * 0.6
+                draw.SimpleText("Не будем сдаваться раньше времени.", "ZSCAV_LastStand", w * 0.5 + jx, h * 0.5, Color(230, 230, 230, 255 * ta), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
+        end
+
+        -- зерно плёнки поверх чёрного
+        if bg > 0.2 then
+            local n = 90
+            surface.SetDrawColor(255, 255, 255, 14 * bg)
+            for i = 1, n do
+                surface.DrawRect(math.random(0, w), math.random(0, h), math.random(1, 2), math.random(1, 2))
+            end
         end
     end
 end)

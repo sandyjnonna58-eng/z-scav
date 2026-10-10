@@ -897,6 +897,8 @@ hook.Add("Org Think", "Main", function(owner, org, timeValue)
 	if hg.organism.ICPThink then hg.organism.ICPThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: викодин - зависимость и ломка (modules/sv_rem_vicodin.lua)
 	if hg.organism.VicodinThink then hg.organism.VicodinThink(owner, org, timeValue, isPly) end
+	-- Z-SCAV: с NeuroTrauma нокаут от удара по голове не запускает умирание (zscav_neurotrauma_compat.lua)
+	if isPly and ZSCAV_NTSafety then ZSCAV_NTSafety(owner, org) end
 	-- Z-SCAV: последний рубеж организма (modules/sv_rem_laststand.lua)
 	if hg.organism.LastStandThink then hg.organism.LastStandThink(owner, org, timeValue, isPly) end
 	-- Z-SCAV: энергия и сон (modules/sv_rem_energy.lua)

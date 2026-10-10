@@ -36,6 +36,9 @@ local function Patch()
         return origCap(org, cap)
     end
 
+    -- 3) удар по голове (бита, кулак): остановка дыхания после удара короче (было до 40 с)
+    if istable(C.Load) then C.Load.apnoeaMax = math.min(C.Load.apnoeaMax or 40, 12) end
+
     print("[Z-SCAV] NeuroTrauma: совместимость включена (пороги мозга, последний бой, эпилепсия)")
     return true
 end
@@ -61,4 +64,35 @@ end)
 function ZSCAV_NeuroTraumaActive()
     local NT = NeuroTrauma
     return istable(NT) and isfunction(NT.Enabled) and NT.Enabled() == true
+end
+
+-- 4) Нокаут от удара по голове - не смерть. Раньше: NeuroTrauma вырубал и останавливал дыхание,
+--    кислород падал ниже 5 -> наш организм считал это "умиранием" -> таймер смерти 60 с ->
+--    мозг "умирал" от одного удара битой. Теперь пока NeuroTrauma держит нокаут/апноэ, а
+--    настоящих смертельных причин нет (кровь, сердце, позвоночник, трахея, мозг < 0.6),
+--    кислород не падает ниже безопасного и таймер умирания не запускается.
+--    Вызывается из основного цикла организма (sv_organism.lua) перед решением об умирании.
+local function TransientOnly(org)
+    if org.heartstop or (org.brain or 0) >= 0.6 then return false end
+    if (org.blood or 5000) <= 3000 or (org.bleed or 0) >= 3 then return false end
+    if (org.pulse or 70) < 15 or (org.trachea or 0) >= 0.5 then return false end
+    if (org.spine2 or 0) >= (hg.organism.fake_spine2 or 1) or (org.spine3 or 0) >= (hg.organism.fake_spine3 or 1) then return false end
+    return true
+end
+
+function ZSCAV_NTSafety(owner, org)
+    local NT = NeuroTrauma
+    if not istable(NT) or not isfunction(NT.Get) or not ZSCAV_NeuroTraumaActive() then return end
+    local st = NT.Get(org)
+    if not st then return end
+    local C = NT.Config or {}
+    local stemFail = istable(C.Brain) and C.Brain.stemFailure or 0.95
+    if (st.stemLasting or 0) >= stemFail then return end -- настоящий отказ ствола мозга - не трогаем
+    if st.terminal then return end                         -- пуля винтовки в голову (правило аддона)
+    if not TransientOnly(org) then return end
+    local now = CurTime()
+    local knocked = org.otrub or now < (st.locUntil or 0) or now < (st.apnoeaUntil or 0)
+    if not knocked then return end
+    if istable(org.o2) and (org.o2[1] or 30) < 9 then org.o2[1] = 9 end
+    org.incapacitated = false
 end

@@ -281,6 +281,7 @@ local function send_organism(org, ply)
 
 	sendtable.superfighter = org.superfighter
 	sendtable.depression = org.depression
+	sendtable.remDepType = hg.organism.DepTypeActive and hg.organism.DepTypeActive(org) or false
 
 	-- REM-HEALTH: органы, кости и метаболизм для меню здоровья
 	sendtable.skull = org.skull

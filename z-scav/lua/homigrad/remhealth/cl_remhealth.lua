@@ -1463,6 +1463,9 @@ function PANEL:DrawMonitor(org, x, y, w)
     if N(org.hungry) >= 85 then alerts[#alerts + 1] = "ИСТОЩЕНИЕ"
     elseif N(org.hungry) >= 65 then alerts[#alerts + 1] = "ОЧЕНЬ ГОЛОДЕН" end
     if N(org.depression) >= 0.25 then alerts[#alerts + 1] = ("ДЕПРЕССИЯ %d%%"):format(N(org.depression) * 100) end
+    -- Z-SCAV: тип депрессии (sv_rem_deptypes.lua)
+    local DEPT = {despair = "ОТЧАЯННЫЙ: ЧАЩЕ ОТКАЗЫ", deprived = "ОБДЕЛЁННЫЙ: ОТКАЗ ОТ ВСЕГО", sadist = "САДИСТ: СРЫВЫ, БОЛЬ В РАДОСТЬ"}
+    if isstring(org.remDepType) and DEPT[org.remDepType] then alerts[#alerts + 1] = DEPT[org.remDepType] end
     if #alerts > 0 then
         Txt(table.concat(alerts, " · "), "RemHP_Small", x + w * 0.5, cy + S(8), Blink(6) and C_RED or C_ORANGE, TEXT_ALIGN_CENTER)
     end

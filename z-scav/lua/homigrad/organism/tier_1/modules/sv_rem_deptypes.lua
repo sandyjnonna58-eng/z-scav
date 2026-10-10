@@ -60,10 +60,28 @@ hook.Add("StartCommand", "ZSCAV_DepDeprived", function(ply, cmd)
     if not ply:Alive() then return end
     local org = ply.organism
     if not Active(org) or org.remDepType ~= "deprived" or not hg.ZSCAVApathyRefuse then return end
+    -- только настоящая депрессия (не просто плохое настроение), и решение по каждому нажатию -
+    -- отказ держится долю секунды, а не блокирует удар на несколько секунд
+    if (org.depression or 0) < 0.2 then return end
     local btn = cmd:GetButtons()
     local changed = false
+    local now = CurTime()
+    ply.zscavDepPress = ply.zscavDepPress or {}
     for _, b in ipairs(BUTTONS) do
-        if bit.band(btn, b[1]) ~= 0 and hg.ZSCAVApathyRefuse(ply, b[2]) then
+        local down = bit.band(btn, b[1]) ~= 0
+        local st = ply.zscavDepPress[b[1]]
+        if not down then
+            ply.zscavDepPress[b[1]] = nil
+        elseif not st then
+            local refuse = hg.organism.RefuseChance and math.Rand(0, 1) < hg.organism.RefuseChance(org) * 0.6
+            st = {refuse = refuse, untilT = now + 0.6}
+            ply.zscavDepPress[b[1]] = st
+            if refuse and now >= (ply.zscavApathyThought or 0) then
+                ply.zscavApathyThought = now + 6
+                ply:Notify(table.Random({"Не хочется..", "Какой смысл..", "Руки не слушаются."}), 3, "zscav_apathy", 0)
+            end
+        end
+        if down and st and st.refuse and now < st.untilT then
             btn = bit.band(btn, bit.bnot(b[1]))
             changed = true
         end

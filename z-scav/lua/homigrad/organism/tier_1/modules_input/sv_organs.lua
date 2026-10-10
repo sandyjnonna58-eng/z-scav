@@ -107,9 +107,9 @@ local function damageBrainLobe(org, bone, dmg, dmgInfo, key)
 	local profile = brainLobeProfiles[key]
 	if not profile then return 0 end
 	if dmgInfo:IsDamageType(DMG_BLAST) then dmg = dmg / 50 end
-	-- Z-SCAV: тупые удары (кулак, падение, ушиб) бьют по долям мозга намного слабее пуль
+	-- Z-SCAV: тупые удары (кулак, бита, топор, падение) оглушают как раньше,
+	-- но в "смерть мозга" (org.brain) идут слабее пуль - см. множитель ниже
 	local blunt = not dmgInfo:IsDamageType(DMG_BULLET + DMG_BUCKSHOT)
-	if blunt then dmg = dmg * 0.4 end
 
 	local oldBrainLobeDamage = getBrainLobeDamage(org)
 	local oldDmg = org[key] or 0

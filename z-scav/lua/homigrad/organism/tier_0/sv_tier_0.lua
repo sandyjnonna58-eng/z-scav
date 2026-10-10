@@ -100,10 +100,24 @@ timer.Create("homigrad-organism", tickrate, 0, function()
 	mulTime = (sysTime - start) * game.GetTimeScale()
 
 	start = sysTime
+	local corpseRate = ZSCAV_CORPSE_THINK_RATE or 1    -- Z-SCAV: трупы думают раз в секунду...
+	local corpseTime = ZSCAV_CORPSE_THINK_TIME or 60   -- ...и только первую минуту после смерти
 	for owner, org in pairs(hg.organism.list) do -- теперь ясно почему от трупов лагает...
 		if not IsValid(owner) or org.owner ~= owner then hg.organism.list[owner] = nil continue end
 		if not istable(org.o2) then hg.organism.EnsureO2(org) end
 		if org.godmode then continue end
+		-- Z-SCAV (оптимизация): мёртвое тело (не игрок, не живой NPC) обновляется реже, потом замирает
+		if not org.alive and not owner:IsPlayer() then
+			org.zDeadSince = org.zDeadSince or time
+			if corpseTime > 0 and time - org.zDeadSince > corpseTime then continue end
+			org.zCorpseAcc = (org.zCorpseAcc or 0) + mulTime
+			if org.zCorpseAcc < corpseRate then continue end
+			local acc = org.zCorpseAcc
+			org.zCorpseAcc = 0
+			hook_Run("Org Think", owner, org, acc)
+			continue
+		end
+		org.zDeadSince = nil
 		hook_Run("Org Think", owner, org, mulTime)
 	end
 end)

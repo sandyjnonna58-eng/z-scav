@@ -57,14 +57,17 @@ local function DrawOn(ent, str)
     end
 end
 
-hook.Add("PostDrawOpaqueRenderables", "ZSCAV_OpenFracture", function(depth, sky)
-    if sky or not cvDraw:GetBool() then return end
+-- Z-SCAV (оптимизация): список тел с торчащими костями обновляется 4 раза в секунду,
+-- а не перебором всех рэгдоллов каждый кадр
+local drawList, nextScan = {}, 0
+local function Scan()
     local eye = EyePos()
     local lp = LocalPlayer()
+    local list = {}
     for _, ply in ipairs(player.GetAll()) do
         if ply:Alive() and not ply:IsDormant() and not IsValid(ply.FakeRagdoll) and ply:GetPos():DistToSqr(eye) < MAXD then
             local s = ply:GetNW2String(NW, "")
-            if s ~= "" and not (ply == lp and not ply:ShouldDrawLocalPlayer()) then DrawOn(ply, s) end
+            if s ~= "" and not (ply == lp and not ply:ShouldDrawLocalPlayer()) then list[#list + 1] = {ply, s} end
         end
     end
     for _, rag in ipairs(ents.FindByClass("prop_ragdoll")) do
@@ -74,7 +77,20 @@ hook.Add("PostDrawOpaqueRenderables", "ZSCAV_OpenFracture", function(depth, sky)
                 local owner = rag:GetNWEntity("ply")
                 if IsValid(owner) and owner:Alive() and owner.FakeRagdoll == rag then s = owner:GetNW2String(NW, "") end
             end
-            DrawOn(rag, s)
+            if s ~= "" then list[#list + 1] = {rag, s} end
         end
+    end
+    drawList = list
+end
+
+hook.Add("PostDrawOpaqueRenderables", "ZSCAV_OpenFracture", function(depth, sky)
+    if sky or not cvDraw:GetBool() then return end
+    local now = RealTime()
+    if now >= nextScan then nextScan = now + 0.25 Scan() end
+    if #drawList == 0 then return end
+    local lp = LocalPlayer()
+    for _, e in ipairs(drawList) do
+        local ent = e[1]
+        if IsValid(ent) and not (ent == lp and not ent:ShouldDrawLocalPlayer()) then DrawOn(ent, e[2]) end
     end
 end)

@@ -462,7 +462,8 @@ local function CinematicDeathTracker()
         end
     end
 
-    if isDead and not IsValid(ragdollEnt) then
+    if isDead and not IsValid(ragdollEnt) and CurTime() >= (ZSCAV_NextRagSearch or 0) then
+        ZSCAV_NextRagSearch = CurTime() + 0.5 -- Z-SCAV (оптимизация): не перебирать все рэгдоллы каждый кадр
         ragdollEnt = ply:GetRagdollEntity()
         if not IsValid(ragdollEnt) then
             local bestDist = math.huge

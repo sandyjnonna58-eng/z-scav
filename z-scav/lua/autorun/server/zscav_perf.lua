@@ -8,7 +8,7 @@
        zscav_corpse_think_rate 1, zscav_corpse_think_time 60   (см. organism/tier_0/sv_tier_0.lua)
     3) Сетевые настройки сервера (ставятся при старте, если zscav_perf_net 1):
        частота обновлений 33-66, без ограничения скорости отдачи. Меньше "резины" и скачков пинга.
-       Организм шлётся ненадёжным пакетом (hg_unreliable_nets 1) - не забивает основной канал.
+       hg_unreliable_nets возвращается в 0: ненадёжные пакеты организма слишком большие и терялись.
 ]]
 
 local cvMax   = CreateConVar("zscav_max_corpses", "14", FCVAR_ARCHIVE, "Z-SCAV: максимум трупов на карте", 0, 200)
@@ -83,7 +83,8 @@ local NET = {
     {"sv_mincmdrate", "33"},
     {"sv_maxcmdrate", "66"},
     {"net_maxfilesize", "64"},
-    {"hg_unreliable_nets", "1"},
+    -- организм НЕ шлём ненадёжным пакетом: он большой и такие пакеты теряются целиком
+    {"hg_unreliable_nets", "0"},
 }
 hook.Add("InitPostEntity", "ZSCAV_PerfNet", function()
     if not cvNet:GetBool() then return end

@@ -280,6 +280,11 @@ local function LerpVariables(lerp,org_source,org_target)
 			--print(org_source,org_source[v])
 		end
 	end
+	-- Z-SCAV: все наши поля (rem*: болезни, ВЧД, викодин, сон, энергия, тип депрессии...)
+	-- копируются всегда - иначе клиент видел их только при полной пересылке организма
+	for k, val in pairs(org_target) do
+		if isstring(k) and string.sub(k, 1, 3) == "rem" then org_source[k] = val end
+	end
 end
 
 hg.LerpVariables = LerpVariables

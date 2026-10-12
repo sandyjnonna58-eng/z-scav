@@ -374,6 +374,7 @@ module[2] = function(owner, org, timeValue)
 		-- Z-SCAV: небольшое кровоизлияние со временем рассасывается
 		if hemorrhage < 0.3 and bleedRate <= 0.0002 then
 			org.brainHemorrhage = max(hemorrhage - timeValue / 1200, 0)
+			hemorrhage = org.brainHemorrhage
 		end
 		org.brain = min(org.brain + timeValue * hemorrhage / (hemorrhage < 0.3 and 900 or 300), 1)
 		org.disorientation = math.max(org.disorientation, hemorrhage * 0.9)

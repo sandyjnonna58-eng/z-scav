@@ -253,6 +253,7 @@ local function InitDeathSequence(ply)
     compatActiveTime = 0
     compatTriggered  = false
     deathTime        = CurTime()
+    prevSkipDown     = true -- Z-SCAV: зажатая в момент смерти кнопка не пропускает экран
     ragdollEnt       = ply:GetRagdollEntity()
     prevReloadDown   = false
     prevJumpDown     = false

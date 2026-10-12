@@ -27,13 +27,17 @@ local function Patch()
     -- 2) последний бой: пока он действует, NeuroTrauma не поднимает повреждение мозга
     --    и не гасит сознание (иначе лечение последнего боя сразу отменялось)
     local origFloor, origCap = Z.FloorBrain, Z.CapConsciousness
-    Z.FloorBrain = function(org, floor)
-        if istable(org) and (org.remLastStandUntil or 0) > CurTime() then return end
-        return origFloor(org, floor)
+    if isfunction(origFloor) then
+        Z.FloorBrain = function(org, floor)
+            if istable(org) and (org.remLastStandUntil or 0) > CurTime() then return end
+            return origFloor(org, floor)
+        end
     end
-    Z.CapConsciousness = function(org, cap)
-        if istable(org) and (org.remLastStand or 0) > CurTime() then return end -- первые секунды рубежа - в сознании
-        return origCap(org, cap)
+    if isfunction(origCap) then
+        Z.CapConsciousness = function(org, cap)
+            if istable(org) and (org.remLastStand or 0) > CurTime() then return end -- первые секунды рубежа - в сознании
+            return origCap(org, cap)
+        end
     end
 
     -- 3) удар по голове (бита, кулак): остановка дыхания после удара короче (было до 40 с)
